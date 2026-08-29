@@ -1,0 +1,2590 @@
+{
+  "config": {
+    "start": "2026-08-24",
+    "s1End": "2027-01-31",
+    "exam": "2027-10-15"
+  },
+  "itemChecks": {
+    "S1_i60_o1": true,
+    "S1_i108_o1": true
+  },
+  "checks": {
+    "2026-08-29": {},
+    "2026-08-30": {}
+  },
+  "reportedDays": {},
+  "darkMode": false,
+  "itemOverrides": {},
+  "customTasks": {},
+  "items": [
+    [
+      1,
+      "La relation médecin-malade",
+      [
+        "legale"
+      ]
+    ],
+    [
+      2,
+      "Les valeurs professionnelles du médecin et des autres professions de santé",
+      [
+        "legale"
+      ]
+    ],
+    [
+      3,
+      "Le raisonnement et la décision en médecine",
+      [
+        "legale"
+      ]
+    ],
+    [
+      4,
+      "La sécurité du patient. La gestion des risques. Les événements indésirables associés aux soins",
+      [
+        "legale"
+      ]
+    ],
+    [
+      5,
+      "La gestion des erreurs et des plaintes, l'aléa thérapeutique",
+      [
+        "legale"
+      ]
+    ],
+    [
+      6,
+      "L'organisation de l'exercice clinique et les méthodes qui permettent de sécuriser le parcours du patient",
+      [
+        "legale"
+      ]
+    ],
+    [
+      7,
+      "Les droits individuels et collectifs du patient",
+      [
+        "legale"
+      ]
+    ],
+    [
+      8,
+      "Les discriminations",
+      [
+        "legale"
+      ]
+    ],
+    [
+      9,
+      "Éthique médicale",
+      [
+        "legale"
+      ]
+    ],
+    [
+      10,
+      "Approches transversales du corps",
+      [
+        "legale"
+      ]
+    ],
+    [
+      11,
+      "Violences et santé",
+      [
+        "legale"
+      ]
+    ],
+    [
+      12,
+      "Violences sexuelles",
+      [
+        "legale"
+      ]
+    ],
+    [
+      13,
+      "Certificats médicaux. Décès et législation. Prélèvements d'organes et législation",
+      [
+        "legale"
+      ]
+    ],
+    [
+      14,
+      "La mort",
+      [
+        "legale"
+      ]
+    ],
+    [
+      15,
+      "Soins psychiatriques sans consentement",
+      [
+        "legale"
+      ]
+    ],
+    [
+      16,
+      "Organisation du système de soins. Sa régulation. Les indicateurs. Parcours de soins",
+      [
+        "legale"
+      ]
+    ],
+    [
+      17,
+      "Télémédecine, télésanté et téléservices en santé",
+      [
+        "legale"
+      ]
+    ],
+    [
+      18,
+      "Santé et numérique",
+      [
+        "legale"
+      ]
+    ],
+    [
+      19,
+      "La sécurité sociale. L'assurance maladie. Les assurances complémentaires. Protection sociale. Économie de la santé",
+      [
+        "legale"
+      ]
+    ],
+    [
+      20,
+      "La méthodologie de la recherche en santé",
+      [
+        "legale"
+      ]
+    ],
+    [
+      21,
+      "Mesure de l'état de santé de la population",
+      [
+        "legale"
+      ]
+    ],
+    [
+      22,
+      "Maladies rares",
+      [
+        "genetique"
+      ]
+    ],
+    [
+      23,
+      "Grossesse normale",
+      [
+        "gyneco"
+      ]
+    ],
+    [
+      24,
+      "Principales complications de la grossesse",
+      [
+        "gyneco"
+      ]
+    ],
+    [
+      25,
+      "Grossesse extra-utérine",
+      [
+        "gyneco"
+      ]
+    ],
+    [
+      26,
+      "Douleur abdominale aiguë chez une femme enceinte",
+      [
+        "gyneco"
+      ]
+    ],
+    [
+      27,
+      "Prévention des risques fœtaux : infection, médicaments, toxiques, irradiation",
+      [
+        "gyneco"
+      ]
+    ],
+    [
+      28,
+      "Particularités de l'infection urinaire au cours de la grossesse",
+      [
+        "gyneco"
+      ]
+    ],
+    [
+      29,
+      "Principaux risques professionnels pour la maternité, liés au travail de la mère",
+      [
+        "gyneco"
+      ]
+    ],
+    [
+      30,
+      "Prématurité et retard de croissance intra-utérin : facteurs de risque et prévention",
+      [
+        "gyneco"
+      ]
+    ],
+    [
+      31,
+      "Accouchement, délivrance et suites de couches normales",
+      [
+        "gyneco"
+      ]
+    ],
+    [
+      32,
+      "Évaluation et soins du nouveau-né à terme",
+      [
+        "gyneco"
+      ]
+    ],
+    [
+      33,
+      "Allaitement maternel",
+      [
+        "gyneco"
+      ]
+    ],
+    [
+      34,
+      "Suites de couches pathologiques : pathologie maternelle dans les 40 jours",
+      [
+        "gyneco"
+      ]
+    ],
+    [
+      35,
+      "Anomalies du cycle menstruel. Métrorragies",
+      [
+        "gyneco"
+      ]
+    ],
+    [
+      36,
+      "Contraception",
+      [
+        "gyneco"
+      ]
+    ],
+    [
+      37,
+      "Interruption volontaire de grossesse",
+      [
+        "gyneco"
+      ]
+    ],
+    [
+      38,
+      "Infertilité du couple : conduite de la première consultation",
+      [
+        "gyneco"
+      ]
+    ],
+    [
+      39,
+      "Assistance médicale à la procréation : principaux aspects biologiques, médicaux et éthiques",
+      [
+        "gyneco"
+      ]
+    ],
+    [
+      40,
+      "Algies pelviennes chez la femme",
+      [
+        "gyneco"
+      ]
+    ],
+    [
+      41,
+      "Endométriose",
+      [
+        "gyneco"
+      ]
+    ],
+    [
+      42,
+      "Aménorrhée",
+      [
+        "gyneco"
+      ]
+    ],
+    [
+      43,
+      "Hémorragie génitale chez la femme",
+      [
+        "gyneco"
+      ]
+    ],
+    [
+      44,
+      "Tuméfaction pelvienne chez la femme",
+      [
+        "gyneco"
+      ]
+    ],
+    [
+      45,
+      "Spécificités des maladies génétiques",
+      [
+        "genetique"
+      ]
+    ],
+    [
+      46,
+      "Médecine génomique",
+      [
+        "genetique"
+      ]
+    ],
+    [
+      47,
+      "Suivi d'un nourrisson, d'un enfant et d'un adolescent normal. Dépistages, examens obligatoires, médecine scolaire",
+      [
+        "ped"
+      ]
+    ],
+    [
+      48,
+      "Alimentation et besoins nutritionnels du nourrisson et de l'enfant",
+      [
+        "ped"
+      ]
+    ],
+    [
+      49,
+      "Puberté normale et pathologique",
+      [
+        "ped"
+      ]
+    ],
+    [
+      50,
+      "Pathologie génito-scrotale chez le garçon et chez l'homme",
+      [
+        "ped"
+      ]
+    ],
+    [
+      51,
+      "Troubles de la miction chez l'enfant",
+      [
+        "ped"
+      ]
+    ],
+    [
+      52,
+      "Strabisme et amblyopie de l'enfant",
+      [
+        "ped"
+      ]
+    ],
+    [
+      53,
+      "Retard de croissance staturo-pondérale",
+      [
+        "ped"
+      ]
+    ],
+    [
+      54,
+      "Boiterie chez l'enfant",
+      [
+        "ped"
+      ]
+    ],
+    [
+      55,
+      "Développement psychomoteur du nourrisson et de l'enfant",
+      [
+        "ped"
+      ]
+    ],
+    [
+      56,
+      "L'enfant handicapé : orientation et prise en charge",
+      [
+        "ped"
+      ]
+    ],
+    [
+      57,
+      "Maltraitance et enfants en danger. Protection maternelle et infantile",
+      [
+        "ped"
+      ]
+    ],
+    [
+      58,
+      "Sexualité normale et ses troubles",
+      [
+        "gyneco"
+      ]
+    ],
+    [
+      59,
+      "Sujets en situation de précarité",
+      [
+        "legale"
+      ]
+    ],
+    [
+      60,
+      "Facteurs de risque, prévention, dépistage des troubles psychiques de l'enfant à la personne âgée",
+      [
+        "psy"
+      ]
+    ],
+    [
+      61,
+      "Bases des classifications des troubles mentaux de l'enfant à la personne âgée",
+      [
+        "psy"
+      ]
+    ],
+    [
+      62,
+      "Organisation de l'offre de soins en psychiatrie, de l'enfant à la personne âgée",
+      [
+        "psy"
+      ]
+    ],
+    [
+      63,
+      "Trouble schizophrénique",
+      [
+        "psy"
+      ]
+    ],
+    [
+      64,
+      "Trouble bipolaire",
+      [
+        "psy"
+      ]
+    ],
+    [
+      65,
+      "Trouble délirant persistant",
+      [
+        "psy"
+      ]
+    ],
+    [
+      66,
+      "Trouble dépressif, trouble anxieux généralisé, trouble panique, trouble phobique, TOC, état de stress post-traumatique, trouble de l'adaptation, trouble de la personnalité",
+      [
+        "psy"
+      ]
+    ],
+    [
+      67,
+      "Troubles envahissants du développement",
+      [
+        "psy"
+      ]
+    ],
+    [
+      68,
+      "Troubles du comportement de l'adolescent",
+      [
+        "psy"
+      ]
+    ],
+    [
+      69,
+      "Troubles psychiques de la grossesse et du post-partum",
+      [
+        "psy"
+      ]
+    ],
+    [
+      70,
+      "Troubles psychiques du sujet âgé",
+      [
+        "psy"
+      ]
+    ],
+    [
+      71,
+      "Troubles des conduites alimentaires chez l'adolescent et l'adulte",
+      [
+        "psy"
+      ]
+    ],
+    [
+      72,
+      "Troubles à symptomatologie somatique et apparentés à tous les âges",
+      [
+        "psy"
+      ]
+    ],
+    [
+      73,
+      "Différents types de techniques psychothérapeutiques",
+      [
+        "psy"
+      ]
+    ],
+    [
+      74,
+      "Prescription et surveillance des psychotropes",
+      [
+        "psy"
+      ]
+    ],
+    [
+      75,
+      "Addiction au tabac",
+      [
+        "psy"
+      ]
+    ],
+    [
+      76,
+      "Addiction à l'alcool",
+      [
+        "psy"
+      ]
+    ],
+    [
+      77,
+      "Addiction aux médicaments psychotropes (benzodiazépines et apparentés)",
+      [
+        "psy"
+      ]
+    ],
+    [
+      78,
+      "Addiction au cannabis, à la cocaïne, aux amphétamines, aux opiacés, aux drogues de synthèse",
+      [
+        "psy"
+      ]
+    ],
+    [
+      79,
+      "Addictions comportementales",
+      [
+        "psy"
+      ]
+    ],
+    [
+      80,
+      "Dopage et conduites dopantes",
+      [
+        "psy"
+      ]
+    ],
+    [
+      81,
+      "Altération chronique de la vision",
+      [
+        "ophtalmo"
+      ]
+    ],
+    [
+      82,
+      "Altération aiguë de la vision",
+      [
+        "ophtalmo"
+      ]
+    ],
+    [
+      83,
+      "Infections et inflammations oculaires",
+      [
+        "ophtalmo"
+      ]
+    ],
+    [
+      84,
+      "Glaucomes",
+      [
+        "ophtalmo"
+      ]
+    ],
+    [
+      85,
+      "Troubles de la réfraction",
+      [
+        "ophtalmo"
+      ]
+    ],
+    [
+      86,
+      "Pathologie des paupières",
+      [
+        "ophtalmo"
+      ]
+    ],
+    [
+      87,
+      "Epistaxis",
+      [
+        "orl"
+      ]
+    ],
+    [
+      88,
+      "Trouble aigu de la parole. Dysphonie",
+      [
+        "orl"
+      ]
+    ],
+    [
+      89,
+      "Altération de la fonction auditive",
+      [
+        "orl"
+      ]
+    ],
+    [
+      90,
+      "Pathologie des glandes salivaires",
+      [
+        "orl"
+      ]
+    ],
+    [
+      91,
+      "Déficit neurologique récent",
+      [
+        "neuro"
+      ]
+    ],
+    [
+      92,
+      "Déficit moteur et/ou sensitif des membres",
+      [
+        "neuro"
+      ]
+    ],
+    [
+      93,
+      "Compression médullaire non traumatique et syndrome de la queue de cheval",
+      [
+        "neuro"
+      ]
+    ],
+    [
+      94,
+      "Rachialgie",
+      [
+        "neuro"
+      ]
+    ],
+    [
+      95,
+      "Radiculalgie et syndrome canalaire",
+      [
+        "neuro"
+      ]
+    ],
+    [
+      96,
+      "Neuropathies périphériques",
+      [
+        "neuro"
+      ]
+    ],
+    [
+      97,
+      "Polyradiculonévrite aiguë inflammatoire (syndrome de Guillain-Barré)",
+      [
+        "neuro"
+      ]
+    ],
+    [
+      98,
+      "Myasthénie",
+      [
+        "neuro"
+      ]
+    ],
+    [
+      99,
+      "Migraine, névralgie du trijumeau et algies de la face",
+      [
+        "neuro"
+      ]
+    ],
+    [
+      100,
+      "Céphalée inhabituelle aiguë et chronique chez l'adulte et l'enfant",
+      [
+        "neuro"
+      ]
+    ],
+    [
+      101,
+      "Paralysie faciale",
+      [
+        "neuro"
+      ]
+    ],
+    [
+      102,
+      "Diplopie",
+      [
+        "neuro"
+      ]
+    ],
+    [
+      103,
+      "Vertige",
+      [
+        "neuro"
+      ]
+    ],
+    [
+      104,
+      "Sclérose en plaques",
+      [
+        "neuro"
+      ]
+    ],
+    [
+      105,
+      "Épilepsie de l'enfant et de l'adulte",
+      [
+        "neuro"
+      ]
+    ],
+    [
+      106,
+      "Maladie de Parkinson",
+      [
+        "neuro"
+      ]
+    ],
+    [
+      107,
+      "Mouvements anormaux",
+      [
+        "neuro"
+      ]
+    ],
+    [
+      108,
+      "Confusion, démences",
+      [
+        "ger"
+      ]
+    ],
+    [
+      109,
+      "Troubles de la marche et de l'équilibre",
+      [
+        "neuro"
+      ]
+    ],
+    [
+      110,
+      "Troubles du sommeil de l'enfant et de l'adulte",
+      [
+        "neuro"
+      ]
+    ],
+    [
+      111,
+      "Dermatoses faciales : acné, rosacée, dermatite séborrhéique",
+      [
+        "dermato"
+      ]
+    ],
+    [
+      112,
+      "Dermatose bulleuse touchant la peau et/ou les muqueuses externes",
+      [
+        "dermato"
+      ]
+    ],
+    [
+      113,
+      "Hémangiomes et malformations vasculaires cutanées",
+      [
+        "dermato"
+      ]
+    ],
+    [
+      114,
+      "Exanthème et érythrodermie de l'adulte et de l'enfant",
+      [
+        "dermato"
+      ]
+    ],
+    [
+      115,
+      "Toxidermies",
+      [
+        "dermato"
+      ]
+    ],
+    [
+      116,
+      "Prurit",
+      [
+        "dermato"
+      ]
+    ],
+    [
+      117,
+      "Psoriasis",
+      [
+        "dermato"
+      ]
+    ],
+    [
+      118,
+      "La personne handicapée : bases de l'évaluation fonctionnelle et thérapeutique",
+      [
+        "ger"
+      ]
+    ],
+    [
+      119,
+      "Soin et accompagnement dans la maladie chronique et le handicap",
+      [
+        "ger"
+      ]
+    ],
+    [
+      120,
+      "Complications de l'immobilité et du décubitus. Prévention et prise en charge",
+      [
+        "ger"
+      ]
+    ],
+    [
+      121,
+      "Le handicap psychique",
+      [
+        "ger"
+      ]
+    ],
+    [
+      122,
+      "Principales techniques de rééducation et de réadaptation",
+      [
+        "ger"
+      ]
+    ],
+    [
+      123,
+      "Vieillissement normal : aspects biologiques, fonctionnels et relationnels. Prévention du vieillissement pathologique",
+      [
+        "ger"
+      ]
+    ],
+    [
+      124,
+      "Ménopause, insuffisance ovarienne prématurée, andropause, déficit androgénique lié à l'âge",
+      [
+        "ger"
+      ]
+    ],
+    [
+      125,
+      "Troubles de la miction et incontinence urinaire de l'adulte et du sujet âgé",
+      [
+        "ger"
+      ]
+    ],
+    [
+      126,
+      "Trouble de l'érection",
+      [
+        "ger"
+      ]
+    ],
+    [
+      127,
+      "Hypertrophie bénigne de la prostate",
+      [
+        "ger"
+      ]
+    ],
+    [
+      128,
+      "Ostéopathies fragilisantes",
+      [
+        "ger"
+      ]
+    ],
+    [
+      129,
+      "Arthrose",
+      [
+        "ger"
+      ]
+    ],
+    [
+      130,
+      "La personne âgée malade : particularités sémiologiques, psychologiques et thérapeutiques",
+      [
+        "ger"
+      ]
+    ],
+    [
+      131,
+      "Troubles de la marche et de l'équilibre (sujet âgé)",
+      [
+        "ger"
+      ]
+    ],
+    [
+      132,
+      "Troubles cognitifs du sujet âgé",
+      [
+        "ger"
+      ]
+    ],
+    [
+      133,
+      "Autonomie et dépendance chez le sujet âgé",
+      [
+        "ger"
+      ]
+    ],
+    [
+      134,
+      "Bases neurophysiologiques et mécanismes physiopathologiques d'une douleur aiguë et d'une douleur chronique",
+      [
+        "douleur"
+      ]
+    ],
+    [
+      135,
+      "Thérapeutiques antalgiques, médicamenteuses et non médicamenteuses",
+      [
+        "douleur"
+      ]
+    ],
+    [
+      136,
+      "Anesthésie locale, locorégionale et générale",
+      [
+        "douleur"
+      ]
+    ],
+    [
+      137,
+      "Douleur chez l'enfant : évaluation et traitements antalgiques",
+      [
+        "douleur"
+      ]
+    ],
+    [
+      138,
+      "Douleur chez la personne vulnérable",
+      [
+        "douleur"
+      ]
+    ],
+    [
+      139,
+      "Soins palliatifs pluridisciplinaires (1) : repères cliniques, organisation des équipes",
+      [
+        "douleur"
+      ]
+    ],
+    [
+      140,
+      "Soins palliatifs pluridisciplinaires (2) : accompagnement du malade et de son entourage, repères éthiques",
+      [
+        "douleur"
+      ]
+    ],
+    [
+      141,
+      "Soins palliatifs pluridisciplinaires (3) : sédation pour détresse en phase terminale, demande d'euthanasie ou de suicide assisté",
+      [
+        "douleur"
+      ]
+    ],
+    [
+      142,
+      "Aspects spécifiques des soins palliatifs en pédiatrie",
+      [
+        "douleur"
+      ]
+    ],
+    [
+      143,
+      "Aspects spécifiques des soins palliatifs en réanimation",
+      [
+        "douleur"
+      ]
+    ],
+    [
+      144,
+      "Deuil normal et pathologique",
+      [
+        "douleur"
+      ]
+    ],
+    [
+      145,
+      "Surveillance des maladies infectieuses transmissibles",
+      [
+        "infectio"
+      ]
+    ],
+    [
+      146,
+      "Vaccinations",
+      [
+        "infectio"
+      ]
+    ],
+    [
+      147,
+      "Fièvre aiguë chez l'enfant et l'adulte",
+      [
+        "infectio"
+      ]
+    ],
+    [
+      148,
+      "Infections naso-sinusiennes de l'adulte et de l'enfant",
+      [
+        "infectio"
+      ]
+    ],
+    [
+      149,
+      "Angines de l'adulte et de l'enfant, rhinopharyngites de l'enfant",
+      [
+        "infectio"
+      ]
+    ],
+    [
+      150,
+      "Otites infectieuses de l'adulte et de l'enfant",
+      [
+        "infectio"
+      ]
+    ],
+    [
+      151,
+      "Méningites, méningoencéphalites, abcès cérébral chez l'adulte et l'enfant",
+      [
+        "infectio"
+      ]
+    ],
+    [
+      152,
+      "Endocardite infectieuse",
+      [
+        "infectio"
+      ]
+    ],
+    [
+      153,
+      "Surveillance des porteurs de valve et prothèses vasculaires",
+      [
+        "infectio"
+      ]
+    ],
+    [
+      154,
+      "Infections broncho-pulmonaires communautaires de l'adulte et de l'enfant",
+      [
+        "infectio"
+      ]
+    ],
+    [
+      155,
+      "Infections cutanéo-muqueuses et des phanères, bactériennes et mycosiques de l'adulte et de l'enfant",
+      [
+        "infectio"
+      ]
+    ],
+    [
+      156,
+      "Infections ostéo-articulaires (IOA) de l'enfant et de l'adulte",
+      [
+        "infectio"
+      ]
+    ],
+    [
+      157,
+      "Septicémie / bactériémie / fongémie de l'adulte et de l'enfant",
+      [
+        "infectio"
+      ]
+    ],
+    [
+      158,
+      "Sepsis et choc septique de l'enfant et de l'adulte",
+      [
+        "infectio"
+      ]
+    ],
+    [
+      159,
+      "Tuberculose de l'adulte et de l'enfant",
+      [
+        "infectio"
+      ]
+    ],
+    [
+      160,
+      "Tétanos",
+      [
+        "infectio"
+      ]
+    ],
+    [
+      161,
+      "Infections urinaires de l'enfant et de l'adulte",
+      [
+        "infectio"
+      ]
+    ],
+    [
+      162,
+      "Infections sexuellement transmissibles (IST)",
+      [
+        "infectio"
+      ]
+    ],
+    [
+      163,
+      "Coqueluche",
+      [
+        "infectio"
+      ]
+    ],
+    [
+      164,
+      "Exanthèmes fébriles de l'enfant",
+      [
+        "ped"
+      ]
+    ],
+    [
+      165,
+      "Oreillons",
+      [
+        "infectio"
+      ]
+    ],
+    [
+      166,
+      "Grippe",
+      [
+        "infectio"
+      ]
+    ],
+    [
+      167,
+      "Hépatites virales",
+      [
+        "infectio"
+      ]
+    ],
+    [
+      168,
+      "Infections à herpès virus du sujet immunocompétent",
+      [
+        "infectio"
+      ]
+    ],
+    [
+      169,
+      "Infections à VIH",
+      [
+        "infectio"
+      ]
+    ],
+    [
+      170,
+      "Paludisme",
+      [
+        "infectio"
+      ]
+    ],
+    [
+      171,
+      "Gale et pédiculose",
+      [
+        "infectio"
+      ]
+    ],
+    [
+      172,
+      "Parasitoses digestives : giardiose, amoebose, téniasis, ascaridiose, oxyurose, anguillulose, cryptosporidiose",
+      [
+        "infectio"
+      ]
+    ],
+    [
+      173,
+      "Zoonoses",
+      [
+        "infectio"
+      ]
+    ],
+    [
+      174,
+      "Pathologie infectieuse chez les migrants adultes et enfants",
+      [
+        "infectio"
+      ]
+    ],
+    [
+      175,
+      "Voyage en pays tropical : conseils avant le départ, pathologies du retour",
+      [
+        "infectio"
+      ]
+    ],
+    [
+      176,
+      "Diarrhées infectieuses de l'adulte et de l'enfant",
+      [
+        "infectio"
+      ]
+    ],
+    [
+      177,
+      "Prescription et surveillance des anti-infectieux chez l'adulte et l'enfant",
+      [
+        "infectio"
+      ]
+    ],
+    [
+      178,
+      "Risques émergents, bioterrorisme, maladies hautement transmissibles",
+      [
+        "infectio"
+      ]
+    ],
+    [
+      179,
+      "Risques sanitaires liés à l'eau et à l'alimentation. Toxi-infections alimentaires",
+      [
+        "infectio"
+      ]
+    ],
+    [
+      180,
+      "Risques sanitaires liés aux irradiations. Radioprotection",
+      [
+        "legale"
+      ]
+    ],
+    [
+      181,
+      "La sécurité sanitaire des produits destinés à l'homme. La veille sanitaire",
+      [
+        "legale"
+      ]
+    ],
+    [
+      182,
+      "Environnement professionnel et santé au travail",
+      [
+        "travail"
+      ]
+    ],
+    [
+      183,
+      "Organisation de la médecine du travail. Prévention des risques professionnels",
+      [
+        "travail"
+      ]
+    ],
+    [
+      184,
+      "Accidents du travail et maladies professionnelles : définitions et enjeux",
+      [
+        "travail"
+      ]
+    ],
+    [
+      185,
+      "Réaction inflammatoire : aspects biologiques et cliniques. Conduite à tenir",
+      [
+        "mi"
+      ]
+    ],
+    [
+      186,
+      "Hypersensibilités et allergies chez l'enfant et l'adulte : physiopathologie, épidémiologie, diagnostic, principes de traitement",
+      [
+        "mi"
+      ]
+    ],
+    [
+      187,
+      "Hypersensibilités et allergies cutanéomuqueuses : urticaire, dermatites atopique et de contact, conjonctivite allergique",
+      [
+        "mi"
+      ]
+    ],
+    [
+      188,
+      "Hypersensibilité et allergies respiratoires : asthme, rhinite",
+      [
+        "mi"
+      ]
+    ],
+    [
+      189,
+      "Déficit immunitaire",
+      [
+        "mi"
+      ]
+    ],
+    [
+      190,
+      "Fièvre prolongée",
+      [
+        "mi"
+      ]
+    ],
+    [
+      191,
+      "Fièvre chez un patient immunodéprimé",
+      [
+        "mi"
+      ]
+    ],
+    [
+      192,
+      "Pathologies auto-immunes : aspects épidémiologiques, diagnostiques et principes de traitement",
+      [
+        "mi"
+      ]
+    ],
+    [
+      193,
+      "Principaux types de vascularite systémique, organes cibles, outils diagnostiques et moyens thérapeutiques",
+      [
+        "mi"
+      ]
+    ],
+    [
+      194,
+      "Lupus systémique. Syndrome des anti-phospholipides (SAPL)",
+      [
+        "mi"
+      ]
+    ],
+    [
+      195,
+      "Artérite à cellules géantes",
+      [
+        "mi"
+      ]
+    ],
+    [
+      196,
+      "Polyarthrite rhumatoïde",
+      [
+        "rhumato"
+      ]
+    ],
+    [
+      197,
+      "Spondyloarthrite",
+      [
+        "rhumato"
+      ]
+    ],
+    [
+      198,
+      "Arthropathie microcristalline",
+      [
+        "rhumato"
+      ]
+    ],
+    [
+      199,
+      "Syndrome douloureux régional complexe (ex algodystrophie)",
+      [
+        "rhumato"
+      ]
+    ],
+    [
+      200,
+      "Douleur et épanchement articulaire. Arthrite d'évolution récente",
+      [
+        "rhumato"
+      ]
+    ],
+    [
+      201,
+      "Transplantation d'organes : aspects épidémiologiques, immunologiques, complications, pronostic, éthiques et légaux",
+      [
+        "mi"
+      ]
+    ],
+    [
+      202,
+      "Biothérapies et thérapies ciblées",
+      [
+        "mi"
+      ]
+    ],
+    [
+      203,
+      "Dyspnée aiguë et chronique",
+      [
+        "pneumo"
+      ]
+    ],
+    [
+      204,
+      "Toux chez l'enfant et chez l'adulte (avec le traitement)",
+      [
+        "pneumo"
+      ]
+    ],
+    [
+      205,
+      "Hémoptysie",
+      [
+        "pneumo"
+      ]
+    ],
+    [
+      206,
+      "Épanchement pleural liquidien",
+      [
+        "pneumo"
+      ]
+    ],
+    [
+      207,
+      "Opacités et masses intra-thoraciques chez l'enfant et chez l'adulte",
+      [
+        "pneumo"
+      ]
+    ],
+    [
+      208,
+      "Insuffisance respiratoire chronique",
+      [
+        "pneumo"
+      ]
+    ],
+    [
+      209,
+      "Bronchopneumopathie chronique obstructive chez l'adulte",
+      [
+        "pneumo"
+      ]
+    ],
+    [
+      210,
+      "Pneumopathie interstitielle diffuse",
+      [
+        "pneumo"
+      ]
+    ],
+    [
+      211,
+      "Sarcoïdose",
+      [
+        "pneumo"
+      ]
+    ],
+    [
+      212,
+      "Hémogramme chez l'adulte et l'enfant : indications et interprétation",
+      [
+        "hemato"
+      ]
+    ],
+    [
+      213,
+      "Anémie chez l'adulte et l'enfant",
+      [
+        "hemato"
+      ]
+    ],
+    [
+      214,
+      "Thrombopénie chez l'adulte et l'enfant",
+      [
+        "hemato"
+      ]
+    ],
+    [
+      215,
+      "Purpuras chez l'adulte et l'enfant",
+      [
+        "hemato"
+      ]
+    ],
+    [
+      216,
+      "Syndrome hémorragique d'origine hématologique",
+      [
+        "hemato"
+      ]
+    ],
+    [
+      217,
+      "Syndrome mononucléosique",
+      [
+        "hemato"
+      ]
+    ],
+    [
+      218,
+      "Éosinophilie",
+      [
+        "hemato"
+      ]
+    ],
+    [
+      219,
+      "Pathologie du fer chez l'adulte et l'enfant",
+      [
+        "hemato"
+      ]
+    ],
+    [
+      220,
+      "Adénopathie superficielle de l'adulte et de l'enfant",
+      [
+        "hemato"
+      ]
+    ],
+    [
+      221,
+      "Athérome : épidémiologie et physiopathologie. Le malade poly-athéromateux",
+      [
+        "cardio"
+      ]
+    ],
+    [
+      222,
+      "Facteurs de risque cardio-vasculaire et prévention",
+      [
+        "cardio"
+      ]
+    ],
+    [
+      223,
+      "Dyslipidémies",
+      [
+        "cardio"
+      ]
+    ],
+    [
+      224,
+      "Hypertension artérielle de l'adulte",
+      [
+        "cardio"
+      ]
+    ],
+    [
+      225,
+      "Artériopathie oblitérante de l'aorte, des artères viscérales et des membres inférieurs, anévrismes",
+      [
+        "cardio"
+      ]
+    ],
+    [
+      226,
+      "Thrombose veineuse profonde et embolie pulmonaire",
+      [
+        "cardio"
+      ]
+    ],
+    [
+      227,
+      "Insuffisance veineuse chronique. Varices",
+      [
+        "cardio"
+      ]
+    ],
+    [
+      228,
+      "Ulcère de jambe",
+      [
+        "cardio"
+      ]
+    ],
+    [
+      229,
+      "Surveillance et complications des abords veineux",
+      [
+        "cardio"
+      ]
+    ],
+    [
+      230,
+      "Douleur thoracique aiguë et chronique",
+      [
+        "cardio"
+      ]
+    ],
+    [
+      231,
+      "Électrocardiogramme : indications et interprétations",
+      [
+        "cardio"
+      ]
+    ],
+    [
+      232,
+      "Fibrillation atriale",
+      [
+        "cardio"
+      ]
+    ],
+    [
+      233,
+      "Valvulopathies",
+      [
+        "cardio"
+      ]
+    ],
+    [
+      234,
+      "Insuffisance cardiaque de l'adulte",
+      [
+        "cardio"
+      ]
+    ],
+    [
+      235,
+      "Péricardite aiguë",
+      [
+        "cardio"
+      ]
+    ],
+    [
+      236,
+      "Troubles de la conduction intracardiaque",
+      [
+        "cardio"
+      ]
+    ],
+    [
+      237,
+      "Palpitations",
+      [
+        "cardio"
+      ]
+    ],
+    [
+      238,
+      "Souffle cardiaque chez l'enfant",
+      [
+        "cardio"
+      ]
+    ],
+    [
+      239,
+      "Acrosyndromes (Raynaud, érythermalgie, acrocyanose, engelures, ischémie digitale)",
+      [
+        "cardio"
+      ]
+    ],
+    [
+      240,
+      "Hypoglycémie chez l'adulte et l'enfant",
+      [
+        "endocrino"
+      ]
+    ],
+    [
+      241,
+      "Goitre, nodules thyroïdiens et cancers thyroïdiens",
+      [
+        "endocrino"
+      ]
+    ],
+    [
+      242,
+      "Hyperthyroïdie",
+      [
+        "endocrino"
+      ]
+    ],
+    [
+      243,
+      "Hypothyroïdie",
+      [
+        "endocrino"
+      ]
+    ],
+    [
+      244,
+      "Adénome hypophysaire",
+      [
+        "endocrino"
+      ]
+    ],
+    [
+      245,
+      "Insuffisance surrénale chez l'adulte et l'enfant",
+      [
+        "endocrino"
+      ]
+    ],
+    [
+      246,
+      "Gynécomastie",
+      [
+        "endocrino"
+      ]
+    ],
+    [
+      247,
+      "Diabète sucré de types 1 et 2 de l'enfant et de l'adulte. Complications",
+      [
+        "endocrino"
+      ]
+    ],
+    [
+      248,
+      "Prévention primaire par la nutrition chez l'adulte et chez l'enfant",
+      [
+        "endocrino"
+      ]
+    ],
+    [
+      249,
+      "Modifications thérapeutiques du mode de vie (alimentation et activité physique)",
+      [
+        "endocrino"
+      ]
+    ],
+    [
+      250,
+      "Dénutrition chez l'adulte et l'enfant",
+      [
+        "endocrino"
+      ]
+    ],
+    [
+      251,
+      "Amaigrissement à tous les âges",
+      [
+        "endocrino"
+      ]
+    ],
+    [
+      252,
+      "Troubles nutritionnels chez le sujet âgé",
+      [
+        "endocrino"
+      ]
+    ],
+    [
+      253,
+      "Obésité de l'enfant et de l'adulte",
+      [
+        "endocrino"
+      ]
+    ],
+    [
+      254,
+      "Besoins nutritionnels et grossesse",
+      [
+        "endocrino"
+      ]
+    ],
+    [
+      255,
+      "Diabète gestationnel",
+      [
+        "endocrino"
+      ]
+    ],
+    [
+      256,
+      "Aptitude au sport, besoins nutritionnels chez le sportif",
+      [
+        "endocrino"
+      ]
+    ],
+    [
+      257,
+      "Œdèmes des membres inférieurs localisés ou généralisés",
+      [
+        "nephro"
+      ]
+    ],
+    [
+      258,
+      "Élévation de la créatininémie",
+      [
+        "nephro"
+      ]
+    ],
+    [
+      259,
+      "Protéinurie et syndrome néphrotique chez l'adulte et l'enfant",
+      [
+        "nephro"
+      ]
+    ],
+    [
+      260,
+      "Hématurie",
+      [
+        "nephro"
+      ]
+    ],
+    [
+      261,
+      "Néphropathie glomérulaire",
+      [
+        "nephro"
+      ]
+    ],
+    [
+      262,
+      "Néphropathies interstitielles",
+      [
+        "nephro"
+      ]
+    ],
+    [
+      263,
+      "Néphropathies vasculaires",
+      [
+        "nephro"
+      ]
+    ],
+    [
+      264,
+      "Insuffisance rénale chronique chez l'adulte et l'enfant",
+      [
+        "nephro"
+      ]
+    ],
+    [
+      265,
+      "Lithiase urinaire",
+      [
+        "uro"
+      ]
+    ],
+    [
+      266,
+      "Polykystose rénale",
+      [
+        "nephro"
+      ]
+    ],
+    [
+      267,
+      "Troubles de l'équilibre acido-basique et désordres hydro-électrolytiques",
+      [
+        "nephro"
+      ]
+    ],
+    [
+      268,
+      "Hypercalcémie",
+      [
+        "nephro"
+      ]
+    ],
+    [
+      269,
+      "Douleurs abdominales aiguës chez l'enfant et chez l'adulte",
+      [
+        "gastro"
+      ]
+    ],
+    [
+      270,
+      "Douleurs lombaires aiguës chez l'enfant et chez l'adulte",
+      [
+        "rhumato"
+      ]
+    ],
+    [
+      271,
+      "Reflux gastro-œsophagien du nourrisson à l'adulte. Hernie hiatale",
+      [
+        "gastro"
+      ]
+    ],
+    [
+      272,
+      "Ulcère gastrique et duodénal. Gastrite",
+      [
+        "gastro"
+      ]
+    ],
+    [
+      273,
+      "Dysphagie",
+      [
+        "gastro"
+      ]
+    ],
+    [
+      274,
+      "Vomissements du nourrisson, de l'enfant et de l'adulte",
+      [
+        "gastro"
+      ]
+    ],
+    [
+      275,
+      "Splénomégalie",
+      [
+        "gastro"
+      ]
+    ],
+    [
+      276,
+      "Hépatomégalie et masse abdominale",
+      [
+        "gastro"
+      ]
+    ],
+    [
+      277,
+      "Lithiase biliaire et complications",
+      [
+        "gastro"
+      ]
+    ],
+    [
+      278,
+      "Ictère",
+      [
+        "gastro"
+      ]
+    ],
+    [
+      279,
+      "Cirrhose et complications",
+      [
+        "gastro"
+      ]
+    ],
+    [
+      280,
+      "Ascite",
+      [
+        "gastro"
+      ]
+    ],
+    [
+      281,
+      "Pancréatite chronique",
+      [
+        "gastro"
+      ]
+    ],
+    [
+      282,
+      "Maladies inflammatoires chroniques de l'intestin (MICI) chez l'adulte",
+      [
+        "gastro"
+      ]
+    ],
+    [
+      283,
+      "Constipation chez l'enfant et l'adulte (avec le traitement)",
+      [
+        "gastro"
+      ]
+    ],
+    [
+      284,
+      "Colopathie fonctionnelle",
+      [
+        "gastro"
+      ]
+    ],
+    [
+      285,
+      "Diarrhée chronique chez l'adulte et l'enfant",
+      [
+        "gastro"
+      ]
+    ],
+    [
+      286,
+      "Diarrhée aiguë et déshydratation du nourrisson à l'adulte",
+      [
+        "gastro"
+      ]
+    ],
+    [
+      287,
+      "Diverticulose colique et diverticulite aiguë du sigmoïde",
+      [
+        "gastro"
+      ]
+    ],
+    [
+      288,
+      "Pathologie hémorroïdaire",
+      [
+        "gastro"
+      ]
+    ],
+    [
+      289,
+      "Hernie pariétale chez l'enfant et l'adulte",
+      [
+        "gastro"
+      ]
+    ],
+    [
+      290,
+      "Épidémiologie, facteurs de risque, prévention et dépistage des cancers",
+      [
+        "onco"
+      ]
+    ],
+    [
+      291,
+      "Cancer : cancérogénèse, oncogénétique",
+      [
+        "onco"
+      ]
+    ],
+    [
+      292,
+      "Diagnostic des cancers : signes d'appel, investigations, caractérisation, pronostic",
+      [
+        "onco"
+      ]
+    ],
+    [
+      293,
+      "Le médecin préleveur pour l'Anatomie et Cytologie Pathologiques",
+      [
+        "onco"
+      ]
+    ],
+    [
+      294,
+      "Traitement des cancers : modalités, classes thérapeutiques, complications, décision pluridisciplinaire",
+      [
+        "onco"
+      ]
+    ],
+    [
+      295,
+      "Prise en charge et accompagnement d'un malade atteint de cancer à tous les stades",
+      [
+        "onco"
+      ]
+    ],
+    [
+      296,
+      "Agranulocytose médicamenteuse : conduite à tenir",
+      [
+        "onco"
+      ]
+    ],
+    [
+      297,
+      "Cancer de l'enfant : particularités épidémiologiques, diagnostiques et thérapeutiques",
+      [
+        "ped"
+      ]
+    ],
+    [
+      298,
+      "Tumeurs de la cavité buccale, naso-sinusiennes, du cavum et des VADS",
+      [
+        "onco"
+      ]
+    ],
+    [
+      299,
+      "Tumeurs intracrâniennes",
+      [
+        "onco"
+      ]
+    ],
+    [
+      300,
+      "Tumeurs du col utérin, tumeur du corps utérin",
+      [
+        "onco"
+      ]
+    ],
+    [
+      301,
+      "Tumeurs du côlon et du rectum",
+      [
+        "onco"
+      ]
+    ],
+    [
+      302,
+      "Tumeurs cutanées, épithéliales et mélaniques",
+      [
+        "onco"
+      ]
+    ],
+    [
+      303,
+      "Tumeurs de l'estomac",
+      [
+        "onco"
+      ]
+    ],
+    [
+      304,
+      "Tumeurs du foie, primitives et secondaires",
+      [
+        "onco"
+      ]
+    ],
+    [
+      305,
+      "Tumeurs de l'œsophage",
+      [
+        "onco"
+      ]
+    ],
+    [
+      306,
+      "Tumeurs de l'ovaire",
+      [
+        "onco"
+      ]
+    ],
+    [
+      307,
+      "Tumeurs des os, primitives et secondaires",
+      [
+        "onco"
+      ]
+    ],
+    [
+      308,
+      "Tumeurs du pancréas",
+      [
+        "onco"
+      ]
+    ],
+    [
+      309,
+      "Tumeurs du poumon, primitives et secondaires",
+      [
+        "onco"
+      ]
+    ],
+    [
+      310,
+      "Tumeurs de la prostate",
+      [
+        "onco"
+      ]
+    ],
+    [
+      311,
+      "Tumeurs du rein de l'adulte",
+      [
+        "onco"
+      ]
+    ],
+    [
+      312,
+      "Tumeurs du sein",
+      [
+        "onco"
+      ]
+    ],
+    [
+      313,
+      "Tumeurs du testicule",
+      [
+        "onco"
+      ]
+    ],
+    [
+      314,
+      "Tumeurs vésicales",
+      [
+        "onco"
+      ]
+    ],
+    [
+      315,
+      "Leucémies aiguës",
+      [
+        "hemato"
+      ]
+    ],
+    [
+      316,
+      "Syndromes myélodysplasiques",
+      [
+        "hemato"
+      ]
+    ],
+    [
+      317,
+      "Syndromes myéloprolifératifs",
+      [
+        "hemato"
+      ]
+    ],
+    [
+      318,
+      "Leucémies lymphoïdes chroniques",
+      [
+        "hemato"
+      ]
+    ],
+    [
+      319,
+      "Lymphomes malins",
+      [
+        "hemato"
+      ]
+    ],
+    [
+      320,
+      "Myélome multiple des os",
+      [
+        "hemato"
+      ]
+    ],
+    [
+      321,
+      "Principe du bon usage du médicament",
+      [
+        "pharmaco"
+      ]
+    ],
+    [
+      322,
+      "La décision thérapeutique personnalisée : bon usage dans des situations à risque",
+      [
+        "pharmaco"
+      ]
+    ],
+    [
+      323,
+      "Analyser et utiliser les résultats des études cliniques : analyse critique, recherche clinique, niveaux de preuve (LCA)",
+      [
+        "pharmaco"
+      ]
+    ],
+    [
+      324,
+      "Éducation thérapeutique, observance et automédication",
+      [
+        "pharmaco"
+      ]
+    ],
+    [
+      325,
+      "Identification et gestion des risques liés aux médicaments et aux biomatériaux, risque iatrogène, erreur médicamenteuse",
+      [
+        "pharmaco"
+      ]
+    ],
+    [
+      326,
+      "Cadre réglementaire de la prescription thérapeutique et recommandations pour le bon usage",
+      [
+        "pharmaco"
+      ]
+    ],
+    [
+      327,
+      "Principes de la médecine intégrative, utilité et risques des interventions non médicamenteuses et thérapies complémentaires",
+      [
+        "pharmaco"
+      ]
+    ],
+    [
+      328,
+      "Thérapeutiques non médicamenteuses et dispositifs médicaux",
+      [
+        "pharmaco"
+      ]
+    ],
+    [
+      329,
+      "Transfusion sanguine et produits dérivés du sang : indications, complications, hémovigilance",
+      [
+        "hemato"
+      ]
+    ],
+    [
+      330,
+      "Prescription et surveillance des classes de médicaments les plus courantes, hors anti-infectieux",
+      [
+        "pharmaco"
+      ]
+    ],
+    [
+      331,
+      "Arrêt cardio-circulatoire",
+      [
+        "urgences"
+      ]
+    ],
+    [
+      332,
+      "État de choc. Principales étiologies : hypovolémique, septique, cardiogénique, anaphylactique",
+      [
+        "urgences"
+      ]
+    ],
+    [
+      333,
+      "Situations sanitaires exceptionnelles",
+      [
+        "urgences"
+      ]
+    ],
+    [
+      334,
+      "Prise en charge immédiate pré-hospitalière d'un brûlé, traumatisé sévère, thoracique, abdominal, des membres/bassin, du rachis, crânien",
+      [
+        "urgences"
+      ]
+    ],
+    [
+      335,
+      "Orientation diagnostique et conduite à tenir devant un traumatisme maxillo-facial et oculaire",
+      [
+        "orl"
+      ]
+    ],
+    [
+      336,
+      "Coma non traumatique chez l'adulte et chez l'enfant",
+      [
+        "urgences"
+      ]
+    ],
+    [
+      337,
+      "Principales intoxications aiguës",
+      [
+        "urgences"
+      ]
+    ],
+    [
+      338,
+      "Œdème de Quincke et anaphylaxie",
+      [
+        "urgences"
+      ]
+    ],
+    [
+      339,
+      "Syndromes coronariens aigus",
+      [
+        "cardio"
+      ]
+    ],
+    [
+      340,
+      "Accidents vasculaires cérébraux",
+      [
+        "neuro"
+      ]
+    ],
+    [
+      341,
+      "Hémorragie méningée",
+      [
+        "neuro"
+      ]
+    ],
+    [
+      342,
+      "Malaise, perte de connaissance, crise convulsive chez l'adulte",
+      [
+        "urgences"
+      ]
+    ],
+    [
+      343,
+      "État confusionnel et trouble de conscience chez l'adulte et chez l'enfant",
+      [
+        "urgences"
+      ]
+    ],
+    [
+      344,
+      "Prise en charge d'une patiente atteinte de pré-éclampsie",
+      [
+        "gyneco"
+      ]
+    ],
+    [
+      345,
+      "Malaise grave du nourrisson et mort inattendue du nourrisson",
+      [
+        "ped"
+      ]
+    ],
+    [
+      346,
+      "Convulsions chez le nourrisson et chez l'enfant",
+      [
+        "ped"
+      ]
+    ],
+    [
+      347,
+      "Rétention aiguë d'urine",
+      [
+        "uro"
+      ]
+    ],
+    [
+      348,
+      "Insuffisance rénale aiguë - Anurie",
+      [
+        "nephro"
+      ]
+    ],
+    [
+      349,
+      "Infection aiguë des parties molles (abcès, panaris, phlegmon des gaines)",
+      [
+        "infectio"
+      ]
+    ],
+    [
+      350,
+      "Grosse jambe rouge aiguë",
+      [
+        "infectio"
+      ]
+    ],
+    [
+      351,
+      "Agitation et délire aiguë",
+      [
+        "psy"
+      ]
+    ],
+    [
+      352,
+      "Crise d'angoisse aiguë et attaque de panique",
+      [
+        "psy"
+      ]
+    ],
+    [
+      353,
+      "Risque et conduite suicidaires chez l'enfant, l'adolescent et l'adulte",
+      [
+        "psy"
+      ]
+    ],
+    [
+      354,
+      "Syndrome occlusif de l'enfant et de l'adulte",
+      [
+        "chirvisc"
+      ]
+    ],
+    [
+      355,
+      "Hémorragie digestive",
+      [
+        "gastro"
+      ]
+    ],
+    [
+      356,
+      "Appendicite de l'enfant et de l'adulte",
+      [
+        "chirvisc"
+      ]
+    ],
+    [
+      357,
+      "Péritonite aiguë chez l'enfant et chez l'adulte",
+      [
+        "chirvisc"
+      ]
+    ],
+    [
+      358,
+      "Pancréatite aiguë",
+      [
+        "gastro"
+      ]
+    ],
+    [
+      359,
+      "Détresse et insuffisance respiratoire aiguë du nourrisson, de l'enfant et de l'adulte",
+      [
+        "urgences"
+      ]
+    ],
+    [
+      360,
+      "Pneumothorax",
+      [
+        "pneumo"
+      ]
+    ],
+    [
+      361,
+      "Lésions péri-articulaires et ligamentaires du genou, de la cheville et de l'épaule",
+      [
+        "ortho"
+      ]
+    ],
+    [
+      362,
+      "Prothèses et ostéosynthèses",
+      [
+        "ortho"
+      ]
+    ],
+    [
+      363,
+      "Fractures fréquentes de l'adulte et du sujet âgé",
+      [
+        "ortho"
+      ]
+    ],
+    [
+      364,
+      "Fractures chez l'enfant : particularités épidémiologiques, diagnostiques et thérapeutiques",
+      [
+        "ped"
+      ]
+    ],
+    [
+      365,
+      "Surveillance d'un malade sous plâtre/résine, diagnostiquer une complication",
+      [
+        "ortho"
+      ]
+    ],
+    [
+      366,
+      "Exposition accidentelle aux liquides biologiques : conduite à tenir",
+      [
+        "infectio"
+      ]
+    ],
+    [
+      367,
+      "Impact de l'environnement sur la santé",
+      [
+        "legale"
+      ]
+    ]
+  ]
+}
