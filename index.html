@@ -169,6 +169,12 @@
   .btn-secondary{font-family:var(--sans);font-size:12.5px;padding:6px 12px;border-radius:var(--radius);border:1px solid var(--rule);background:var(--white);color:var(--ink-soft);cursor:pointer;}
   .btn-danger{font-family:var(--sans);font-size:12.5px;padding:6px 12px;border-radius:var(--radius);border:1px solid var(--danger);background:none;color:var(--danger);cursor:pointer;}
 
+  .swap-block{margin-top:10px;padding-top:10px;border-top:1px dashed var(--rule-soft);}
+  .swap-toggle{font-family:var(--mono);font-size:11px;background:none;border:1px solid var(--rule);color:var(--ink-soft);border-radius:20px;padding:5px 10px;cursor:pointer;}
+  .swap-panel{display:none;}
+  .swap-panel.open{display:block;}
+  .swap-panel input[type=text]{font-family:var(--sans);font-size:13px;padding:7px 9px;border:1px solid var(--rule);border-radius:var(--radius);background:var(--paper-raised);color:var(--ink);flex:1;}
+
   .item-manage-row{background:var(--white);border:1px solid var(--rule-soft);border-left:4px solid var(--rule);border-radius:var(--radius);padding:12px 14px;margin-bottom:6px;}
   .item-manage-row .imtop{display:flex;align-items:center;gap:8px;margin-bottom:2px;}
   .item-manage-row .imnum{font-family:var(--mono);font-size:11px;color:var(--ink-soft);}
@@ -725,9 +731,9 @@ function buildCalendar(cfg, reportedDays){
       day.tasks = [];
       for(let i=0;i<perDay;i++){
         const idx = baseIdx+i;
-        const t = taskForIndex(phase, idx);
+        const e = effectiveItemFor(phase, idx);
         INDEX_DATE[phase][idx] = iso;
-        day.tasks.push({id:t.key, kind:'item', itemNum:t.itemNum, mode:t.mode, idx});
+        day.tasks.push({id:e.nativeKey, kind:'item', itemNum:e.itemNum, mode:e.mode, idx, phase, overridden:e.overridden, originalItemNum:e.originalItemNum});
       }
       counters[phase]++;
     } else if(!weekend && (phase==='S1'||phase==='S2')){
@@ -754,6 +760,150 @@ function buildCalendar(cfg, reportedDays){
 }
 
 function findDay(iso){ return CAL.find(d=>d.iso===iso); }
+
+// ---------- item overrides (échange manuel d'un item pour une case donnée) ----------
+// DATA.itemOverrides est une map "clé native de la case" -> { itemNum: <item affiché à la place> }
+// la clé native (ex "S1_i60_o1") identifie la case indépendamment du contenu affiché, donc
+// le suivi "fait / pas fait" continue de porter sur la case, pas sur l'item.
+function effectiveItemFor(phase, idx){
+  const t = taskForIndex(phase, idx);
+  const ov = DATA && DATA.itemOverrides && DATA.itemOverrides[t.key];
+  return {
+    nativeKey: t.key,
+    mode: t.mode,
+    itemNum: ov ? ov.itemNum : t.itemNum,
+    overridden: !!ov,
+    originalItemNum: t.itemNum
+  };
+}
+function getSlot(phase, idx){
+  const e = effectiveItemFor(phase, idx);
+  return Object.assign({ phase, idx, iso: (INDEX_DATE[phase] && INDEX_DATE[phase][idx]) || null }, e);
+}
+function findSwapCandidates(itemNum){
+  const out = [];
+  ['S1','S2'].forEach(phase=>{
+    const cap = PHASE_FINAL_QUOTA[phase] || 0;
+    for(let idx=0; idx<cap; idx++){
+      const s = getSlot(phase, idx);
+      if(s.itemNum === itemNum) out.push(s);
+    }
+  });
+  out.sort((a,b)=> (a.iso||'') < (b.iso||'') ? -1 : 1);
+  return out;
+}
+function performSwap(phaseA, idxA, nativeKeyA, itemA, slotB, itemB){
+  DATA.itemOverrides = DATA.itemOverrides || {};
+  DATA.itemOverrides[nativeKeyA] = { itemNum: itemB };
+  DATA.itemOverrides[slotB.nativeKey] = { itemNum: itemA };
+  CAL = buildCalendar(DATA.config, DATA.reportedDays);
+  saveData();
+  render();
+}
+function undoSwap(nativeKey){
+  if(DATA.itemOverrides) delete DATA.itemOverrides[nativeKey];
+  CAL = buildCalendar(DATA.config, DATA.reportedDays);
+  saveData();
+  render();
+}
+
+// ---------- révisions libres ajoutées à la main sur un jour (chapitres mixtes) ----------
+function addCustomTask(iso, label){
+  if(!DATA.customTasks) DATA.customTasks = {};
+  if(!DATA.customTasks[iso]) DATA.customTasks[iso] = [];
+  const id = 'custom_' + Date.now() + '_' + Math.floor(Math.random()*1000);
+  DATA.customTasks[iso].push({id, label});
+  saveData();
+}
+function removeCustomTask(iso, id){
+  if(!DATA.customTasks || !DATA.customTasks[iso]) return;
+  DATA.customTasks[iso] = DATA.customTasks[iso].filter(t=>t.id!==id);
+  saveData();
+}
+function customTasksHTML(iso){
+  const list = (DATA.customTasks && DATA.customTasks[iso]) || [];
+  let items = list.map(t=>{
+    const done = isGenericDone(iso, t.id);
+    return `<li class="${done?'done':''}">
+      <input type="checkbox" id="ct-${iso}-${t.id}" data-genericiso="${iso}" data-genericid="${t.id}" ${done?'checked':''}>
+      <label for="ct-${iso}-${t.id}">${t.label}</label>
+      <button type="button" class="btn-danger" data-delcustom="${iso}|${t.id}" style="margin-left:auto;padding:2px 8px;font-size:11px;">×</button>
+    </li>`;
+  }).join('');
+  const list_html = items ? `<ul class="generic-list custom-list" style="margin-top:8px;">${items}</ul>` : '';
+  return `${list_html}
+    <div class="add-item-form" style="margin-top:10px;">
+      <div class="frow">
+        <input type="text" id="customLabelInput-${iso}" placeholder="Nom du chapitre (ex: Douleur thoracique — items 230/231/232)">
+      </div>
+      <button type="button" class="btn-primary" data-addcustom="${iso}">+ Ajouter une révision libre ce jour</button>
+    </div>`;
+}
+function bindCustomTaskHandlers(container, iso){
+  const btn = container.querySelector(`[data-addcustom="${iso}"]`);
+  if(btn) btn.addEventListener('click', ()=>{
+    const input = document.getElementById(`customLabelInput-${iso}`);
+    const label = input.value.trim();
+    if(!label){ alert('Indique un nom pour cette révision.'); return; }
+    addCustomTask(iso, label);
+    render();
+  });
+  container.querySelectorAll('[data-delcustom]').forEach(b=>{
+    b.addEventListener('click', ()=>{
+      const [iso2,id] = b.getAttribute('data-delcustom').split('|');
+      removeCustomTask(iso2, id);
+      render();
+    });
+  });
+}
+function bindSwapHandlers(container){
+  container.querySelectorAll('.swap-toggle').forEach(btn=>{
+    btn.addEventListener('click', (e)=>{
+      e.stopPropagation();
+      const panel = document.getElementById('swap-'+btn.getAttribute('data-key'));
+      if(panel) panel.classList.toggle('open');
+    });
+  });
+  container.querySelectorAll('[data-unswap]').forEach(btn=>{
+    btn.addEventListener('click', (e)=>{
+      e.stopPropagation();
+      undoSwap(btn.getAttribute('data-unswap'));
+    });
+  });
+  container.querySelectorAll('[data-swapsearch]').forEach(btn=>{
+    btn.addEventListener('click', (e)=>{
+      e.stopPropagation();
+      const key = btn.getAttribute('data-swapsearch');
+      const phase = btn.getAttribute('data-swapphase');
+      const idx = parseInt(btn.getAttribute('data-swapidx'),10);
+      const curItemNum = parseInt(btn.getAttribute('data-swapcur'),10);
+      const input = document.getElementById('swapInput-'+key);
+      const resultsEl = document.getElementById('swapResults-'+key);
+      const num = parseInt((input.value||'').trim(),10);
+      if(!num || !ITEM_BY_NUM[num]){ resultsEl.innerHTML = `<p class="hist-empty">Item introuvable.</p>`; return; }
+      if(num === curItemNum){ resultsEl.innerHTML = `<p class="hist-empty">C'est déjà l'item affiché ici.</p>`; return; }
+      if(!phase || isNaN(idx)){ resultsEl.innerHTML = `<p class="hist-empty">Échange indisponible pour cette case.</p>`; return; }
+      const candidates = findSwapCandidates(num).filter(c=> !(c.phase===phase && c.idx===idx));
+      if(candidates.length===0){ resultsEl.innerHTML = `<p class="hist-empty">Aucune occurrence planifiée trouvée pour l'item ${num}.</p>`; return; }
+      resultsEl.innerHTML = `<p style="font-size:11.5px;color:var(--ink-soft);margin:4px 0 6px;">Choisis quelle occurrence de l'item ${num} échanger avec celle-ci :</p>` +
+        candidates.map((c,i)=>{
+          const d = c.iso ? parseISO(c.iso) : null;
+          const modeLabel = c.mode==='revision' ? 'Révision' : 'Entraînement';
+          const doneTag = isItemTaskDone(c.nativeKey) ? ' — déjà fait' : '';
+          return `<div class="plan-row" data-swapchoice="${i}" style="cursor:pointer;">
+            <span class="pd">${d?fmtShort(d):'—'}</span>
+            <span class="pitems"><span class="pitem" style="background:${c.mode==='revision'?'var(--accent)':'var(--amber)'}">${modeLabel}${doneTag}</span></span>
+          </div>`;
+        }).join('');
+      resultsEl.querySelectorAll('[data-swapchoice]').forEach(row=>{
+        row.addEventListener('click', ()=>{
+          const i = parseInt(row.getAttribute('data-swapchoice'),10);
+          performSwap(phase, idx, key, curItemNum, candidates[i], num);
+        });
+      });
+    });
+  });
+}
 
 // ---------- fichier de secours (File System Access API) ----------
 // localStorage seul n'est pas fiable dans certains cas (Arc/Chromium, fenêtres
@@ -838,7 +988,7 @@ async function tryReconnectBackupFile(){
     const text = await file.text();
     if(text && text.trim()){
       const parsed = JSON.parse(text);
-      DATA = Object.assign({config:Object.assign({},DEFAULT_CONFIG), itemChecks:{}, checks:{}, reportedDays:{}, darkMode:false}, parsed);
+      DATA = Object.assign({config:Object.assign({},DEFAULT_CONFIG), itemChecks:{}, checks:{}, reportedDays:{}, darkMode:false, itemOverrides:{}, customTasks:{}}, parsed);
       if(!DATA.items) DATA.items = ITEMS_RAW.map(([n,t,c])=>[n,t,c]);
       await saveData();
     }
@@ -852,12 +1002,12 @@ async function loadData(){
     const raw = localStorage.getItem(STORAGE_KEY);
     if(raw){
       const parsed = JSON.parse(raw);
-      const data = Object.assign({config:Object.assign({},DEFAULT_CONFIG), itemChecks:{}, checks:{}, reportedDays:{}, darkMode:false}, parsed);
+      const data = Object.assign({config:Object.assign({},DEFAULT_CONFIG), itemChecks:{}, checks:{}, reportedDays:{}, darkMode:false, itemOverrides:{}, customTasks:{}}, parsed);
       if(!data.items) data.items = ITEMS_RAW.map(([n,t,c])=>[n,t,c]);
       return data;
     }
   }catch(e){ console.error('Erreur de lecture locale', e); }
-  return {config:Object.assign({},DEFAULT_CONFIG), itemChecks:{}, checks:{}, reportedDays:{}, darkMode:false, items: ITEMS_RAW.map(([n,t,c])=>[n,t,c])};
+  return {config:Object.assign({},DEFAULT_CONFIG), itemChecks:{}, checks:{}, reportedDays:{}, darkMode:false, itemOverrides:{}, customTasks:{}, items: ITEMS_RAW.map(([n,t,c])=>[n,t,c])};
 }
 async function saveData(){
   try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(DATA)); }
@@ -877,7 +1027,7 @@ function importBackup(file){
   reader.onload = async (e) => {
     try{
       const parsed = JSON.parse(e.target.result);
-      DATA = Object.assign({config:Object.assign({},DEFAULT_CONFIG), itemChecks:{}, checks:{}, reportedDays:{}, darkMode:false}, parsed);
+      DATA = Object.assign({config:Object.assign({},DEFAULT_CONFIG), itemChecks:{}, checks:{}, reportedDays:{}, darkMode:false, itemOverrides:{}, customTasks:{}}, parsed);
       if(!DATA.items) DATA.items = ITEMS_RAW.map(([n,t,c])=>[n,t,c]);
       rebuildAll();
       applyTheme();
@@ -947,8 +1097,8 @@ function quotaThroughToday(phase){
 function uncompletedInRange(phase, cap){
   const out = [];
   for(let idx=0; idx<cap; idx++){
-    const t = taskForIndex(phase, idx);
-    if(!isItemTaskDone(t.key)) out.push(Object.assign({}, t, {phase, idx}));
+    const s = getSlot(phase, idx);
+    if(!isItemTaskDone(s.nativeKey)) out.push({ key:s.nativeKey, itemNum:s.itemNum, mode:s.mode, phase, idx, overridden:s.overridden, originalItemNum:s.originalItemNum });
   }
   return out;
 }
@@ -987,24 +1137,18 @@ function retardList(){
 }
 
 // ---------- item history ----------
+// Parcourt les cases "effectives" (après échanges éventuels) : une case échangée vers cet
+// item apparaît dans son historique, une case échangée vers un autre item en disparaît.
 function itemHistory(itemNum){
   const entries = [];
   ['S1','S2'].forEach(phase=>{
-    const queue = phase==='S1'?S1_QUEUE:S2_QUEUE;
-    if(queue.indexOf(itemNum) === -1) return;
     const cap = quotaThroughToday(phase);
-    const period = queue.length;
-    // find all indices < cap that map to this item
-    const posList = [];
-    queue.forEach((n,pos)=>{ if(n===itemNum) posList.push(pos); });
-    posList.forEach(pos=>{
-      let idx = pos;
-      while(idx < cap){
-        const t = taskForIndex(phase, idx);
-        entries.push({ phase, idx, mode:t.mode, done:isItemTaskDone(t.key), iso: INDEX_DATE[phase][idx] || null });
-        idx += period;
+    for(let idx=0; idx<cap; idx++){
+      const s = getSlot(phase, idx);
+      if(s.itemNum === itemNum){
+        entries.push({ phase, idx, mode:s.mode, done:isItemTaskDone(s.nativeKey), iso: s.iso });
       }
-    });
+    }
   });
   entries.sort((a,b)=> (a.iso||'') < (b.iso||'') ? -1 : 1);
   return entries;
@@ -1048,8 +1192,21 @@ function itemTaskHTML(task, opts){
     : "Pratique — choisis Anki ou QCM edn.fr";
   const key = task.id || task.key;
   const histCount = itemHistory(task.itemNum).filter(h=>h.done).length;
+  const swapUI = `
+    <div class="swap-block" onclick="event.stopPropagation()">
+      <button type="button" class="swap-toggle" data-key="${key}">🔄 Changer l'item de cette case</button>
+      ${task.overridden ? `<button type="button" class="btn-secondary" data-unswap="${key}" style="margin-left:6px;padding:5px 10px;font-size:11px;">↺ Remettre l'item ${task.originalItemNum ? '#'+task.originalItemNum : "d'origine"}</button>` : ''}
+      <div class="swap-panel" id="swap-${key}">
+        <div class="frow" style="display:flex;gap:6px;margin-top:8px;">
+          <input type="text" inputmode="numeric" id="swapInput-${key}" placeholder="N° de l'item à mettre à la place">
+          <button type="button" class="btn-secondary" data-swapsearch="${key}" data-swapphase="${task.phase||''}" data-swapidx="${task.idx!=null?task.idx:''}" data-swapcur="${item.num}">Chercher</button>
+        </div>
+        <div id="swapResults-${key}" style="margin-top:6px;"></div>
+      </div>
+    </div>
+  `;
   return `
-    <div class="task-card ${task.mode} ${done?'done':''}" data-key="${key}">
+    <div class="task-card ${task.mode} ${done?'done':''}" data-key="${key}" data-phase="${task.phase||''}" data-idx="${task.idx!=null?task.idx:''}">
       <div class="top-row">
         <span class="mode-badge ${task.mode}">${modeLabel}</span>
         ${catPillsHTML(item.cats)}
@@ -1062,6 +1219,7 @@ function itemTaskHTML(task, opts){
         <input type="checkbox" data-itemkey="${key}" ${done?'checked':''}>
         <span>Fait</span>
       </label>
+      ${swapUI}
     </div>
   `;
 }
@@ -1099,16 +1257,17 @@ function bindTaskHandlers(container){
   });
   container.querySelectorAll('.task-card').forEach(card=>{
     card.addEventListener('click', ()=>{
-      const key = card.getAttribute('data-key');
-      const idx = key.split('_')[1];
-      const phase = key.split('_')[0];
-      const t = taskForIndex(phase, parseInt(idx,10));
-      selectedItemNum = t.itemNum;
+      const phase = card.getAttribute('data-phase');
+      const idxAttr = card.getAttribute('data-idx');
+      if(phase && idxAttr !== ''){
+        selectedItemNum = getSlot(phase, parseInt(idxAttr,10)).itemNum;
+      }
       currentTab = 'progress';
       document.querySelectorAll('#tabbar button').forEach(b=>b.classList.toggle('active', b.getAttribute('data-tab')==='progress'));
       render();
     });
   });
+  bindSwapHandlers(container);
 }
 function updateRetardBadgeOnly(){
   const rlen = retardList().length;
@@ -1185,8 +1344,11 @@ function renderToday(){
     }
   }
 
-  container.innerHTML = weekSummaryHTML() + head + body + `<footer class="note">Plus de temps aujourd'hui ? Avance librement (onglet Planning). Moins de temps ? Utilise "Reporter cette journée", ou laisse simplement les items non faits — ils remonteront automatiquement demain.</footer>`;
+  const custom = day.reported ? '' : customTasksHTML(day.iso);
+
+  container.innerHTML = weekSummaryHTML() + head + body + custom + `<footer class="note">Plus de temps aujourd'hui ? Avance librement (onglet Planning). Moins de temps ? Utilise "Reporter cette journée", ou laisse simplement les items non faits — ils remonteront automatiquement demain.</footer>`;
   bindTaskHandlers(container);
+  if(!day.reported) bindCustomTaskHandlers(container, day.iso);
   const rb = document.getElementById('reportBtn');
   if(rb) rb.addEventListener('click', ()=>{
     if(!DATA.reportedDays) DATA.reportedDays = {};
@@ -1253,9 +1415,10 @@ function renderPlanning(){
       <p class="phase-lbl" style="color:${color}">${phaseLabel(day.phase)} (aperçu nominal)</p>
       <h2>${fmtLong(day.date)}</h2></div>`;
     let body = (day.tasks && day.tasks[0] && day.tasks[0].kind==='item') ? day.tasks.map(t=>itemTaskHTML(t)).join('') : genericListHTML(day.iso, day.tasks||[]);
-    container.innerHTML = head + body;
+    container.innerHTML = head + body + customTasksHTML(day.iso);
     document.getElementById('backBtn').addEventListener('click', ()=>{ selectedDayIso=null; renderPlanning(); });
     bindTaskHandlers(container);
+    bindCustomTaskHandlers(container, day.iso);
     return;
   }
   let html = '';
@@ -1318,13 +1481,12 @@ function renderProgress(){
   const status = {};
   ['S1','S2'].forEach(phase=>{
     const cap = quotaThroughToday(phase);
-    const queue = phase==='S1'?S1_QUEUE:S2_QUEUE;
     for(let idx=0; idx<cap; idx++){
-      const t = taskForIndex(phase, idx);
-      if(!status[t.itemNum]) status[t.itemNum] = {revision:false, entrainement:false};
-      if(isItemTaskDone(t.key)){
-        if(t.mode==='revision') status[t.itemNum].revision = true;
-        else status[t.itemNum].entrainement = true;
+      const s = getSlot(phase, idx);
+      if(!status[s.itemNum]) status[s.itemNum] = {revision:false, entrainement:false};
+      if(isItemTaskDone(s.nativeKey)){
+        if(s.mode==='revision') status[s.itemNum].revision = true;
+        else status[s.itemNum].entrainement = true;
       }
     }
   });
