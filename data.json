@@ -19,7 +19,14 @@
   },
   "reportedDays": {},
   "darkMode": false,
-  "itemOverrides": {},
+  "itemOverrides": {
+    "S1_i118_o1": {
+      "itemNum": 123
+    },
+    "S1_i123_o1": {
+      "itemNum": 118
+    }
+  },
   "customTasks": {},
   "items": [
     [
