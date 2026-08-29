@@ -4,7 +4,13 @@
     "s1End": "2027-01-31",
     "exam": "2027-10-15"
   },
-  "itemChecks": {},
+  "itemChecks": {
+    "S1_i60_o1": true,
+    "S1_i108_o1": true,
+    "S1_i185_o1": true,
+    "S1_i290_o1": true,
+    "S1_i47_o1": true
+  },
   "checks": {
     "2026-08-29": {},
     "2026-08-30": {}
