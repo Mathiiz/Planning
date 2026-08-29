@@ -210,6 +210,20 @@
         <span id="linkFileStatus" style="font-size:10.5px;color:#9FB3C8;"></span>
       </span>
     </label>
+    <label>Synchronisation GitHub (sauvegarde auto à chaque modification)
+      <span style="display:flex;flex-direction:column;gap:6px;">
+        <input type="text" id="ghOwner" placeholder="Utilisateur ou organisation GitHub (ex: mathiiz)">
+        <input type="text" id="ghRepo" placeholder="Nom du dépôt (ex: edn-planning)">
+        <input type="text" id="ghPath" placeholder="Nom du fichier de données (ex: data.json)">
+        <input type="text" id="ghBranch" placeholder="Branche (ex: main)">
+        <input type="password" id="ghToken" placeholder="Token d'accès personnel GitHub">
+        <span style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+          <button type="button" id="btnGhSave" class="settings-toggle" style="margin:0;">Enregistrer la connexion</button>
+          <button type="button" id="btnGhDisconnect" class="settings-toggle" style="margin:0;">Déconnecter</button>
+          <span id="ghStatus" style="font-size:10.5px;color:#9FB3C8;"></span>
+        </span>
+      </span>
+    </label>
   </div>
 </div>
 
@@ -1013,6 +1027,114 @@ async function saveData(){
   try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(DATA)); }
   catch(e){ console.error('Erreur de sauvegarde locale', e); }
   writeBackupFile(); // no-op si aucun fichier n'est lié
+  githubQueueSave(); // no-op si GitHub n'est pas configuré
+}
+
+// ---------- synchronisation GitHub ----------
+const GH_CONFIG_KEY = 'edn-planner-github-v1';
+let ghSaveInFlight = false;
+let ghSavePending = false;
+let ghSha = null; // sha du dernier contenu connu du fichier distant
+
+function getGithubConfig(){
+  try{
+    const raw = localStorage.getItem(GH_CONFIG_KEY);
+    return raw ? JSON.parse(raw) : null;
+  }catch(e){ return null; }
+}
+function setGithubConfig(cfg){
+  localStorage.setItem(GH_CONFIG_KEY, JSON.stringify(cfg));
+  ghSha = null;
+}
+function clearGithubConfig(){
+  localStorage.removeItem(GH_CONFIG_KEY);
+  ghSha = null;
+}
+function ghHeaders(cfg){
+  return {
+    'Authorization': 'token ' + cfg.token,
+    'Accept': 'application/vnd.github+json',
+    'Content-Type': 'application/json'
+  };
+}
+function ghContentsUrl(cfg){
+  return `https://api.github.com/repos/${encodeURIComponent(cfg.owner)}/${encodeURIComponent(cfg.repo)}/contents/${cfg.path.split('/').map(encodeURIComponent).join('/')}`;
+}
+function setGithubStatus(text){
+  const el = document.getElementById('ghStatus');
+  if(el) el.textContent = text;
+}
+function b64EncodeUtf8(str){
+  return btoa(unescape(encodeURIComponent(str)));
+}
+function b64DecodeUtf8(b64){
+  return decodeURIComponent(escape(atob(b64)));
+}
+// tentative de chargement des données distantes au démarrage — retourne les données ou null
+async function githubLoadData(){
+  const cfg = getGithubConfig();
+  if(!cfg || !cfg.token || !cfg.owner || !cfg.repo) return null;
+  try{
+    setGithubStatus('Chargement depuis GitHub…');
+    const res = await fetch(ghContentsUrl(cfg) + '?ref=' + encodeURIComponent(cfg.branch||'main'), { headers: ghHeaders(cfg) });
+    if(res.status===404){ setGithubStatus('Aucune donnée distante — première sauvegarde à venir'); return null; }
+    if(!res.ok){ setGithubStatus('Erreur de connexion GitHub (' + res.status + ')'); return null; }
+    const j = await res.json();
+    ghSha = j.sha;
+    const parsed = JSON.parse(b64DecodeUtf8(j.content.replace(/\n/g,'')));
+    setGithubStatus('Synchronisé ✓');
+    return parsed;
+  }catch(e){
+    console.error('Erreur GitHub (chargement)', e);
+    setGithubStatus('Hors ligne — utilisation de la copie locale');
+    return null;
+  }
+}
+// sauvegarde immédiate, sérialisée : un seul push à la fois, le plus récent état gagne
+async function githubQueueSave(){
+  const cfg = getGithubConfig();
+  if(!cfg || !cfg.token || !cfg.owner || !cfg.repo) return;
+  if(ghSaveInFlight){ ghSavePending = true; return; }
+  ghSaveInFlight = true;
+  setGithubStatus('Sauvegarde…');
+  try{
+    if(ghSha === null){
+      try{
+        const r = await fetch(ghContentsUrl(cfg) + '?ref=' + encodeURIComponent(cfg.branch||'main'), { headers: ghHeaders(cfg) });
+        if(r.ok){ const j = await r.json(); ghSha = j.sha; }
+        else if(r.status===404){ ghSha = undefined; }
+      }catch(e){ /* on tentera quand même l'écriture */ }
+    }
+    const body = {
+      message: 'Mise à jour planning — ' + new Date().toISOString(),
+      content: b64EncodeUtf8(JSON.stringify(DATA, null, 2)),
+      branch: cfg.branch || 'main'
+    };
+    if(ghSha) body.sha = ghSha;
+    const res = await fetch(ghContentsUrl(cfg), { method:'PUT', headers: ghHeaders(cfg), body: JSON.stringify(body) });
+    if(res.ok){
+      const j = await res.json();
+      ghSha = j.content ? j.content.sha : null;
+      setGithubStatus('Synchronisé ✓ ' + new Date().toLocaleTimeString('fr-FR'));
+    } else if(res.status===409){
+      ghSha = null; // conflit de version — on relira le sha au prochain essai
+      setGithubStatus('Conflit de version — nouvel essai…');
+      ghSavePending = true;
+    } else {
+      const errTxt = await res.text().catch(()=> '');
+      console.error('Erreur GitHub (sauvegarde)', res.status, errTxt);
+      setGithubStatus('Erreur de sauvegarde GitHub (' + res.status + ')');
+    }
+  }catch(e){
+    console.error('Erreur GitHub (réseau)', e);
+    setGithubStatus('Hors ligne — sauvegardé localement seulement');
+  }finally{
+    ghSaveInFlight = false;
+    if(ghSavePending){
+      ghSavePending = false;
+      githubQueueSave();
+    }
+  }
 }
 function exportBackup(){
   const blob = new Blob([JSON.stringify(DATA, null, 2)], {type:'application/json'});
@@ -1716,6 +1838,12 @@ function applyTheme(){
 async function init(){
   DATA = await loadData();
   await tryReconnectBackupFile(); // relit le fichier de secours s'il est lié, remplace DATA si présent
+  const remote = await githubLoadData(); // si GitHub est configuré, la version distante prime
+  if(remote){
+    DATA = Object.assign({config:Object.assign({},DEFAULT_CONFIG), itemChecks:{}, checks:{}, reportedDays:{}, darkMode:false, itemOverrides:{}, customTasks:{}}, remote);
+    if(!DATA.items) DATA.items = ITEMS_RAW.map(([n,t,c])=>[n,t,c]);
+    try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(DATA)); }catch(e){}
+  }
   if(!fsApiSupported()) setLinkStatus('Non supporté par ce navigateur');
   rebuildAll();
   CAL = buildCalendar(DATA.config, DATA.reportedDays);
@@ -1724,6 +1852,30 @@ async function init(){
   document.getElementById('cfgStart').value = DATA.config.start;
   document.getElementById('cfgS1End').value = DATA.config.s1End;
   document.getElementById('cfgExam').value = DATA.config.exam;
+
+  const ghCfg = getGithubConfig();
+  if(ghCfg){
+    document.getElementById('ghOwner').value = ghCfg.owner || '';
+    document.getElementById('ghRepo').value = ghCfg.repo || '';
+    document.getElementById('ghPath').value = ghCfg.path || '';
+    document.getElementById('ghBranch').value = ghCfg.branch || '';
+    document.getElementById('ghToken').value = ghCfg.token || '';
+  }
+  document.getElementById('btnGhSave').addEventListener('click', async ()=>{
+    const owner = document.getElementById('ghOwner').value.trim();
+    const repo = document.getElementById('ghRepo').value.trim();
+    const path = document.getElementById('ghPath').value.trim() || 'data.json';
+    const branch = document.getElementById('ghBranch').value.trim() || 'main';
+    const token = document.getElementById('ghToken').value.trim();
+    if(!owner || !repo || !token){ setGithubStatus('Renseigne au moins utilisateur, dépôt et token.'); return; }
+    setGithubConfig({owner, repo, path, branch, token});
+    await githubQueueSave();
+  });
+  document.getElementById('btnGhDisconnect').addEventListener('click', ()=>{
+    clearGithubConfig();
+    ['ghOwner','ghRepo','ghPath','ghBranch','ghToken'].forEach(id=>{ document.getElementById(id).value=''; });
+    setGithubStatus('Déconnecté — sauvegarde locale uniquement');
+  });
 
   document.getElementById('themeToggle').addEventListener('click', ()=>{
     DATA.darkMode = !DATA.darkMode;
