@@ -1568,28 +1568,6 @@ function itemHistory(itemNum){
 }
 
 // ---------- rendering ----------
-function isDayFullyDone(day){
-  if(!day.tasks || day.tasks.length===0) return true;
-  return day.tasks.every(t=> t.kind==='item' ? isItemTaskDone(t.id) : isGenericDone(day.iso, t.id));
-}
-// série de jours consécutifs entièrement complétés (jours sans tâche ou hors plage ignorés,
-// journée en cours comptée seulement si elle est déjà terminée)
-function computeStreak(){
-  const today = todayDate();
-  const start = parseISO(DATA.config.start);
-  let cursor = new Date(today);
-  const todayDay = findDay(todayIso());
-  if(!todayDay || !isDayFullyDone(todayDay)) cursor = addDays(cursor, -1);
-  let streak = 0;
-  while(cursor >= start){
-    const day = findDay(toISO(cursor));
-    if(!day || !day.tasks || day.tasks.length===0){ cursor = addDays(cursor, -1); continue; }
-    if(isDayFullyDone(day)){ streak++; cursor = addDays(cursor, -1); }
-    else break;
-  }
-  return streak;
-}
-
 function renderVitals(){
   const exam = parseISO(DATA.config.exam);
   const daysLeft = Math.max(0, daysBetween(todayDate(), exam));
@@ -1601,12 +1579,10 @@ function renderVitals(){
   });
   const pct = total? Math.round(done/total*100) : 0;
   const day = findDay(todayIso());
-  const streak = computeStreak();
   document.getElementById('vitals').innerHTML = `
     <div class="vital"><div class="num">${daysLeft}</div><div class="lbl">Jours avant les EDN</div></div>
     <div class="vital"><div class="num">${day ? (day.phase==='S1'?'S1':day.phase==='S2'?'S2':'Consol.') : '—'}</div><div class="lbl">Phase actuelle</div></div>
     <div class="vital"><div class="num">${pct}%</div><div class="lbl">Progression globale</div></div>
-    <div class="vital"><div class="num">${streak}🔥</div><div class="lbl">Jour${streak>1?'s':''} complet${streak>1?'s':''} d'affilée</div></div>
   `;
   const rlen = retardList().length;
   const badge = document.getElementById('retardBadge');
@@ -1633,9 +1609,9 @@ function itemTaskHTML(task, opts){
   const diffUI = `
     <div class="diff-row">
       <span class="diff-label">Ressenti :</span>
-      <button type="button" class="diff-btn ${diff==='facile'?'active':''}" data-diffitem="${item.num}" data-difflevel="facile">😊 Facile</button>
-      <button type="button" class="diff-btn ${diff==='moyen'?'active':''}" data-diffitem="${item.num}" data-difflevel="moyen">😐 Moyen</button>
-      <button type="button" class="diff-btn ${diff==='difficile'?'active':''}" data-diffitem="${item.num}" data-difflevel="difficile">😰 Difficile</button>
+      <button type="button" class="diff-btn ${diff==='facile'?'active':''}" data-diffitem="${item.num}" data-difflevel="facile">🟢 Facile</button>
+      <button type="button" class="diff-btn ${diff==='moyen'?'active':''}" data-diffitem="${item.num}" data-difflevel="moyen">🟡 Moyen</button>
+      <button type="button" class="diff-btn ${diff==='difficile'?'active':''}" data-diffitem="${item.num}" data-difflevel="difficile">🔴 Difficile</button>
     </div>
   `;
   const swapUI = `
