@@ -175,6 +175,12 @@
   .swap-panel.open{display:block;}
   .swap-panel input[type=text]{font-family:var(--sans);font-size:13px;padding:7px 9px;border:1px solid var(--rule);border-radius:var(--radius);background:var(--paper-raised);color:var(--ink);flex:1;}
 
+  .subject-config-list{max-height:260px;overflow-y:auto;border:1px solid var(--rule);border-radius:var(--radius);padding:4px 8px;}
+  .subject-row{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:5px 0;border-bottom:1px solid var(--rule-soft);font-size:12.5px;}
+  .subject-row:last-child{border-bottom:none;}
+  .subject-row label{display:flex;align-items:center;gap:6px;font-weight:normal;flex:1;}
+  .subject-row input[type=date]{font-family:var(--sans);font-size:11.5px;padding:4px 6px;border:1px solid var(--rule);border-radius:6px;background:var(--paper-raised);color:var(--ink);width:130px;}
+
   .item-manage-row{background:var(--white);border:1px solid var(--rule-soft);border-left:4px solid var(--rule);border-radius:var(--radius);padding:12px 14px;margin-bottom:6px;}
   .item-manage-row .imtop{display:flex;align-items:center;gap:8px;margin-bottom:2px;}
   .item-manage-row .imnum{font-family:var(--mono);font-size:11px;color:var(--ink-soft);}
@@ -184,19 +190,73 @@
   .item-edit-form input[type=text], .item-edit-form select{
     font-family:var(--sans);font-size:13px;padding:7px 9px;border:1px solid var(--rule);border-radius:var(--radius);background:var(--paper-raised);color:var(--ink);
   }
+
+  .onboard-overlay{position:fixed;inset:0;background:rgba(10,14,20,0.72);z-index:500;display:flex;align-items:center;justify-content:center;padding:20px;}
+  .onboard-overlay.hidden{display:none;}
+  .onboard-card{background:var(--white);border-radius:var(--radius);max-width:520px;width:100%;max-height:88vh;overflow-y:auto;padding:24px;box-shadow:0 20px 60px rgba(0,0,0,0.4);}
+  .onboard-card h2{margin:0 0 6px;font-size:19px;}
+  .onboard-card p.lead{font-size:12.5px;color:var(--ink-soft);margin:0 0 18px;}
+  .onboard-card label{display:block;font-size:12.5px;font-weight:600;margin-bottom:14px;}
+  .onboard-card input[type=date], .onboard-card select{
+    display:block;width:100%;margin-top:6px;font-family:var(--sans);font-size:13.5px;padding:8px 10px;border:1px solid var(--rule);border-radius:var(--radius);background:var(--paper-raised);color:var(--ink);
+  }
+  .onboard-card .hint{font-size:10.5px;color:#9FB3C8;font-weight:normal;display:block;margin-top:4px;}
+  .onboard-card .subject-config-list{max-height:220px;}
+  .onboard-submit{width:100%;margin-top:8px;padding:12px;border:none;border-radius:var(--radius);background:var(--accent);color:#fff;font-family:var(--sans);font-weight:700;font-size:14px;cursor:pointer;}
 </style>
 </head>
 <body>
 
+<div class="onboard-overlay hidden" id="onboardOverlay">
+  <div class="onboard-card">
+    <h2>Bienvenue 👋</h2>
+    <p class="lead">Quelques infos pour construire ton planning. Tu pourras tout modifier plus tard dans les réglages.</p>
+    <label>Année d'étude actuelle
+      <select id="obStudentYear">
+        <option value="3">3ᵉ année (DFGSM3)</option>
+        <option value="4">4ᵉ année (DFASM1)</option>
+        <option value="5">5ᵉ année (DFASM2)</option>
+        <option value="6">6ᵉ année (DFASM3 — EDN)</option>
+      </select>
+    </label>
+    <label>Début des révisions<input type="date" id="obStart"></label>
+    <label>Date de l'examen (partiels ou EDN)<input type="date" id="obExam"></label>
+    <label>Début des tours de révision générale
+      <input type="date" id="obS1End">
+      <span class="hint">Date à partir de laquelle tu révises tout le programme cumulativement. Si ça ne te concerne pas encore, mets une date proche de ton examen.</span>
+    </label>
+    <label>Matières nouvelles de cette période
+      <span class="hint">Coche les matières que tu découvres actuellement. Ajouter une DL de partiel sur une matière (ici ou plus tard) la fait passer en priorité.</span>
+      <div class="subject-config-list" id="obSubjectList" style="margin-top:8px;"></div>
+    </label>
+    <button type="button" class="onboard-submit" id="obSubmit">Créer mon planning</button>
+  </div>
+</div>
+
 <div class="chart-header">
   <p class="eyebrow"><span>Dossier de révision personnel</span><button class="theme-btn" id="themeToggle">Mode sombre</button></p>
-  <h1>EDN — 5<sup>e</sup> année</h1>
+  <h1>EDN — Planning de révisions</h1>
   <div class="vitals" id="vitals"></div>
   <button class="settings-toggle" id="settingsToggle">Ajuster les dates ▾</button>
   <div class="settings-panel" id="settingsPanel">
     <label>Début des révisions<input type="date" id="cfgStart"></label>
-    <label>Fin du S1 (bascule S2)<input type="date" id="cfgS1End"></label>
+    <label>Début des tours de révision générale<input type="date" id="cfgS1End">
+      <span style="font-size:10.5px;color:#9FB3C8;display:block;margin-top:4px;">La date à partir de laquelle tu passes en révision cumulative de tout le programme, tous items confondus. Avant cette date, seules les matières "nouvelles" que tu as cochées ci-dessous tournent (les bascules entre trimestres/semestres se gèrent avec les DL de partiels, pas avec cette date).</span>
+    </label>
     <label>Date des EDN (estimation)<input type="date" id="cfgExam"></label>
+    <label>Année d'étude actuelle
+      <select id="cfgStudentYear">
+        <option value="3">3ᵉ année (DFGSM3)</option>
+        <option value="4">4ᵉ année (DFASM1)</option>
+        <option value="5">5ᵉ année (DFASM2)</option>
+        <option value="6">6ᵉ année (DFASM3 — EDN)</option>
+      </select>
+      <span style="font-size:10.5px;color:#9FB3C8;display:block;margin-top:4px;">Détermine notamment si la LCA apparaît dans les révisions du week-end (à partir de la 5ᵉ année).</span>
+    </label>
+    <label>Matières nouvelles de la période & DL de partiels
+      <span style="font-size:10.5px;color:#9FB3C8;display:block;margin-bottom:6px;">Coche les matières que tu découvres actuellement (remplace les 6 par défaut). Ajoute une DL sur une matière (nouvelle ou déjà vue) pour faire remonter tous ses items en tête de file avant cette date.</span>
+      <div class="subject-config-list" id="subjectConfigList"></div>
+    </label>
     <label>Sauvegarde
       <span style="display:flex;gap:8px;flex-wrap:wrap;">
         <button type="button" id="btnExport" class="settings-toggle" style="margin:0;">Exporter ↓</button>
@@ -626,11 +686,34 @@ const CAT_COLORS = {
   endocrino:'#059669', nephro:'#14B8A6', uro:'#4338CA', gastro:'#CA8A04', pharmaco:'#7E22CE', urgences:'#B91C1C',
   chirvisc:'#92400E', ortho:'#475569', other:'var(--c-other)'
 };
-const NEW_CATS = ['psy','ger','mi','ped','onco','hemato'];
+const NEW_CATS_DEFAULT = ['psy','ger','mi','ped','onco','hemato'];
 const REVIEW_CATS = ['cardio','pneumo','gastro','nephro','endocrino','rhumato','neuro','dermato','gyneco','uro','orl','ophtalmo',
   'infectio','douleur','genetique','travail','legale','pharmaco','urgences','chirvisc','ortho'];
-const ALL_CATS = NEW_CATS.concat(REVIEW_CATS);
+const ALL_CATS = NEW_CATS_DEFAULT.concat(REVIEW_CATS);
 
+// matières "nouvelles" de la période en cours : configurable par l'étudiant (settings),
+// retombe sur les 6 matières historiques par défaut si rien n'est choisi / anciennes données.
+function currentNewCats(){
+  const c = DATA && DATA.config && DATA.config.newCats;
+  return (c && c.length) ? c : NEW_CATS_DEFAULT;
+}
+function currentReviewCats(){
+  const nc = currentNewCats();
+  return ALL_CATS.filter(c=>!nc.includes(c));
+}
+// une matière avec une DL (date de partiel) passe en tête de file, DL la plus proche en premier
+function categoriesByDeadlinePriority(cats){
+  const dl = (DATA && DATA.subjectDeadlines) || {};
+  const withDL = cats.filter(c=>dl[c]).sort((a,b)=> dl[a] < dl[b] ? -1 : (dl[a] > dl[b] ? 1 : 0));
+  const withoutDL = cats.filter(c=>!dl[c]);
+  return {withDL, withoutDL};
+}
+
+// année d'étude actuelle : retombe sur 6 (comportement historique) si absent des anciennes données
+function currentStudentYear(){
+  const y = DATA && DATA.config && DATA.config.studentYear;
+  return y || 6;
+}
 let ITEM_BY_NUM = {};
 let CURRENT_ITEMS = [];
 // an item now carries an array of colleges (cats); cats[0] is the "primary" college
@@ -654,8 +737,30 @@ function rebuildAll(){
   CURRENT_ITEMS = DATA.items;
   ITEM_BY_NUM = {};
   CURRENT_ITEMS.forEach(([n,t,cats])=>{ ITEM_BY_NUM[n] = {num:n, title:t, cats:cats, cat: cats[0]}; });
-  S1_QUEUE = roundRobin(NEW_CATS.map(itemsOfPrimaryCat));
-  S2_QUEUE = CURRENT_ITEMS.map(([n])=>n);
+  S1_QUEUE = buildS1Queue();
+  S2_QUEUE = buildS2Queue();
+}
+// file S1 (matières nouvelles de la période) : les matières avec DL passent en bloc en tête
+// (DL la plus proche d'abord), le reste continue en round-robin comme avant.
+function buildS1Queue(){
+  const cats = currentNewCats();
+  const {withDL, withoutDL} = categoriesByDeadlinePriority(cats);
+  const urgent = [];
+  withDL.forEach(c=>{ itemsOfPrimaryCat(c).forEach(n=>urgent.push(n)); });
+  const rest = roundRobin(withoutDL.map(itemsOfPrimaryCat));
+  return urgent.concat(rest);
+}
+// file S2 (révision globale) : mêmes principe, sur l'ensemble des matières (une matière déjà
+// vue en cours peut aussi avoir une DL de partiel et doit repasser en priorité de révision).
+function buildS2Queue(){
+  const {withDL} = categoriesByDeadlinePriority(ALL_CATS);
+  const seen = new Set();
+  const urgent = [];
+  withDL.forEach(c=>{
+    itemsOfCat(c).forEach(n=>{ if(!seen.has(n)){ urgent.push(n); seen.add(n); } });
+  });
+  const rest = CURRENT_ITEMS.map(([n])=>n).filter(n=>!seen.has(n));
+  return urgent.concat(rest);
 }
 function nextItemId(){
   let max = 0;
@@ -697,7 +802,7 @@ function taskForIndex(phase, idx){
   return { key: phase+'_i'+itemNum+'_o'+occurrence, itemNum, mode, occurrence };
 }
 
-const DEFAULT_CONFIG = { start:'2026-08-24', s1End:'2027-01-31', exam:'2027-10-15' };
+const DEFAULT_CONFIG = { start:'2026-08-24', s1End:'2027-01-31', exam:'2027-10-15', newCats: NEW_CATS_DEFAULT.slice(), studentYear: 6 };
 
 let DATA = null;
 let CAL = [];
@@ -753,10 +858,11 @@ function buildCalendar(cfg, reportedDays){
     } else if(!weekend && (phase==='S1'||phase==='S2')){
       day.tasks = [];
     } else if(weekend){
-      day.tasks = [
-        {id:'lca', kind:'generic', label:"LCA — 2 articles minimum (méthodologie + analyse critique)"},
-        {id:'free', kind:'generic', label:"Révision libre — item ou matière de ton choix (rattrapage)"},
-      ];
+      day.tasks = [];
+      if(currentStudentYear() >= 5){
+        day.tasks.push({id:'lca', kind:'generic', label:"LCA — 2 articles minimum (méthodologie + analyse critique)"});
+      }
+      day.tasks.push({id:'free', kind:'generic', label:"Révision libre — item ou matière de ton choix (rattrapage)"});
     } else { // CONSOL
       day.tasks = reported ? [] : [
         {id:'anki_all', kind:'generic', label:"Anki — session complète (aucune nouvelle carte)"},
@@ -1002,7 +1108,7 @@ async function tryReconnectBackupFile(){
     const text = await file.text();
     if(text && text.trim()){
       const parsed = JSON.parse(text);
-      DATA = Object.assign({config:Object.assign({},DEFAULT_CONFIG), itemChecks:{}, checks:{}, reportedDays:{}, darkMode:false, itemOverrides:{}, customTasks:{}}, parsed);
+      DATA = Object.assign({config:Object.assign({},DEFAULT_CONFIG), itemChecks:{}, checks:{}, reportedDays:{}, darkMode:false, itemOverrides:{}, customTasks:{}, subjectDeadlines:{}, onboarded:true}, parsed);
       if(!DATA.items) DATA.items = ITEMS_RAW.map(([n,t,c])=>[n,t,c]);
       await saveData();
     }
@@ -1016,12 +1122,12 @@ async function loadData(){
     const raw = localStorage.getItem(STORAGE_KEY);
     if(raw){
       const parsed = JSON.parse(raw);
-      const data = Object.assign({config:Object.assign({},DEFAULT_CONFIG), itemChecks:{}, checks:{}, reportedDays:{}, darkMode:false, itemOverrides:{}, customTasks:{}}, parsed);
+      const data = Object.assign({config:Object.assign({},DEFAULT_CONFIG), itemChecks:{}, checks:{}, reportedDays:{}, darkMode:false, itemOverrides:{}, customTasks:{}, subjectDeadlines:{}, onboarded:true}, parsed);
       if(!data.items) data.items = ITEMS_RAW.map(([n,t,c])=>[n,t,c]);
       return data;
     }
   }catch(e){ console.error('Erreur de lecture locale', e); }
-  return {config:Object.assign({},DEFAULT_CONFIG), itemChecks:{}, checks:{}, reportedDays:{}, darkMode:false, itemOverrides:{}, customTasks:{}, items: ITEMS_RAW.map(([n,t,c])=>[n,t,c])};
+  return {config:Object.assign({},DEFAULT_CONFIG), itemChecks:{}, checks:{}, reportedDays:{}, darkMode:false, itemOverrides:{}, customTasks:{}, subjectDeadlines:{}, onboarded:false, items: ITEMS_RAW.map(([n,t,c])=>[n,t,c])};
 }
 async function saveData(){
   try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(DATA)); }
@@ -1149,7 +1255,7 @@ function importBackup(file){
   reader.onload = async (e) => {
     try{
       const parsed = JSON.parse(e.target.result);
-      DATA = Object.assign({config:Object.assign({},DEFAULT_CONFIG), itemChecks:{}, checks:{}, reportedDays:{}, darkMode:false, itemOverrides:{}, customTasks:{}}, parsed);
+      DATA = Object.assign({config:Object.assign({},DEFAULT_CONFIG), itemChecks:{}, checks:{}, reportedDays:{}, darkMode:false, itemOverrides:{}, customTasks:{}, subjectDeadlines:{}, onboarded:true}, parsed);
       if(!DATA.items) DATA.items = ITEMS_RAW.map(([n,t,c])=>[n,t,c]);
       rebuildAll();
       applyTheme();
@@ -1157,6 +1263,8 @@ function importBackup(file){
       document.getElementById('cfgStart').value = DATA.config.start;
       document.getElementById('cfgS1End').value = DATA.config.s1End;
       document.getElementById('cfgExam').value = DATA.config.exam;
+      document.getElementById('cfgStudentYear').value = String(currentStudentYear());
+      renderSubjectConfigList();
       await saveData();
       selectedDayIso = null; selectedItemNum = null;
       render();
@@ -1620,15 +1728,17 @@ function renderProgress(){
     const total = nums.length;
     const revPct = total? Math.round(rev/total*100):0;
     const entPct = total? Math.round(ent/total*100):0;
+    const dl = DATA.subjectDeadlines && DATA.subjectDeadlines[cat];
+    const dlLabel = dl ? ` · DL ${fmtShort(parseISO(dl))}` : '';
     return `<div class="spec-card" data-cat="${cat}">
-      <div class="row1"><span class="name">${CAT_LABELS[cat]}</span><span class="pct">${rev}/${total} vus · ${ent}/${total} entraînés</span></div>
+      <div class="row1"><span class="name">${CAT_LABELS[cat]}${dlLabel}</span><span class="pct">${rev}/${total} vus · ${ent}/${total} entraînés</span></div>
       <div class="dualbar"><div class="seg-rev" style="width:${revPct}%"></div><div class="seg-ent" style="width:${Math.max(0,entPct-revPct)}%"></div></div>
     </div>`;
   }
-  let html = `<p class="section-title">Matières à découvrir (S1)</p>`;
-  NEW_CATS.forEach(c=>{ html += cardFor(c); });
+  let html = `<p class="section-title">Matières à découvrir (période actuelle)</p>`;
+  currentNewCats().forEach(c=>{ html += cardFor(c); });
   html += `<p class="section-title">Autres collèges (révision)</p>`;
-  REVIEW_CATS.forEach(c=>{ html += cardFor(c); });
+  currentReviewCats().forEach(c=>{ html += cardFor(c); });
   html += `<p style="font-size:11px;color:var(--ink-soft);margin:14px 0;">Teal = items lus au moins une fois · ambre = items entraînés au moins une fois. Clique une matière pour voir le détail par item.</p>`;
   container.innerHTML = html;
   container.querySelectorAll('.spec-card').forEach(card=>{
@@ -1835,12 +1945,47 @@ function applyTheme(){
   document.getElementById('themeToggle').textContent = DATA.darkMode ? 'Mode clair' : 'Mode sombre';
 }
 
+function renderSubjectConfigList(){
+  const el = document.getElementById('subjectConfigList');
+  const nc = currentNewCats();
+  el.innerHTML = ALL_CATS.map(c=>{
+    const dl = (DATA.subjectDeadlines && DATA.subjectDeadlines[c]) || '';
+    return `<div class="subject-row">
+      <label><input type="checkbox" class="newcat-check" value="${c}" ${nc.includes(c)?'checked':''}> ${CAT_LABELS[c]}</label>
+      <input type="date" class="deadline-input" data-cat="${c}" value="${dl}">
+    </div>`;
+  }).join('');
+  el.querySelectorAll('.newcat-check').forEach(cb=>{
+    cb.addEventListener('change', ()=>{
+      const checked = Array.from(el.querySelectorAll('.newcat-check:checked')).map(x=>x.value);
+      DATA.config.newCats = checked;
+      rebuildAll();
+      CAL = buildCalendar(DATA.config, DATA.reportedDays);
+      selectedDayIso = null; selectedItemNum = null;
+      saveData();
+      render();
+    });
+  });
+  el.querySelectorAll('.deadline-input').forEach(inp=>{
+    inp.addEventListener('change', ()=>{
+      if(!DATA.subjectDeadlines) DATA.subjectDeadlines = {};
+      const cat = inp.getAttribute('data-cat');
+      if(inp.value) DATA.subjectDeadlines[cat] = inp.value; else delete DATA.subjectDeadlines[cat];
+      rebuildAll();
+      CAL = buildCalendar(DATA.config, DATA.reportedDays);
+      selectedDayIso = null; selectedItemNum = null;
+      saveData();
+      render();
+    });
+  });
+}
+
 async function init(){
   DATA = await loadData();
   await tryReconnectBackupFile(); // relit le fichier de secours s'il est lié, remplace DATA si présent
   const remote = await githubLoadData(); // si GitHub est configuré, la version distante prime
   if(remote){
-    DATA = Object.assign({config:Object.assign({},DEFAULT_CONFIG), itemChecks:{}, checks:{}, reportedDays:{}, darkMode:false, itemOverrides:{}, customTasks:{}}, remote);
+    DATA = Object.assign({config:Object.assign({},DEFAULT_CONFIG), itemChecks:{}, checks:{}, reportedDays:{}, darkMode:false, itemOverrides:{}, customTasks:{}, subjectDeadlines:{}, onboarded:true}, remote);
     if(!DATA.items) DATA.items = ITEMS_RAW.map(([n,t,c])=>[n,t,c]);
     try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(DATA)); }catch(e){}
   }
@@ -1852,6 +1997,16 @@ async function init(){
   document.getElementById('cfgStart').value = DATA.config.start;
   document.getElementById('cfgS1End').value = DATA.config.s1End;
   document.getElementById('cfgExam').value = DATA.config.exam;
+  document.getElementById('cfgStudentYear').value = String(currentStudentYear());
+  renderSubjectConfigList();
+
+  document.getElementById('cfgStudentYear').addEventListener('change', e=>{
+    DATA.config.studentYear = parseInt(e.target.value, 10);
+    CAL = buildCalendar(DATA.config, DATA.reportedDays);
+    selectedDayIso = null; selectedItemNum = null;
+    saveData();
+    render();
+  });
 
   const ghCfg = getGithubConfig();
   if(ghCfg){
@@ -1918,6 +2073,48 @@ async function init(){
   });
 
   render();
+  if(!DATA.onboarded) showOnboarding();
+}
+
+function renderOnboardSubjectList(year){
+  const el = document.getElementById('obSubjectList');
+  const defaults = (parseInt(year,10)===6) ? NEW_CATS_DEFAULT : [];
+  el.innerHTML = ALL_CATS.map(c=>`
+    <div class="subject-row">
+      <label><input type="checkbox" class="ob-newcat-check" value="${c}" ${defaults.includes(c)?'checked':''}> ${CAT_LABELS[c]}</label>
+    </div>
+  `).join('');
+}
+function showOnboarding(){
+  const overlay = document.getElementById('onboardOverlay');
+  overlay.classList.remove('hidden');
+  document.getElementById('obStudentYear').value = '6';
+  renderOnboardSubjectList('6');
+  document.getElementById('obStudentYear').addEventListener('change', e=>{
+    renderOnboardSubjectList(e.target.value);
+  });
+  document.getElementById('obSubmit').addEventListener('click', ()=>{
+    const year = parseInt(document.getElementById('obStudentYear').value,10);
+    const start = document.getElementById('obStart').value;
+    const exam = document.getElementById('obExam').value;
+    const s1End = document.getElementById('obS1End').value;
+    const newCats = Array.from(document.querySelectorAll('.ob-newcat-check:checked')).map(x=>x.value);
+    if(!start || !exam || !s1End){ alert('Merci de renseigner les trois dates.'); return; }
+    if(newCats.length===0){ alert('Coche au moins une matière nouvelle pour cette période.'); return; }
+    DATA.config = Object.assign({}, DEFAULT_CONFIG, { start, exam, s1End, newCats, studentYear: year });
+    DATA.onboarded = true;
+    rebuildAll();
+    CAL = buildCalendar(DATA.config, DATA.reportedDays);
+    document.getElementById('cfgStart').value = DATA.config.start;
+    document.getElementById('cfgS1End').value = DATA.config.s1End;
+    document.getElementById('cfgExam').value = DATA.config.exam;
+    document.getElementById('cfgStudentYear').value = String(currentStudentYear());
+    renderSubjectConfigList();
+    saveData();
+    overlay.classList.add('hidden');
+    selectedDayIso = null; selectedItemNum = null;
+    render();
+  });
 }
 
 init();
