@@ -2,6 +2,24 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
+<script>
+// Anti-cache : Notion (et les CDN intermédiaires) peuvent conserver une ancienne version de
+// cette page tant que son URL ne change pas. On force ici un rechargement avec un paramètre
+// de version unique à chaque ouverture, ce qui déclenche systématiquement un nouveau
+// téléchargement de la dernière version poussée sur GitHub plutôt qu'une copie en cache.
+(function(){
+  try{
+    var url = new URL(window.location.href);
+    if(!url.searchParams.has('v')){
+      url.searchParams.set('v', Date.now());
+      window.location.replace(url.toString());
+    }
+  }catch(e){ /* URL non standard (ex: file://) : on ignore, pas de cache distant concerné */ }
+})();
+</script>
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Dossier de révision — EDN 2027</title>
 <link rel="icon" type="image/png" href="data:image/png;base64,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">
@@ -1850,7 +1868,6 @@ function renderPlanning(){
   CAL.forEach(day=>{
     const m = fmtMonthYear(day.date);
     if(m !== lastMonth){ html += `<div class="month-divider">${m}</div>`; lastMonth = m; }
-    if(day.weekend) return;
     const color = phaseColor(day.phase);
     let itemsHtml = '';
     if(day.reported){
@@ -1861,6 +1878,9 @@ function renderPlanning(){
         const bg = t.mode==='revision' ? 'var(--accent)' : 'var(--amber)';
         return `<span class="pitem" style="background:${bg}" title="${it.title}">#${it.num}</span>`;
       }).join('');
+    } else if(day.weekend){
+      const hasLca = day.tasks.some(t=>t.id==='lca');
+      itemsHtml = `<span class="pitem" style="background:${color}">${hasLca?'LCA + libre':'libre'}</span>`;
     } else {
       itemsHtml = `<span class="pitem" style="background:${color}">consolidation</span>`;
     }
@@ -1869,7 +1889,7 @@ function renderPlanning(){
       <span class="pitems">${itemsHtml}</span>
     </div>`;
   });
-  container.innerHTML = `<p class="weekend-note">Aperçu nominal (hors reports/retards). Les week-ends (LCA + libre) ne sont pas listés — voir l'onglet LCA.</p>` + html;
+  container.innerHTML = `<p class="weekend-note">Aperçu nominal (hors reports/retards).</p>` + html;
   container.querySelectorAll('.plan-row').forEach(row=>{
     row.addEventListener('click', ()=>{ selectedDayIso = row.getAttribute('data-iso'); renderPlanning(); });
   });
@@ -1985,7 +2005,7 @@ function renderLCA(){
   const methodoOptions = ['Essai randomisé','Cohorte','Cas-témoins','Méta-analyse / revue systématique','Étude transversale','Autre'];
 
   let rows = '';
-  allSaturdays.slice().reverse().forEach(sat=>{
+  allSaturdays.forEach(sat=>{
     const sunDate = addDays(sat.date,1);
     const sunIso = toISO(sunDate);
     const done = isGenericDone(sat.iso,'lca') || isGenericDone(sunIso,'lca');
