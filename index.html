@@ -175,6 +175,17 @@
   .swap-panel.open{display:block;}
   .swap-panel input[type=text]{font-family:var(--sans);font-size:13px;padding:7px 9px;border:1px solid var(--rule);border-radius:var(--radius);background:var(--paper-raised);color:var(--ink);flex:1;}
 
+  .diff-row{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-top:10px;}
+  .diff-label{font-size:11px;color:var(--ink-soft);}
+  .diff-btn{font-family:var(--sans);font-size:11px;background:none;border:1px solid var(--rule);border-radius:20px;padding:4px 9px;cursor:pointer;color:var(--ink-soft);}
+  .diff-btn.active{background:var(--accent);color:#fff;border-color:var(--accent);}
+
+  .dl-alerts{display:flex;flex-direction:column;gap:6px;margin-bottom:14px;}
+  .dl-alert-row{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:9px 12px;border-radius:var(--radius);background:var(--paper-raised);border:1px solid var(--rule);font-size:12px;}
+  .dl-alert-row.urgent{background:rgba(217,119,6,0.12);border-color:var(--amber);}
+  .dl-cat{font-weight:700;}
+  .dl-detail{color:var(--ink-soft);}
+
   .subject-config-list{max-height:260px;overflow-y:auto;border:1px solid var(--rule);border-radius:var(--radius);padding:4px 8px;}
   .subject-row{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:5px 0;border-bottom:1px solid var(--rule-soft);font-size:12.5px;}
   .subject-row:last-child{border-bottom:none;}
@@ -976,6 +987,68 @@ function bindCustomTaskHandlers(container, iso){
     });
   });
 }
+// ---------- ressenti de difficulté & rappel rapproché ----------
+// une note "difficile" programme automatiquement une révision rapprochée (J+3), sans toucher
+// à la file principale — un vrai renvoi façon répétition espacée serait plus lourd à intégrer
+// proprement dans le système de file actuel, ce raccourci reste sûr et additif.
+function rateItemDifficulty(itemNum, level){
+  if(!DATA.itemDifficulty) DATA.itemDifficulty = {};
+  DATA.itemDifficulty[itemNum] = level;
+  if(level==='difficile'){
+    const item = ITEM_BY_NUM[itemNum];
+    const boostDate = toISO(addDays(todayDate(), 3));
+    const label = `🔁 Révision rapprochée — Item ${itemNum} : ${item ? item.title : ''} (marqué difficile)`;
+    const existing = (DATA.customTasks && DATA.customTasks[boostDate]) || [];
+    if(!existing.some(t=>t.label===label)) addCustomTask(boostDate, label);
+  }
+  saveData();
+}
+function bindDifficultyHandlers(container){
+  container.querySelectorAll('.diff-btn').forEach(btn=>{
+    btn.addEventListener('click', (e)=>{
+      e.stopPropagation();
+      const itemNum = parseInt(btn.getAttribute('data-diffitem'),10);
+      const level = btn.getAttribute('data-difflevel');
+      rateItemDifficulty(itemNum, level);
+      render();
+    });
+  });
+}
+
+// ---------- alertes DL de partiels ----------
+function deadlineAlertsHTML(){
+  const dl = DATA.subjectDeadlines || {};
+  const cats = Object.keys(dl);
+  if(cats.length===0) return '';
+  const status = {};
+  ['S1','S2'].forEach(phase=>{
+    const cap = quotaThroughToday(phase);
+    for(let idx=0; idx<cap; idx++){
+      const s = getSlot(phase, idx);
+      if(status[s.itemNum]===undefined) status[s.itemNum] = false;
+      if(s.mode==='revision' && isItemTaskDone(s.nativeKey)) status[s.itemNum] = true;
+    }
+  });
+  const today = todayDate();
+  const rows = cats.map(c=>{
+    const daysLeft = daysBetween(today, parseISO(dl[c]));
+    const nums = itemsOfCat(c);
+    const total = nums.length;
+    const done = nums.filter(n=>status[n]).length;
+    return { cat:c, daysLeft, total, done, remaining: total-done };
+  }).filter(r=>r.daysLeft >= -1).sort((a,b)=>a.daysLeft-b.daysLeft);
+  if(rows.length===0) return '';
+  return `<div class="dl-alerts">` + rows.map(r=>{
+    const urgent = r.daysLeft <= 7;
+    const label = r.daysLeft < 0 ? 'DL dépassée' : (r.daysLeft===0 ? 'DL aujourd\u2019hui' : `DL dans ${r.daysLeft} j`);
+    const statusLabel = r.remaining>0 ? `${r.done}/${r.total} vus · ${r.remaining} restants` : `${r.total}/${r.total} vus — tout vu ✓`;
+    return `<div class="dl-alert-row ${urgent?'urgent':''}">
+      <span class="dl-cat">${CAT_LABELS[r.cat]}</span>
+      <span class="dl-detail">${label} · ${statusLabel}</span>
+    </div>`;
+  }).join('') + `</div>`;
+}
+
 function bindSwapHandlers(container){
   container.querySelectorAll('.swap-toggle').forEach(btn=>{
     btn.addEventListener('click', (e)=>{
@@ -1108,7 +1181,7 @@ async function tryReconnectBackupFile(){
     const text = await file.text();
     if(text && text.trim()){
       const parsed = JSON.parse(text);
-      DATA = Object.assign({config:Object.assign({},DEFAULT_CONFIG), itemChecks:{}, checks:{}, reportedDays:{}, darkMode:false, itemOverrides:{}, customTasks:{}, subjectDeadlines:{}, onboarded:true}, parsed);
+      DATA = Object.assign({config:Object.assign({},DEFAULT_CONFIG), itemChecks:{}, checks:{}, reportedDays:{}, darkMode:false, itemOverrides:{}, customTasks:{}, subjectDeadlines:{}, itemDifficulty:{}, lcaEntries:{}, onboarded:true}, parsed);
       if(!DATA.items) DATA.items = ITEMS_RAW.map(([n,t,c])=>[n,t,c]);
       await saveData();
     }
@@ -1122,25 +1195,30 @@ async function loadData(){
     const raw = localStorage.getItem(STORAGE_KEY);
     if(raw){
       const parsed = JSON.parse(raw);
-      const data = Object.assign({config:Object.assign({},DEFAULT_CONFIG), itemChecks:{}, checks:{}, reportedDays:{}, darkMode:false, itemOverrides:{}, customTasks:{}, subjectDeadlines:{}, onboarded:true}, parsed);
+      const data = Object.assign({config:Object.assign({},DEFAULT_CONFIG), itemChecks:{}, checks:{}, reportedDays:{}, darkMode:false, itemOverrides:{}, customTasks:{}, subjectDeadlines:{}, itemDifficulty:{}, lcaEntries:{}, onboarded:true}, parsed);
       if(!data.items) data.items = ITEMS_RAW.map(([n,t,c])=>[n,t,c]);
       return data;
     }
   }catch(e){ console.error('Erreur de lecture locale', e); }
-  return {config:Object.assign({},DEFAULT_CONFIG), itemChecks:{}, checks:{}, reportedDays:{}, darkMode:false, itemOverrides:{}, customTasks:{}, subjectDeadlines:{}, onboarded:false, items: ITEMS_RAW.map(([n,t,c])=>[n,t,c])};
+  return {config:Object.assign({},DEFAULT_CONFIG), itemChecks:{}, checks:{}, reportedDays:{}, darkMode:false, itemOverrides:{}, customTasks:{}, subjectDeadlines:{}, itemDifficulty:{}, lcaEntries:{}, onboarded:false, items: ITEMS_RAW.map(([n,t,c])=>[n,t,c])};
 }
 async function saveData(){
   try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(DATA)); }
   catch(e){ console.error('Erreur de sauvegarde locale', e); }
   writeBackupFile(); // no-op si aucun fichier n'est lié
-  githubQueueSave(); // no-op si GitHub n'est pas configuré
+  scheduleGithubSync(); // no-op si GitHub n'est pas configuré
 }
 
 // ---------- synchronisation GitHub ----------
 const GH_CONFIG_KEY = 'edn-planner-github-v1';
+const GH_SNAPSHOT_KEY = 'edn-planner-github-snapshot-v1'; // dernier état connu-synchronisé, base du merge à 3 voies
 let ghSaveInFlight = false;
 let ghSavePending = false;
 let ghSha = null; // sha du dernier contenu connu du fichier distant
+let ghDebounceTimer = null;
+let ghPendingSince = null;
+const GH_DEBOUNCE_MS = 15000; // sauvegarde groupée : 15s d'inactivité avant de pousser
+const GH_MAX_WAIT_MS = 60000; // jamais plus de 60s d'attente même en cas d'activité continue
 
 function getGithubConfig(){
   try{
@@ -1154,7 +1232,9 @@ function setGithubConfig(cfg){
 }
 function clearGithubConfig(){
   localStorage.removeItem(GH_CONFIG_KEY);
+  localStorage.removeItem(GH_SNAPSHOT_KEY);
   ghSha = null;
+  if(ghDebounceTimer){ clearTimeout(ghDebounceTimer); ghDebounceTimer = null; ghPendingSince = null; }
 }
 function ghHeaders(cfg){
   return {
@@ -1176,6 +1256,58 @@ function b64EncodeUtf8(str){
 function b64DecodeUtf8(b64){
   return decodeURIComponent(escape(atob(b64)));
 }
+function getGhSnapshot(){
+  try{ const raw = localStorage.getItem(GH_SNAPSHOT_KEY); return raw ? JSON.parse(raw) : {}; }catch(e){ return {}; }
+}
+function setGhSnapshot(data){
+  try{ localStorage.setItem(GH_SNAPSHOT_KEY, JSON.stringify(data)); }catch(e){}
+}
+
+// ---------- merge à 3 voies (distant / local / dernier état synchronisé) ----------
+// pour les maps clé->valeur (itemChecks, checks, itemOverrides, subjectDeadlines, customTasks,
+// reportedDays) : chaque clé est fusionnée indépendamment. Si le local a changé cette clé
+// depuis le dernier sync, le local gagne ; sinon si le distant l'a changée, le distant gagne ;
+// sinon on garde la valeur commune. Ça permet à deux appareils de modifier des jours/items
+// différents sans que l'un écrase le travail de l'autre.
+function mergeMap(remote, local, snapshot){
+  remote = remote || {}; local = local || {}; snapshot = snapshot || {};
+  const keys = new Set([...Object.keys(remote), ...Object.keys(local), ...Object.keys(snapshot)]);
+  const out = {};
+  keys.forEach(k=>{
+    const r = remote[k], l = local[k], s = snapshot[k];
+    const localChanged = JSON.stringify(l) !== JSON.stringify(s);
+    const remoteChanged = JSON.stringify(r) !== JSON.stringify(s);
+    let v;
+    if(localChanged) v = l;
+    else if(remoteChanged) v = r;
+    else v = (l!==undefined ? l : r);
+    if(v!==undefined) out[k] = v;
+  });
+  return out;
+}
+function mergeScalar(remote, local, snapshot){
+  const localChanged = JSON.stringify(local) !== JSON.stringify(snapshot);
+  const remoteChanged = JSON.stringify(remote) !== JSON.stringify(snapshot);
+  if(localChanged) return local;
+  if(remoteChanged) return remote;
+  return local!==undefined ? local : remote;
+}
+function mergeData(remote, local, snapshot){
+  remote = remote || {}; snapshot = snapshot || {};
+  return {
+    config: mergeScalar(remote.config, local.config, snapshot.config),
+    items: mergeScalar(remote.items, local.items, snapshot.items),
+    darkMode: mergeScalar(remote.darkMode, local.darkMode, snapshot.darkMode),
+    onboarded: mergeScalar(remote.onboarded, local.onboarded, snapshot.onboarded),
+    itemChecks: mergeMap(remote.itemChecks, local.itemChecks, snapshot.itemChecks),
+    checks: mergeMap(remote.checks, local.checks, snapshot.checks),
+    reportedDays: mergeMap(remote.reportedDays, local.reportedDays, snapshot.reportedDays),
+    itemOverrides: mergeMap(remote.itemOverrides, local.itemOverrides, snapshot.itemOverrides),
+    subjectDeadlines: mergeMap(remote.subjectDeadlines, local.subjectDeadlines, snapshot.subjectDeadlines),
+    customTasks: mergeMap(remote.customTasks, local.customTasks, snapshot.customTasks)
+  };
+}
+
 // tentative de chargement des données distantes au démarrage — retourne les données ou null
 async function githubLoadData(){
   const cfg = getGithubConfig();
@@ -1188,6 +1320,7 @@ async function githubLoadData(){
     const j = await res.json();
     ghSha = j.sha;
     const parsed = JSON.parse(b64DecodeUtf8(j.content.replace(/\n/g,'')));
+    setGhSnapshot(parsed); // base de référence pour les futurs merges
     setGithubStatus('Synchronisé ✓');
     return parsed;
   }catch(e){
@@ -1196,52 +1329,102 @@ async function githubLoadData(){
     return null;
   }
 }
-// sauvegarde immédiate, sérialisée : un seul push à la fois, le plus récent état gagne
-async function githubQueueSave(){
+// programme une synchronisation groupée : regroupe les modifications rapprochées en un seul
+// commit, avec un délai maximal pour ne jamais rester trop longtemps désynchronisé.
+function scheduleGithubSync(){
+  const cfg = getGithubConfig();
+  if(!cfg || !cfg.token || !cfg.owner || !cfg.repo) return;
+  const now = Date.now();
+  if(ghPendingSince===null) ghPendingSince = now;
+  if(ghDebounceTimer) clearTimeout(ghDebounceTimer);
+  const waited = now - ghPendingSince;
+  const delay = waited >= GH_MAX_WAIT_MS ? 0 : GH_DEBOUNCE_MS;
+  setGithubStatus('Modifications en attente de synchronisation…');
+  ghDebounceTimer = setTimeout(()=>{
+    ghDebounceTimer = null;
+    ghPendingSince = null;
+    githubSyncNow();
+  }, delay);
+}
+// synchronisation immédiate avec merge à 3 voies : récupère le distant, fusionne avec le
+// local par rapport au dernier état connu, pousse le résultat, et applique le merge localement
+// (au cas où le distant contenait des changements faits depuis un autre appareil).
+async function githubSyncNow(){
   const cfg = getGithubConfig();
   if(!cfg || !cfg.token || !cfg.owner || !cfg.repo) return;
   if(ghSaveInFlight){ ghSavePending = true; return; }
   ghSaveInFlight = true;
-  setGithubStatus('Sauvegarde…');
+  setGithubStatus('Synchronisation…');
   try{
-    if(ghSha === null){
+    for(let attempt=0; attempt<2; attempt++){
+      let remoteData = null, sha;
       try{
         const r = await fetch(ghContentsUrl(cfg) + '?ref=' + encodeURIComponent(cfg.branch||'main'), { headers: ghHeaders(cfg) });
-        if(r.ok){ const j = await r.json(); ghSha = j.sha; }
-        else if(r.status===404){ ghSha = undefined; }
-      }catch(e){ /* on tentera quand même l'écriture */ }
+        if(r.ok){
+          const j = await r.json();
+          sha = j.sha;
+          remoteData = JSON.parse(b64DecodeUtf8(j.content.replace(/\n/g,'')));
+        } else if(r.status===404){
+          sha = undefined;
+        } else {
+          setGithubStatus('Erreur de connexion GitHub (' + r.status + ')');
+          return;
+        }
+      }catch(e){
+        setGithubStatus('Hors ligne — sauvegardé localement seulement');
+        return;
+      }
+
+      const snapshot = getGhSnapshot();
+      const merged = remoteData ? mergeData(remoteData, DATA, snapshot) : DATA;
+
+      const body = {
+        message: 'Mise à jour planning — ' + new Date().toISOString(),
+        content: b64EncodeUtf8(JSON.stringify(merged, null, 2)),
+        branch: cfg.branch || 'main'
+      };
+      if(sha) body.sha = sha;
+      const res = await fetch(ghContentsUrl(cfg), { method:'PUT', headers: ghHeaders(cfg), body: JSON.stringify(body) });
+      if(res.ok){
+        const j = await res.json();
+        ghSha = j.content ? j.content.sha : null;
+        DATA = merged;
+        setGhSnapshot(merged);
+        try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(DATA)); }catch(e){}
+        rebuildAll();
+        CAL = buildCalendar(DATA.config, DATA.reportedDays);
+        render();
+        setGithubStatus('Synchronisé ✓ ' + new Date().toLocaleTimeString('fr-FR'));
+        return;
+      } else if(res.status===409){
+        continue; // sha changé entre-temps : on reboucle, refetch + re-merge
+      } else {
+        const errTxt = await res.text().catch(()=> '');
+        console.error('Erreur GitHub (sauvegarde)', res.status, errTxt);
+        setGithubStatus('Erreur de sauvegarde GitHub (' + res.status + ')');
+        return;
+      }
     }
-    const body = {
-      message: 'Mise à jour planning — ' + new Date().toISOString(),
-      content: b64EncodeUtf8(JSON.stringify(DATA, null, 2)),
-      branch: cfg.branch || 'main'
-    };
-    if(ghSha) body.sha = ghSha;
-    const res = await fetch(ghContentsUrl(cfg), { method:'PUT', headers: ghHeaders(cfg), body: JSON.stringify(body) });
-    if(res.ok){
-      const j = await res.json();
-      ghSha = j.content ? j.content.sha : null;
-      setGithubStatus('Synchronisé ✓ ' + new Date().toLocaleTimeString('fr-FR'));
-    } else if(res.status===409){
-      ghSha = null; // conflit de version — on relira le sha au prochain essai
-      setGithubStatus('Conflit de version — nouvel essai…');
-      ghSavePending = true;
-    } else {
-      const errTxt = await res.text().catch(()=> '');
-      console.error('Erreur GitHub (sauvegarde)', res.status, errTxt);
-      setGithubStatus('Erreur de sauvegarde GitHub (' + res.status + ')');
-    }
-  }catch(e){
-    console.error('Erreur GitHub (réseau)', e);
-    setGithubStatus('Hors ligne — sauvegardé localement seulement');
+    setGithubStatus('Conflit persistant — nouvel essai au prochain changement');
   }finally{
     ghSaveInFlight = false;
     if(ghSavePending){
       ghSavePending = false;
-      githubQueueSave();
+      githubSyncNow();
     }
   }
 }
+// force une synchronisation immédiate si l'onglet passe en arrière-plan, pour ne pas perdre
+// de modifications en attente si l'appareil se met en veille juste après.
+document.addEventListener('visibilitychange', ()=>{
+  if(document.hidden && ghDebounceTimer){
+    clearTimeout(ghDebounceTimer);
+    ghDebounceTimer = null;
+    ghPendingSince = null;
+    githubSyncNow();
+  }
+});
+
 function exportBackup(){
   const blob = new Blob([JSON.stringify(DATA, null, 2)], {type:'application/json'});
   const url = URL.createObjectURL(blob);
@@ -1255,7 +1438,7 @@ function importBackup(file){
   reader.onload = async (e) => {
     try{
       const parsed = JSON.parse(e.target.result);
-      DATA = Object.assign({config:Object.assign({},DEFAULT_CONFIG), itemChecks:{}, checks:{}, reportedDays:{}, darkMode:false, itemOverrides:{}, customTasks:{}, subjectDeadlines:{}, onboarded:true}, parsed);
+      DATA = Object.assign({config:Object.assign({},DEFAULT_CONFIG), itemChecks:{}, checks:{}, reportedDays:{}, darkMode:false, itemOverrides:{}, customTasks:{}, subjectDeadlines:{}, itemDifficulty:{}, lcaEntries:{}, onboarded:true}, parsed);
       if(!DATA.items) DATA.items = ITEMS_RAW.map(([n,t,c])=>[n,t,c]);
       rebuildAll();
       applyTheme();
@@ -1385,6 +1568,28 @@ function itemHistory(itemNum){
 }
 
 // ---------- rendering ----------
+function isDayFullyDone(day){
+  if(!day.tasks || day.tasks.length===0) return true;
+  return day.tasks.every(t=> t.kind==='item' ? isItemTaskDone(t.id) : isGenericDone(day.iso, t.id));
+}
+// série de jours consécutifs entièrement complétés (jours sans tâche ou hors plage ignorés,
+// journée en cours comptée seulement si elle est déjà terminée)
+function computeStreak(){
+  const today = todayDate();
+  const start = parseISO(DATA.config.start);
+  let cursor = new Date(today);
+  const todayDay = findDay(todayIso());
+  if(!todayDay || !isDayFullyDone(todayDay)) cursor = addDays(cursor, -1);
+  let streak = 0;
+  while(cursor >= start){
+    const day = findDay(toISO(cursor));
+    if(!day || !day.tasks || day.tasks.length===0){ cursor = addDays(cursor, -1); continue; }
+    if(isDayFullyDone(day)){ streak++; cursor = addDays(cursor, -1); }
+    else break;
+  }
+  return streak;
+}
+
 function renderVitals(){
   const exam = parseISO(DATA.config.exam);
   const daysLeft = Math.max(0, daysBetween(todayDate(), exam));
@@ -1396,10 +1601,12 @@ function renderVitals(){
   });
   const pct = total? Math.round(done/total*100) : 0;
   const day = findDay(todayIso());
+  const streak = computeStreak();
   document.getElementById('vitals').innerHTML = `
     <div class="vital"><div class="num">${daysLeft}</div><div class="lbl">Jours avant les EDN</div></div>
     <div class="vital"><div class="num">${day ? (day.phase==='S1'?'S1':day.phase==='S2'?'S2':'Consol.') : '—'}</div><div class="lbl">Phase actuelle</div></div>
     <div class="vital"><div class="num">${pct}%</div><div class="lbl">Progression globale</div></div>
+    <div class="vital"><div class="num">${streak}🔥</div><div class="lbl">Jour${streak>1?'s':''} complet${streak>1?'s':''} d'affilée</div></div>
   `;
   const rlen = retardList().length;
   const badge = document.getElementById('retardBadge');
@@ -1422,6 +1629,15 @@ function itemTaskHTML(task, opts){
     : "Pratique — choisis Anki ou QCM edn.fr";
   const key = task.id || task.key;
   const histCount = itemHistory(task.itemNum).filter(h=>h.done).length;
+  const diff = (DATA.itemDifficulty && DATA.itemDifficulty[task.itemNum]) || null;
+  const diffUI = `
+    <div class="diff-row">
+      <span class="diff-label">Ressenti :</span>
+      <button type="button" class="diff-btn ${diff==='facile'?'active':''}" data-diffitem="${item.num}" data-difflevel="facile">😊 Facile</button>
+      <button type="button" class="diff-btn ${diff==='moyen'?'active':''}" data-diffitem="${item.num}" data-difflevel="moyen">😐 Moyen</button>
+      <button type="button" class="diff-btn ${diff==='difficile'?'active':''}" data-diffitem="${item.num}" data-difflevel="difficile">😰 Difficile</button>
+    </div>
+  `;
   const swapUI = `
     <div class="swap-block" onclick="event.stopPropagation()">
       <button type="button" class="swap-toggle" data-key="${key}">🔄 Changer l'item de cette case</button>
@@ -1449,6 +1665,7 @@ function itemTaskHTML(task, opts){
         <input type="checkbox" data-itemkey="${key}" ${done?'checked':''}>
         <span>Fait</span>
       </label>
+      <div onclick="event.stopPropagation()">${diffUI}</div>
       ${swapUI}
     </div>
   `;
@@ -1498,6 +1715,7 @@ function bindTaskHandlers(container){
     });
   });
   bindSwapHandlers(container);
+  bindDifficultyHandlers(container);
 }
 function updateRetardBadgeOnly(){
   const rlen = retardList().length;
@@ -1576,7 +1794,7 @@ function renderToday(){
 
   const custom = day.reported ? '' : customTasksHTML(day.iso);
 
-  container.innerHTML = weekSummaryHTML() + head + body + custom + `<footer class="note">Plus de temps aujourd'hui ? Avance librement (onglet Planning). Moins de temps ? Utilise "Reporter cette journée", ou laisse simplement les items non faits — ils remonteront automatiquement demain.</footer>`;
+  container.innerHTML = deadlineAlertsHTML() + weekSummaryHTML() + head + body + custom + `<footer class="note">Plus de temps aujourd'hui ? Avance librement (onglet Planning). Moins de temps ? Utilise "Reporter cette journée", ou laisse simplement les items non faits — ils remonteront automatiquement demain.</footer>`;
   bindTaskHandlers(container);
   if(!day.reported) bindCustomTaskHandlers(container, day.iso);
   const rb = document.getElementById('reportBtn');
@@ -1788,15 +2006,31 @@ function renderLCA(){
     if(isGenericDone(sat.iso,'lca') || isGenericDone(sunIso,'lca')) streak++; else break;
   }
 
+  const methodoOptions = ['Essai randomisé','Cohorte','Cas-témoins','Méta-analyse / revue systématique','Étude transversale','Autre'];
+
   let rows = '';
   allSaturdays.slice().reverse().forEach(sat=>{
     const sunDate = addDays(sat.date,1);
     const sunIso = toISO(sunDate);
     const done = isGenericDone(sat.iso,'lca') || isGenericDone(sunIso,'lca');
+    const entry = (DATA.lcaEntries && DATA.lcaEntries[sat.iso]) || {};
+    const hasNote = !!(entry.title || entry.notes);
     rows += `<div class="lca-row ${done?'done':''}">
       <span>${fmtShort(sat.date)} – ${fmtShort(sunDate)}</span>
       <input type="checkbox" data-sat="${sat.iso}" data-sun="${sunIso}" ${done?'checked':''}>
-    </div>`;
+    </div>
+    <button type="button" class="swap-toggle" data-lcatoggle="${sat.iso}" style="margin:-6px 0 10px;">📝 ${hasNote? 'Voir / modifier la fiche' : 'Ajouter la fiche de lecture'}</button>
+    <div class="swap-panel lca-notes" id="lcanotes-${sat.iso}">
+      <div class="frow"><input type="text" class="lca-title" data-lcatitle="${sat.iso}" placeholder="Titre de l'article" value="${(entry.title||'').replace(/"/g,'&quot;')}"></div>
+      <div class="frow" style="margin-top:6px;">
+        <select class="lca-methodo" data-lcamethodo="${sat.iso}">
+          <option value="">Méthodologie…</option>
+          ${methodoOptions.map(m=>`<option value="${m}" ${entry.methodo===m?'selected':''}>${m}</option>`).join('')}
+        </select>
+      </div>
+      <textarea class="lca-note-text" data-lcanote="${sat.iso}" placeholder="Points clés, pièges méthodo repérés…" style="width:100%;margin-top:6px;min-height:60px;font-family:var(--sans);font-size:13px;padding:8px;border:1px solid var(--rule);border-radius:var(--radius);background:var(--paper-raised);color:var(--ink);">${entry.notes||''}</textarea>
+    </div>
+    `;
   });
 
   container.innerHTML = `
@@ -1813,9 +2047,31 @@ function renderLCA(){
       renderLCA();
     });
   });
+  container.querySelectorAll('[data-lcatoggle]').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const panel = document.getElementById('lcanotes-'+btn.getAttribute('data-lcatoggle'));
+      if(panel) panel.classList.toggle('open');
+    });
+  });
+  function saveLcaEntry(iso){
+    if(!DATA.lcaEntries) DATA.lcaEntries = {};
+    const title = document.querySelector(`[data-lcatitle="${iso}"]`).value.trim();
+    const methodo = document.querySelector(`[data-lcamethodo="${iso}"]`).value;
+    const notes = document.querySelector(`[data-lcanote="${iso}"]`).value.trim();
+    if(!title && !methodo && !notes){ delete DATA.lcaEntries[iso]; }
+    else { DATA.lcaEntries[iso] = {title, methodo, notes}; }
+    saveData();
+  }
+  container.querySelectorAll('.lca-title, .lca-methodo').forEach(el=>{
+    el.addEventListener('change', ()=> saveLcaEntry(el.getAttribute('data-lcatitle')||el.getAttribute('data-lcamethodo')));
+  });
+  container.querySelectorAll('.lca-note-text').forEach(el=>{
+    el.addEventListener('blur', ()=> saveLcaEntry(el.getAttribute('data-lcanote')));
+  });
 }
 
 let itemsFilterCat = 'all';
+let itemsSearchQuery = '';
 
 function render(){
   renderVitals();
@@ -1846,8 +2102,10 @@ function renderItemsManager(){
   const container = document.getElementById('app');
   const cats = ALL_CATS;
 
+  const q = itemsSearchQuery.trim().toLowerCase();
   const list = CURRENT_ITEMS
     .filter(([n,t,c])=> itemsFilterCat==='all' || normalizeCats(c).includes(itemsFilterCat))
+    .filter(([n,t])=> !q || String(n).includes(q) || t.toLowerCase().includes(q))
     .sort((a,b)=>a[0]-b[0]);
 
   let rows = list.map(([n,t,c])=>{
@@ -1878,7 +2136,7 @@ function renderItemsManager(){
       <button class="btn-primary" id="btnAddItem" style="margin-top:10px;">Ajouter</button>
     </div>
     <div class="frow" style="align-items:center;margin-bottom:14px;">
-      <label style="font-family:var(--mono);font-size:11.5px;color:var(--ink-soft);">Filtrer :</label>
+      <input type="text" id="itemsSearchInput" placeholder="Rechercher un item (numéro ou mot-clé)…" value="${itemsSearchQuery.replace(/"/g,'&quot;')}" style="font-family:var(--sans);font-size:13px;padding:7px 10px;border:1px solid var(--rule);border-radius:var(--radius);background:var(--white);color:var(--ink);flex:1;">
       <select id="filterCatSelect" style="font-family:var(--sans);font-size:13px;padding:7px 10px;border:1px solid var(--rule);border-radius:var(--radius);background:var(--white);color:var(--ink);flex:1;">
         <option value="all" ${itemsFilterCat==='all'?'selected':''}>Tous les collèges (${CURRENT_ITEMS.length})</option>
         ${cats.map(c=>`<option value="${c}" ${itemsFilterCat===c?'selected':''}>${CAT_LABELS[c]} (${itemsOfCat(c).length})</option>`).join('')}
@@ -1887,6 +2145,13 @@ function renderItemsManager(){
     ${rows}
   `;
 
+  document.getElementById('itemsSearchInput').addEventListener('input', e=>{
+    itemsSearchQuery = e.target.value;
+    renderItemsManager();
+    const inp = document.getElementById('itemsSearchInput');
+    inp.focus();
+    inp.setSelectionRange(inp.value.length, inp.value.length);
+  });
   document.getElementById('filterCatSelect').addEventListener('change', e=>{
     itemsFilterCat = e.target.value;
     renderItemsManager();
@@ -1985,7 +2250,7 @@ async function init(){
   await tryReconnectBackupFile(); // relit le fichier de secours s'il est lié, remplace DATA si présent
   const remote = await githubLoadData(); // si GitHub est configuré, la version distante prime
   if(remote){
-    DATA = Object.assign({config:Object.assign({},DEFAULT_CONFIG), itemChecks:{}, checks:{}, reportedDays:{}, darkMode:false, itemOverrides:{}, customTasks:{}, subjectDeadlines:{}, onboarded:true}, remote);
+    DATA = Object.assign({config:Object.assign({},DEFAULT_CONFIG), itemChecks:{}, checks:{}, reportedDays:{}, darkMode:false, itemOverrides:{}, customTasks:{}, subjectDeadlines:{}, itemDifficulty:{}, lcaEntries:{}, onboarded:true}, remote);
     if(!DATA.items) DATA.items = ITEMS_RAW.map(([n,t,c])=>[n,t,c]);
     try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(DATA)); }catch(e){}
   }
@@ -2024,7 +2289,7 @@ async function init(){
     const token = document.getElementById('ghToken').value.trim();
     if(!owner || !repo || !token){ setGithubStatus('Renseigne au moins utilisateur, dépôt et token.'); return; }
     setGithubConfig({owner, repo, path, branch, token});
-    await githubQueueSave();
+    await githubSyncNow();
   });
   document.getElementById('btnGhDisconnect').addEventListener('click', ()=>{
     clearGithubConfig();
