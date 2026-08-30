@@ -1,51 +1,18 @@
 {
   "config": {
     "start": "2026-08-24",
-    "s1End": "2027-01-31",
+    "s1End": "2027-01-21",
     "exam": "2027-10-15",
+    "newCats": [
+      "psy",
+      "ger",
+      "mi",
+      "ped",
+      "onco",
+      "hemato"
+    ],
     "studentYear": 5
   },
-  "itemChecks": {
-    "S1_i60_o1": true,
-    "S1_i108_o1": true,
-    "S1_i185_o1": true,
-    "S1_i290_o1": true,
-    "S1_i47_o1": true,
-    "S1_i212_o1": true,
-    "S1_i61_o1": true,
-    "S1_i118_o1": true,
-    "S1_i48_o1": true,
-    "S1_i186_o1": true
-  },
-  "checks": {
-    "2026-08-29": {},
-    "2026-08-30": {}
-  },
-  "reportedDays": {},
-  "darkMode": true,
-  "itemOverrides": {
-    "S1_i118_o1": {
-      "itemNum": 123
-    },
-    "S1_i123_o1": {
-      "itemNum": 118
-    },
-    "S1_i48_o1": {
-      "itemNum": 49
-    },
-    "S1_i49_o1": {
-      "itemNum": 48
-    },
-    "S1_i186_o1": {
-      "itemNum": 1
-    },
-    "S2_i1_o1": {
-      "itemNum": 186
-    }
-  },
-  "customTasks": {},
-  "subjectDeadlines": {},
-  "onboarded": true,
   "items": [
     [
       1,
@@ -2616,5 +2583,46 @@
         "legale"
       ]
     ]
-  ]
+  ],
+  "darkMode": false,
+  "onboarded": true,
+  "itemChecks": {
+    "S1_i60_o1": true,
+    "S1_i108_o1": true,
+    "S1_i185_o1": true,
+    "S1_i290_o1": true,
+    "S1_i47_o1": true,
+    "S1_i212_o1": true,
+    "S1_i61_o1": true,
+    "S1_i118_o1": true,
+    "S1_i48_o1": true,
+    "S1_i186_o1": true
+  },
+  "checks": {
+    "2026-08-29": {},
+    "2026-08-30": {}
+  },
+  "reportedDays": {},
+  "itemOverrides": {
+    "S1_i118_o1": {
+      "itemNum": 123
+    },
+    "S1_i123_o1": {
+      "itemNum": 118
+    },
+    "S1_i48_o1": {
+      "itemNum": 49
+    },
+    "S1_i49_o1": {
+      "itemNum": 48
+    },
+    "S1_i186_o1": {
+      "itemNum": 1
+    },
+    "S2_i1_o1": {
+      "itemNum": 186
+    }
+  },
+  "subjectDeadlines": {},
+  "customTasks": {}
 }
