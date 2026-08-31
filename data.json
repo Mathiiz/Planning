@@ -2597,7 +2597,8 @@
     "S1_i118_o1": true,
     "S1_i48_o1": true,
     "S1_i186_o1": true,
-    "S1_i291_o1": true
+    "S1_i291_o1": true,
+    "S1_i213_o1": true
   },
   "checks": {
     "2026-08-29": {
@@ -2755,5 +2756,12 @@
     }
   },
   "subjectDeadlines": {},
-  "customTasks": {}
+  "customTasks": {
+    "2026-09-03": [
+      {
+        "id": "custom_1788199341001_577",
+        "label": "🔁 Révision rapprochée — Item 213 : Anémie chez l'adulte et l'enfant (marqué difficile)"
+      }
+    ]
+  }
 }
