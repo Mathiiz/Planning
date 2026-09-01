@@ -81,11 +81,16 @@
   .day-head h2{font-family:var(--serif);font-size:18px;margin:0 0 2px;font-weight:600;text-transform:capitalize;}
   .day-head .sub{font-size:12px;color:var(--ink-soft);}
   .report-btn{margin-top:10px;font-family:var(--mono);font-size:11px;background:none;border:1px solid var(--rule);color:var(--ink-soft);border-radius:20px;padding:5px 12px;cursor:pointer;}
+  .report-control{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:10px;}
+  .report-control select, .report-control input[type=text]{font-family:var(--sans);font-size:12px;padding:6px 8px;border:1px solid var(--rule);border-radius:6px;background:var(--paper-raised);color:var(--ink);}
+  .report-control input[type=text]{flex:1;min-width:120px;}
+  .report-control .report-btn{margin-top:0;}
   .report-btn.active{background:var(--amber);color:#fff;border-color:var(--amber);}
 
   .task-card{background:var(--white);border:1px solid var(--rule-soft);border-left:4px solid var(--rule);border-radius:var(--radius);padding:14px 16px;margin-bottom:10px;cursor:pointer;}
   .task-card.revision{border-left-color:var(--accent);}
   .task-card.entrainement{border-left-color:var(--amber);}
+  .task-card.sdd{border-left-color:var(--danger);}
   .task-card .top-row{display:flex;align-items:center;gap:8px;margin-bottom:7px;flex-wrap:wrap;}
   .mode-badge{font-family:var(--mono);font-size:9.5px;text-transform:uppercase;letter-spacing:.07em;padding:2px 7px;border-radius:2px;color:#fff;}
   .mode-badge.revision{background:var(--accent);}
@@ -273,6 +278,10 @@
       <span style="font-size:10.5px;color:#9FB3C8;display:block;margin-top:4px;">La date à partir de laquelle tu passes en révision cumulative de tout le programme, tous items confondus. Avant cette date, seules les matières "nouvelles" que tu as cochées ci-dessous tournent (les bascules entre trimestres/semestres se gèrent avec les DL de partiels, pas avec cette date).</span>
     </label>
     <label>Date des EDN (estimation)<input type="date" id="cfgExam"></label>
+    <label>Date des ECOS (optionnel)
+      <input type="date" id="cfgEcos">
+      <span style="font-size:10.5px;color:#9FB3C8;display:block;margin-top:4px;">Si renseignée, la période entre les EDN et cette date bascule automatiquement en entraînement ECOS : 4 SDD par jour (plus d'items), jusqu'à épuisement du catalogue SDD ci-dessous.</span>
+    </label>
     <label>Année d'étude actuelle
       <select id="cfgStudentYear">
         <option value="3">3ᵉ année (DFGSM3)</option>
@@ -285,6 +294,31 @@
     <label>Matières nouvelles de la période & DL de partiels
       <span style="font-size:10.5px;color:#9FB3C8;display:block;margin-bottom:6px;">Coche les matières que tu découvres actuellement (remplace les 6 par défaut). Ajoute une DL sur une matière (nouvelle ou déjà vue) pour faire remonter tous ses items en tête de file avant cette date.</span>
       <div class="subject-config-list" id="subjectConfigList"></div>
+    </label>
+    <label>Jours spéciaux (repos, partiels, concours blancs…)
+      <span style="font-size:10.5px;color:#9FB3C8;display:block;margin-bottom:6px;">Programme à l'avance un jour sans rien de prévu — les items qui y étaient prévus glissent automatiquement aux jours suivants.</span>
+      <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px;">
+        <input type="date" id="newReportedDate" style="font-family:var(--sans);font-size:12px;padding:6px 8px;border:1px solid var(--rule);border-radius:6px;background:var(--paper-raised);color:var(--ink);">
+        <select id="newReportedType" style="font-family:var(--sans);font-size:12px;padding:6px 8px;border:1px solid var(--rule);border-radius:6px;background:var(--paper-raised);color:var(--ink);">
+          <option value="repos">Repos</option>
+          <option value="partiel">Partiel</option>
+          <option value="concours_blanc">Concours blanc</option>
+          <option value="autre">Autre</option>
+        </select>
+        <input type="text" id="newReportedLabel" placeholder="Précision (optionnel)" style="font-family:var(--sans);font-size:12px;padding:6px 8px;border:1px solid var(--rule);border-radius:6px;background:var(--paper-raised);color:var(--ink);flex:1;min-width:120px;">
+      </div>
+      <button type="button" id="btnAddReportedDay" class="settings-toggle" style="margin:0 0 10px;">+ Programmer ce jour</button>
+      <div class="subject-config-list" id="reportedDaysList"></div>
+    </label>
+    <label>Catalogue SDD (entraînement ECOS)
+      <span style="font-size:10.5px;color:#9FB3C8;display:block;margin-bottom:6px;">Les 356 situations de départ officielles sont préchargées. Besoin de corriger un intitulé ou d'en ajouter une variante ? Colle une ou plusieurs lignes au format "numéro;titre" (ex : "1;Constipation") ci-dessous puis importe — ça met à jour uniquement les numéros concernés, le reste du catalogue ne bouge pas.</span>
+      <textarea id="sddBulkImport" placeholder="1;Constipation&#10;2;Diarrhée&#10;4;Douleur abdominale…" style="width:100%;min-height:90px;font-family:var(--mono);font-size:12px;padding:8px;border:1px solid var(--rule);border-radius:var(--radius);background:var(--paper-raised);color:var(--ink);"></textarea>
+      <div style="display:flex;gap:8px;margin:8px 0;">
+        <button type="button" id="btnImportSdd" class="settings-toggle" style="margin:0;">Importer (ajoute/remplace par numéro)</button>
+        <button type="button" id="btnClearSdd" class="settings-toggle" style="margin:0;">Vider le catalogue</button>
+      </div>
+      <span id="sddCatalogCount" style="font-size:10.5px;color:#9FB3C8;display:block;margin-bottom:6px;"></span>
+      <div class="subject-config-list" id="sddCatalogList" style="max-height:200px;"></div>
     </label>
     <label>Sauvegarde
       <span style="display:flex;gap:8px;flex-wrap:wrap;">
@@ -697,6 +731,99 @@ const ITEMS_RAW = [
 [366,'Exposition accidentelle aux liquides biologiques : conduite à tenir',['infectio']],
 [367,'Impact de l\'environnement sur la santé',['legale']]
 ];
+
+// Liste officielle complète des 356 situations de départ (SDD) pour l'entraînement ECOS.
+const SDD_SEED_RAW = [
+  [1,'Constipation'],[2,'Diarrhée'],[3,'Distension abdominale'],[4,'Douleur abdominale'],
+  [5,'Douleur anale'],[6,'Hépatomégalie'],[7,'Incontinence fécale'],[8,'Masse abdominale'],
+  [9,'Masse / tuméfaction pariétale'],[10,'Méléna / rectorragie'],[11,'Régurgitation du nourrisson'],[12,'Nausées'],
+  [13,'Vomissements'],[14,'Émission de sang par la bouche'],[15,'Anomalies de couleur des extrémités'],[16,'Adénopathies uniques ou multiples'],
+  [17,'Amaigrissement'],[18,'Découverte d\'anomalies à l\'auscultation cardiaque'],[19,'Découverte d\'un souffle vasculaire'],[20,'Découverte d\'anomalies à l\'auscultation pulmonaire'],
+  [21,'Asthénie'],[22,'Diminution de la diurèse'],[23,'Anomalie de la miction'],[24,'Bouffées de chaleur'],
+  [25,'Hypersudation'],[26,'Anomalies de la croissance staturo-pondérale'],[27,'Chute de la personne âgée'],[28,'Coma et troubles de conscience'],
+  [29,'Contraction musculaire localisée ou généralisée'],[30,'Dénutrition / malnutrition'],[31,'Perte d\'autonomie progressive'],[32,'Déshydratation de l\'enfant'],
+  [33,'Difficulté à procréer'],[34,'Douleur aiguë post-opératoire'],[35,'Douleur chronique'],[36,'Douleur de la région lombaire'],
+  [37,'Éruptions chez l\'enfant'],[38,'État de mort apparente'],[39,'Examen du nouveau-né à terme'],[40,'Écoulement mammelonaire'],
+  [41,'Gynécomastie'],[42,'Hypertension artérielle'],[43,'Découverte d\'une hypotension artérielle'],[44,'Hyperthermie / fièvre'],
+  [45,'Hypothermie'],[46,'Hypotonie / malaise du nourrisson'],[47,'Ictère'],[48,'Ictère chez le nouveau-né'],
+  [49,'Ivresse aiguë'],[50,'Malaise / perte de connaissance'],[51,'Obésité et surpoids'],[52,'Odynophagie / dysphagie'],
+  [53,'Hypertension durant la grossesse'],[54,'Oedème localisé ou diffus'],[55,'Pâleur de l\'enfant'],[56,'Raideur articulaire'],
+  [57,'Prise de poids'],[58,'Splénomégalie'],[59,'Tendance au saignement'],[60,'Hémorragie aiguë'],
+  [61,'Syndrome polyuro-polydypsique'],[62,'Troubles de déglutition et fausse-route'],[63,'Troubles sexuels et troubles de l\'érection'],[64,'Vertige et sensation vertigineuse'],
+  [65,'Déformation rachidienne'],[66,'Apparition d\'une difficulté à la marche'],[67,'Douleurs articulaires'],[68,'Boiterie'],
+  [69,'Claudication intermittente d\'un membre'],[70,'Déformation articulaire'],[71,'Douleur d\'un membre'],[72,'Douleur du rachis'],
+  [73,'Douleur, brûlure, crampes et paresthésies'],[74,'Faiblesse musculaire'],[75,'Instabilité du genou'],[76,'Jambes lourdes'],
+  [77,'Myalgies'],[78,'Acné'],[79,'Hirsutisme'],[80,'Alopécie et chute des cheveux'],
+  [81,'Anomalies des ongles'],[82,'Bulles, éruption bulleuse'],[83,'Cicatrice anormale'],[84,'Lésion cutanée / grain de beauté'],
+  [85,'Érythème'],[86,'Escarre'],[87,'Grosse jambe rouge aiguë'],[88,'Prurit'],
+  [89,'Purpura / ecchymose / hématome'],[90,'Tâche cutanée du nourrisson'],[91,'Anomalies des muqueuses'],[92,'Ulcère cutané'],
+  [93,'Vésicules, éruption vésiculeuse (cutanéomuqueuse)'],[94,'Troubles du cycle menstruel'],[95,'Découverte d\'une anomalie au toucher rectal'],[96,'Brûlure mictionnelle'],
+  [97,'Rétention aiguë d\'urines'],[98,'Contraction utérine chez une femme enceinte'],[99,'Douleur pelvienne'],[100,'Douleur testiculaire'],
+  [101,'Ecoulement urétral'],[102,'Hématurie'],[103,'Incontinence urinaire'],[104,'Leucorrhées'],
+  [105,'Découverte d\'une malformation de l\'appareil génital'],[106,'Masse pelvienne'],[107,'Prolapsus'],[108,'Anomalie des bourses'],
+  [109,'Perte de liquide chez une femme enceinte avant terme'],[110,'Saignement génital anormal en post-partum'],[111,'Saignement génital durant la grossesse'],[112,'Saignement génital anormal (hors grossesse connue)'],
+  [113,'Puberté précoce ou retardée'],[114,'Agitation'],[115,'Anomalie du développement psychomoteur'],[116,'Anxiété'],
+  [117,'Apathie'],[118,'Céphalée'],[119,'Confusion mentale / désorientation'],[120,'Convulsions'],
+  [121,'Déficit neurologique sensitif et/ou moteur'],[122,'Hallucinations'],[123,'Humeur triste / douleur morale'],[124,'Idées délirantes'],
+  [125,'Idées ou conduites suicidaires / lésions auto-infligées'],[126,'Mouvements anormaux'],[127,'Paralysie faciale'],[128,'Tremblements'],
+  [129,'Troubles de l\'attention'],[130,'Troubles de l\'équilibre'],[131,'Troubles de mémoire / déclin cognitif'],[132,'Troubles de conduites alimentaires (anorexie ou boulimie)'],
+  [133,'Troubles du comportement chez l\'enfant et l\'adolescent'],[134,'Troubles du langage et/ou phonation'],[135,'Troubles du sommeil, insomnie ou hypersomnie'],[136,'Troubles obsessionnels, comportement compulsif'],
+  [137,'Troubles psychiatriques en post-partum'],[138,'Anomalie de la vision'],[139,'Anomalies palpébrales'],[140,'Baisse de l\'audition / surdité'],
+  [141,'Sensation de brûlure oculaire'],[142,'Corps étranger de l\'oreille ou du nez'],[143,'Diplopie'],[144,'Douleur cervico-faciale'],
+  [145,'Douleur pharyngée'],[146,'Dysphonie'],[147,'Épistaxis'],[148,'Goitre ou nodule thyroïdien'],
+  [149,'Ingestion ou inhalation d\'un corps étranger'],[150,'Limitation de l\'ouverture de bouche'],[151,'Oedème de la face et du cou'],[152,'Oeil rouge et/ou douloureux'],
+  [153,'Otalgie'],[154,'Otorrhée'],[155,'Rhinorrhée'],[156,'Ronflements'],
+  [157,'Strabisme de l\'enfant'],[158,'Tuméfaction cervico-faciale'],[159,'Bradycardie'],[160,'Détresse respiratoire aiguë'],
+  [161,'Douleur thoracique'],[162,'Dyspnée'],[163,'Expectoration'],[164,'Anomalie de l\'examen clinique mammaire'],
+  [165,'Palpitations'],[166,'Tachycardie'],[167,'Toux'],[168,'Brûlure'],
+  [169,'Morsures et piqûres'],[170,'Plaie'],[171,'Traumatisme abdomino-pelvien'],[172,'Traumatisme crânien'],
+  [173,'Traumatisme des membres'],[174,'Traumatisme facial'],[175,'Traumatisme rachidien'],[176,'Traumatisme sévère'],
+  [177,'Traumatisme thoracique'],[178,'Demande / prescription raisonnée et choix d\'un examen diagnostique'],[179,'Réaction inflammatoire sur pièce opératoire / biopsie'],[180,'Interprétation d\'un compte-rendu d\'anatomopathologie'],
+  [181,'Tumeurs malignes sur pièce opératoire / biopsie'],[182,'Analyse de la bandelette urinaire'],[183,'Analyse du liquide cérébro-spinal'],[184,'Prescription et interprétation d\'un audiogramme'],
+  [185,'Réalisation et interprétation d\'un électrocardiogramme (ECG)'],[186,'Syndrome inflammatoire aigu ou chronique'],[187,'Bactérie multirésistante à l\'antibiogramme'],[188,'Découverte de bacilles acido-alcoolo-résistants (BAAR) sur un crachat'],
+  [189,'Analyse d\'un examen cytobactériologique des urines (ECBU)'],[190,'Hémocultures positives'],[191,'Prescription et interprétation d\'un examen microbiologique de selles'],[192,'Analyse d\'un résultat de gaz du sang'],
+  [193,'Analyse de l\'électrophorèse des protéines sériques'],[194,'Analyse du bilan thyroïdien'],[195,'Analyse du bilan lipidique'],[196,'Analyse du sédiment urinaire'],
+  [197,'Analyse des bicarbonates'],[198,'Cholestase'],[199,'Créatinine augmentée'],[200,'Dyscalcémie'],
+  [201,'Dyskaliémie (hypokaliémie et hyperkaliémie)'],[202,'Dysnatrémie'],[203,'Élévation de la protéine C-réactive (CRP)'],[204,'Élévation des enzymes cardiaques'],
+  [205,'Élévation des enzymes pancréatiques'],[206,'Élévation des transaminases sans cholestase'],[207,'Ferritine : baisse ou augmentation'],[208,'Hyperglycémie'],
+  [209,'Hypoglycémie'],[210,'Hyperprotidémie'],[211,'Hypoprotidémie'],[212,'Protéinurie'],
+  [213,'Allongement du temps de céphaline activée (TCA)'],[214,'Anomalie des indices érythrocytaires (taux d\'hémoglobine, hématocrite, etc.)'],[215,'Anomalie des plaquettes'],[216,'Anomalie des leucocytes'],
+  [217,'Baisse de l\'hémoglobine'],[218,'Diminution du taux de prothrombine (TP)'],[219,'Hyperéosinophilie'],[220,'Hyperlymphocytose'],
+  [221,'Interprétation d\'un myélogramme'],[222,'Prescription et analyse du frottis sanguin'],[223,'Interprétation de l\'hémogramme'],[224,'Découverte d\'une anomalie abdominale à l\'examen d\'imagerie médicale'],
+  [225,'Découverte d\'une anomalie cervico-faciale à l\'examen d\'imagerie médicale'],[226,'Découverte d\'une anomalie du cerveau à l\'examen d\'imagerie médicale'],[227,'Découverte d\'une anomalie médullaire ou vertébrale à l\'examen d\'imagerie médicale'],[228,'Découverte d\'une anomalie osseuse et articulaire à l\'examen d\'imagerie médicale'],
+  [229,'Découverte d\'une anomalie pelvienne à l\'examen d\'imagerie médicale'],[230,'Rédaction de la demande d\'un examen d\'imagerie'],[231,'Demande d\'un examen d\'imagerie'],[232,'Demande d\'explication d\'un patient sur le déroulement, les risques et les bénéfices attendus d\'un examen d\'imagerie'],
+  [233,'Identifier / reconnaître les différents examens d\'imagerie (type / fenêtre / séquences / incidences / injection)'],[234,'Interprétation d\'une recherche d\'accès palustre'],[235,'Découverte, diagnostic positif et dépistage rapide du VIH'],[236,'Interprétation d\'un résultat de sérologie'],
+  [237,'Prescription et interprétation de tests allergologiques (patch tests, prick tests, IDR)'],[238,'Demande et préparation aux examens endoscopiques (bronchiques, digestifs)'],[239,'Explication pré-opératoire et recueil de consentement d\'un geste invasif diagnostique ou thérapeutique'],[240,'Expliquer une hospitalisation en soins psychiatriques à la demande d\'un tiers'],
+  [241,'Gestion du sevrage alcoolique contraint'],[242,'Gestion du sevrage tabagique contraint'],[243,'Mise en place et suivi d\'un appareil d\'immobilisation'],[244,'Mise en place et suivi d\'une contention mécanique'],
+  [245,'Prescription d\'un appareil simple'],[246,'Prescription d\'un soin ambulatoire'],[247,'Prescription d\'une rééducation'],[248,'Prescription et suivi d\'un traitement par anticoagulant et/ou anti-agrégant'],
+  [249,'Prescrire des anti-inflammatoires non-stéroïdiens (AINS)'],[250,'Prescrire des antalgiques'],[251,'Prescrire des corticoïdes par voie générale ou locale'],[252,'Prescription d\'un hypolipémiant'],
+  [253,'Prescrire des diurétiques'],[254,'Prescrire des soins associés à l\'initiation d\'une chimiothérapie'],[255,'Prescrire un anti-infectieux'],[256,'Prescrire un hypnotique / anxiolytique'],
+  [257,'Prescrire une contraception et contraception d\'urgence'],[258,'Prévention de la douleur liée aux soins'],[259,'Évaluation et prise en charge de la douleur aiguë'],[260,'Évaluation et prise en charge de la douleur chronique'],
+  [261,'Évaluation et prise en charge de la douleur de l\'enfant et du nourrisson'],[262,'Accès palustre'],[263,'Prise en charge d\'une ectoparasitose'],[264,'Adaptation des traitements sur un terrain particulier (insuffisant rénal, insuffisant hépatique, grossesse, personne âgée, etc.)'],
+  [265,'Consultation de suivi d\'un nourrisson en bonne santé'],[266,'Consultation de suivi d\'un patient polymédiqué'],[267,'Consultation de suivi d\'un patient polymorbide'],[268,'Consultation de suivi d\'une grossesse normale'],
+  [269,'Consultation de suivi et traitement de fond d\'un patient souffrant d\'un trouble psychiatrique chronique (hors dépression)'],[270,'Demande d\'amaigrissement'],[271,'Prescription et surveillance d\'une voie d\'abord vasculaire'],[272,'Prescrire et réaliser une transfusion sanguine'],
+  [273,'Prise en charge d\'un allaitement normal et difficile'],[274,'Prise en charge d\'un patient présentant une tuberculose bacillifère'],[275,'Prise en charge d\'une suspicion de thrombophilie'],[276,'Prise en charge d\'un patient en décubitus prolongé'],
+  [277,'Consultation de suivi d\'un patient présentant une lombalgie aiguë ou chronique'],[278,'Consultation de suivi d\'une femme ménopausée'],[279,'Consultation de suivi d\'une pathologie chronique'],[280,'Prescription d\'une insulinothérapie, consultation de suivi, éducation d\'un patient diabétique de type 1'],
+  [281,'Prescription médicamenteuse, consultation de suivi et éducation d\'un patient diabétique de type 2 ou ayant un diabète secondaire'],[282,'Prescription médicamenteuse, consultation de suivi et éducation d\'un patient hypertendu'],[283,'Consultation de suivi et éducation thérapeutique d\'un patient asthmatique'],[284,'Consultation de suivi et éducation thérapeutique d\'un patient avec hypothyroïdie'],
+  [285,'Consultation de suivi et éducation thérapeutique d\'un patient avec un antécédent cardiovasculaire'],[286,'Consultation de suivi et éducation thérapeutique d\'un patient BPCO'],[287,'Consultation de suivi et éducation thérapeutique d\'un patient insuffisant cardiaque'],[288,'Consultation de suivi et traitement de fond d\'un patient dépressif'],
+  [289,'Consultation et suivi d\'un patient épileptique'],[290,'Suivi d\'un patient en insuffisance rénale chronique'],[291,'Suivi du patient immunodéprimé'],[292,'Première consultation d\'addictologie'],
+  [293,'Consultation de suivi addictologie'],[294,'Consultation de suivi en gynécologie'],[295,'Consultation de suivi gériatrique'],[296,'Consultation de suivi pédiatrique'],
+  [297,'Consultation de suivi en cancérologie'],[298,'Consultation et suivi d\'un patient ayant des troubles cognitifs'],[299,'Consultation post-événement allergique'],[300,'Consultation pré-anesthésique'],
+  [301,'Consultation suite à un contage tuberculeux'],[302,'Consultation aux voyageurs'],[303,'Prévention / dépistage des cancers de l\'adulte'],[304,'Dépistage du diabète gestationnel'],
+  [305,'Dépistage et conseils devant une infection sexuellement transmissible'],[306,'Dépistage et prévention ostéoporose'],[307,'Dépistage prénatal de la trisomie 21'],[308,'Dépistage néonatal systématique'],
+  [309,'Patient à risque suicidaire'],[310,'Prévention chez un malade contagieux'],[311,'Prévention des infections liées aux soins'],[312,'Prévention des risques foetaux'],
+  [313,'Prévention des risques liés à l\'alcool'],[314,'Prévention des risques liés au tabac'],[315,'Prévention des risques professionnels'],[316,'Identifier les conséquences d\'une pathologie / situation sur le maintien d\'un emploi'],
+  [317,'Dépistage et prévention des violences faites aux femmes'],[318,'Prévention de la mort inexpliquée du nourrisson'],[319,'Prévention du surpoids et de l\'obésité'],[320,'Prévention des maladies cardiovasculaires'],
+  [321,'Suspicion de maltraitance et enfance en danger'],[322,'Vaccinations de l\'adulte et de l\'enfant'],[323,'Prévention de l\'exposition aux écrans'],[324,'Modification thérapeutique du mode de vie (sommeil, activité physique, alimentation, etc.)'],
+  [325,'Prévention des accidents domestiques'],[326,'Accident du travail'],[327,'Annonce d\'un diagnostic de maladie grave au patient et/ou à sa famille'],[328,'Annonce d\'une maladie chronique'],
+  [329,'Conduite à tenir devant une demande d\'accès à l\'information / au dossier médical'],[330,'Accompagnement global d\'un aidant'],[331,'Découverte d\'un aléa thérapeutique ou d\'une erreur médicale'],[332,'Demande d\'interruption volontaire de grossesse'],
+  [333,'Demande d\'un certificat médical initial'],[334,'Demande de traitement et investigation inappropriés'],[335,'Évaluation de l\'aptitude au sport et rédaction d\'un certificat de non contre-indication'],[336,'Exposition accidentelle aux liquides biologiques'],
+  [337,'Identification, prise en soin et suivi d\'un patient en situation palliative'],[338,'Prescription médicale chez un patient en situation de précarité'],[339,'Prescrire un arrêt de travail'],[340,'Prise volontaire ou involontaire d\'un toxique ou d\'un médicament potentiellement toxique'],
+  [341,'Réaction à un événement potentiellement traumatique'],[342,'Rédaction d\'une ordonnance / d\'un courrier médical'],[343,'Refus de traitement et de prise en charge recommandés'],[344,'Situation de harcèlement'],
+  [345,'Situation de handicap'],[346,'Situation sanitaire exceptionnelle'],[347,'Situation sociale précaire et isolement'],[348,'Suspicion d\'un effet indésirable des médicaments ou d\'un soin'],
+  [349,'Troubles des interactions sociales / difficultés de socialisation'],[350,'Violences sexuelles'],[351,'Violences psychologiques et/ou physiques'],[352,'Expliquer un traitement au patient (adulte / enfant / adolescent)'],
+  [353,'Identifier une situation de déconditionnement à l\'effort'],[354,'Évaluation de l\'observance thérapeutique'],[355,'Organisation de la sortie d\'hospitalisation'],[356,'Information et suivi d\'un patient en chirurgie ambulatoire']
+];
 (function(){
 
 const CAT_LABELS = {
@@ -758,7 +885,10 @@ function roundRobin(lists){
 }
 let S1_QUEUE = [];
 let S2_QUEUE = [];
+let SDD_QUEUE = [];
+let SDD_BY_NUM = {};
 const ITEMS_PER_DAY = {S1:2, S2:3};
+const SDD_PER_DAY = 4;
 
 function rebuildAll(){
   // normalize any legacy single-string categories to arrays (backward compatibility)
@@ -768,6 +898,17 @@ function rebuildAll(){
   CURRENT_ITEMS.forEach(([n,t,cats])=>{ ITEM_BY_NUM[n] = {num:n, title:t, cats:cats, cat: cats[0]}; });
   S1_QUEUE = buildS1Queue();
   S2_QUEUE = buildS2Queue();
+  const sdd = DATA.sddItems || [];
+  SDD_QUEUE = sdd.map(([n])=>n);
+  SDD_BY_NUM = {};
+  sdd.forEach(([n,t])=>{ SDD_BY_NUM[n] = {num:n, title:t}; });
+}
+function sddTaskForIndex(idx){
+  if(SDD_QUEUE.length===0) return null;
+  const pos = idx % SDD_QUEUE.length;
+  const occurrence = Math.floor(idx/SDD_QUEUE.length)+1;
+  const num = SDD_QUEUE[pos];
+  return { key:'ECOS_i'+num+'_o'+occurrence, num, occurrence };
 }
 // file S1 (matières nouvelles de la période) : les matières avec DL passent en bloc en tête
 // (DL la plus proche d'abord), le reste continue en round-robin comme avant.
@@ -836,7 +977,7 @@ const DEFAULT_CONFIG = { start:'2026-08-24', s1End:'2027-01-31', exam:'2027-10-1
 let DATA = null;
 let CAL = [];
 let INDEX_DATE = {S1:{}, S2:{}};       // idx -> iso  (nominal date a slot was issued)
-let PHASE_FINAL_QUOTA = {S1:0, S2:0};  // total quota once a phase is fully over
+let PHASE_FINAL_QUOTA = {S1:0, S2:0, ECOS:0};  // total quota once a phase is fully over
 let currentTab = 'today';
 let selectedDayIso = null;
 let selectedItemNum = null;
@@ -859,21 +1000,36 @@ function buildCalendar(cfg, reportedDays){
   const s1End = parseISO(cfg.s1End);
   const exam = parseISO(cfg.exam);
   const consolStart = addDays(exam,-21);
+  const ecosDate = cfg.ecosDate ? parseISO(cfg.ecosDate) : null;
+  const finalDate = (ecosDate && ecosDate > exam) ? ecosDate : exam;
   const days = [];
   INDEX_DATE = {S1:{}, S2:{}};
-  let counters = {S1:0, S2:0};
+  let counters = {S1:0, S2:0, ECOS:0};
   let cur = new Date(start);
-  while(cur <= exam){
+  while(cur <= finalDate){
     const weekend = isWeekendDate(cur);
     let phase;
     if(cur < s1End) phase='S1';
+    else if(cur > exam) phase='ECOS';
     else if(cur >= consolStart) phase='CONSOL';
     else phase='S2';
     const iso = toISO(cur);
-    const reported = !!reportedDays[iso];
-    const day = { date:new Date(cur), iso, phase, weekend, reported };
+    const reportedEntry = reportedDays[iso] || null;
+    const reported = !!reportedEntry;
+    const day = { date:new Date(cur), iso, phase, weekend, reported, reportedInfo: reportedEntry };
 
-    if(!weekend && (phase==='S1'||phase==='S2') && !reported && (phase==='S1'?S1_QUEUE.length:S2_QUEUE.length)>0){
+    if(phase==='ECOS'){
+      day.tasks = [];
+      if(!reported && SDD_QUEUE.length>0){
+        const baseIdx = counters.ECOS*SDD_PER_DAY;
+        for(let i=0;i<SDD_PER_DAY;i++){
+          const idx = baseIdx+i;
+          const t = sddTaskForIndex(idx);
+          if(t) day.tasks.push({id:t.key, kind:'sdd', num:t.num, idx});
+        }
+        counters.ECOS++;
+      }
+    } else if(!weekend && (phase==='S1'||phase==='S2') && !reported && (phase==='S1'?S1_QUEUE.length:S2_QUEUE.length)>0){
       const perDay = ITEMS_PER_DAY[phase];
       const baseIdx = counters[phase]*perDay;
       day.tasks = [];
@@ -888,10 +1044,12 @@ function buildCalendar(cfg, reportedDays){
       day.tasks = [];
     } else if(weekend){
       day.tasks = [];
-      if(currentStudentYear() >= 5){
-        day.tasks.push({id:'lca', kind:'generic', label:"LCA — 2 articles minimum (méthodologie + analyse critique)"});
+      if(!reported){
+        if(currentStudentYear() >= 5){
+          day.tasks.push({id:'lca', kind:'generic', label:"LCA — 2 articles minimum (méthodologie + analyse critique)"});
+        }
+        day.tasks.push({id:'free', kind:'generic', label:"Révision libre — item ou matière de ton choix (rattrapage)"});
       }
-      day.tasks.push({id:'free', kind:'generic', label:"Révision libre — item ou matière de ton choix (rattrapage)"});
     } else { // CONSOL
       day.tasks = reported ? [] : [
         {id:'anki_all', kind:'generic', label:"Anki — session complète (aucune nouvelle carte)"},
@@ -905,10 +1063,61 @@ function buildCalendar(cfg, reportedDays){
   }
   PHASE_FINAL_QUOTA.S1 = counters.S1 * ITEMS_PER_DAY.S1;
   PHASE_FINAL_QUOTA.S2 = counters.S2 * ITEMS_PER_DAY.S2;
+  PHASE_FINAL_QUOTA.ECOS = counters.ECOS * SDD_PER_DAY;
   return days;
 }
 
 function findDay(iso){ return CAL.find(d=>d.iso===iso); }
+
+const REPORTED_TYPE_LABELS = { repos:'Repos', partiel:'Partiel', concours_blanc:'Concours blanc', autre:'Autre' };
+function reportedDayLabel(entry){
+  if(!entry) return 'Journée reportée';
+  if(entry===true) return 'Journée reportée';
+  const base = REPORTED_TYPE_LABELS[entry.type] || 'Journée reportée';
+  return entry.label ? `${base} — ${entry.label}` : base;
+}
+function setReportedDay(iso, type, label){
+  if(!DATA.reportedDays) DATA.reportedDays = {};
+  DATA.reportedDays[iso] = label ? {type, label} : {type};
+  CAL = buildCalendar(DATA.config, DATA.reportedDays);
+  saveData();
+}
+function clearReportedDay(iso){
+  if(DATA.reportedDays) delete DATA.reportedDays[iso];
+  CAL = buildCalendar(DATA.config, DATA.reportedDays);
+  saveData();
+}
+function reportControlHTML(day){
+  if(day.reported){
+    return `<div class="report-control">
+      <button type="button" class="report-btn active" data-unreport="${day.iso}">↺ Annuler (${reportedDayLabel(day.reportedInfo)})</button>
+    </div>`;
+  }
+  return `<div class="report-control">
+    <select id="reportType-${day.iso}">
+      <option value="repos">Repos</option>
+      <option value="partiel">Partiel</option>
+      <option value="concours_blanc">Concours blanc</option>
+      <option value="autre">Autre</option>
+    </select>
+    <input type="text" id="reportLabel-${day.iso}" placeholder="Précision (optionnel)">
+    <button type="button" class="report-btn" data-report="${day.iso}">⤼ Marquer ce jour</button>
+  </div>`;
+}
+function bindReportControl(container, iso){
+  const btn = container.querySelector(`[data-report="${iso}"]`);
+  if(btn) btn.addEventListener('click', ()=>{
+    const type = document.getElementById(`reportType-${iso}`).value;
+    const label = document.getElementById(`reportLabel-${iso}`).value.trim();
+    setReportedDay(iso, type, label);
+    render();
+  });
+  const ubtn = container.querySelector(`[data-unreport="${iso}"]`);
+  if(ubtn) ubtn.addEventListener('click', ()=>{
+    clearReportedDay(iso);
+    render();
+  });
+}
 
 // ---------- item overrides (échange manuel d'un item pour une case donnée) ----------
 // DATA.itemOverrides est une map "clé native de la case" -> { itemNum: <item affiché à la place> }
@@ -1199,7 +1408,7 @@ async function tryReconnectBackupFile(){
     const text = await file.text();
     if(text && text.trim()){
       const parsed = JSON.parse(text);
-      DATA = Object.assign({config:Object.assign({},DEFAULT_CONFIG), itemChecks:{}, checks:{}, reportedDays:{}, darkMode:false, itemOverrides:{}, customTasks:{}, subjectDeadlines:{}, itemDifficulty:{}, lcaEntries:{}, onboarded:true}, parsed);
+      DATA = Object.assign({config:Object.assign({},DEFAULT_CONFIG), itemChecks:{}, checks:{}, reportedDays:{}, darkMode:false, itemOverrides:{}, customTasks:{}, subjectDeadlines:{}, itemDifficulty:{}, lcaEntries:{}, sddItems: SDD_SEED_RAW.map(([n,t])=>[n,t]), onboarded:true}, parsed);
       if(!DATA.items) DATA.items = ITEMS_RAW.map(([n,t,c])=>[n,t,c]);
       await saveData();
     }
@@ -1213,12 +1422,12 @@ async function loadData(){
     const raw = localStorage.getItem(STORAGE_KEY);
     if(raw){
       const parsed = JSON.parse(raw);
-      const data = Object.assign({config:Object.assign({},DEFAULT_CONFIG), itemChecks:{}, checks:{}, reportedDays:{}, darkMode:false, itemOverrides:{}, customTasks:{}, subjectDeadlines:{}, itemDifficulty:{}, lcaEntries:{}, onboarded:true}, parsed);
+      const data = Object.assign({config:Object.assign({},DEFAULT_CONFIG), itemChecks:{}, checks:{}, reportedDays:{}, darkMode:false, itemOverrides:{}, customTasks:{}, subjectDeadlines:{}, itemDifficulty:{}, lcaEntries:{}, sddItems: SDD_SEED_RAW.map(([n,t])=>[n,t]), onboarded:true}, parsed);
       if(!data.items) data.items = ITEMS_RAW.map(([n,t,c])=>[n,t,c]);
       return data;
     }
   }catch(e){ console.error('Erreur de lecture locale', e); }
-  return {config:Object.assign({},DEFAULT_CONFIG), itemChecks:{}, checks:{}, reportedDays:{}, darkMode:false, itemOverrides:{}, customTasks:{}, subjectDeadlines:{}, itemDifficulty:{}, lcaEntries:{}, onboarded:false, items: ITEMS_RAW.map(([n,t,c])=>[n,t,c])};
+  return {config:Object.assign({},DEFAULT_CONFIG), itemChecks:{}, checks:{}, reportedDays:{}, darkMode:false, itemOverrides:{}, customTasks:{}, subjectDeadlines:{}, itemDifficulty:{}, lcaEntries:{}, sddItems: SDD_SEED_RAW.map(([n,t])=>[n,t]), onboarded:false, items: ITEMS_RAW.map(([n,t,c])=>[n,t,c])};
 }
 async function saveData(){
   try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(DATA)); }
@@ -1322,7 +1531,10 @@ function mergeData(remote, local, snapshot){
     reportedDays: mergeMap(remote.reportedDays, local.reportedDays, snapshot.reportedDays),
     itemOverrides: mergeMap(remote.itemOverrides, local.itemOverrides, snapshot.itemOverrides),
     subjectDeadlines: mergeMap(remote.subjectDeadlines, local.subjectDeadlines, snapshot.subjectDeadlines),
-    customTasks: mergeMap(remote.customTasks, local.customTasks, snapshot.customTasks)
+    customTasks: mergeMap(remote.customTasks, local.customTasks, snapshot.customTasks),
+    itemDifficulty: mergeMap(remote.itemDifficulty, local.itemDifficulty, snapshot.itemDifficulty),
+    lcaEntries: mergeMap(remote.lcaEntries, local.lcaEntries, snapshot.lcaEntries),
+    sddItems: mergeScalar(remote.sddItems, local.sddItems, snapshot.sddItems)
   };
 }
 
@@ -1456,7 +1668,7 @@ function importBackup(file){
   reader.onload = async (e) => {
     try{
       const parsed = JSON.parse(e.target.result);
-      DATA = Object.assign({config:Object.assign({},DEFAULT_CONFIG), itemChecks:{}, checks:{}, reportedDays:{}, darkMode:false, itemOverrides:{}, customTasks:{}, subjectDeadlines:{}, itemDifficulty:{}, lcaEntries:{}, onboarded:true}, parsed);
+      DATA = Object.assign({config:Object.assign({},DEFAULT_CONFIG), itemChecks:{}, checks:{}, reportedDays:{}, darkMode:false, itemOverrides:{}, customTasks:{}, subjectDeadlines:{}, itemDifficulty:{}, lcaEntries:{}, sddItems: SDD_SEED_RAW.map(([n,t])=>[n,t]), onboarded:true}, parsed);
       if(!DATA.items) DATA.items = ITEMS_RAW.map(([n,t,c])=>[n,t,c]);
       rebuildAll();
       applyTheme();
@@ -1464,8 +1676,11 @@ function importBackup(file){
       document.getElementById('cfgStart').value = DATA.config.start;
       document.getElementById('cfgS1End').value = DATA.config.s1End;
       document.getElementById('cfgExam').value = DATA.config.exam;
+      document.getElementById('cfgEcos').value = DATA.config.ecosDate || '';
       document.getElementById('cfgStudentYear').value = String(currentStudentYear());
       renderSubjectConfigList();
+      renderReportedDaysList();
+      renderSddCatalogList();
       await saveData();
       selectedDayIso = null; selectedItemNum = null;
       render();
@@ -1481,8 +1696,8 @@ function setItemTaskDone(key, val){ DATA.itemChecks[key] = val; saveData(); }
 function isGenericDone(iso, taskId){ return !!dayChecks(iso)[taskId]; }
 function setGenericDone(iso, taskId, val){ dayChecks(iso)[taskId] = val; saveData(); }
 
-function phaseColor(phase){ return phase==='S1' ? 'var(--accent)' : phase==='S2' ? 'var(--navy)' : 'var(--amber)'; }
-function phaseLabel(phase){ return phase==='S1' ? 'Semestre 1 — découverte + révision' : phase==='S2' ? 'Semestre 2 — révision pure' : 'Consolidation finale'; }
+function phaseColor(phase){ return phase==='S1' ? 'var(--accent)' : phase==='S2' ? 'var(--navy)' : phase==='ECOS' ? 'var(--danger)' : 'var(--amber)'; }
+function phaseLabel(phase){ return phase==='S1' ? 'Semestre 1 — découverte + révision' : phase==='S2' ? 'Semestre 2 — révision pure' : phase==='ECOS' ? 'Entraînement ECOS (SDD)' : 'Consolidation finale'; }
 
 // ---------- dynamic quota helpers ----------
 function quotaBeforeToday(phase){
@@ -1665,6 +1880,25 @@ function itemTaskHTML(task, opts){
   `;
 }
 
+function sddTaskHTML(task){
+  const sdd = SDD_BY_NUM[task.num] || {num:task.num, title:'SDD inconnue — vérifie le catalogue dans les réglages'};
+  const key = task.id;
+  const done = isItemTaskDone(key);
+  return `
+    <div class="task-card sdd ${done?'done':''}" data-key="${key}">
+      <div class="top-row">
+        <span class="mode-badge" style="background:var(--danger)">SDD</span>
+        <span class="item-num">SDD ${sdd.num}</span>
+      </div>
+      <h3>${sdd.title}</h3>
+      <label class="task-check" onclick="event.stopPropagation()">
+        <input type="checkbox" data-itemkey="${key}" ${done?'checked':''}>
+        <span>Fait</span>
+      </label>
+    </div>
+  `;
+}
+
 function genericListHTML(iso, tasks){
   return `<ul class="generic-list">` + tasks.map(t=>{
     const done = isGenericDone(iso, t.id);
@@ -1746,7 +1980,6 @@ function weekSummaryHTML(){
 function renderToday(){
   const container = document.getElementById('app');
   const start = parseISO(DATA.config.start);
-  const exam = parseISO(DATA.config.exam);
   const today = todayDate();
 
   if(today < start){
@@ -1754,8 +1987,9 @@ function renderToday(){
     container.innerHTML = `<div class="empty-state"><h2>Le programme démarre bientôt</h2><p>Ton dossier commence le ${fmtShort(start)} — encore ${d} jour${d>1?'s':''}.</p></div>`;
     return;
   }
-  if(today > exam){
-    container.innerHTML = `<div class="empty-state"><h2>Bonne chance pour les EDN !</h2><p>Le programme prévu est terminé.</p></div>`;
+  const lastDay = CAL.length ? CAL[CAL.length-1] : null;
+  if(!lastDay || today > lastDay.date){
+    container.innerHTML = `<div class="empty-state"><h2>Bonne chance !</h2><p>Le programme prévu est terminé.</p></div>`;
     return;
   }
   const day = findDay(todayIso());
@@ -1767,16 +2001,18 @@ function renderToday(){
       <div class="stripe" style="background:${color}"></div>
       <p class="phase-lbl" style="color:${color}">${phaseLabel(day.phase)}</p>
       <h2>${fmtLong(day.date)}</h2>
-      <p class="sub">${day.reported ? "Journée reportée — rien de nouveau aujourd'hui" : day.weekend ? 'Week-end — LCA obligatoire' : (day.phase==='CONSOL' ? 'Pas de contenu nouveau' : '')}</p>
-      ${(!day.weekend && (day.phase==='S1'||day.phase==='S2')) ? `<button class="report-btn ${day.reported?'active':''}" id="reportBtn">${day.reported ? '↺ Annuler le report' : '⤼ Reporter cette journée'}</button>` : ''}
+      <p class="sub">${day.reported ? reportedDayLabel(day.reportedInfo) : day.weekend ? (day.phase==='ECOS' ? 'Entraînement ECOS — 4 SDD' : 'Week-end — LCA obligatoire') : (day.phase==='CONSOL' ? 'Pas de contenu nouveau' : day.phase==='ECOS' ? 'Entraînement ECOS — 4 SDD' : '')}</p>
+      ${reportControlHTML(day)}
     </div>
   `;
 
   let body = '';
-  if(day.weekend || day.phase==='CONSOL'){
-    body = day.reported ? `<p class="empty-state">Journée reportée.</p>` : genericListHTML(day.iso, day.tasks);
-  } else if(day.reported){
-    body = `<p class="empty-state">Journée reportée — les items prévus glissent automatiquement aux jours suivants.</p>`;
+  if(day.reported){
+    body = `<p class="empty-state">${reportedDayLabel(day.reportedInfo)} — rien de prévu ce jour-là. ${(!day.weekend && day.phase!=='CONSOL') ? 'Les items prévus glissent automatiquement aux jours suivants.' : ''}</p>`;
+  } else if(day.phase==='ECOS'){
+    body = day.tasks && day.tasks.length ? day.tasks.map(t=>sddTaskHTML(t)).join('') : `<div class="empty-state"><p>Aucune SDD dans le catalogue — ajoutes-en dans les réglages pour activer l'entraînement ECOS.</p></div>`;
+  } else if(day.weekend || day.phase==='CONSOL'){
+    body = genericListHTML(day.iso, day.tasks);
   } else {
     const tasks = todaysDynamicTasks();
     if(tasks.length===0){
@@ -1788,18 +2024,10 @@ function renderToday(){
 
   const custom = day.reported ? '' : customTasksHTML(day.iso);
 
-  container.innerHTML = deadlineAlertsHTML() + weekSummaryHTML() + head + body + custom + `<footer class="note">Plus de temps aujourd'hui ? Avance librement (onglet Planning). Moins de temps ? Utilise "Reporter cette journée", ou laisse simplement les items non faits — ils remonteront automatiquement demain.</footer>`;
+  container.innerHTML = deadlineAlertsHTML() + weekSummaryHTML() + head + body + custom + `<footer class="note">Plus de temps aujourd'hui ? Avance librement (onglet Planning). Moins de temps ? Marque cette journée (repos, partiel, concours blanc…), ou laisse simplement les items non faits — ils remonteront automatiquement demain.</footer>`;
   bindTaskHandlers(container);
   if(!day.reported) bindCustomTaskHandlers(container, day.iso);
-  const rb = document.getElementById('reportBtn');
-  if(rb) rb.addEventListener('click', ()=>{
-    if(!DATA.reportedDays) DATA.reportedDays = {};
-    if(day.reported) delete DATA.reportedDays[day.iso];
-    else DATA.reportedDays[day.iso] = true;
-    CAL = buildCalendar(DATA.config, DATA.reportedDays);
-    saveData();
-    render();
-  });
+  bindReportControl(container, day.iso);
 }
 
 function renderRetard(){
@@ -1855,12 +2083,20 @@ function renderPlanning(){
     let head = `<button class="back-link" id="backBtn">← Retour au planning</button>
     <div class="day-head"><div class="stripe" style="background:${color}"></div>
       <p class="phase-lbl" style="color:${color}">${phaseLabel(day.phase)} (aperçu nominal)</p>
-      <h2>${fmtLong(day.date)}</h2></div>`;
-    let body = (day.tasks && day.tasks[0] && day.tasks[0].kind==='item') ? day.tasks.map(t=>itemTaskHTML(t)).join('') : genericListHTML(day.iso, day.tasks||[]);
-    container.innerHTML = head + body + customTasksHTML(day.iso);
+      <h2>${fmtLong(day.date)}</h2>
+      ${day.reported ? `<p class="sub">${reportedDayLabel(day.reportedInfo)}</p>` : ''}
+      ${reportControlHTML(day)}
+    </div>`;
+    let body = day.reported
+      ? `<p class="empty-state">${reportedDayLabel(day.reportedInfo)} — rien de prévu ce jour-là.</p>`
+      : ((day.tasks && day.tasks[0] && day.tasks[0].kind==='item') ? day.tasks.map(t=>itemTaskHTML(t)).join('')
+        : (day.tasks && day.tasks[0] && day.tasks[0].kind==='sdd') ? day.tasks.map(t=>sddTaskHTML(t)).join('')
+        : genericListHTML(day.iso, day.tasks||[]));
+    container.innerHTML = head + body + (day.reported ? '' : customTasksHTML(day.iso));
     document.getElementById('backBtn').addEventListener('click', ()=>{ selectedDayIso=null; renderPlanning(); });
     bindTaskHandlers(container);
-    bindCustomTaskHandlers(container, day.iso);
+    if(!day.reported) bindCustomTaskHandlers(container, day.iso);
+    bindReportControl(container, day.iso);
     return;
   }
   let html = '';
@@ -1871,7 +2107,7 @@ function renderPlanning(){
     const color = phaseColor(day.phase);
     let itemsHtml = '';
     if(day.reported){
-      itemsHtml = `<span class="pitem" style="background:var(--rule);color:var(--ink-soft)">reportée</span>`;
+      itemsHtml = `<span class="pitem" style="background:var(--rule);color:var(--ink-soft)">${reportedDayLabel(day.reportedInfo)}</span>`;
     } else if(day.tasks[0] && day.tasks[0].kind==='item'){
       itemsHtml = day.tasks.map(t=>{
         const it = ITEM_BY_NUM[t.itemNum];
@@ -1881,6 +2117,13 @@ function renderPlanning(){
     } else if(day.weekend){
       const hasLca = day.tasks.some(t=>t.id==='lca');
       itemsHtml = `<span class="pitem" style="background:${color}">${hasLca?'LCA + libre':'libre'}</span>`;
+    } else if(day.tasks[0] && day.tasks[0].kind==='sdd'){
+      itemsHtml = day.tasks.map(t=>{
+        const sdd = SDD_BY_NUM[t.num];
+        return `<span class="pitem" style="background:${color}" title="${sdd?sdd.title:''}">SDD${t.num}</span>`;
+      }).join('');
+    } else if(day.phase==='ECOS'){
+      itemsHtml = `<span class="pitem" style="background:var(--rule);color:var(--ink-soft)">aucune SDD</span>`;
     } else {
       itemsHtml = `<span class="pitem" style="background:${color}">consolidation</span>`;
     }
@@ -2206,6 +2449,51 @@ function applyTheme(){
   document.getElementById('themeToggle').textContent = DATA.darkMode ? 'Mode clair' : 'Mode sombre';
 }
 
+function renderSddCatalogList(){
+  const countEl = document.getElementById('sddCatalogCount');
+  const listEl = document.getElementById('sddCatalogList');
+  const sdd = (DATA.sddItems || []).slice().sort((a,b)=>a[0]-b[0]);
+  countEl.textContent = `${sdd.length} SDD dans le catalogue (liste officielle : 356).`;
+  if(sdd.length===0){ listEl.innerHTML = `<p style="font-size:11.5px;color:var(--ink-soft);padding:6px 0;">Catalogue vide — importe une liste ci-dessus pour activer l'entraînement ECOS.</p>`; return; }
+  listEl.innerHTML = sdd.map(([n,t])=>`
+    <div class="subject-row">
+      <span>SDD ${n} — ${t}</span>
+      <button type="button" class="btn-danger" data-delsdd="${n}" style="padding:3px 9px;font-size:11px;">×</button>
+    </div>
+  `).join('');
+  listEl.querySelectorAll('[data-delsdd]').forEach(b=>{
+    b.addEventListener('click', ()=>{
+      const n = parseInt(b.getAttribute('data-delsdd'),10);
+      DATA.sddItems = (DATA.sddItems||[]).filter(([num])=>num!==n);
+      rebuildAll();
+      CAL = buildCalendar(DATA.config, DATA.reportedDays);
+      saveData();
+      renderSddCatalogList();
+      render();
+    });
+  });
+}
+
+function renderReportedDaysList(){
+  const el = document.getElementById('reportedDaysList');
+  const entries = Object.keys(DATA.reportedDays||{}).sort();
+  if(entries.length===0){ el.innerHTML = `<p style="font-size:11.5px;color:var(--ink-soft);padding:6px 0;">Aucun jour spécial programmé.</p>`; return; }
+  el.innerHTML = entries.map(iso=>{
+    const entry = DATA.reportedDays[iso];
+    return `<div class="subject-row">
+      <span>${fmtShort(parseISO(iso))} — ${reportedDayLabel(entry)}</span>
+      <button type="button" class="btn-danger" data-delreported="${iso}" style="padding:3px 9px;font-size:11px;">×</button>
+    </div>`;
+  }).join('');
+  el.querySelectorAll('[data-delreported]').forEach(b=>{
+    b.addEventListener('click', ()=>{
+      clearReportedDay(b.getAttribute('data-delreported'));
+      renderReportedDaysList();
+      render();
+    });
+  });
+}
+
 function renderSubjectConfigList(){
   const el = document.getElementById('subjectConfigList');
   const nc = currentNewCats();
@@ -2246,7 +2534,7 @@ async function init(){
   await tryReconnectBackupFile(); // relit le fichier de secours s'il est lié, remplace DATA si présent
   const remote = await githubLoadData(); // si GitHub est configuré, la version distante prime
   if(remote){
-    DATA = Object.assign({config:Object.assign({},DEFAULT_CONFIG), itemChecks:{}, checks:{}, reportedDays:{}, darkMode:false, itemOverrides:{}, customTasks:{}, subjectDeadlines:{}, itemDifficulty:{}, lcaEntries:{}, onboarded:true}, remote);
+    DATA = Object.assign({config:Object.assign({},DEFAULT_CONFIG), itemChecks:{}, checks:{}, reportedDays:{}, darkMode:false, itemOverrides:{}, customTasks:{}, subjectDeadlines:{}, itemDifficulty:{}, lcaEntries:{}, sddItems: SDD_SEED_RAW.map(([n,t])=>[n,t]), onboarded:true}, remote);
     if(!DATA.items) DATA.items = ITEMS_RAW.map(([n,t,c])=>[n,t,c]);
     try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(DATA)); }catch(e){}
   }
@@ -2258,8 +2546,67 @@ async function init(){
   document.getElementById('cfgStart').value = DATA.config.start;
   document.getElementById('cfgS1End').value = DATA.config.s1End;
   document.getElementById('cfgExam').value = DATA.config.exam;
+  document.getElementById('cfgEcos').value = DATA.config.ecosDate || '';
   document.getElementById('cfgStudentYear').value = String(currentStudentYear());
   renderSubjectConfigList();
+  renderReportedDaysList();
+  renderSddCatalogList();
+
+  document.getElementById('cfgEcos').addEventListener('change', e=>{
+    DATA.config.ecosDate = e.target.value || null;
+    CAL = buildCalendar(DATA.config, DATA.reportedDays);
+    selectedDayIso = null; selectedItemNum = null;
+    saveData();
+    render();
+  });
+
+  document.getElementById('btnImportSdd').addEventListener('click', ()=>{
+    const raw = document.getElementById('sddBulkImport').value;
+    const lines = raw.split('\n').map(l=>l.trim()).filter(Boolean);
+    if(lines.length===0){ alert('Colle au moins une ligne au format "numéro;titre".'); return; }
+    if(!DATA.sddItems) DATA.sddItems = [];
+    const byNum = {};
+    DATA.sddItems.forEach(([n,t])=>{ byNum[n] = t; });
+    let imported = 0, skipped = 0;
+    lines.forEach(line=>{
+      const sep = line.includes(';') ? ';' : (line.includes('\t') ? '\t' : null);
+      if(!sep){ skipped++; return; }
+      const [numStr, ...rest] = line.split(sep);
+      const num = parseInt(numStr.trim(),10);
+      const title = rest.join(sep).trim();
+      if(!num || !title){ skipped++; return; }
+      byNum[num] = title; // ajoute, ou remplace si ce numéro existait déjà
+      imported++;
+    });
+    DATA.sddItems = Object.keys(byNum).map(n=>[parseInt(n,10), byNum[n]]);
+    rebuildAll();
+    CAL = buildCalendar(DATA.config, DATA.reportedDays);
+    saveData();
+    document.getElementById('sddBulkImport').value = '';
+    renderSddCatalogList();
+    render();
+    alert(`${imported} SDD importée${imported>1?'s':''}${skipped>0?`, ${skipped} ligne${skipped>1?'s':''} ignorée${skipped>1?'s':''} (format invalide)`:''}.`);
+  });
+  document.getElementById('btnClearSdd').addEventListener('click', ()=>{
+    if(!confirm('Vider tout le catalogue SDD ? Les cases déjà cochées resteront en mémoire mais ne seront plus rattachées à un titre tant que tu ne réimportes pas.')) return;
+    DATA.sddItems = [];
+    rebuildAll();
+    CAL = buildCalendar(DATA.config, DATA.reportedDays);
+    saveData();
+    renderSddCatalogList();
+    render();
+  });
+
+  document.getElementById('btnAddReportedDay').addEventListener('click', ()=>{
+    const iso = document.getElementById('newReportedDate').value;
+    const type = document.getElementById('newReportedType').value;
+    const label = document.getElementById('newReportedLabel').value.trim();
+    if(!iso){ alert('Choisis une date.'); return; }
+    setReportedDay(iso, type, label);
+    document.getElementById('newReportedLabel').value = '';
+    renderReportedDaysList();
+    render();
+  });
 
   document.getElementById('cfgStudentYear').addEventListener('change', e=>{
     DATA.config.studentYear = parseInt(e.target.value, 10);
@@ -2369,8 +2716,11 @@ function showOnboarding(){
     document.getElementById('cfgStart').value = DATA.config.start;
     document.getElementById('cfgS1End').value = DATA.config.s1End;
     document.getElementById('cfgExam').value = DATA.config.exam;
+    document.getElementById('cfgEcos').value = DATA.config.ecosDate || '';
     document.getElementById('cfgStudentYear').value = String(currentStudentYear());
     renderSubjectConfigList();
+    renderReportedDaysList();
+    renderSddCatalogList();
     saveData();
     overlay.classList.add('hidden');
     selectedDayIso = null; selectedItemNum = null;
