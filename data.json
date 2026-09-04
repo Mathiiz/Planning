@@ -2774,7 +2774,9 @@
       "itemNum": 119
     }
   },
-  "subjectDeadlines": {},
+  "subjectDeadlines": {
+    "psy": "0020-12-12"
+  },
   "customTasks": {
     "2026-09-03": [
       {
