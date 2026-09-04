@@ -54,12 +54,6 @@
   .vital .num{font-family:var(--mono);font-size:18px;font-weight:600;color:#fff;line-height:1.1;}
   .vital .lbl{font-size:9.5px;letter-spacing:.05em;text-transform:uppercase;color:#8DA0B6;margin-top:3px;}
 
-  .settings-toggle{font-family:var(--mono);font-size:11px;color:#9FB3C8;background:none;border:none;cursor:pointer;padding:0;margin-top:8px;text-decoration:underline;}
-  .settings-panel{margin-top:10px;padding:12px;background:rgba(255,255,255,.06);border-radius:var(--radius);display:none;gap:10px;flex-wrap:wrap;}
-  .settings-panel.open{display:flex;}
-  .settings-panel label{font-size:11px;color:#9FB3C8;display:flex;flex-direction:column;gap:4px;}
-  .settings-panel input{font-family:var(--mono);padding:5px 7px;border-radius:2px;border:none;}
-
   .tabbar{display:flex;background:var(--paper-raised);border-bottom:1px solid var(--rule);position:sticky;top:92px;z-index:19;overflow-x:auto;}
   .tabbar button{font-family:var(--sans);font-size:12.5px;font-weight:600;color:var(--ink-soft);background:none;border:none;padding:12px 13px;cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap;position:relative;}
   .tabbar button.active{color:var(--accent-dark);border-bottom-color:var(--accent);}
@@ -175,17 +169,14 @@
   .loading{padding:60px;text-align:center;color:var(--ink-soft);font-family:var(--mono);font-size:13px;}
   .back-link{color:var(--accent-dark);background:none;border:none;font-family:var(--mono);font-size:11.5px;cursor:pointer;margin-bottom:14px;text-decoration:underline;padding:0;}
 
-  .chip-row{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px;}
   .cat-checkbox-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:6px 10px;margin-bottom:4px;}
   .cat-checkbox{display:flex;align-items:center;gap:6px;font-size:12px;cursor:pointer;color:var(--ink-soft);}
   .cat-checkbox input{width:14px;height:14px;cursor:pointer;flex-shrink:0;}
   .cat-checkbox span{line-height:1.3;}
-  .chip{font-family:var(--mono);font-size:11px;padding:5px 10px;border-radius:20px;border:1px solid var(--rule);background:var(--white);color:var(--ink-soft);cursor:pointer;}
-  .chip.active{background:var(--navy);color:#fff;border-color:var(--navy);}
   .add-item-form{background:var(--white);border:1px solid var(--rule);border-radius:var(--radius);padding:14px 16px;margin-bottom:16px;}
   .add-item-form h4{font-family:var(--serif);font-size:14.5px;margin:0 0 10px;}
   .add-item-form .frow{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px;}
-  .add-item-form input[type=text], .add-item-form select{
+  .add-item-form input[type=text], .add-item-form input[type=number], .add-item-form select{
     font-family:var(--sans);font-size:13px;padding:8px 10px;border:1px solid var(--rule);border-radius:var(--radius);background:var(--paper-raised);color:var(--ink);flex:1;min-width:140px;
   }
   .btn-primary{font-family:var(--sans);font-size:13px;font-weight:600;padding:8px 16px;border-radius:var(--radius);border:none;background:var(--accent);color:#fff;cursor:pointer;}
@@ -225,6 +216,18 @@
     font-family:var(--sans);font-size:13px;padding:7px 9px;border:1px solid var(--rule);border-radius:var(--radius);background:var(--paper-raised);color:var(--ink);
   }
 
+  /* Cartes et sections pour la page Paramètres */
+  .settings-card{background:var(--white);border:1px solid var(--rule);border-radius:var(--radius);padding:16px 18px;margin-bottom:16px;}
+  .settings-card h3{font-family:var(--serif);font-size:16px;margin:0 0 10px;font-weight:600;}
+  .settings-group{display:flex;flex-direction:column;gap:12px;margin-bottom:8px;}
+  .settings-group label{font-size:12px;font-weight:600;display:flex;flex-direction:column;gap:4px;color:var(--ink);}
+  .settings-group label.checkbox-label{flex-direction:row;align-items:center;gap:8px;font-weight:normal;cursor:pointer;}
+  .settings-group label.checkbox-label input[type=checkbox]{width:16px;height:16px;cursor:pointer;}
+  .settings-card input[type=date], .settings-card input[type=text], .settings-card input[type=password], .settings-card select, .settings-card textarea{
+    font-family:var(--sans);font-size:13px;padding:7px 9px;border:1px solid var(--rule);border-radius:var(--radius);background:var(--paper-raised);color:var(--ink);
+  }
+  .settings-hint{font-size:11px;color:var(--ink-soft);font-weight:normal;line-height:1.4;}
+
   .onboard-overlay{position:fixed;inset:0;background:rgba(10,14,20,0.72);z-index:500;display:flex;align-items:center;justify-content:center;padding:20px;}
   .onboard-overlay.hidden{display:none;}
   .onboard-card{background:var(--white);border-radius:var(--radius);max-width:520px;width:100%;max-height:88vh;overflow-y:auto;padding:24px;box-shadow:0 20px 60px rgba(0,0,0,0.4);}
@@ -244,7 +247,7 @@
 <div class="onboard-overlay hidden" id="onboardOverlay">
   <div class="onboard-card">
     <h2>Bienvenue 👋</h2>
-    <p class="lead">Quelques infos pour construire ton planning. Tu pourras tout modifier plus tard dans les réglages.</p>
+    <p class="lead">Quelques infos pour construire ton planning. Tu pourras tout modifier plus tard dans l'onglet Paramètres.</p>
     <label>Année d'étude actuelle
       <select id="obStudentYear">
         <option value="3">3ᵉ année (DFGSM3)</option>
@@ -271,83 +274,6 @@
   <p class="eyebrow"><span>Dossier de révision personnel</span><button class="theme-btn" id="themeToggle">Mode sombre</button></p>
   <h1>EDN — Planning de révisions</h1>
   <div class="vitals" id="vitals"></div>
-  <button class="settings-toggle" id="settingsToggle">Ajuster les dates ▾</button>
-  <div class="settings-panel" id="settingsPanel">
-    <label>Début des révisions<input type="date" id="cfgStart"></label>
-    <label>Début des tours de révision générale<input type="date" id="cfgS1End">
-      <span style="font-size:10.5px;color:#9FB3C8;display:block;margin-top:4px;">La date à partir de laquelle tu passes en révision cumulative de tout le programme, tous items confondus. Avant cette date, seules les matières "nouvelles" que tu as cochées ci-dessous tournent (les bascules entre trimestres/semestres se gèrent avec les DL de partiels, pas avec cette date).</span>
-    </label>
-    <label>Date des EDN (estimation)<input type="date" id="cfgExam"></label>
-    <label>Date des ECOS (optionnel)
-      <input type="date" id="cfgEcos">
-      <span style="font-size:10.5px;color:#9FB3C8;display:block;margin-top:4px;">Si renseignée, la période entre les EDN et cette date bascule automatiquement en entraînement ECOS : 4 SDD par jour (plus d'items), jusqu'à épuisement du catalogue SDD ci-dessous.</span>
-    </label>
-    <label>Année d'étude actuelle
-      <select id="cfgStudentYear">
-        <option value="3">3ᵉ année (DFGSM3)</option>
-        <option value="4">4ᵉ année (DFASM1)</option>
-        <option value="5">5ᵉ année (DFASM2)</option>
-        <option value="6">6ᵉ année (DFASM3 — EDN)</option>
-      </select>
-      <span style="font-size:10.5px;color:#9FB3C8;display:block;margin-top:4px;">Détermine notamment si la LCA apparaît dans les révisions du week-end (à partir de la 5ᵉ année).</span>
-    </label>
-    <label>Matières nouvelles de la période & DL de partiels
-      <span style="font-size:10.5px;color:#9FB3C8;display:block;margin-bottom:6px;">Coche les matières que tu découvres actuellement (remplace les 6 par défaut). Ajoute une DL sur une matière (nouvelle ou déjà vue) pour faire remonter tous ses items en tête de file avant cette date.</span>
-      <div class="subject-config-list" id="subjectConfigList"></div>
-    </label>
-    <label>Jours spéciaux (repos, partiels, concours blancs…)
-      <span style="font-size:10.5px;color:#9FB3C8;display:block;margin-bottom:6px;">Programme à l'avance un jour sans rien de prévu — les items qui y étaient prévus glissent automatiquement aux jours suivants.</span>
-      <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px;">
-        <input type="date" id="newReportedDate" style="font-family:var(--sans);font-size:12px;padding:6px 8px;border:1px solid var(--rule);border-radius:6px;background:var(--paper-raised);color:var(--ink);">
-        <select id="newReportedType" style="font-family:var(--sans);font-size:12px;padding:6px 8px;border:1px solid var(--rule);border-radius:6px;background:var(--paper-raised);color:var(--ink);">
-          <option value="repos">Repos</option>
-          <option value="partiel">Partiel</option>
-          <option value="concours_blanc">Concours blanc</option>
-          <option value="autre">Autre</option>
-        </select>
-        <input type="text" id="newReportedLabel" placeholder="Précision (optionnel)" style="font-family:var(--sans);font-size:12px;padding:6px 8px;border:1px solid var(--rule);border-radius:6px;background:var(--paper-raised);color:var(--ink);flex:1;min-width:120px;">
-      </div>
-      <button type="button" id="btnAddReportedDay" class="settings-toggle" style="margin:0 0 10px;">+ Programmer ce jour</button>
-      <div class="subject-config-list" id="reportedDaysList"></div>
-    </label>
-    <label>Catalogue SDD (entraînement ECOS)
-      <span style="font-size:10.5px;color:#9FB3C8;display:block;margin-bottom:6px;">Les 356 situations de départ officielles sont préchargées. Besoin de corriger un intitulé ou d'en ajouter une variante ? Colle une ou plusieurs lignes au format "numéro;titre" (ex : "1;Constipation") ci-dessous puis importe — ça met à jour uniquement les numéros concernés, le reste du catalogue ne bouge pas.</span>
-      <textarea id="sddBulkImport" placeholder="1;Constipation&#10;2;Diarrhée&#10;4;Douleur abdominale…" style="width:100%;min-height:90px;font-family:var(--mono);font-size:12px;padding:8px;border:1px solid var(--rule);border-radius:var(--radius);background:var(--paper-raised);color:var(--ink);"></textarea>
-      <div style="display:flex;gap:8px;margin:8px 0;">
-        <button type="button" id="btnImportSdd" class="settings-toggle" style="margin:0;">Importer (ajoute/remplace par numéro)</button>
-        <button type="button" id="btnClearSdd" class="settings-toggle" style="margin:0;">Vider le catalogue</button>
-      </div>
-      <span id="sddCatalogCount" style="font-size:10.5px;color:#9FB3C8;display:block;margin-bottom:6px;"></span>
-      <div class="subject-config-list" id="sddCatalogList" style="max-height:200px;"></div>
-    </label>
-    <label>Sauvegarde
-      <span style="display:flex;gap:8px;flex-wrap:wrap;">
-        <button type="button" id="btnExport" class="settings-toggle" style="margin:0;">Exporter ↓</button>
-        <button type="button" id="btnImportTrigger" class="settings-toggle" style="margin:0;">Importer ↑</button>
-        <input type="file" id="fileImport" accept="application/json" style="display:none;">
-      </span>
-    </label>
-    <label>Fichier de secours (recommandé)
-      <span style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
-        <button type="button" id="btnLinkFile" class="settings-toggle" style="margin:0;">Lier un fichier local</button>
-        <span id="linkFileStatus" style="font-size:10.5px;color:#9FB3C8;"></span>
-      </span>
-    </label>
-    <label>Synchronisation GitHub (sauvegarde auto à chaque modification)
-      <span style="display:flex;flex-direction:column;gap:6px;">
-        <input type="text" id="ghOwner" placeholder="Utilisateur ou organisation GitHub (ex: mathiiz)">
-        <input type="text" id="ghRepo" placeholder="Nom du dépôt (ex: edn-planning)">
-        <input type="text" id="ghPath" placeholder="Nom du fichier de données (ex: data.json)">
-        <input type="text" id="ghBranch" placeholder="Branche (ex: main)">
-        <input type="password" id="ghToken" placeholder="Token d'accès personnel GitHub">
-        <span style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
-          <button type="button" id="btnGhSave" class="settings-toggle" style="margin:0;">Enregistrer la connexion</button>
-          <button type="button" id="btnGhDisconnect" class="settings-toggle" style="margin:0;">Déconnecter</button>
-          <span id="ghStatus" style="font-size:10.5px;color:#9FB3C8;"></span>
-        </span>
-      </span>
-    </label>
-  </div>
 </div>
 
 <div class="tabbar" id="tabbar">
@@ -357,6 +283,8 @@
   <button data-tab="progress">Progression</button>
   <button data-tab="lca">LCA</button>
   <button data-tab="items">Items</button>
+  <button data-tab="sdd">SDD</button>
+  <button data-tab="settings">Paramètres</button>
 </div>
 
 <div class="wrap" id="app"><div class="loading">Chargement du dossier…</div></div>
@@ -732,7 +660,7 @@ const ITEMS_RAW = [
 [367,'Impact de l\'environnement sur la santé',['legale']]
 ];
 
-// Liste officielle complète des 356 situations de départ (SDD) pour l'entraînement ECOS.
+// Liste officielle des 356 situations de départ (SDD) pour l'entraînement ECOS
 const SDD_SEED_RAW = [
   [1,'Constipation'],[2,'Diarrhée'],[3,'Distension abdominale'],[4,'Douleur abdominale'],
   [5,'Douleur anale'],[6,'Hépatomégalie'],[7,'Incontinence fécale'],[8,'Masse abdominale'],
@@ -824,6 +752,7 @@ const SDD_SEED_RAW = [
   [349,'Troubles des interactions sociales / difficultés de socialisation'],[350,'Violences sexuelles'],[351,'Violences psychologiques et/ou physiques'],[352,'Expliquer un traitement au patient (adulte / enfant / adolescent)'],
   [353,'Identifier une situation de déconditionnement à l\'effort'],[354,'Évaluation de l\'observance thérapeutique'],[355,'Organisation de la sortie d\'hospitalisation'],[356,'Information et suivi d\'un patient en chirurgie ambulatoire']
 ];
+
 (function(){
 
 const CAT_LABELS = {
@@ -847,8 +776,6 @@ const REVIEW_CATS = ['cardio','pneumo','gastro','nephro','endocrino','rhumato','
   'infectio','douleur','genetique','travail','legale','pharmaco','urgences','chirvisc','ortho'];
 const ALL_CATS = NEW_CATS_DEFAULT.concat(REVIEW_CATS);
 
-// matières "nouvelles" de la période en cours : configurable par l'étudiant (settings),
-// retombe sur les 6 matières historiques par défaut si rien n'est choisi / anciennes données.
 function currentNewCats(){
   const c = DATA && DATA.config && DATA.config.newCats;
   return (c && c.length) ? c : NEW_CATS_DEFAULT;
@@ -857,7 +784,6 @@ function currentReviewCats(){
   const nc = currentNewCats();
   return ALL_CATS.filter(c=>!nc.includes(c));
 }
-// une matière avec une DL (date de partiel) passe en tête de file, DL la plus proche en premier
 function categoriesByDeadlinePriority(cats){
   const dl = (DATA && DATA.subjectDeadlines) || {};
   const withDL = cats.filter(c=>dl[c]).sort((a,b)=> dl[a] < dl[b] ? -1 : (dl[a] > dl[b] ? 1 : 0));
@@ -865,15 +791,13 @@ function categoriesByDeadlinePriority(cats){
   return {withDL, withoutDL};
 }
 
-// année d'étude actuelle : retombe sur 6 (comportement historique) si absent des anciennes données
 function currentStudentYear(){
   const y = DATA && DATA.config && DATA.config.studentYear;
   return y || 6;
 }
 let ITEM_BY_NUM = {};
 let CURRENT_ITEMS = [];
-// an item now carries an array of colleges (cats); cats[0] is the "primary" college
-// used for S1/S2 scheduling, the full array is used for display, filtering and progress.
+
 function normalizeCats(c){ return Array.isArray(c) ? c.slice() : [c || 'other']; }
 function itemsOfCat(cat){ return CURRENT_ITEMS.filter(([n,t,cats])=> normalizeCats(cats).includes(cat)).map(([n])=>n); }
 function itemsOfPrimaryCat(cat){ return CURRENT_ITEMS.filter(([n,t,cats])=> normalizeCats(cats)[0]===cat).map(([n])=>n); }
@@ -891,7 +815,6 @@ const ITEMS_PER_DAY = {S1:2, S2:3};
 const SDD_PER_DAY = 4;
 
 function rebuildAll(){
-  // normalize any legacy single-string categories to arrays (backward compatibility)
   DATA.items = DATA.items.map(([n,t,c])=>[n,t,normalizeCats(c)]);
   CURRENT_ITEMS = DATA.items;
   ITEM_BY_NUM = {};
@@ -910,8 +833,6 @@ function sddTaskForIndex(idx){
   const num = SDD_QUEUE[pos];
   return { key:'ECOS_i'+num+'_o'+occurrence, num, occurrence };
 }
-// file S1 (matières nouvelles de la période) : les matières avec DL passent en bloc en tête
-// (DL la plus proche d'abord), le reste continue en round-robin comme avant.
 function buildS1Queue(){
   const cats = currentNewCats();
   const {withDL, withoutDL} = categoriesByDeadlinePriority(cats);
@@ -920,10 +841,6 @@ function buildS1Queue(){
   const rest = roundRobin(withoutDL.map(itemsOfPrimaryCat));
   return urgent.concat(rest);
 }
-// file S2 (révision globale) : mêmes principe, sur l'ensemble des matières (une matière déjà
-// vue en cours peut aussi avoir une DL de partiel et doit repasser en priorité de révision).
-// Le reste (hors DL) est mélangé par matière en round-robin plutôt que laissé dans l'ordre
-// numérique du catalogue, pour éviter de rester plusieurs jours d'affilée sur la même matière.
 function buildS2Queue(){
   const {withDL} = categoriesByDeadlinePriority(ALL_CATS);
   const seen = new Set();
@@ -969,9 +886,38 @@ function deleteItem(num){
   saveData();
 }
 
-// task index (idx, within a phase's infinite cycling queue) -> {itemNum, mode}
-// key is based on item identity + occurrence count (not raw position) so it stays
-// valid even if items are later added, edited, or removed from the catalog.
+function nextSddId(){
+  let max = 0;
+  (DATA.sddItems||[]).forEach(([n])=>{ if(n>max) max=n; });
+  return Math.max(max+1, 357);
+}
+function addSddItem(num, title){
+  if(!DATA.sddItems) DATA.sddItems = [];
+  const existing = DATA.sddItems.find(([n])=>n===num);
+  if(existing){
+    existing[1] = title;
+  } else {
+    DATA.sddItems.push([num, title]);
+  }
+  rebuildAll();
+  CAL = buildCalendar(DATA.config, DATA.reportedDays);
+  saveData();
+}
+function updateSddItem(num, newTitle){
+  const row = (DATA.sddItems||[]).find(([n])=>n===num);
+  if(!row) return;
+  row[1] = newTitle;
+  rebuildAll();
+  CAL = buildCalendar(DATA.config, DATA.reportedDays);
+  saveData();
+}
+function deleteSddItem(num){
+  DATA.sddItems = (DATA.sddItems||[]).filter(([n])=>n!==num);
+  rebuildAll();
+  CAL = buildCalendar(DATA.config, DATA.reportedDays);
+  saveData();
+}
+
 function taskForIndex(phase, idx){
   const queue = phase==='S1' ? S1_QUEUE : S2_QUEUE;
   if(queue.length===0) return { key: phase+'_empty_'+idx, itemNum:null, mode:'revision', occurrence:1 };
@@ -982,12 +928,20 @@ function taskForIndex(phase, idx){
   return { key: phase+'_i'+itemNum+'_o'+occurrence, itemNum, mode, occurrence };
 }
 
-const DEFAULT_CONFIG = { start:'2026-08-24', s1End:'2027-01-31', exam:'2027-10-15', newCats: NEW_CATS_DEFAULT.slice(), studentYear: 6 };
+const DEFAULT_CONFIG = {
+  start:'2026-08-24',
+  s1End:'2027-01-31',
+  exam:'2027-10-15',
+  newCats: NEW_CATS_DEFAULT.slice(),
+  studentYear: 6,
+  showCountdownEdn: true,
+  showCountdownEcos: true
+};
 
 let DATA = null;
 let CAL = [];
-let INDEX_DATE = {S1:{}, S2:{}};       // idx -> iso  (nominal date a slot was issued)
-let PHASE_FINAL_QUOTA = {S1:0, S2:0, ECOS:0};  // total quota once a phase is fully over
+let INDEX_DATE = {S1:{}, S2:{}};
+let PHASE_FINAL_QUOTA = {S1:0, S2:0, ECOS:0};
 let currentTab = 'today';
 let selectedDayIso = null;
 let selectedItemNum = null;
@@ -1003,7 +957,6 @@ function isWeekendDate(d){ const dow=d.getDay(); return dow===0||dow===6; }
 function todayDate(){ const t=new Date(); t.setHours(0,0,0,0); return t; }
 function todayIso(){ return toISO(todayDate()); }
 
-// ---------- calendar build (accounts for reported/skipped days) ----------
 function buildCalendar(cfg, reportedDays){
   reportedDays = reportedDays || {};
   const start = parseISO(cfg.start);
@@ -1129,10 +1082,6 @@ function bindReportControl(container, iso){
   });
 }
 
-// ---------- item overrides (échange manuel d'un item pour une case donnée) ----------
-// DATA.itemOverrides est une map "clé native de la case" -> { itemNum: <item affiché à la place> }
-// la clé native (ex "S1_i60_o1") identifie la case indépendamment du contenu affiché, donc
-// le suivi "fait / pas fait" continue de porter sur la case, pas sur l'item.
 function effectiveItemFor(phase, idx){
   const t = taskForIndex(phase, idx);
   const ov = DATA && DATA.itemOverrides && DATA.itemOverrides[t.key];
@@ -1175,7 +1124,6 @@ function undoSwap(nativeKey){
   render();
 }
 
-// ---------- révisions libres ajoutées à la main sur un jour (chapitres mixtes) ----------
 function addCustomTask(iso, label){
   if(!DATA.customTasks) DATA.customTasks = {};
   if(!DATA.customTasks[iso]) DATA.customTasks[iso] = [];
@@ -1224,10 +1172,7 @@ function bindCustomTaskHandlers(container, iso){
     });
   });
 }
-// ---------- ressenti de difficulté & rappel rapproché ----------
-// une note "difficile" programme automatiquement une révision rapprochée (J+3), sans toucher
-// à la file principale — un vrai renvoi façon répétition espacée serait plus lourd à intégrer
-// proprement dans le système de file actuel, ce raccourci reste sûr et additif.
+
 function rateItemDifficulty(itemNum, level){
   if(!DATA.itemDifficulty) DATA.itemDifficulty = {};
   DATA.itemDifficulty[itemNum] = level;
@@ -1252,7 +1197,6 @@ function bindDifficultyHandlers(container){
   });
 }
 
-// ---------- alertes DL de partiels ----------
 function deadlineAlertsHTML(){
   const dl = DATA.subjectDeadlines || {};
   const cats = Object.keys(dl);
@@ -1336,10 +1280,6 @@ function bindSwapHandlers(container){
 }
 
 // ---------- fichier de secours (File System Access API) ----------
-// localStorage seul n'est pas fiable dans certains cas (Arc/Chromium, fenêtres
-// privées, nettoyage automatique des données au quitter). On propose donc de
-// lier un vrai fichier .json sur le disque : chaque sauvegarde y est aussi
-// écrite, et au chargement on relit ce fichier en priorité s'il est accessible.
 const IDB_NAME = 'edn-planner-fs', IDB_STORE = 'handles', IDB_KEY = 'backupFile';
 function idbOpen(){
   return new Promise((res,rej)=>{
@@ -1366,8 +1306,13 @@ async function idbGetHandle(){
   });
 }
 let backupHandle = null;
+let currentLinkFileStatus = '';
 function fsApiSupported(){ return typeof window.showSaveFilePicker === 'function'; }
-function setLinkStatus(text){ const el = document.getElementById('linkFileStatus'); if(el) el.textContent = text; }
+function setLinkStatus(text){
+  currentLinkFileStatus = text;
+  const el = document.getElementById('linkFileStatus');
+  if(el) el.textContent = text;
+}
 async function linkBackupFile(){
   if(!fsApiSupported()){
     alert("Ton navigateur ne supporte pas cette fonction. Continue avec Exporter/Importer manuellement, ou utilise Chrome/Arc/Edge à jour.");
@@ -1380,7 +1325,7 @@ async function linkBackupFile(){
         suggestedName: 'edn-sauvegarde.json',
         types: [{description:'Sauvegarde EDN', accept:{'application/json':['.json']}}]
       });
-    }catch(e){ return; } // annulé par l'utilisateur
+    }catch(e){ return; }
     backupHandle = handle;
     await idbSetHandle(handle);
     await writeBackupFile();
@@ -1412,14 +1357,14 @@ async function tryReconnectBackupFile(){
     if(!ok){ setLinkStatus('Fichier lié : clique pour réautoriser'); backupHandle = handle; return; }
     backupHandle = handle;
     setLinkStatus('Lié : ' + handle.name);
-    // Le fichier sur disque est la source la plus fiable : on le relit et,
-    // s'il est plus complet que ce qu'on a en mémoire/localStorage, on l'utilise.
     const file = await handle.getFile();
     const text = await file.text();
     if(text && text.trim()){
       const parsed = JSON.parse(text);
       DATA = Object.assign({config:Object.assign({},DEFAULT_CONFIG), itemChecks:{}, checks:{}, reportedDays:{}, darkMode:false, itemOverrides:{}, customTasks:{}, subjectDeadlines:{}, itemDifficulty:{}, lcaEntries:{}, sddItems: SDD_SEED_RAW.map(([n,t])=>[n,t]), onboarded:true}, parsed);
       if(!DATA.items) DATA.items = ITEMS_RAW.map(([n,t,c])=>[n,t,c]);
+      if(DATA.config.showCountdownEdn===undefined) DATA.config.showCountdownEdn = true;
+      if(DATA.config.showCountdownEcos===undefined) DATA.config.showCountdownEcos = true;
       await saveData();
     }
   }catch(e){ console.error('Reconnexion fichier de secours impossible', e); }
@@ -1434,6 +1379,8 @@ async function loadData(){
       const parsed = JSON.parse(raw);
       const data = Object.assign({config:Object.assign({},DEFAULT_CONFIG), itemChecks:{}, checks:{}, reportedDays:{}, darkMode:false, itemOverrides:{}, customTasks:{}, subjectDeadlines:{}, itemDifficulty:{}, lcaEntries:{}, sddItems: SDD_SEED_RAW.map(([n,t])=>[n,t]), onboarded:true}, parsed);
       if(!data.items) data.items = ITEMS_RAW.map(([n,t,c])=>[n,t,c]);
+      if(data.config.showCountdownEdn===undefined) data.config.showCountdownEdn = true;
+      if(data.config.showCountdownEcos===undefined) data.config.showCountdownEcos = true;
       return data;
     }
   }catch(e){ console.error('Erreur de lecture locale', e); }
@@ -1442,20 +1389,21 @@ async function loadData(){
 async function saveData(){
   try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(DATA)); }
   catch(e){ console.error('Erreur de sauvegarde locale', e); }
-  writeBackupFile(); // no-op si aucun fichier n'est lié
-  scheduleGithubSync(); // no-op si GitHub n'est pas configuré
+  writeBackupFile();
+  scheduleGithubSync();
 }
 
 // ---------- synchronisation GitHub ----------
 const GH_CONFIG_KEY = 'edn-planner-github-v1';
-const GH_SNAPSHOT_KEY = 'edn-planner-github-snapshot-v1'; // dernier état connu-synchronisé, base du merge à 3 voies
+const GH_SNAPSHOT_KEY = 'edn-planner-github-snapshot-v1';
 let ghSaveInFlight = false;
 let ghSavePending = false;
-let ghSha = null; // sha du dernier contenu connu du fichier distant
+let ghSha = null;
 let ghDebounceTimer = null;
 let ghPendingSince = null;
-const GH_DEBOUNCE_MS = 15000; // sauvegarde groupée : 15s d'inactivité avant de pousser
-const GH_MAX_WAIT_MS = 60000; // jamais plus de 60s d'attente même en cas d'activité continue
+const GH_DEBOUNCE_MS = 15000;
+const GH_MAX_WAIT_MS = 60000;
+let currentGhStatus = '';
 
 function getGithubConfig(){
   try{
@@ -1484,6 +1432,7 @@ function ghContentsUrl(cfg){
   return `https://api.github.com/repos/${encodeURIComponent(cfg.owner)}/${encodeURIComponent(cfg.repo)}/contents/${cfg.path.split('/').map(encodeURIComponent).join('/')}`;
 }
 function setGithubStatus(text){
+  currentGhStatus = text;
   const el = document.getElementById('ghStatus');
   if(el) el.textContent = text;
 }
@@ -1500,12 +1449,6 @@ function setGhSnapshot(data){
   try{ localStorage.setItem(GH_SNAPSHOT_KEY, JSON.stringify(data)); }catch(e){}
 }
 
-// ---------- merge à 3 voies (distant / local / dernier état synchronisé) ----------
-// pour les maps clé->valeur (itemChecks, checks, itemOverrides, subjectDeadlines, customTasks,
-// reportedDays) : chaque clé est fusionnée indépendamment. Si le local a changé cette clé
-// depuis le dernier sync, le local gagne ; sinon si le distant l'a changée, le distant gagne ;
-// sinon on garde la valeur commune. Ça permet à deux appareils de modifier des jours/items
-// différents sans que l'un écrase le travail de l'autre.
 function mergeMap(remote, local, snapshot){
   remote = remote || {}; local = local || {}; snapshot = snapshot || {};
   const keys = new Set([...Object.keys(remote), ...Object.keys(local), ...Object.keys(snapshot)]);
@@ -1532,7 +1475,7 @@ function mergeScalar(remote, local, snapshot){
 function mergeData(remote, local, snapshot){
   remote = remote || {}; snapshot = snapshot || {};
   return {
-    config: mergeScalar(remote.config, local.config, snapshot.config),
+    config: mergeMap(remote.config, local.config, snapshot.config),
     items: mergeScalar(remote.items, local.items, snapshot.items),
     darkMode: mergeScalar(remote.darkMode, local.darkMode, snapshot.darkMode),
     onboarded: mergeScalar(remote.onboarded, local.onboarded, snapshot.onboarded),
@@ -1548,7 +1491,6 @@ function mergeData(remote, local, snapshot){
   };
 }
 
-// tentative de chargement des données distantes au démarrage — retourne les données ou null
 async function githubLoadData(){
   const cfg = getGithubConfig();
   if(!cfg || !cfg.token || !cfg.owner || !cfg.repo) return null;
@@ -1560,7 +1502,7 @@ async function githubLoadData(){
     const j = await res.json();
     ghSha = j.sha;
     const parsed = JSON.parse(b64DecodeUtf8(j.content.replace(/\n/g,'')));
-    setGhSnapshot(parsed); // base de référence pour les futurs merges
+    setGhSnapshot(parsed);
     setGithubStatus('Synchronisé ✓');
     return parsed;
   }catch(e){
@@ -1569,8 +1511,6 @@ async function githubLoadData(){
     return null;
   }
 }
-// programme une synchronisation groupée : regroupe les modifications rapprochées en un seul
-// commit, avec un délai maximal pour ne jamais rester trop longtemps désynchronisé.
 function scheduleGithubSync(){
   const cfg = getGithubConfig();
   if(!cfg || !cfg.token || !cfg.owner || !cfg.repo) return;
@@ -1586,9 +1526,6 @@ function scheduleGithubSync(){
     githubSyncNow();
   }, delay);
 }
-// synchronisation immédiate avec merge à 3 voies : récupère le distant, fusionne avec le
-// local par rapport au dernier état connu, pousse le résultat, et applique le merge localement
-// (au cas où le distant contenait des changements faits depuis un autre appareil).
 async function githubSyncNow(){
   const cfg = getGithubConfig();
   if(!cfg || !cfg.token || !cfg.owner || !cfg.repo) return;
@@ -1637,7 +1574,7 @@ async function githubSyncNow(){
         setGithubStatus('Synchronisé ✓ ' + new Date().toLocaleTimeString('fr-FR'));
         return;
       } else if(res.status===409){
-        continue; // sha changé entre-temps : on reboucle, refetch + re-merge
+        continue;
       } else {
         const errTxt = await res.text().catch(()=> '');
         console.error('Erreur GitHub (sauvegarde)', res.status, errTxt);
@@ -1654,8 +1591,7 @@ async function githubSyncNow(){
     }
   }
 }
-// force une synchronisation immédiate si l'onglet passe en arrière-plan, pour ne pas perdre
-// de modifications en attente si l'appareil se met en veille juste après.
+
 document.addEventListener('visibilitychange', ()=>{
   if(document.hidden && ghDebounceTimer){
     clearTimeout(ghDebounceTimer);
@@ -1680,18 +1616,12 @@ function importBackup(file){
       const parsed = JSON.parse(e.target.result);
       DATA = Object.assign({config:Object.assign({},DEFAULT_CONFIG), itemChecks:{}, checks:{}, reportedDays:{}, darkMode:false, itemOverrides:{}, customTasks:{}, subjectDeadlines:{}, itemDifficulty:{}, lcaEntries:{}, sddItems: SDD_SEED_RAW.map(([n,t])=>[n,t]), onboarded:true}, parsed);
       if(!DATA.items) DATA.items = ITEMS_RAW.map(([n,t,c])=>[n,t,c]);
+      if(DATA.config.showCountdownEdn===undefined) DATA.config.showCountdownEdn = true;
+      if(DATA.config.showCountdownEcos===undefined) DATA.config.showCountdownEcos = true;
       rebuildAll();
       applyTheme();
       CAL = buildCalendar(DATA.config, DATA.reportedDays);
       rescheduleAllAnnales();
-      document.getElementById('cfgStart').value = DATA.config.start;
-      document.getElementById('cfgS1End').value = DATA.config.s1End;
-      document.getElementById('cfgExam').value = DATA.config.exam;
-      document.getElementById('cfgEcos').value = DATA.config.ecosDate || '';
-      document.getElementById('cfgStudentYear').value = String(currentStudentYear());
-      renderSubjectConfigList();
-      renderReportedDaysList();
-      renderSddCatalogList();
       await saveData();
       selectedDayIso = null; selectedItemNum = null;
       render();
@@ -1710,7 +1640,6 @@ function setGenericDone(iso, taskId, val){ dayChecks(iso)[taskId] = val; saveDat
 function phaseColor(phase){ return phase==='S1' ? 'var(--accent)' : phase==='S2' ? 'var(--navy)' : phase==='ECOS' ? 'var(--danger)' : 'var(--amber)'; }
 function phaseLabel(phase){ return phase==='S1' ? 'Semestre 1 — découverte + révision' : phase==='S2' ? 'Semestre 2 — révision pure' : phase==='ECOS' ? 'Entraînement ECOS (SDD)' : 'Consolidation finale'; }
 
-// ---------- dynamic quota helpers ----------
 function quotaBeforeToday(phase){
   const t = todayDate();
   if(CAL.length && t < CAL[0].date) return 0;
@@ -1718,7 +1647,6 @@ function quotaBeforeToday(phase){
   const today = findDay(todayIso());
   if(!today) return PHASE_FINAL_QUOTA[phase];
   if(today.phase === phase){
-    // count completed weekdays strictly before today in this phase
     let n = 0;
     for(const d of CAL){
       if(d.iso === today.iso) break;
@@ -1750,7 +1678,6 @@ function quotaThroughToday(phase){
   return 0;
 }
 
-// collect uncompleted task refs in [0, cap) for a phase, in order
 function uncompletedInRange(phase, cap){
   const out = [];
   for(let idx=0; idx<cap; idx++){
@@ -1777,7 +1704,6 @@ function retardList(){
       out.push({ type:'item', phase, idx:t.idx, itemNum:t.itemNum, mode:t.mode, key:t.key, iso: INDEX_DATE[phase][t.idx] });
     });
   });
-  // generic (weekend/consol) tasks from past days, not done
   const today = todayIso();
   CAL.forEach(d=>{
     if(d.iso >= today) return;
@@ -1793,9 +1719,6 @@ function retardList(){
   return out;
 }
 
-// ---------- item history ----------
-// Parcourt les cases "effectives" (après échanges éventuels) : une case échangée vers cet
-// item apparaît dans son historique, une case échangée vers un autre item en disparaît.
 function itemHistory(itemNum){
   const entries = [];
   ['S1','S2'].forEach(phase=>{
@@ -1811,10 +1734,31 @@ function itemHistory(itemNum){
   return entries;
 }
 
-// ---------- rendering ----------
 function renderVitals(){
-  const exam = parseISO(DATA.config.exam);
-  const daysLeft = Math.max(0, daysBetween(todayDate(), exam));
+  const showEdn = DATA.config.showCountdownEdn !== false;
+  const showEcos = DATA.config.showCountdownEcos !== false;
+  let vitalsHtml = '';
+
+  if(showEdn){
+    if(DATA.config.exam){
+      const exam = parseISO(DATA.config.exam);
+      const daysLeft = Math.max(0, daysBetween(todayDate(), exam));
+      vitalsHtml += `<div class="vital"><div class="num">${daysLeft}</div><div class="lbl">Jours avant les EDN</div></div>`;
+    } else {
+      vitalsHtml += `<div class="vital"><div class="num">—</div><div class="lbl">Jours avant les EDN</div></div>`;
+    }
+  }
+
+  if(showEcos){
+    if(DATA.config.ecosDate){
+      const ecos = parseISO(DATA.config.ecosDate);
+      const daysLeftEcos = Math.max(0, daysBetween(todayDate(), ecos));
+      vitalsHtml += `<div class="vital"><div class="num">${daysLeftEcos}</div><div class="lbl">Jours avant les ECOS</div></div>`;
+    } else {
+      vitalsHtml += `<div class="vital"><div class="num">—</div><div class="lbl">Jours avant les ECOS</div></div>`;
+    }
+  }
+
   let total=0, done=0;
   ['S1','S2'].forEach(phase=>{
     const cap = PHASE_FINAL_QUOTA[phase];
@@ -1823,11 +1767,14 @@ function renderVitals(){
   });
   const pct = total? Math.round(done/total*100) : 0;
   const day = findDay(todayIso());
-  document.getElementById('vitals').innerHTML = `
-    <div class="vital"><div class="num">${daysLeft}</div><div class="lbl">Jours avant les EDN</div></div>
-    <div class="vital"><div class="num">${day ? (day.phase==='S1'?'S1':day.phase==='S2'?'S2':'Consol.') : '—'}</div><div class="lbl">Phase actuelle</div></div>
+  const phaseDisplay = day ? (day.phase==='S1'?'S1':day.phase==='S2'?'S2':day.phase==='ECOS'?'ECOS':'Consol.') : '—';
+
+  vitalsHtml += `
+    <div class="vital"><div class="num">${phaseDisplay}</div><div class="lbl">Phase actuelle</div></div>
     <div class="vital"><div class="num">${pct}%</div><div class="lbl">Progression globale</div></div>
   `;
+  document.getElementById('vitals').innerHTML = vitalsHtml;
+
   const rlen = retardList().length;
   const badge = document.getElementById('retardBadge');
   if(rlen>0){ badge.style.display='inline-block'; badge.textContent = rlen; }
@@ -1892,7 +1839,7 @@ function itemTaskHTML(task, opts){
 }
 
 function sddTaskHTML(task){
-  const sdd = SDD_BY_NUM[task.num] || {num:task.num, title:'SDD inconnue — vérifie le catalogue dans les réglages'};
+  const sdd = SDD_BY_NUM[task.num] || {num:task.num, title:'SDD inconnue — vérifie le catalogue dans l\'onglet SDD'};
   const key = task.id;
   const done = isItemTaskDone(key);
   return `
@@ -1965,7 +1912,7 @@ function updateRetardBadgeOnly(){
 
 function weekSummaryHTML(){
   const today = todayDate();
-  const dow = (today.getDay()+6)%7; // Monday=0
+  const dow = (today.getDay()+6)%7;
   const monday = addDays(today, -dow);
   const sunday = addDays(monday,6);
   let total=0, done=0;
@@ -1978,7 +1925,6 @@ function weekSummaryHTML(){
   const satIso = toISO(addDays(monday,5));
   const sunIso = toISO(sunday);
   const lcaOk = isGenericDone(satIso,'lca') || isGenericDone(sunIso,'lca');
-  const lcaDue = sunday <= today || CAL.some(d=>d.iso===sunIso);
   return `
     <div class="week-summary">
       <p class="wtitle">Cette semaine (${fmtShort(monday)} – ${fmtShort(sunday)})</p>
@@ -2021,7 +1967,7 @@ function renderToday(){
   if(day.reported){
     body = `<p class="empty-state">${reportedDayLabel(day.reportedInfo)} — rien de prévu ce jour-là. ${(!day.weekend && day.phase!=='CONSOL') ? 'Les items prévus glissent automatiquement aux jours suivants.' : ''}</p>`;
   } else if(day.phase==='ECOS'){
-    body = day.tasks && day.tasks.length ? day.tasks.map(t=>sddTaskHTML(t)).join('') : `<div class="empty-state"><p>Aucune SDD dans le catalogue — ajoutes-en dans les réglages pour activer l'entraînement ECOS.</p></div>`;
+    body = day.tasks && day.tasks.length ? day.tasks.map(t=>sddTaskHTML(t)).join('') : `<div class="empty-state"><p>Aucune SDD dans le catalogue — ajoutes-en dans l'onglet SDD pour activer l'entraînement ECOS.</p></div>`;
   } else if(day.weekend || day.phase==='CONSOL'){
     body = genericListHTML(day.iso, day.tasks);
   } else {
@@ -2082,7 +2028,7 @@ function renderRetard(){
   container.innerHTML = html;
   bindTaskHandlers(container);
   container.querySelectorAll('[data-itemkey], [data-genericiso]').forEach(cb=>{
-    cb.addEventListener('change', ()=>{ renderRetard(); }); // re-render to drop completed rows
+    cb.addEventListener('change', ()=>{ renderRetard(); });
   });
 }
 
@@ -2323,16 +2269,6 @@ function renderLCA(){
 let itemsFilterCat = 'all';
 let itemsSearchQuery = '';
 
-function render(){
-  renderVitals();
-  if(currentTab==='today') renderToday();
-  else if(currentTab==='retard') renderRetard();
-  else if(currentTab==='planning') renderPlanning();
-  else if(currentTab==='progress') renderProgress();
-  else if(currentTab==='lca') renderLCA();
-  else if(currentTab==='items') renderItemsManager();
-}
-
 function catCheckboxGrid(idPrefix, selectedCats){
   selectedCats = selectedCats || [];
   return `<div class="cat-checkbox-grid" id="${idPrefix}-grid">
@@ -2455,57 +2391,390 @@ function renderItemsManager(){
   });
 }
 
-function applyTheme(){
-  document.body.classList.toggle('dark', !!DATA.darkMode);
-  document.getElementById('themeToggle').textContent = DATA.darkMode ? 'Mode clair' : 'Mode sombre';
-}
+// ---------- PAGE DÉDIÉE SDD (Situations de Départ ECOS) ----------
+let sddSearchQuery = '';
 
-function renderSddCatalogList(){
-  const countEl = document.getElementById('sddCatalogCount');
-  const listEl = document.getElementById('sddCatalogList');
+function renderSddManager(){
+  const container = document.getElementById('app');
   const sdd = (DATA.sddItems || []).slice().sort((a,b)=>a[0]-b[0]);
-  countEl.textContent = `${sdd.length} SDD dans le catalogue (liste officielle : 356).`;
-  if(sdd.length===0){ listEl.innerHTML = `<p style="font-size:11.5px;color:var(--ink-soft);padding:6px 0;">Catalogue vide — importe une liste ci-dessus pour activer l'entraînement ECOS.</p>`; return; }
-  listEl.innerHTML = sdd.map(([n,t])=>`
-    <div class="subject-row">
-      <span>SDD ${n} — ${t}</span>
-      <button type="button" class="btn-danger" data-delsdd="${n}" style="padding:3px 9px;font-size:11px;">×</button>
+  const q = sddSearchQuery.trim().toLowerCase();
+  const filtered = sdd.filter(([n,t])=> !q || String(n).includes(q) || t.toLowerCase().includes(q));
+
+  let rows = filtered.map(([n,t])=>`
+    <div class="item-manage-row" data-num="${n}" style="border-left-color:var(--danger)">
+      <div class="imtop">
+        <span class="imnum">SDD ${n}</span>
+        <span class="imtitle">${t}</span>
+      </div>
+      <div class="imactions">
+        <button class="btn-secondary" data-editsdd="${n}">Modifier</button>
+        <button class="btn-danger" data-delsdd="${n}">Supprimer</button>
+      </div>
     </div>
   `).join('');
-  listEl.querySelectorAll('[data-delsdd]').forEach(b=>{
-    b.addEventListener('click', ()=>{
-      const n = parseInt(b.getAttribute('data-delsdd'),10);
-      DATA.sddItems = (DATA.sddItems||[]).filter(([num])=>num!==n);
+  if(!rows) rows = `<p class="hist-empty">Aucune situation de départ trouvée.</p>`;
+
+  container.innerHTML = `
+    <p class="weekend-note">Gère ici le catalogue officiel des Situations de Départ (SDD) pour l'entraînement aux ECOS. En phase ECOS, 4 SDD par jour sont planifiées jusqu'à épuisement du catalogue.</p>
+    
+    <div class="add-item-form">
+      <h4>+ Ajouter une situation de départ (SDD)</h4>
+      <div class="frow">
+        <input type="number" id="newSddNum" placeholder="Numéro (ex: ${nextSddId()})" style="max-width:140px;">
+        <input type="text" id="newSddTitle" placeholder="Intitulé de la SDD (ex: Constipation)">
+      </div>
+      <button class="btn-primary" id="btnAddSdd" style="margin-top:6px;">Ajouter cette SDD</button>
+    </div>
+
+    <div class="settings-card" style="margin-bottom:16px;">
+      <h3>Importation / Réinitialisation en masse</h3>
+      <p class="settings-hint" style="margin-bottom:8px;">Colle une ou plusieurs lignes au format « numéro;titre » (ex: 1;Constipation) pour importer ou mettre à jour les SDD existantes sans écraser le reste.</p>
+      <textarea id="sddBulkImport" placeholder="1;Constipation&#10;2;Diarrhée&#10;4;Douleur abdominale…" style="width:100%;min-height:80px;font-family:var(--mono);font-size:12px;padding:8px;border:1px solid var(--rule);border-radius:var(--radius);background:var(--paper-raised);color:var(--ink);"></textarea>
+      <div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap;">
+        <button type="button" id="btnImportSdd" class="btn-secondary">Importer les lignes</button>
+        <button type="button" id="btnClearSdd" class="btn-danger">Vider tout le catalogue</button>
+      </div>
+    </div>
+
+    <div class="frow" style="align-items:center;margin-bottom:12px;">
+      <input type="text" id="sddSearchInput" placeholder="Rechercher une SDD (numéro ou mot-clé)…" value="${sddSearchQuery.replace(/"/g,'&quot;')}" style="font-family:var(--sans);font-size:13px;padding:7px 10px;border:1px solid var(--rule);border-radius:var(--radius);background:var(--white);color:var(--ink);flex:1;">
+      <span style="font-family:var(--mono);font-size:11.5px;color:var(--ink-soft);margin-left:10px;">${sdd.length} SDD au total</span>
+    </div>
+
+    ${rows}
+  `;
+
+  document.getElementById('sddSearchInput').addEventListener('input', e=>{
+    sddSearchQuery = e.target.value;
+    renderSddManager();
+    const inp = document.getElementById('sddSearchInput');
+    inp.focus();
+    inp.setSelectionRange(inp.value.length, inp.value.length);
+  });
+
+  document.getElementById('btnAddSdd').addEventListener('click', ()=>{
+    const numVal = document.getElementById('newSddNum').value.trim();
+    const title = document.getElementById('newSddTitle').value.trim();
+    const num = numVal ? parseInt(numVal,10) : nextSddId();
+    if(!num || !title){ alert('Renseigne un numéro et un intitulé.'); return; }
+    addSddItem(num, title);
+    render();
+  });
+
+  document.getElementById('btnImportSdd').addEventListener('click', ()=>{
+    const raw = document.getElementById('sddBulkImport').value;
+    const lines = raw.split('\n').map(l=>l.trim()).filter(Boolean);
+    if(lines.length===0){ alert('Colle au moins une ligne au format « numéro;titre ».'); return; }
+    if(!DATA.sddItems) DATA.sddItems = [];
+    const byNum = {};
+    DATA.sddItems.forEach(([n,t])=>{ byNum[n] = t; });
+    let imported = 0, skipped = 0;
+    lines.forEach(line=>{
+      const sep = line.includes(';') ? ';' : (line.includes('\t') ? '\t' : null);
+      if(!sep){ skipped++; return; }
+      const [numStr, ...rest] = line.split(sep);
+      const num = parseInt(numStr.trim(),10);
+      const title = rest.join(sep).trim();
+      if(!num || !title){ skipped++; return; }
+      byNum[num] = title;
+      imported++;
+    });
+    DATA.sddItems = Object.keys(byNum).map(n=>[parseInt(n,10), byNum[n]]);
+    rebuildAll();
+    CAL = buildCalendar(DATA.config, DATA.reportedDays);
+    saveData();
+    render();
+    alert(`${imported} SDD importée${imported>1?'s':''}${skipped>0?`, ${skipped} ligne${skipped>1?'s':''} ignorée${skipped>1?'s':''}`:''}.`);
+  });
+
+  document.getElementById('btnClearSdd').addEventListener('click', ()=>{
+    if(!confirm('Vider tout le catalogue SDD ? Les cases déjà cochées resteront en mémoire mais ne seront plus associées à un titre.')) return;
+    DATA.sddItems = [];
+    rebuildAll();
+    CAL = buildCalendar(DATA.config, DATA.reportedDays);
+    saveData();
+    render();
+  });
+
+  container.querySelectorAll('[data-delsdd]').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const num = parseInt(btn.getAttribute('data-delsdd'),10);
+      const sddObj = SDD_BY_NUM[num];
+      if(confirm(`Supprimer la SDD #${num} — "${sddObj ? sddObj.title : ''}" ?`)){
+        deleteSddItem(num);
+        render();
+      }
+    });
+  });
+
+  container.querySelectorAll('[data-editsdd]').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const num = parseInt(btn.getAttribute('data-editsdd'),10);
+      const row = btn.closest('.item-manage-row');
+      const sddObj = SDD_BY_NUM[num] || {title:''};
+      row.querySelector('.imactions').innerHTML = '';
+      const form = document.createElement('div');
+      form.className = 'item-edit-form';
+      form.innerHTML = `
+        <input type="text" value="${sddObj.title.replace(/"/g,'&quot;')}" id="editSddTitle-${num}">
+        <div class="imactions">
+          <button class="btn-primary" id="saveSddEdit-${num}">Enregistrer</button>
+          <button class="btn-secondary" id="cancelSddEdit-${num}">Annuler</button>
+        </div>
+      `;
+      row.appendChild(form);
+      document.getElementById(`saveSddEdit-${num}`).addEventListener('click', ()=>{
+        const newTitle = document.getElementById(`editSddTitle-${num}`).value.trim();
+        if(!newTitle){ alert('Le titre ne peut pas être vide.'); return; }
+        updateSddItem(num, newTitle);
+        render();
+      });
+      document.getElementById(`cancelSddEdit-${num}`).addEventListener('click', ()=>{ render(); });
+    });
+  });
+}
+
+// ---------- PAGE DÉDIÉE PARAMÈTRES ----------
+function renderSettings(){
+  const container = document.getElementById('app');
+  const cfg = DATA.config;
+  const ghCfg = getGithubConfig() || {};
+  const nc = currentNewCats();
+
+  const subjectsHtml = ALL_CATS.map(c=>{
+    const dl = (DATA.subjectDeadlines && DATA.subjectDeadlines[c]) || '';
+    return `<div class="subject-row">
+      <label><input type="checkbox" class="newcat-check" value="${c}" ${nc.includes(c)?'checked':''}> ${CAT_LABELS[c]}</label>
+      <input type="date" class="deadline-input" data-cat="${c}" value="${dl}">
+    </div>`;
+  }).join('');
+
+  const repEntries = Object.keys(DATA.reportedDays||{}).sort();
+  let reportedListHtml = `<p style="font-size:11.5px;color:var(--ink-soft);padding:4px 0;">Aucun jour spécial programmé.</p>`;
+  if(repEntries.length > 0){
+    reportedListHtml = repEntries.map(iso=>{
+      const entry = DATA.reportedDays[iso];
+      return `<div class="subject-row">
+        <span>${fmtShort(parseISO(iso))} — ${reportedDayLabel(entry)}</span>
+        <button type="button" class="btn-danger" data-delreported="${iso}" style="padding:2px 8px;font-size:11px;">×</button>
+      </div>`;
+    }).join('');
+  }
+
+  container.innerHTML = `
+    <div class="settings-card">
+      <h3>Affichage & Compteurs du bandeau</h3>
+      <div class="settings-group">
+        <label class="checkbox-label">
+          <input type="checkbox" id="cfgShowEdn" ${cfg.showCountdownEdn!==false ? 'checked':''}>
+          <span>Afficher le compte à rebours <strong>EDN</strong></span>
+        </label>
+        <label class="checkbox-label">
+          <input type="checkbox" id="cfgShowEcos" ${cfg.showCountdownEcos!==false ? 'checked':''}>
+          <span>Afficher le compte à rebours <strong>ECOS</strong></span>
+        </label>
+      </div>
+    </div>
+
+    <div class="settings-card">
+      <h3>Calendrier & Dates d'examen</h3>
+      <div class="settings-group">
+        <label>Année d'étude actuelle
+          <select id="cfgStudentYear">
+            <option value="3" ${String(cfg.studentYear)==='3'?'selected':''}>3ᵉ année (DFGSM3)</option>
+            <option value="4" ${String(cfg.studentYear)==='4'?'selected':''}>4ᵉ année (DFASM1)</option>
+            <option value="5" ${String(cfg.studentYear)==='5'?'selected':''}>5ᵉ année (DFASM2)</option>
+            <option value="6" ${String(cfg.studentYear)==='6'?'selected':''}>6ᵉ année (DFASM3 — EDN)</option>
+          </select>
+          <span class="settings-hint">Détermine notamment si la LCA apparaît dans les révisions du week-end (à partir de la 5ᵉ année).</span>
+        </label>
+        <label>Début des révisions
+          <input type="date" id="cfgStart" value="${cfg.start}">
+        </label>
+        <label>Début des tours de révision générale
+          <input type="date" id="cfgS1End" value="${cfg.s1End}">
+          <span class="settings-hint">Date à partir de laquelle tu passes en révision cumulative de tout le programme, tous items confondus. Avant cette date, seules les matières cochées ci-dessous tournent.</span>
+        </label>
+        <label>Date des EDN (estimation)
+          <input type="date" id="cfgExam" value="${cfg.exam}">
+        </label>
+        <label>Date des ECOS (optionnel)
+          <input type="date" id="cfgEcos" value="${cfg.ecosDate||''}">
+          <span class="settings-hint">Si renseignée, la période entre les EDN et cette date bascule automatiquement en entraînement ECOS (4 SDD par jour).</span>
+        </label>
+      </div>
+    </div>
+
+    <div class="settings-card">
+      <h3>Matières nouvelles de la période & DL de partiels</h3>
+      <span class="settings-hint" style="display:block;margin-bottom:8px;">Coche les matières que tu découvres actuellement. Ajoute une date butoir (DL) pour faire remonter les items d'une matière en priorité avant cette date.</span>
+      <div class="subject-config-list">${subjectsHtml}</div>
+    </div>
+
+    <div class="settings-card">
+      <h3>Jours spéciaux (repos, partiels, concours blancs…)</h3>
+      <span class="settings-hint" style="display:block;margin-bottom:8px;">Programme à l'avance un jour sans rien de prévu — les items prévus glissent automatiquement aux jours suivants.</span>
+      <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px;">
+        <input type="date" id="newReportedDate">
+        <select id="newReportedType">
+          <option value="repos">Repos</option>
+          <option value="partiel">Partiel</option>
+          <option value="concours_blanc">Concours blanc</option>
+          <option value="autre">Autre</option>
+        </select>
+        <input type="text" id="newReportedLabel" placeholder="Précision (optionnel)" style="flex:1;min-width:120px;">
+      </div>
+      <button type="button" id="btnAddReportedDay" class="btn-primary" style="margin-bottom:12px;">+ Programmer ce jour</button>
+      <div class="subject-config-list">${reportedListHtml}</div>
+    </div>
+
+    <div class="settings-card">
+      <h3>Synchronisation GitHub (sauvegarde automatique sur data.json)</h3>
+      <div class="settings-group">
+        <input type="text" id="ghOwner" placeholder="Utilisateur ou organisation GitHub (ex: mathiiz)" value="${ghCfg.owner||''}">
+        <input type="text" id="ghRepo" placeholder="Nom du dépôt (ex: edn-planning)" value="${ghCfg.repo||''}">
+        <input type="text" id="ghPath" placeholder="Nom du fichier de données (ex: data.json)" value="${ghCfg.path||'data.json'}">
+        <input type="text" id="ghBranch" placeholder="Branche (ex: main)" value="${ghCfg.branch||'main'}">
+        <input type="password" id="ghToken" placeholder="Token d'accès personnel GitHub (PAT)" value="${ghCfg.token||''}">
+      </div>
+      <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:10px;">
+        <button type="button" id="btnGhSave" class="btn-primary">Enregistrer la connexion</button>
+        <button type="button" id="btnGhSyncNow" class="btn-secondary">Synchroniser maintenant</button>
+        <button type="button" id="btnGhDisconnect" class="btn-danger">Déconnecter</button>
+      </div>
+      <span id="ghStatus" style="font-size:11.5px;color:var(--ink-soft);display:block;margin-top:8px;">${currentGhStatus || ''}</span>
+    </div>
+
+    <div class="settings-card">
+      <h3>Sauvegarde manuelle & Fichier de secours</h3>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px;">
+        <button type="button" id="btnExport" class="btn-secondary">Exporter le dossier JSON ↓</button>
+        <button type="button" id="btnImportTrigger" class="btn-secondary">Importer un dossier JSON ↑</button>
+        <input type="file" id="fileImport" accept="application/json" style="display:none;">
+      </div>
+      <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+        <button type="button" id="btnLinkFile" class="btn-secondary">Lier un fichier local (.json)</button>
+        <span id="linkFileStatus" style="font-size:11.5px;color:var(--ink-soft);">${currentLinkFileStatus || ''}</span>
+      </div>
+    </div>
+  `;
+
+  document.getElementById('cfgShowEdn').addEventListener('change', e=>{
+    DATA.config.showCountdownEdn = e.target.checked;
+    saveData();
+    renderVitals();
+  });
+  document.getElementById('cfgShowEcos').addEventListener('change', e=>{
+    DATA.config.showCountdownEcos = e.target.checked;
+    saveData();
+    renderVitals();
+  });
+
+  document.getElementById('cfgStudentYear').addEventListener('change', e=>{
+    DATA.config.studentYear = parseInt(e.target.value, 10);
+    CAL = buildCalendar(DATA.config, DATA.reportedDays);
+    saveData();
+    render();
+  });
+  document.getElementById('cfgStart').addEventListener('change', e=>{
+    DATA.config.start = e.target.value;
+    CAL = buildCalendar(DATA.config, DATA.reportedDays);
+    saveData();
+    render();
+  });
+  document.getElementById('cfgS1End').addEventListener('change', e=>{
+    DATA.config.s1End = e.target.value;
+    CAL = buildCalendar(DATA.config, DATA.reportedDays);
+    saveData();
+    render();
+  });
+  document.getElementById('cfgExam').addEventListener('change', e=>{
+    DATA.config.exam = e.target.value;
+    CAL = buildCalendar(DATA.config, DATA.reportedDays);
+    saveData();
+    render();
+  });
+  document.getElementById('cfgEcos').addEventListener('change', e=>{
+    DATA.config.ecosDate = e.target.value || null;
+    CAL = buildCalendar(DATA.config, DATA.reportedDays);
+    saveData();
+    render();
+  });
+
+  container.querySelectorAll('.newcat-check').forEach(cb=>{
+    cb.addEventListener('change', ()=>{
+      const checked = Array.from(container.querySelectorAll('.newcat-check:checked')).map(x=>x.value);
+      DATA.config.newCats = checked;
       rebuildAll();
       CAL = buildCalendar(DATA.config, DATA.reportedDays);
       saveData();
-      renderSddCatalogList();
       render();
     });
   });
-}
 
-function renderReportedDaysList(){
-  const el = document.getElementById('reportedDaysList');
-  const entries = Object.keys(DATA.reportedDays||{}).sort();
-  if(entries.length===0){ el.innerHTML = `<p style="font-size:11.5px;color:var(--ink-soft);padding:6px 0;">Aucun jour spécial programmé.</p>`; return; }
-  el.innerHTML = entries.map(iso=>{
-    const entry = DATA.reportedDays[iso];
-    return `<div class="subject-row">
-      <span>${fmtShort(parseISO(iso))} — ${reportedDayLabel(entry)}</span>
-      <button type="button" class="btn-danger" data-delreported="${iso}" style="padding:3px 9px;font-size:11px;">×</button>
-    </div>`;
-  }).join('');
-  el.querySelectorAll('[data-delreported]').forEach(b=>{
+  container.querySelectorAll('.deadline-input').forEach(inp=>{
+    inp.addEventListener('change', ()=>{
+      if(!DATA.subjectDeadlines) DATA.subjectDeadlines = {};
+      const cat = inp.getAttribute('data-cat');
+      if(inp.value) DATA.subjectDeadlines[cat] = inp.value; else delete DATA.subjectDeadlines[cat];
+      rebuildAll();
+      CAL = buildCalendar(DATA.config, DATA.reportedDays);
+      scheduleAnnalesForDeadline(cat);
+      saveData();
+      render();
+    });
+  });
+
+  document.getElementById('btnAddReportedDay').addEventListener('click', ()=>{
+    const iso = document.getElementById('newReportedDate').value;
+    const type = document.getElementById('newReportedType').value;
+    const label = document.getElementById('newReportedLabel').value.trim();
+    if(!iso){ alert('Choisis une date.'); return; }
+    setReportedDay(iso, type, label);
+    render();
+  });
+
+  container.querySelectorAll('[data-delreported]').forEach(b=>{
     b.addEventListener('click', ()=>{
       clearReportedDay(b.getAttribute('data-delreported'));
-      renderReportedDaysList();
       render();
     });
   });
+
+  document.getElementById('btnGhSave').addEventListener('click', async ()=>{
+    const owner = document.getElementById('ghOwner').value.trim();
+    const repo = document.getElementById('ghRepo').value.trim();
+    const path = document.getElementById('ghPath').value.trim() || 'data.json';
+    const branch = document.getElementById('ghBranch').value.trim() || 'main';
+    const token = document.getElementById('ghToken').value.trim();
+    if(!owner || !repo || !token){ setGithubStatus('Renseigne au moins utilisateur, dépôt et token.'); return; }
+    setGithubConfig({owner, repo, path, branch, token});
+    await githubSyncNow();
+  });
+
+  document.getElementById('btnGhSyncNow').addEventListener('click', async ()=>{
+    await githubSyncNow();
+  });
+
+  document.getElementById('btnGhDisconnect').addEventListener('click', ()=>{
+    clearGithubConfig();
+    ['ghOwner','ghRepo','ghPath','ghBranch','ghToken'].forEach(id=>{ document.getElementById(id).value=''; });
+    setGithubStatus('Déconnecté — sauvegarde locale uniquement');
+  });
+
+  document.getElementById('btnExport').addEventListener('click', exportBackup);
+  document.getElementById('btnImportTrigger').addEventListener('click', ()=>{ document.getElementById('fileImport').click(); });
+  document.getElementById('fileImport').addEventListener('change', (e)=>{
+    const file = e.target.files[0];
+    if(file) importBackup(file);
+    e.target.value = '';
+  });
+  document.getElementById('btnLinkFile').addEventListener('click', async ()=>{
+    await linkBackupFile();
+    render();
+  });
 }
 
-// ---------- annales, programmées automatiquement 1 à 2 semaines avant la DL d'une matière ----------
 function clearAnnalesForCat(cat){
   if(!DATA.customTasks) return;
   const prefix = 'annale_' + cat + '_';
@@ -2536,182 +2805,44 @@ function rescheduleAllAnnales(){
   Object.keys(DATA.subjectDeadlines||{}).forEach(cat=> scheduleAnnalesForDeadline(cat));
 }
 
-function renderSubjectConfigList(){
-  const el = document.getElementById('subjectConfigList');
-  const nc = currentNewCats();
-  el.innerHTML = ALL_CATS.map(c=>{
-    const dl = (DATA.subjectDeadlines && DATA.subjectDeadlines[c]) || '';
-    return `<div class="subject-row">
-      <label><input type="checkbox" class="newcat-check" value="${c}" ${nc.includes(c)?'checked':''}> ${CAT_LABELS[c]}</label>
-      <input type="date" class="deadline-input" data-cat="${c}" value="${dl}">
-    </div>`;
-  }).join('');
-  el.querySelectorAll('.newcat-check').forEach(cb=>{
-    cb.addEventListener('change', ()=>{
-      const checked = Array.from(el.querySelectorAll('.newcat-check:checked')).map(x=>x.value);
-      DATA.config.newCats = checked;
-      rebuildAll();
-      CAL = buildCalendar(DATA.config, DATA.reportedDays);
-      selectedDayIso = null; selectedItemNum = null;
-      saveData();
-      render();
-    });
-  });
-  el.querySelectorAll('.deadline-input').forEach(inp=>{
-    inp.addEventListener('change', ()=>{
-      if(!DATA.subjectDeadlines) DATA.subjectDeadlines = {};
-      const cat = inp.getAttribute('data-cat');
-      if(inp.value) DATA.subjectDeadlines[cat] = inp.value; else delete DATA.subjectDeadlines[cat];
-      rebuildAll();
-      CAL = buildCalendar(DATA.config, DATA.reportedDays);
-      scheduleAnnalesForDeadline(cat);
-      selectedDayIso = null; selectedItemNum = null;
-      saveData();
-      render();
-    });
-  });
+function applyTheme(){
+  document.body.classList.toggle('dark', !!DATA.darkMode);
+  document.getElementById('themeToggle').textContent = DATA.darkMode ? 'Mode clair' : 'Mode sombre';
+}
+
+function render(){
+  renderVitals();
+  if(currentTab==='today') renderToday();
+  else if(currentTab==='retard') renderRetard();
+  else if(currentTab==='planning') renderPlanning();
+  else if(currentTab==='progress') renderProgress();
+  else if(currentTab==='lca') renderLCA();
+  else if(currentTab==='items') renderItemsManager();
+  else if(currentTab==='sdd') renderSddManager();
+  else if(currentTab==='settings') renderSettings();
 }
 
 async function init(){
   DATA = await loadData();
-  await tryReconnectBackupFile(); // relit le fichier de secours s'il est lié, remplace DATA si présent
-  const remote = await githubLoadData(); // si GitHub est configuré, la version distante prime
+  await tryReconnectBackupFile();
+  const remote = await githubLoadData();
   if(remote){
     DATA = Object.assign({config:Object.assign({},DEFAULT_CONFIG), itemChecks:{}, checks:{}, reportedDays:{}, darkMode:false, itemOverrides:{}, customTasks:{}, subjectDeadlines:{}, itemDifficulty:{}, lcaEntries:{}, sddItems: SDD_SEED_RAW.map(([n,t])=>[n,t]), onboarded:true}, remote);
     if(!DATA.items) DATA.items = ITEMS_RAW.map(([n,t,c])=>[n,t,c]);
+    if(DATA.config.showCountdownEdn===undefined) DATA.config.showCountdownEdn = true;
+    if(DATA.config.showCountdownEcos===undefined) DATA.config.showCountdownEcos = true;
     try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(DATA)); }catch(e){}
   }
   if(!fsApiSupported()) setLinkStatus('Non supporté par ce navigateur');
   rebuildAll();
   CAL = buildCalendar(DATA.config, DATA.reportedDays);
-  rescheduleAllAnnales(); // ré-aligne les annales déjà programmées avec le calendrier actuel
+  rescheduleAllAnnales();
   applyTheme();
-
-  document.getElementById('cfgStart').value = DATA.config.start;
-  document.getElementById('cfgS1End').value = DATA.config.s1End;
-  document.getElementById('cfgExam').value = DATA.config.exam;
-  document.getElementById('cfgEcos').value = DATA.config.ecosDate || '';
-  document.getElementById('cfgStudentYear').value = String(currentStudentYear());
-  renderSubjectConfigList();
-  renderReportedDaysList();
-  renderSddCatalogList();
-
-  document.getElementById('cfgEcos').addEventListener('change', e=>{
-    DATA.config.ecosDate = e.target.value || null;
-    CAL = buildCalendar(DATA.config, DATA.reportedDays);
-    selectedDayIso = null; selectedItemNum = null;
-    saveData();
-    render();
-  });
-
-  document.getElementById('btnImportSdd').addEventListener('click', ()=>{
-    const raw = document.getElementById('sddBulkImport').value;
-    const lines = raw.split('\n').map(l=>l.trim()).filter(Boolean);
-    if(lines.length===0){ alert('Colle au moins une ligne au format "numéro;titre".'); return; }
-    if(!DATA.sddItems) DATA.sddItems = [];
-    const byNum = {};
-    DATA.sddItems.forEach(([n,t])=>{ byNum[n] = t; });
-    let imported = 0, skipped = 0;
-    lines.forEach(line=>{
-      const sep = line.includes(';') ? ';' : (line.includes('\t') ? '\t' : null);
-      if(!sep){ skipped++; return; }
-      const [numStr, ...rest] = line.split(sep);
-      const num = parseInt(numStr.trim(),10);
-      const title = rest.join(sep).trim();
-      if(!num || !title){ skipped++; return; }
-      byNum[num] = title; // ajoute, ou remplace si ce numéro existait déjà
-      imported++;
-    });
-    DATA.sddItems = Object.keys(byNum).map(n=>[parseInt(n,10), byNum[n]]);
-    rebuildAll();
-    CAL = buildCalendar(DATA.config, DATA.reportedDays);
-    saveData();
-    document.getElementById('sddBulkImport').value = '';
-    renderSddCatalogList();
-    render();
-    alert(`${imported} SDD importée${imported>1?'s':''}${skipped>0?`, ${skipped} ligne${skipped>1?'s':''} ignorée${skipped>1?'s':''} (format invalide)`:''}.`);
-  });
-  document.getElementById('btnClearSdd').addEventListener('click', ()=>{
-    if(!confirm('Vider tout le catalogue SDD ? Les cases déjà cochées resteront en mémoire mais ne seront plus rattachées à un titre tant que tu ne réimportes pas.')) return;
-    DATA.sddItems = [];
-    rebuildAll();
-    CAL = buildCalendar(DATA.config, DATA.reportedDays);
-    saveData();
-    renderSddCatalogList();
-    render();
-  });
-
-  document.getElementById('btnAddReportedDay').addEventListener('click', ()=>{
-    const iso = document.getElementById('newReportedDate').value;
-    const type = document.getElementById('newReportedType').value;
-    const label = document.getElementById('newReportedLabel').value.trim();
-    if(!iso){ alert('Choisis une date.'); return; }
-    setReportedDay(iso, type, label);
-    document.getElementById('newReportedLabel').value = '';
-    renderReportedDaysList();
-    render();
-  });
-
-  document.getElementById('cfgStudentYear').addEventListener('change', e=>{
-    DATA.config.studentYear = parseInt(e.target.value, 10);
-    CAL = buildCalendar(DATA.config, DATA.reportedDays);
-    selectedDayIso = null; selectedItemNum = null;
-    saveData();
-    render();
-  });
-
-  const ghCfg = getGithubConfig();
-  if(ghCfg){
-    document.getElementById('ghOwner').value = ghCfg.owner || '';
-    document.getElementById('ghRepo').value = ghCfg.repo || '';
-    document.getElementById('ghPath').value = ghCfg.path || '';
-    document.getElementById('ghBranch').value = ghCfg.branch || '';
-    document.getElementById('ghToken').value = ghCfg.token || '';
-  }
-  document.getElementById('btnGhSave').addEventListener('click', async ()=>{
-    const owner = document.getElementById('ghOwner').value.trim();
-    const repo = document.getElementById('ghRepo').value.trim();
-    const path = document.getElementById('ghPath').value.trim() || 'data.json';
-    const branch = document.getElementById('ghBranch').value.trim() || 'main';
-    const token = document.getElementById('ghToken').value.trim();
-    if(!owner || !repo || !token){ setGithubStatus('Renseigne au moins utilisateur, dépôt et token.'); return; }
-    setGithubConfig({owner, repo, path, branch, token});
-    await githubSyncNow();
-  });
-  document.getElementById('btnGhDisconnect').addEventListener('click', ()=>{
-    clearGithubConfig();
-    ['ghOwner','ghRepo','ghPath','ghBranch','ghToken'].forEach(id=>{ document.getElementById(id).value=''; });
-    setGithubStatus('Déconnecté — sauvegarde locale uniquement');
-  });
 
   document.getElementById('themeToggle').addEventListener('click', ()=>{
     DATA.darkMode = !DATA.darkMode;
     applyTheme();
     saveData();
-  });
-  document.getElementById('settingsToggle').addEventListener('click', ()=>{
-    document.getElementById('settingsPanel').classList.toggle('open');
-  });
-  document.getElementById('btnExport').addEventListener('click', exportBackup);
-  document.getElementById('btnLinkFile').addEventListener('click', async ()=>{
-    await linkBackupFile();
-    render();
-  });
-  document.getElementById('btnImportTrigger').addEventListener('click', ()=>{ document.getElementById('fileImport').click(); });
-  document.getElementById('fileImport').addEventListener('change', (e)=>{
-    const file = e.target.files[0];
-    if(file) importBackup(file);
-    e.target.value = '';
-  });
-  ['cfgStart','cfgS1End','cfgExam'].forEach(id=>{
-    document.getElementById(id).addEventListener('change', e=>{
-      const map = {cfgStart:'start', cfgS1End:'s1End', cfgExam:'exam'};
-      DATA.config[map[id]] = e.target.value;
-      CAL = buildCalendar(DATA.config, DATA.reportedDays);
-      selectedDayIso = null; selectedItemNum = null;
-      saveData();
-      render();
-    });
   });
 
   document.getElementById('tabbar').addEventListener('click', e=>{
@@ -2753,18 +2884,10 @@ function showOnboarding(){
     const newCats = Array.from(document.querySelectorAll('.ob-newcat-check:checked')).map(x=>x.value);
     if(!start || !exam || !s1End){ alert('Merci de renseigner les trois dates.'); return; }
     if(newCats.length===0){ alert('Coche au moins une matière nouvelle pour cette période.'); return; }
-    DATA.config = Object.assign({}, DEFAULT_CONFIG, { start, exam, s1End, newCats, studentYear: year });
+    DATA.config = Object.assign({}, DEFAULT_CONFIG, { start, exam, s1End, newCats, studentYear: year, showCountdownEdn: true, showCountdownEcos: true });
     DATA.onboarded = true;
     rebuildAll();
     CAL = buildCalendar(DATA.config, DATA.reportedDays);
-    document.getElementById('cfgStart').value = DATA.config.start;
-    document.getElementById('cfgS1End').value = DATA.config.s1End;
-    document.getElementById('cfgExam').value = DATA.config.exam;
-    document.getElementById('cfgEcos').value = DATA.config.ecosDate || '';
-    document.getElementById('cfgStudentYear').value = String(currentStudentYear());
-    renderSubjectConfigList();
-    renderReportedDaysList();
-    renderSddCatalogList();
     saveData();
     overlay.classList.add('hidden');
     selectedDayIso = null; selectedItemNum = null;
