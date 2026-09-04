@@ -4,13 +4,16 @@
     "s1End": "2027-01-21",
     "exam": "2027-10-15",
     "newCats": [
+      "psy",
       "ger",
       "mi",
       "ped",
       "onco",
       "hemato"
     ],
-    "studentYear": 5
+    "studentYear": 5,
+    "showCountdownEdn": true,
+    "showCountdownEcos": true
   },
   "items": [
     [
