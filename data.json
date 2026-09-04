@@ -2599,7 +2599,8 @@
     "S1_i186_o1": true,
     "S1_i291_o1": true,
     "S1_i213_o1": true,
-    "S1_i62_o1": true
+    "S1_i62_o1": true,
+    "S1_i119_o1": true
   },
   "checks": {
     "2026-08-29": {
@@ -2733,7 +2734,8 @@
     "2026-09-12": {},
     "2026-09-13": {},
     "2026-09-05": {},
-    "2026-09-06": {}
+    "2026-09-06": {},
+    "2026-09-03": {}
   },
   "reportedDays": {},
   "itemOverrides": {
@@ -2770,5 +2772,1435 @@
         "label": "🔁 Révision rapprochée — Item 213 : Anémie chez l'adulte et l'enfant (marqué difficile)"
       }
     ]
-  }
+  },
+  "itemDifficulty": {
+    "130": "facile"
+  },
+  "lcaEntries": {},
+  "sddItems": [
+    [
+      1,
+      "Constipation"
+    ],
+    [
+      2,
+      "Diarrhée"
+    ],
+    [
+      3,
+      "Distension abdominale"
+    ],
+    [
+      4,
+      "Douleur abdominale"
+    ],
+    [
+      5,
+      "Douleur anale"
+    ],
+    [
+      6,
+      "Hépatomégalie"
+    ],
+    [
+      7,
+      "Incontinence fécale"
+    ],
+    [
+      8,
+      "Masse abdominale"
+    ],
+    [
+      9,
+      "Masse / tuméfaction pariétale"
+    ],
+    [
+      10,
+      "Méléna / rectorragie"
+    ],
+    [
+      11,
+      "Régurgitation du nourrisson"
+    ],
+    [
+      12,
+      "Nausées"
+    ],
+    [
+      13,
+      "Vomissements"
+    ],
+    [
+      14,
+      "Émission de sang par la bouche"
+    ],
+    [
+      15,
+      "Anomalies de couleur des extrémités"
+    ],
+    [
+      16,
+      "Adénopathies uniques ou multiples"
+    ],
+    [
+      17,
+      "Amaigrissement"
+    ],
+    [
+      18,
+      "Découverte d'anomalies à l'auscultation cardiaque"
+    ],
+    [
+      19,
+      "Découverte d'un souffle vasculaire"
+    ],
+    [
+      20,
+      "Découverte d'anomalies à l'auscultation pulmonaire"
+    ],
+    [
+      21,
+      "Asthénie"
+    ],
+    [
+      22,
+      "Diminution de la diurèse"
+    ],
+    [
+      23,
+      "Anomalie de la miction"
+    ],
+    [
+      24,
+      "Bouffées de chaleur"
+    ],
+    [
+      25,
+      "Hypersudation"
+    ],
+    [
+      26,
+      "Anomalies de la croissance staturo-pondérale"
+    ],
+    [
+      27,
+      "Chute de la personne âgée"
+    ],
+    [
+      28,
+      "Coma et troubles de conscience"
+    ],
+    [
+      29,
+      "Contraction musculaire localisée ou généralisée"
+    ],
+    [
+      30,
+      "Dénutrition / malnutrition"
+    ],
+    [
+      31,
+      "Perte d'autonomie progressive"
+    ],
+    [
+      32,
+      "Déshydratation de l'enfant"
+    ],
+    [
+      33,
+      "Difficulté à procréer"
+    ],
+    [
+      34,
+      "Douleur aiguë post-opératoire"
+    ],
+    [
+      35,
+      "Douleur chronique"
+    ],
+    [
+      36,
+      "Douleur de la région lombaire"
+    ],
+    [
+      37,
+      "Éruptions chez l'enfant"
+    ],
+    [
+      38,
+      "État de mort apparente"
+    ],
+    [
+      39,
+      "Examen du nouveau-né à terme"
+    ],
+    [
+      40,
+      "Écoulement mammelonaire"
+    ],
+    [
+      41,
+      "Gynécomastie"
+    ],
+    [
+      42,
+      "Hypertension artérielle"
+    ],
+    [
+      43,
+      "Découverte d'une hypotension artérielle"
+    ],
+    [
+      44,
+      "Hyperthermie / fièvre"
+    ],
+    [
+      45,
+      "Hypothermie"
+    ],
+    [
+      46,
+      "Hypotonie / malaise du nourrisson"
+    ],
+    [
+      47,
+      "Ictère"
+    ],
+    [
+      48,
+      "Ictère chez le nouveau-né"
+    ],
+    [
+      49,
+      "Ivresse aiguë"
+    ],
+    [
+      50,
+      "Malaise / perte de connaissance"
+    ],
+    [
+      51,
+      "Obésité et surpoids"
+    ],
+    [
+      52,
+      "Odynophagie / dysphagie"
+    ],
+    [
+      53,
+      "Hypertension durant la grossesse"
+    ],
+    [
+      54,
+      "Oedème localisé ou diffus"
+    ],
+    [
+      55,
+      "Pâleur de l'enfant"
+    ],
+    [
+      56,
+      "Raideur articulaire"
+    ],
+    [
+      57,
+      "Prise de poids"
+    ],
+    [
+      58,
+      "Splénomégalie"
+    ],
+    [
+      59,
+      "Tendance au saignement"
+    ],
+    [
+      60,
+      "Hémorragie aiguë"
+    ],
+    [
+      61,
+      "Syndrome polyuro-polydypsique"
+    ],
+    [
+      62,
+      "Troubles de déglutition et fausse-route"
+    ],
+    [
+      63,
+      "Troubles sexuels et troubles de l'érection"
+    ],
+    [
+      64,
+      "Vertige et sensation vertigineuse"
+    ],
+    [
+      65,
+      "Déformation rachidienne"
+    ],
+    [
+      66,
+      "Apparition d'une difficulté à la marche"
+    ],
+    [
+      67,
+      "Douleurs articulaires"
+    ],
+    [
+      68,
+      "Boiterie"
+    ],
+    [
+      69,
+      "Claudication intermittente d'un membre"
+    ],
+    [
+      70,
+      "Déformation articulaire"
+    ],
+    [
+      71,
+      "Douleur d'un membre"
+    ],
+    [
+      72,
+      "Douleur du rachis"
+    ],
+    [
+      73,
+      "Douleur, brûlure, crampes et paresthésies"
+    ],
+    [
+      74,
+      "Faiblesse musculaire"
+    ],
+    [
+      75,
+      "Instabilité du genou"
+    ],
+    [
+      76,
+      "Jambes lourdes"
+    ],
+    [
+      77,
+      "Myalgies"
+    ],
+    [
+      78,
+      "Acné"
+    ],
+    [
+      79,
+      "Hirsutisme"
+    ],
+    [
+      80,
+      "Alopécie et chute des cheveux"
+    ],
+    [
+      81,
+      "Anomalies des ongles"
+    ],
+    [
+      82,
+      "Bulles, éruption bulleuse"
+    ],
+    [
+      83,
+      "Cicatrice anormale"
+    ],
+    [
+      84,
+      "Lésion cutanée / grain de beauté"
+    ],
+    [
+      85,
+      "Érythème"
+    ],
+    [
+      86,
+      "Escarre"
+    ],
+    [
+      87,
+      "Grosse jambe rouge aiguë"
+    ],
+    [
+      88,
+      "Prurit"
+    ],
+    [
+      89,
+      "Purpura / ecchymose / hématome"
+    ],
+    [
+      90,
+      "Tâche cutanée du nourrisson"
+    ],
+    [
+      91,
+      "Anomalies des muqueuses"
+    ],
+    [
+      92,
+      "Ulcère cutané"
+    ],
+    [
+      93,
+      "Vésicules, éruption vésiculeuse (cutanéomuqueuse)"
+    ],
+    [
+      94,
+      "Troubles du cycle menstruel"
+    ],
+    [
+      95,
+      "Découverte d'une anomalie au toucher rectal"
+    ],
+    [
+      96,
+      "Brûlure mictionnelle"
+    ],
+    [
+      97,
+      "Rétention aiguë d'urines"
+    ],
+    [
+      98,
+      "Contraction utérine chez une femme enceinte"
+    ],
+    [
+      99,
+      "Douleur pelvienne"
+    ],
+    [
+      100,
+      "Douleur testiculaire"
+    ],
+    [
+      101,
+      "Ecoulement urétral"
+    ],
+    [
+      102,
+      "Hématurie"
+    ],
+    [
+      103,
+      "Incontinence urinaire"
+    ],
+    [
+      104,
+      "Leucorrhées"
+    ],
+    [
+      105,
+      "Découverte d'une malformation de l'appareil génital"
+    ],
+    [
+      106,
+      "Masse pelvienne"
+    ],
+    [
+      107,
+      "Prolapsus"
+    ],
+    [
+      108,
+      "Anomalie des bourses"
+    ],
+    [
+      109,
+      "Perte de liquide chez une femme enceinte avant terme"
+    ],
+    [
+      110,
+      "Saignement génital anormal en post-partum"
+    ],
+    [
+      111,
+      "Saignement génital durant la grossesse"
+    ],
+    [
+      112,
+      "Saignement génital anormal (hors grossesse connue)"
+    ],
+    [
+      113,
+      "Puberté précoce ou retardée"
+    ],
+    [
+      114,
+      "Agitation"
+    ],
+    [
+      115,
+      "Anomalie du développement psychomoteur"
+    ],
+    [
+      116,
+      "Anxiété"
+    ],
+    [
+      117,
+      "Apathie"
+    ],
+    [
+      118,
+      "Céphalée"
+    ],
+    [
+      119,
+      "Confusion mentale / désorientation"
+    ],
+    [
+      120,
+      "Convulsions"
+    ],
+    [
+      121,
+      "Déficit neurologique sensitif et/ou moteur"
+    ],
+    [
+      122,
+      "Hallucinations"
+    ],
+    [
+      123,
+      "Humeur triste / douleur morale"
+    ],
+    [
+      124,
+      "Idées délirantes"
+    ],
+    [
+      125,
+      "Idées ou conduites suicidaires / lésions auto-infligées"
+    ],
+    [
+      126,
+      "Mouvements anormaux"
+    ],
+    [
+      127,
+      "Paralysie faciale"
+    ],
+    [
+      128,
+      "Tremblements"
+    ],
+    [
+      129,
+      "Troubles de l'attention"
+    ],
+    [
+      130,
+      "Troubles de l'équilibre"
+    ],
+    [
+      131,
+      "Troubles de mémoire / déclin cognitif"
+    ],
+    [
+      132,
+      "Troubles de conduites alimentaires (anorexie ou boulimie)"
+    ],
+    [
+      133,
+      "Troubles du comportement chez l'enfant et l'adolescent"
+    ],
+    [
+      134,
+      "Troubles du langage et/ou phonation"
+    ],
+    [
+      135,
+      "Troubles du sommeil, insomnie ou hypersomnie"
+    ],
+    [
+      136,
+      "Troubles obsessionnels, comportement compulsif"
+    ],
+    [
+      137,
+      "Troubles psychiatriques en post-partum"
+    ],
+    [
+      138,
+      "Anomalie de la vision"
+    ],
+    [
+      139,
+      "Anomalies palpébrales"
+    ],
+    [
+      140,
+      "Baisse de l'audition / surdité"
+    ],
+    [
+      141,
+      "Sensation de brûlure oculaire"
+    ],
+    [
+      142,
+      "Corps étranger de l'oreille ou du nez"
+    ],
+    [
+      143,
+      "Diplopie"
+    ],
+    [
+      144,
+      "Douleur cervico-faciale"
+    ],
+    [
+      145,
+      "Douleur pharyngée"
+    ],
+    [
+      146,
+      "Dysphonie"
+    ],
+    [
+      147,
+      "Épistaxis"
+    ],
+    [
+      148,
+      "Goitre ou nodule thyroïdien"
+    ],
+    [
+      149,
+      "Ingestion ou inhalation d'un corps étranger"
+    ],
+    [
+      150,
+      "Limitation de l'ouverture de bouche"
+    ],
+    [
+      151,
+      "Oedème de la face et du cou"
+    ],
+    [
+      152,
+      "Oeil rouge et/ou douloureux"
+    ],
+    [
+      153,
+      "Otalgie"
+    ],
+    [
+      154,
+      "Otorrhée"
+    ],
+    [
+      155,
+      "Rhinorrhée"
+    ],
+    [
+      156,
+      "Ronflements"
+    ],
+    [
+      157,
+      "Strabisme de l'enfant"
+    ],
+    [
+      158,
+      "Tuméfaction cervico-faciale"
+    ],
+    [
+      159,
+      "Bradycardie"
+    ],
+    [
+      160,
+      "Détresse respiratoire aiguë"
+    ],
+    [
+      161,
+      "Douleur thoracique"
+    ],
+    [
+      162,
+      "Dyspnée"
+    ],
+    [
+      163,
+      "Expectoration"
+    ],
+    [
+      164,
+      "Anomalie de l'examen clinique mammaire"
+    ],
+    [
+      165,
+      "Palpitations"
+    ],
+    [
+      166,
+      "Tachycardie"
+    ],
+    [
+      167,
+      "Toux"
+    ],
+    [
+      168,
+      "Brûlure"
+    ],
+    [
+      169,
+      "Morsures et piqûres"
+    ],
+    [
+      170,
+      "Plaie"
+    ],
+    [
+      171,
+      "Traumatisme abdomino-pelvien"
+    ],
+    [
+      172,
+      "Traumatisme crânien"
+    ],
+    [
+      173,
+      "Traumatisme des membres"
+    ],
+    [
+      174,
+      "Traumatisme facial"
+    ],
+    [
+      175,
+      "Traumatisme rachidien"
+    ],
+    [
+      176,
+      "Traumatisme sévère"
+    ],
+    [
+      177,
+      "Traumatisme thoracique"
+    ],
+    [
+      178,
+      "Demande / prescription raisonnée et choix d'un examen diagnostique"
+    ],
+    [
+      179,
+      "Réaction inflammatoire sur pièce opératoire / biopsie"
+    ],
+    [
+      180,
+      "Interprétation d'un compte-rendu d'anatomopathologie"
+    ],
+    [
+      181,
+      "Tumeurs malignes sur pièce opératoire / biopsie"
+    ],
+    [
+      182,
+      "Analyse de la bandelette urinaire"
+    ],
+    [
+      183,
+      "Analyse du liquide cérébro-spinal"
+    ],
+    [
+      184,
+      "Prescription et interprétation d'un audiogramme"
+    ],
+    [
+      185,
+      "Réalisation et interprétation d'un électrocardiogramme (ECG)"
+    ],
+    [
+      186,
+      "Syndrome inflammatoire aigu ou chronique"
+    ],
+    [
+      187,
+      "Bactérie multirésistante à l'antibiogramme"
+    ],
+    [
+      188,
+      "Découverte de bacilles acido-alcoolo-résistants (BAAR) sur un crachat"
+    ],
+    [
+      189,
+      "Analyse d'un examen cytobactériologique des urines (ECBU)"
+    ],
+    [
+      190,
+      "Hémocultures positives"
+    ],
+    [
+      191,
+      "Prescription et interprétation d'un examen microbiologique de selles"
+    ],
+    [
+      192,
+      "Analyse d'un résultat de gaz du sang"
+    ],
+    [
+      193,
+      "Analyse de l'électrophorèse des protéines sériques"
+    ],
+    [
+      194,
+      "Analyse du bilan thyroïdien"
+    ],
+    [
+      195,
+      "Analyse du bilan lipidique"
+    ],
+    [
+      196,
+      "Analyse du sédiment urinaire"
+    ],
+    [
+      197,
+      "Analyse des bicarbonates"
+    ],
+    [
+      198,
+      "Cholestase"
+    ],
+    [
+      199,
+      "Créatinine augmentée"
+    ],
+    [
+      200,
+      "Dyscalcémie"
+    ],
+    [
+      201,
+      "Dyskaliémie (hypokaliémie et hyperkaliémie)"
+    ],
+    [
+      202,
+      "Dysnatrémie"
+    ],
+    [
+      203,
+      "Élévation de la protéine C-réactive (CRP)"
+    ],
+    [
+      204,
+      "Élévation des enzymes cardiaques"
+    ],
+    [
+      205,
+      "Élévation des enzymes pancréatiques"
+    ],
+    [
+      206,
+      "Élévation des transaminases sans cholestase"
+    ],
+    [
+      207,
+      "Ferritine : baisse ou augmentation"
+    ],
+    [
+      208,
+      "Hyperglycémie"
+    ],
+    [
+      209,
+      "Hypoglycémie"
+    ],
+    [
+      210,
+      "Hyperprotidémie"
+    ],
+    [
+      211,
+      "Hypoprotidémie"
+    ],
+    [
+      212,
+      "Protéinurie"
+    ],
+    [
+      213,
+      "Allongement du temps de céphaline activée (TCA)"
+    ],
+    [
+      214,
+      "Anomalie des indices érythrocytaires (taux d'hémoglobine, hématocrite, etc.)"
+    ],
+    [
+      215,
+      "Anomalie des plaquettes"
+    ],
+    [
+      216,
+      "Anomalie des leucocytes"
+    ],
+    [
+      217,
+      "Baisse de l'hémoglobine"
+    ],
+    [
+      218,
+      "Diminution du taux de prothrombine (TP)"
+    ],
+    [
+      219,
+      "Hyperéosinophilie"
+    ],
+    [
+      220,
+      "Hyperlymphocytose"
+    ],
+    [
+      221,
+      "Interprétation d'un myélogramme"
+    ],
+    [
+      222,
+      "Prescription et analyse du frottis sanguin"
+    ],
+    [
+      223,
+      "Interprétation de l'hémogramme"
+    ],
+    [
+      224,
+      "Découverte d'une anomalie abdominale à l'examen d'imagerie médicale"
+    ],
+    [
+      225,
+      "Découverte d'une anomalie cervico-faciale à l'examen d'imagerie médicale"
+    ],
+    [
+      226,
+      "Découverte d'une anomalie du cerveau à l'examen d'imagerie médicale"
+    ],
+    [
+      227,
+      "Découverte d'une anomalie médullaire ou vertébrale à l'examen d'imagerie médicale"
+    ],
+    [
+      228,
+      "Découverte d'une anomalie osseuse et articulaire à l'examen d'imagerie médicale"
+    ],
+    [
+      229,
+      "Découverte d'une anomalie pelvienne à l'examen d'imagerie médicale"
+    ],
+    [
+      230,
+      "Rédaction de la demande d'un examen d'imagerie"
+    ],
+    [
+      231,
+      "Demande d'un examen d'imagerie"
+    ],
+    [
+      232,
+      "Demande d'explication d'un patient sur le déroulement, les risques et les bénéfices attendus d'un examen d'imagerie"
+    ],
+    [
+      233,
+      "Identifier / reconnaître les différents examens d'imagerie (type / fenêtre / séquences / incidences / injection)"
+    ],
+    [
+      234,
+      "Interprétation d'une recherche d'accès palustre"
+    ],
+    [
+      235,
+      "Découverte, diagnostic positif et dépistage rapide du VIH"
+    ],
+    [
+      236,
+      "Interprétation d'un résultat de sérologie"
+    ],
+    [
+      237,
+      "Prescription et interprétation de tests allergologiques (patch tests, prick tests, IDR)"
+    ],
+    [
+      238,
+      "Demande et préparation aux examens endoscopiques (bronchiques, digestifs)"
+    ],
+    [
+      239,
+      "Explication pré-opératoire et recueil de consentement d'un geste invasif diagnostique ou thérapeutique"
+    ],
+    [
+      240,
+      "Expliquer une hospitalisation en soins psychiatriques à la demande d'un tiers"
+    ],
+    [
+      241,
+      "Gestion du sevrage alcoolique contraint"
+    ],
+    [
+      242,
+      "Gestion du sevrage tabagique contraint"
+    ],
+    [
+      243,
+      "Mise en place et suivi d'un appareil d'immobilisation"
+    ],
+    [
+      244,
+      "Mise en place et suivi d'une contention mécanique"
+    ],
+    [
+      245,
+      "Prescription d'un appareil simple"
+    ],
+    [
+      246,
+      "Prescription d'un soin ambulatoire"
+    ],
+    [
+      247,
+      "Prescription d'une rééducation"
+    ],
+    [
+      248,
+      "Prescription et suivi d'un traitement par anticoagulant et/ou anti-agrégant"
+    ],
+    [
+      249,
+      "Prescrire des anti-inflammatoires non-stéroïdiens (AINS)"
+    ],
+    [
+      250,
+      "Prescrire des antalgiques"
+    ],
+    [
+      251,
+      "Prescrire des corticoïdes par voie générale ou locale"
+    ],
+    [
+      252,
+      "Prescription d'un hypolipémiant"
+    ],
+    [
+      253,
+      "Prescrire des diurétiques"
+    ],
+    [
+      254,
+      "Prescrire des soins associés à l'initiation d'une chimiothérapie"
+    ],
+    [
+      255,
+      "Prescrire un anti-infectieux"
+    ],
+    [
+      256,
+      "Prescrire un hypnotique / anxiolytique"
+    ],
+    [
+      257,
+      "Prescrire une contraception et contraception d'urgence"
+    ],
+    [
+      258,
+      "Prévention de la douleur liée aux soins"
+    ],
+    [
+      259,
+      "Évaluation et prise en charge de la douleur aiguë"
+    ],
+    [
+      260,
+      "Évaluation et prise en charge de la douleur chronique"
+    ],
+    [
+      261,
+      "Évaluation et prise en charge de la douleur de l'enfant et du nourrisson"
+    ],
+    [
+      262,
+      "Accès palustre"
+    ],
+    [
+      263,
+      "Prise en charge d'une ectoparasitose"
+    ],
+    [
+      264,
+      "Adaptation des traitements sur un terrain particulier (insuffisant rénal, insuffisant hépatique, grossesse, personne âgée, etc.)"
+    ],
+    [
+      265,
+      "Consultation de suivi d'un nourrisson en bonne santé"
+    ],
+    [
+      266,
+      "Consultation de suivi d'un patient polymédiqué"
+    ],
+    [
+      267,
+      "Consultation de suivi d'un patient polymorbide"
+    ],
+    [
+      268,
+      "Consultation de suivi d'une grossesse normale"
+    ],
+    [
+      269,
+      "Consultation de suivi et traitement de fond d'un patient souffrant d'un trouble psychiatrique chronique (hors dépression)"
+    ],
+    [
+      270,
+      "Demande d'amaigrissement"
+    ],
+    [
+      271,
+      "Prescription et surveillance d'une voie d'abord vasculaire"
+    ],
+    [
+      272,
+      "Prescrire et réaliser une transfusion sanguine"
+    ],
+    [
+      273,
+      "Prise en charge d'un allaitement normal et difficile"
+    ],
+    [
+      274,
+      "Prise en charge d'un patient présentant une tuberculose bacillifère"
+    ],
+    [
+      275,
+      "Prise en charge d'une suspicion de thrombophilie"
+    ],
+    [
+      276,
+      "Prise en charge d'un patient en décubitus prolongé"
+    ],
+    [
+      277,
+      "Consultation de suivi d'un patient présentant une lombalgie aiguë ou chronique"
+    ],
+    [
+      278,
+      "Consultation de suivi d'une femme ménopausée"
+    ],
+    [
+      279,
+      "Consultation de suivi d'une pathologie chronique"
+    ],
+    [
+      280,
+      "Prescription d'une insulinothérapie, consultation de suivi, éducation d'un patient diabétique de type 1"
+    ],
+    [
+      281,
+      "Prescription médicamenteuse, consultation de suivi et éducation d'un patient diabétique de type 2 ou ayant un diabète secondaire"
+    ],
+    [
+      282,
+      "Prescription médicamenteuse, consultation de suivi et éducation d'un patient hypertendu"
+    ],
+    [
+      283,
+      "Consultation de suivi et éducation thérapeutique d'un patient asthmatique"
+    ],
+    [
+      284,
+      "Consultation de suivi et éducation thérapeutique d'un patient avec hypothyroïdie"
+    ],
+    [
+      285,
+      "Consultation de suivi et éducation thérapeutique d'un patient avec un antécédent cardiovasculaire"
+    ],
+    [
+      286,
+      "Consultation de suivi et éducation thérapeutique d'un patient BPCO"
+    ],
+    [
+      287,
+      "Consultation de suivi et éducation thérapeutique d'un patient insuffisant cardiaque"
+    ],
+    [
+      288,
+      "Consultation de suivi et traitement de fond d'un patient dépressif"
+    ],
+    [
+      289,
+      "Consultation et suivi d'un patient épileptique"
+    ],
+    [
+      290,
+      "Suivi d'un patient en insuffisance rénale chronique"
+    ],
+    [
+      291,
+      "Suivi du patient immunodéprimé"
+    ],
+    [
+      292,
+      "Première consultation d'addictologie"
+    ],
+    [
+      293,
+      "Consultation de suivi addictologie"
+    ],
+    [
+      294,
+      "Consultation de suivi en gynécologie"
+    ],
+    [
+      295,
+      "Consultation de suivi gériatrique"
+    ],
+    [
+      296,
+      "Consultation de suivi pédiatrique"
+    ],
+    [
+      297,
+      "Consultation de suivi en cancérologie"
+    ],
+    [
+      298,
+      "Consultation et suivi d'un patient ayant des troubles cognitifs"
+    ],
+    [
+      299,
+      "Consultation post-événement allergique"
+    ],
+    [
+      300,
+      "Consultation pré-anesthésique"
+    ],
+    [
+      301,
+      "Consultation suite à un contage tuberculeux"
+    ],
+    [
+      302,
+      "Consultation aux voyageurs"
+    ],
+    [
+      303,
+      "Prévention / dépistage des cancers de l'adulte"
+    ],
+    [
+      304,
+      "Dépistage du diabète gestationnel"
+    ],
+    [
+      305,
+      "Dépistage et conseils devant une infection sexuellement transmissible"
+    ],
+    [
+      306,
+      "Dépistage et prévention ostéoporose"
+    ],
+    [
+      307,
+      "Dépistage prénatal de la trisomie 21"
+    ],
+    [
+      308,
+      "Dépistage néonatal systématique"
+    ],
+    [
+      309,
+      "Patient à risque suicidaire"
+    ],
+    [
+      310,
+      "Prévention chez un malade contagieux"
+    ],
+    [
+      311,
+      "Prévention des infections liées aux soins"
+    ],
+    [
+      312,
+      "Prévention des risques foetaux"
+    ],
+    [
+      313,
+      "Prévention des risques liés à l'alcool"
+    ],
+    [
+      314,
+      "Prévention des risques liés au tabac"
+    ],
+    [
+      315,
+      "Prévention des risques professionnels"
+    ],
+    [
+      316,
+      "Identifier les conséquences d'une pathologie / situation sur le maintien d'un emploi"
+    ],
+    [
+      317,
+      "Dépistage et prévention des violences faites aux femmes"
+    ],
+    [
+      318,
+      "Prévention de la mort inexpliquée du nourrisson"
+    ],
+    [
+      319,
+      "Prévention du surpoids et de l'obésité"
+    ],
+    [
+      320,
+      "Prévention des maladies cardiovasculaires"
+    ],
+    [
+      321,
+      "Suspicion de maltraitance et enfance en danger"
+    ],
+    [
+      322,
+      "Vaccinations de l'adulte et de l'enfant"
+    ],
+    [
+      323,
+      "Prévention de l'exposition aux écrans"
+    ],
+    [
+      324,
+      "Modification thérapeutique du mode de vie (sommeil, activité physique, alimentation, etc.)"
+    ],
+    [
+      325,
+      "Prévention des accidents domestiques"
+    ],
+    [
+      326,
+      "Accident du travail"
+    ],
+    [
+      327,
+      "Annonce d'un diagnostic de maladie grave au patient et/ou à sa famille"
+    ],
+    [
+      328,
+      "Annonce d'une maladie chronique"
+    ],
+    [
+      329,
+      "Conduite à tenir devant une demande d'accès à l'information / au dossier médical"
+    ],
+    [
+      330,
+      "Accompagnement global d'un aidant"
+    ],
+    [
+      331,
+      "Découverte d'un aléa thérapeutique ou d'une erreur médicale"
+    ],
+    [
+      332,
+      "Demande d'interruption volontaire de grossesse"
+    ],
+    [
+      333,
+      "Demande d'un certificat médical initial"
+    ],
+    [
+      334,
+      "Demande de traitement et investigation inappropriés"
+    ],
+    [
+      335,
+      "Évaluation de l'aptitude au sport et rédaction d'un certificat de non contre-indication"
+    ],
+    [
+      336,
+      "Exposition accidentelle aux liquides biologiques"
+    ],
+    [
+      337,
+      "Identification, prise en soin et suivi d'un patient en situation palliative"
+    ],
+    [
+      338,
+      "Prescription médicale chez un patient en situation de précarité"
+    ],
+    [
+      339,
+      "Prescrire un arrêt de travail"
+    ],
+    [
+      340,
+      "Prise volontaire ou involontaire d'un toxique ou d'un médicament potentiellement toxique"
+    ],
+    [
+      341,
+      "Réaction à un événement potentiellement traumatique"
+    ],
+    [
+      342,
+      "Rédaction d'une ordonnance / d'un courrier médical"
+    ],
+    [
+      343,
+      "Refus de traitement et de prise en charge recommandés"
+    ],
+    [
+      344,
+      "Situation de harcèlement"
+    ],
+    [
+      345,
+      "Situation de handicap"
+    ],
+    [
+      346,
+      "Situation sanitaire exceptionnelle"
+    ],
+    [
+      347,
+      "Situation sociale précaire et isolement"
+    ],
+    [
+      348,
+      "Suspicion d'un effet indésirable des médicaments ou d'un soin"
+    ],
+    [
+      349,
+      "Troubles des interactions sociales / difficultés de socialisation"
+    ],
+    [
+      350,
+      "Violences sexuelles"
+    ],
+    [
+      351,
+      "Violences psychologiques et/ou physiques"
+    ],
+    [
+      352,
+      "Expliquer un traitement au patient (adulte / enfant / adolescent)"
+    ],
+    [
+      353,
+      "Identifier une situation de déconditionnement à l'effort"
+    ],
+    [
+      354,
+      "Évaluation de l'observance thérapeutique"
+    ],
+    [
+      355,
+      "Organisation de la sortie d'hospitalisation"
+    ],
+    [
+      356,
+      "Information et suivi d'un patient en chirurgie ambulatoire"
+    ]
+  ]
 }
