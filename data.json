@@ -2737,7 +2737,12 @@
     "2026-09-06": {},
     "2026-09-03": {}
   },
-  "reportedDays": {},
+  "reportedDays": {
+    "2026-09-02": {
+      "type": "autre",
+      "label": "Garde"
+    }
+  },
   "itemOverrides": {
     "S1_i118_o1": {
       "itemNum": 123
