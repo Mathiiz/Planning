@@ -922,6 +922,8 @@ function buildS1Queue(){
 }
 // file S2 (révision globale) : mêmes principe, sur l'ensemble des matières (une matière déjà
 // vue en cours peut aussi avoir une DL de partiel et doit repasser en priorité de révision).
+// Le reste (hors DL) est mélangé par matière en round-robin plutôt que laissé dans l'ordre
+// numérique du catalogue, pour éviter de rester plusieurs jours d'affilée sur la même matière.
 function buildS2Queue(){
   const {withDL} = categoriesByDeadlinePriority(ALL_CATS);
   const seen = new Set();
@@ -929,7 +931,15 @@ function buildS2Queue(){
   withDL.forEach(c=>{
     itemsOfCat(c).forEach(n=>{ if(!seen.has(n)){ urgent.push(n); seen.add(n); } });
   });
-  const rest = CURRENT_ITEMS.map(([n])=>n).filter(n=>!seen.has(n));
+  const restNums = CURRENT_ITEMS.map(([n])=>n).filter(n=>!seen.has(n));
+  const byCat = {};
+  restNums.forEach(n=>{
+    const it = ITEM_BY_NUM[n];
+    const cat = (it && it.cats && it.cats[0]) || '_sans_matiere';
+    if(!byCat[cat]) byCat[cat] = [];
+    byCat[cat].push(n);
+  });
+  const rest = roundRobin(Object.values(byCat));
   return urgent.concat(rest);
 }
 function nextItemId(){
@@ -1673,6 +1683,7 @@ function importBackup(file){
       rebuildAll();
       applyTheme();
       CAL = buildCalendar(DATA.config, DATA.reportedDays);
+      rescheduleAllAnnales();
       document.getElementById('cfgStart').value = DATA.config.start;
       document.getElementById('cfgS1End').value = DATA.config.s1End;
       document.getElementById('cfgExam').value = DATA.config.exam;
@@ -2494,6 +2505,37 @@ function renderReportedDaysList(){
   });
 }
 
+// ---------- annales, programmées automatiquement 1 à 2 semaines avant la DL d'une matière ----------
+function clearAnnalesForCat(cat){
+  if(!DATA.customTasks) return;
+  const prefix = 'annale_' + cat + '_';
+  Object.keys(DATA.customTasks).forEach(iso=>{
+    DATA.customTasks[iso] = DATA.customTasks[iso].filter(t=> !(t.id && t.id.indexOf(prefix)===0));
+    if(DATA.customTasks[iso].length===0) delete DATA.customTasks[iso];
+  });
+}
+function scheduleAnnalesForDeadline(cat){
+  if(!DATA.customTasks) DATA.customTasks = {};
+  clearAnnalesForCat(cat);
+  const dl = DATA.subjectDeadlines && DATA.subjectDeadlines[cat];
+  if(!dl) return;
+  const dlDate = parseISO(dl);
+  const label = `📄 Annale — ${CAT_LABELS[cat]}`;
+  let cur = addDays(dlDate, -14);
+  const to = addDays(dlDate, -7);
+  while(cur <= to){
+    const iso = toISO(cur);
+    if(findDay(iso)){
+      if(!DATA.customTasks[iso]) DATA.customTasks[iso] = [];
+      DATA.customTasks[iso].push({id:'annale_'+cat+'_'+iso, label});
+    }
+    cur = addDays(cur, 1);
+  }
+}
+function rescheduleAllAnnales(){
+  Object.keys(DATA.subjectDeadlines||{}).forEach(cat=> scheduleAnnalesForDeadline(cat));
+}
+
 function renderSubjectConfigList(){
   const el = document.getElementById('subjectConfigList');
   const nc = currentNewCats();
@@ -2522,6 +2564,7 @@ function renderSubjectConfigList(){
       if(inp.value) DATA.subjectDeadlines[cat] = inp.value; else delete DATA.subjectDeadlines[cat];
       rebuildAll();
       CAL = buildCalendar(DATA.config, DATA.reportedDays);
+      scheduleAnnalesForDeadline(cat);
       selectedDayIso = null; selectedItemNum = null;
       saveData();
       render();
@@ -2541,6 +2584,7 @@ async function init(){
   if(!fsApiSupported()) setLinkStatus('Non supporté par ce navigateur');
   rebuildAll();
   CAL = buildCalendar(DATA.config, DATA.reportedDays);
+  rescheduleAllAnnales(); // ré-aligne les annales déjà programmées avec le calendrier actuel
   applyTheme();
 
   document.getElementById('cfgStart').value = DATA.config.start;
