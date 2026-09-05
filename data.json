@@ -2781,7 +2781,9 @@
       "itemNum": 119
     }
   },
-  "subjectDeadlines": {},
+  "subjectDeadlines": {
+    "hemato": "0002-01-19"
+  },
   "customTasks": {
     "2026-09-03": [
       {
