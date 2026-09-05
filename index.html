@@ -2902,4 +2902,260 @@ function renderSettings(){
     render();
   });
   document.getElementById('cfgDailyP1').addEventListener('change', e=>{
-    DATA.config.dailyItemsPhase1 = Math.max(1,Je ne suis pas programmé pour faire ce type de chose.
+    DATA.config.dailyItemsPhase1 = Math.max(1, parseInt(e.target.value,10)||2);
+    rebuildAll();
+    CAL = buildCalendar(DATA.config, DATA.reportedDays);
+    saveData();
+    render();
+  });
+  document.getElementById('cfgDailyP2').addEventListener('change', e=>{
+    DATA.config.dailyItemsPhase2 = Math.max(1, parseInt(e.target.value,10)||3);
+    rebuildAll();
+    CAL = buildCalendar(DATA.config, DATA.reportedDays);
+    saveData();
+    render();
+  });
+  document.getElementById('cfgStudyModeP1').addEventListener('change', e=>{
+    DATA.config.studyModeP1 = e.target.value;
+    rebuildAll();
+    CAL = buildCalendar(DATA.config, DATA.reportedDays);
+    saveData();
+    render();
+  });
+  document.getElementById('cfgStudyModeP2').addEventListener('change', e=>{
+    DATA.config.studyModeP2 = e.target.value;
+    rebuildAll();
+    CAL = buildCalendar(DATA.config, DATA.reportedDays);
+    saveData();
+    render();
+  });
+  document.getElementById('cfgExam').addEventListener('change', e=>{
+    DATA.config.exam = e.target.value;
+    CAL = buildCalendar(DATA.config, DATA.reportedDays);
+    updateTitles();
+    saveData();
+    render();
+  });
+  document.getElementById('cfgEcos').addEventListener('change', e=>{
+    DATA.config.ecosDate = e.target.value;
+    rebuildAll();
+    CAL = buildCalendar(DATA.config, DATA.reportedDays);
+    saveData();
+    render();
+  });
+
+  document.getElementById('btnCfgSelectAll').addEventListener('click', ()=>{
+    container.querySelectorAll('.newcat-check').forEach(cb=>{ cb.checked = true; });
+    DATA.config.newCats = ALL_CATS.slice();
+    rebuildAll();
+    CAL = buildCalendar(DATA.config, DATA.reportedDays);
+    saveData();
+    render();
+  });
+  document.getElementById('btnCfgDeselectAll').addEventListener('click', ()=>{
+    container.querySelectorAll('.newcat-check').forEach(cb=>{ cb.checked = false; });
+    DATA.config.newCats = [];
+    rebuildAll();
+    CAL = buildCalendar(DATA.config, DATA.reportedDays);
+    saveData();
+    render();
+  });
+  container.querySelectorAll('.newcat-check').forEach(cb=>{
+    cb.addEventListener('change', ()=>{
+      DATA.config.newCats = Array.from(container.querySelectorAll('.newcat-check:checked')).map(el=>el.value);
+      rebuildAll();
+      CAL = buildCalendar(DATA.config, DATA.reportedDays);
+      saveData();
+      render();
+    });
+  });
+  container.querySelectorAll('.deadline-input').forEach(inp=>{
+    inp.addEventListener('change', e=>{
+      const cat = e.target.getAttribute('data-cat');
+      if(!DATA.subjectDeadlines) DATA.subjectDeadlines = {};
+      if(e.target.value) DATA.subjectDeadlines[cat] = e.target.value;
+      else delete DATA.subjectDeadlines[cat];
+      saveData();
+      render();
+    });
+  });
+
+  document.getElementById('btnAddReportedDay').addEventListener('click', ()=>{
+    const iso = document.getElementById('newReportedDate').value;
+    const type = document.getElementById('newReportedType').value;
+    const label = document.getElementById('newReportedLabel').value.trim();
+    if(!iso){ alert('Choisis une date.'); return; }
+    setReportedDay(iso, type, label);
+    render();
+  });
+  container.querySelectorAll('[data-delreported]').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      clearReportedDay(btn.getAttribute('data-delreported'));
+      render();
+    });
+  });
+
+  document.getElementById('btnGhSave').addEventListener('click', ()=>{
+    const owner = document.getElementById('ghOwner').value.trim();
+    const repo = document.getElementById('ghRepo').value.trim();
+    const path = document.getElementById('ghPath').value.trim() || 'data.json';
+    const branch = document.getElementById('ghBranch').value.trim() || 'main';
+    const token = document.getElementById('ghToken').value.trim();
+    if(!owner || !repo || !token){ alert("Renseigne au moins l'utilisateur, le dépôt et le token."); return; }
+    setGithubConfig({owner, repo, path, branch, token});
+    setGithubStatus('Connexion enregistrée — synchronisation en cours…');
+    githubSyncNow();
+    render();
+  });
+  document.getElementById('btnGhSyncNow').addEventListener('click', ()=>{ githubSyncNow(); });
+  document.getElementById('btnGhDisconnect').addEventListener('click', ()=>{
+    if(!confirm('Déconnecter la synchronisation GitHub ? Tes données restent en local.')) return;
+    clearGithubConfig();
+    setGithubStatus('');
+    render();
+  });
+
+  document.getElementById('btnExport').addEventListener('click', exportBackup);
+  document.getElementById('btnImportTrigger').addEventListener('click', ()=>{
+    document.getElementById('fileImport').click();
+  });
+  document.getElementById('fileImport').addEventListener('change', e=>{
+    const file = e.target.files[0];
+    if(file) importBackup(file);
+    e.target.value = '';
+  });
+  document.getElementById('btnLinkFile').addEventListener('click', linkBackupFile);
+
+  document.getElementById('btnRelaunchOnboard').addEventListener('click', ()=>{
+    renderObSubjectList();
+    document.getElementById('obStudentYear').value = String(DATA.config.studentYear||6);
+    document.getElementById('obStart').value = DATA.config.start||'';
+    document.getElementById('obExam').value = DATA.config.exam||'';
+    document.getElementById('obS1End').value = DATA.config.s1End||'';
+    document.getElementById('obStudyMode').value = DATA.config.studyModeP1||'alterne';
+    document.getElementById('obEcos').value = DATA.config.ecosDate||'';
+    document.querySelectorAll('.ob-newcat-check').forEach(cb=>{ cb.checked = currentNewCats().includes(cb.value); });
+    document.getElementById('onboardOverlay').classList.remove('hidden');
+  });
+}
+
+// ---------- réservé : replanification des annales/QCM blancs (non implémenté) ----------
+function rescheduleAllAnnales(){
+  // Aucune fonctionnalité de banque d'annales n'est encore branchée : no-op volontaire
+  // pour éviter une erreur si un import de sauvegarde appelle cette fonction.
+}
+
+// ---------- thème clair/sombre ----------
+function applyTheme(){
+  document.body.classList.toggle('dark', !!(DATA && DATA.darkMode));
+  const btn = document.getElementById('themeToggle');
+  if(btn) btn.textContent = (DATA && DATA.darkMode) ? 'Mode clair' : 'Mode sombre';
+}
+
+// ---------- assistant de configuration initiale ----------
+function renderObSubjectList(){
+  const el = document.getElementById('obSubjectList');
+  if(!el) return;
+  el.innerHTML = ALL_CATS.map(c=>`<label class="subject-row"><input type="checkbox" class="ob-newcat-check" value="${c}"> ${CAT_LABELS[c]}</label>`).join('');
+}
+
+// ---------- routeur d'affichage principal ----------
+function render(){
+  renderVitals();
+  updateTitles();
+  switch(currentTab){
+    case 'today': renderToday(); break;
+    case 'retard': renderRetard(); break;
+    case 'planning': renderPlanning(); break;
+    case 'progress': renderProgress(); break;
+    case 'lca': renderLCA(); break;
+    case 'items': renderItemsManager(); break;
+    case 'sdd': renderSddManager(); break;
+    case 'settings': renderSettings(); break;
+    default: renderToday();
+  }
+}
+
+// ---------- initialisation ----------
+async function init(){
+  DATA = await loadData();
+  await tryReconnectBackupFile();
+
+  const ghCfg = getGithubConfig();
+  if(ghCfg && ghCfg.token && ghCfg.owner && ghCfg.repo){
+    const remote = await githubLoadData();
+    if(remote){
+      const snapshot = getGhSnapshot();
+      DATA = mergeData(remote, DATA, snapshot);
+      DATA.config = Object.assign(getDefaultConfig(), DATA.config || {});
+      if(!DATA.items) DATA.items = ITEMS_RAW.map(([n,t,c])=>[n,t,c]);
+      if(!DATA.sddItems) DATA.sddItems = SDD_SEED_RAW.map(([n,t])=>[n,t]);
+    }
+  }
+
+  rebuildAll();
+  CAL = buildCalendar(DATA.config, DATA.reportedDays);
+  applyTheme();
+  updateTitles();
+
+  document.getElementById('themeToggle').addEventListener('click', ()=>{
+    DATA.darkMode = !DATA.darkMode;
+    applyTheme();
+    saveData();
+  });
+
+  document.querySelectorAll('#tabbar button').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      currentTab = btn.getAttribute('data-tab');
+      selectedDayIso = null;
+      selectedItemNum = null;
+      document.querySelectorAll('#tabbar button').forEach(b=>b.classList.toggle('active', b===btn));
+      render();
+    });
+  });
+
+  document.getElementById('btnObSelectAll').addEventListener('click', ()=>{
+    document.querySelectorAll('.ob-newcat-check').forEach(cb=>{ cb.checked = true; });
+  });
+  document.getElementById('btnObDeselectAll').addEventListener('click', ()=>{
+    document.querySelectorAll('.ob-newcat-check').forEach(cb=>{ cb.checked = false; });
+  });
+  document.getElementById('obSubmit').addEventListener('click', ()=>{
+    const start = document.getElementById('obStart').value;
+    const exam = document.getElementById('obExam').value;
+    if(!start || !exam){ alert("Renseigne au moins la date de début et la date d'examen."); return; }
+    DATA.config.studentYear = parseInt(document.getElementById('obStudentYear').value,10) || 6;
+    DATA.config.start = start;
+    DATA.config.exam = exam;
+    const s1EndVal = document.getElementById('obS1End').value;
+    DATA.config.s1End = s1EndVal || toISO(addDays(parseISO(start),150));
+    const mode = document.getElementById('obStudyMode').value;
+    DATA.config.studyModeP1 = mode;
+    DATA.config.studyModeP2 = mode;
+    DATA.config.ecosDate = document.getElementById('obEcos').value || '';
+    DATA.config.newCats = Array.from(document.querySelectorAll('.ob-newcat-check:checked')).map(el=>el.value);
+    DATA.onboarded = true;
+    rebuildAll();
+    CAL = buildCalendar(DATA.config, DATA.reportedDays);
+    updateTitles();
+    saveData();
+    document.getElementById('onboardOverlay').classList.add('hidden');
+    render();
+  });
+
+  if(!DATA.onboarded){
+    renderObSubjectList();
+    document.getElementById('obStart').value = DATA.config.start || toISO(todayDate());
+    document.getElementById('obExam').value = DATA.config.exam || '';
+    document.getElementById('obS1End').value = DATA.config.s1End || '';
+    document.getElementById('onboardOverlay').classList.remove('hidden');
+  }
+
+  render();
+}
+
+init();
+})();
+</script>
+</body>
+</html>
