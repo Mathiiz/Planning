@@ -12,7 +12,7 @@
       "psy"
     ],
     "studentYear": 5,
-    "showCountdownEdn": true,
+    "showCountdownEdn": false,
     "showCountdownEcos": false,
     "ecosDate": "",
     "dailyItemsPhase1": 2,
