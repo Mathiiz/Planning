@@ -921,9 +921,13 @@ function buildS1Queue(){
     return CURRENT_ITEMS.map(([n])=>n);
   }
   const {withDL, withoutDL} = categoriesByDeadlinePriority(cats);
-  const urgent = [];
-  withDL.forEach(c=>{ itemsOfPrimaryCat(c).forEach(n=>urgent.push(n)); });
-  
+  let urgent = [];
+  if(mode === 'bloc'){
+    withDL.forEach(c=>{ itemsOfPrimaryCat(c).forEach(n=>urgent.push(n)); });
+  } else {
+    urgent = roundRobin(withDL.map(itemsOfPrimaryCat));
+  }
+
   let rest = [];
   if(mode === 'bloc'){
     withoutDL.forEach(c => {
@@ -939,10 +943,16 @@ function buildS2Queue(){
   const mode = (DATA && DATA.config && DATA.config.studyModeP2) || 'alterne';
   const {withDL} = categoriesByDeadlinePriority(ALL_CATS);
   const seen = new Set();
-  const urgent = [];
-  withDL.forEach(c=>{
-    itemsOfCat(c).forEach(n=>{ if(!seen.has(n)){ urgent.push(n); seen.add(n); } });
-  });
+  let urgent = [];
+  if(mode === 'bloc'){
+    withDL.forEach(c=>{
+      itemsOfCat(c).forEach(n=>{ if(!seen.has(n)){ urgent.push(n); seen.add(n); } });
+    });
+  } else {
+    roundRobin(withDL.map(c=>itemsOfCat(c))).forEach(n=>{
+      if(!seen.has(n)){ urgent.push(n); seen.add(n); }
+    });
+  }
   const restNums = CURRENT_ITEMS.map(([n])=>n).filter(n=>!seen.has(n));
 
   let rest = [];
