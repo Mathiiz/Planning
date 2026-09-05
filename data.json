@@ -5,13 +5,14 @@
     "exam": "2027-10-15",
     "newCats": [
       "ger",
+      "hemato",
       "mi",
-      "ped",
       "onco",
-      "hemato"
+      "ped",
+      "psy"
     ],
     "studentYear": 5,
-    "showCountdownEdn": false,
+    "showCountdownEdn": true,
     "showCountdownEcos": false,
     "ecosDate": "",
     "dailyItemsPhase1": 2,
@@ -2784,7 +2785,10 @@
   "subjectDeadlines": {
     "hemato": "2027-01-19",
     "ger": "2027-01-19",
-    "onco": "2027-01-19"
+    "onco": "2027-01-19",
+    "mi": "2027-01-21",
+    "ped": "2027-01-21",
+    "psy": "2027-01-21"
   },
   "customTasks": {
     "2026-09-03": [
