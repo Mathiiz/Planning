@@ -1297,17 +1297,9 @@ function deadlineAlertsHTML(){
   const dl = DATA.subjectDeadlines || {};
   const cats = Object.keys(dl);
   if(cats.length===0) return '';
+  const itemStatus = computeItemStatus();
   const status = {};
-  ['S1','S2'].forEach(phase=>{
-    const cap = quotaThroughToday(phase);
-    for(let idx=0; idx<cap; idx++){
-      const s = getSlot(phase, idx);
-      if(s && s.itemNum){
-        if(status[s.itemNum]===undefined) status[s.itemNum] = false;
-        if(s.mode==='revision' && isItemTaskDone(s.nativeKey)) status[s.itemNum] = true;
-      }
-    }
-  });
+  Object.keys(itemStatus).forEach(n=>{ status[n] = itemStatus[n].revision; });
   const today = todayDate();
   const rows = cats.map(c=>{
     const daysLeft = daysBetween(today, parseISO(dl[c]));
@@ -1863,16 +1855,48 @@ function retardList(){
   return out;
 }
 
+function computeItemStatus(){
+  // Basé directement sur les coches enregistrées (DATA.itemChecks), pas sur la file
+  // d'attente S1/S2 actuelle : une matière retirée ou ajoutée aux « matières de la
+  // période en cours » ne fait donc plus disparaître la progression déjà validée.
+  const status = {};
+  const re = /^(?:S1|S2)_i(\d+)_o(\d+)$/;
+  Object.keys(DATA.itemChecks || {}).forEach(key=>{
+    if(!DATA.itemChecks[key]) return;
+    const m = re.exec(key);
+    if(!m) return;
+    const n = parseInt(m[1],10);
+    if(!ITEM_BY_NUM[n]) return; // item supprimé depuis
+    const occ = parseInt(m[2],10);
+    if(!status[n]) status[n] = {revision:false, entrainement:false};
+    if(occ===1) status[n].revision = true; else status[n].entrainement = true;
+  });
+  return status;
+}
+
 function itemHistory(itemNum){
   const entries = [];
+  const covered = new Set();
   ['S1','S2'].forEach(phase=>{
     const cap = quotaThroughToday(phase);
     for(let idx=0; idx<cap; idx++){
       const s = getSlot(phase, idx);
       if(s && s.itemNum === itemNum){
         entries.push({ phase, idx, mode:s.mode, done:isItemTaskDone(s.nativeKey), iso: s.iso });
+        covered.add(s.nativeKey);
       }
     }
+  });
+  // Progression déjà validée mais dont l'occurrence ne fait plus partie du planning
+  // actuel (ex : matière retirée des « matières de la période en cours ») : on la
+  // garde visible même si on ne connaît plus la date exacte à laquelle elle a eu lieu.
+  const re = /^(S1|S2)_i(\d+)_o(\d+)$/;
+  Object.keys(DATA.itemChecks || {}).forEach(key=>{
+    if(!DATA.itemChecks[key] || covered.has(key)) return;
+    const m = re.exec(key);
+    if(!m || parseInt(m[2],10) !== itemNum) return;
+    const mode = parseInt(m[3],10)===1 ? 'revision' : 'entrainement';
+    entries.push({ phase:m[1], idx:null, mode, done:true, iso:null });
   });
   entries.sort((a,b)=> (a.iso||'') < (b.iso||'') ? -1 : 1);
   return entries;
@@ -2288,20 +2312,7 @@ function renderProgress(){
   const container = document.getElementById('app');
   if(selectedItemNum){ renderItemHistory(selectedItemNum); return; }
 
-  const status = {};
-  ['S1','S2'].forEach(phase=>{
-    const cap = quotaThroughToday(phase);
-    for(let idx=0; idx<cap; idx++){
-      const s = getSlot(phase, idx);
-      if(s && s.itemNum){
-        if(!status[s.itemNum]) status[s.itemNum] = {revision:false, entrainement:false};
-        if(isItemTaskDone(s.nativeKey)){
-          if(s.mode==='revision') status[s.itemNum].revision = true;
-          else status[s.itemNum].entrainement = true;
-        }
-      }
-    }
-  });
+  const status = computeItemStatus();
 
   function cardFor(cat){
     const nums = itemsOfCat(cat);
