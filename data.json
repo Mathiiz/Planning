@@ -4,7 +4,6 @@
     "s1End": "2027-01-21",
     "exam": "2027-10-15",
     "newCats": [
-      "psy",
       "ger",
       "mi",
       "ped",
@@ -12,8 +11,13 @@
       "hemato"
     ],
     "studentYear": 5,
-    "showCountdownEdn": true,
-    "showCountdownEcos": true
+    "showCountdownEdn": false,
+    "showCountdownEcos": false,
+    "ecosDate": "",
+    "dailyItemsPhase1": 2,
+    "dailyItemsPhase2": 3,
+    "studyModeP1": "alterne",
+    "studyModeP2": "alterne"
   },
   "items": [
     [
@@ -2746,6 +2750,9 @@
     },
     "2026-09-03": {
       "type": "concours_blanc"
+    },
+    "2026-09-04": {
+      "type": "concours_blanc"
     }
   },
   "itemOverrides": {
@@ -2774,9 +2781,7 @@
       "itemNum": 119
     }
   },
-  "subjectDeadlines": {
-    "psy": "0020-12-12"
-  },
+  "subjectDeadlines": {},
   "customTasks": {
     "2026-09-03": [
       {
