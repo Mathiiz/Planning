@@ -2976,7 +2976,8 @@ function renderSettings(){
       if(e.target.value) DATA.subjectDeadlines[cat] = e.target.value;
       else delete DATA.subjectDeadlines[cat];
       saveData();
-      render();
+      // Pas de render() ici : ce champ n'affecte que l'onglet Progression,
+      // et redessiner toute la page ferait perdre le scroll/focus en cours de saisie.
     });
   });
 
