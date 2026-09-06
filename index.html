@@ -1108,14 +1108,19 @@ function buildCalendar(cfg, reportedDays){
       }
       counters[phase]++;
       if(cur <= todayCutoff){
-        // jour déjà atteint (aujourd'hui ou passé) : on ne remplace jamais ce qui a déjà été
-        // affiché ici (et potentiellement fait) suite à un changement de priorité/DL — on ne
-        // fait qu'ajouter les items qui n'y étaient pas encore.
+        // jour déjà atteint (aujourd'hui ou passé) : on ne supprime jamais un item qui y était
+        // déjà (et potentiellement fait) suite à un changement de priorité/DL — on ajoute les
+        // nouveaux venus sans retirer les anciens. En revanche, pour une case déjà présente
+        // (même clé native), on rafraîchit ses données depuis le calcul du jour : c'est ce qui
+        // permet à un échange manuel d'item sur cette case de bien se répercuter ici, au lieu
+        // de rester bloqué sur l'ancien item figé.
         if(!DATA.pinnedDayItems) DATA.pinnedDayItems = {};
         const pinned = DATA.pinnedDayItems[iso] || [];
-        const seenKeys = new Set(pinned.map(t=>t.id));
-        const merged = pinned.slice();
-        freshTasks.forEach(t=>{ if(!seenKeys.has(t.id)){ merged.push(t); seenKeys.add(t.id); } });
+        const freshById = {};
+        freshTasks.forEach(t=>{ freshById[t.id] = t; });
+        const merged = pinned.map(p => freshById[p.id] || p);
+        const mergedIds = new Set(merged.map(t=>t.id));
+        freshTasks.forEach(t=>{ if(!mergedIds.has(t.id)){ merged.push(t); mergedIds.add(t.id); } });
         DATA.pinnedDayItems[iso] = merged;
         day.tasks = merged;
       } else {
@@ -3031,8 +3036,11 @@ function renderSettings(){
       if(!DATA.subjectDeadlines) DATA.subjectDeadlines = {};
       if(e.target.value) DATA.subjectDeadlines[cat] = e.target.value;
       else delete DATA.subjectDeadlines[cat];
+      rebuildAll();
+      CAL = buildCalendar(DATA.config, DATA.reportedDays);
+      scheduleAnnalesForDeadline(cat);
       saveData();
-      
+      render();
     });
   });
 
@@ -3095,10 +3103,36 @@ function renderSettings(){
   });
 }
 
-// ---------- réservé : replanification des annales/QCM blancs (non implémenté) ----------
+// ---------- annales, programmées automatiquement 1 à 2 semaines avant la DL d'une matière ----------
+function clearAnnalesForCat(cat){
+  if(!DATA.customTasks) return;
+  const prefix = 'annale_' + cat + '_';
+  Object.keys(DATA.customTasks).forEach(iso=>{
+    DATA.customTasks[iso] = DATA.customTasks[iso].filter(t=> !(t.id && t.id.indexOf(prefix)===0));
+    if(DATA.customTasks[iso].length===0) delete DATA.customTasks[iso];
+  });
+}
+function scheduleAnnalesForDeadline(cat){
+  if(!DATA.customTasks) DATA.customTasks = {};
+  clearAnnalesForCat(cat);
+  const dl = DATA.subjectDeadlines && DATA.subjectDeadlines[cat];
+  if(!dl) return;
+  const dlDate = parseISO(dl);
+  if(isNaN(dlDate.getTime())) return;
+  const label = `📄 Annale — ${CAT_LABELS[cat] || cat}`;
+  let cur = addDays(dlDate, -14);
+  const to = addDays(dlDate, -7);
+  while(cur <= to){
+    const iso = toISO(cur);
+    if(findDay(iso)){
+      if(!DATA.customTasks[iso]) DATA.customTasks[iso] = [];
+      DATA.customTasks[iso].push({id:'annale_'+cat+'_'+iso, label});
+    }
+    cur = addDays(cur, 1);
+  }
+}
 function rescheduleAllAnnales(){
-  // Aucune fonctionnalité de banque d'annales n'est encore branchée : no-op volontaire
-  // pour éviter une erreur si un import de sauvegarde appelle cette fonction.
+  Object.keys(DATA.subjectDeadlines||{}).forEach(cat=> scheduleAnnalesForDeadline(cat));
 }
 
 // ---------- thème clair/sombre ----------
@@ -3151,6 +3185,7 @@ async function init(){
 
   rebuildAll();
   CAL = buildCalendar(DATA.config, DATA.reportedDays);
+  rescheduleAllAnnales();
   applyTheme();
   updateTitles();
 
