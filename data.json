@@ -2607,7 +2607,8 @@
     "S1_i291_o1": true,
     "S1_i213_o1": true,
     "S1_i62_o1": true,
-    "S1_i119_o1": true
+    "S1_i119_o1": true,
+    "S1_i214_o1": true
   },
   "checks": {
     "2026-08-29": {
@@ -2740,11 +2741,15 @@
     "2026-09-20": {},
     "2026-09-12": {},
     "2026-09-13": {},
-    "2026-09-05": {},
+    "2026-09-05": {
+      "free": true
+    },
     "2026-09-06": {
       "lca": true
     },
-    "2026-09-03": {}
+    "2026-09-03": {
+      "custom_1788199341001_577": true
+    }
   },
   "reportedDays": {
     "2026-09-02": {
@@ -2804,10 +2809,223 @@
         "id": "custom_1788199341001_577",
         "label": "🔁 Révision rapprochée — Item 213 : Anémie chez l'adulte et l'enfant (marqué difficile)"
       }
+    ],
+    "2027-01-05": [
+      {
+        "id": "annale_hemato_2027-01-05",
+        "label": "📄 Annale — Hématologie"
+      },
+      {
+        "id": "annale_ger_2027-01-05",
+        "label": "📄 Annale — Gériatrie – Vieillissement"
+      },
+      {
+        "id": "annale_onco_2027-01-05",
+        "label": "📄 Annale — Oncologie"
+      }
+    ],
+    "2027-01-06": [
+      {
+        "id": "annale_hemato_2027-01-06",
+        "label": "📄 Annale — Hématologie"
+      },
+      {
+        "id": "annale_ger_2027-01-06",
+        "label": "📄 Annale — Gériatrie – Vieillissement"
+      },
+      {
+        "id": "annale_onco_2027-01-06",
+        "label": "📄 Annale — Oncologie"
+      }
+    ],
+    "2027-01-07": [
+      {
+        "id": "annale_hemato_2027-01-07",
+        "label": "📄 Annale — Hématologie"
+      },
+      {
+        "id": "annale_ger_2027-01-07",
+        "label": "📄 Annale — Gériatrie – Vieillissement"
+      },
+      {
+        "id": "annale_onco_2027-01-07",
+        "label": "📄 Annale — Oncologie"
+      },
+      {
+        "id": "annale_mi_2027-01-07",
+        "label": "📄 Annale — Médecine interne"
+      },
+      {
+        "id": "annale_ped_2027-01-07",
+        "label": "📄 Annale — Pédiatrie"
+      },
+      {
+        "id": "annale_psy_2027-01-07",
+        "label": "📄 Annale — Psychiatrie"
+      }
+    ],
+    "2027-01-08": [
+      {
+        "id": "annale_hemato_2027-01-08",
+        "label": "📄 Annale — Hématologie"
+      },
+      {
+        "id": "annale_ger_2027-01-08",
+        "label": "📄 Annale — Gériatrie – Vieillissement"
+      },
+      {
+        "id": "annale_onco_2027-01-08",
+        "label": "📄 Annale — Oncologie"
+      },
+      {
+        "id": "annale_mi_2027-01-08",
+        "label": "📄 Annale — Médecine interne"
+      },
+      {
+        "id": "annale_ped_2027-01-08",
+        "label": "📄 Annale — Pédiatrie"
+      },
+      {
+        "id": "annale_psy_2027-01-08",
+        "label": "📄 Annale — Psychiatrie"
+      }
+    ],
+    "2027-01-09": [
+      {
+        "id": "annale_hemato_2027-01-09",
+        "label": "📄 Annale — Hématologie"
+      },
+      {
+        "id": "annale_ger_2027-01-09",
+        "label": "📄 Annale — Gériatrie – Vieillissement"
+      },
+      {
+        "id": "annale_onco_2027-01-09",
+        "label": "📄 Annale — Oncologie"
+      },
+      {
+        "id": "annale_mi_2027-01-09",
+        "label": "📄 Annale — Médecine interne"
+      },
+      {
+        "id": "annale_ped_2027-01-09",
+        "label": "📄 Annale — Pédiatrie"
+      },
+      {
+        "id": "annale_psy_2027-01-09",
+        "label": "📄 Annale — Psychiatrie"
+      }
+    ],
+    "2027-01-10": [
+      {
+        "id": "annale_hemato_2027-01-10",
+        "label": "📄 Annale — Hématologie"
+      },
+      {
+        "id": "annale_ger_2027-01-10",
+        "label": "📄 Annale — Gériatrie – Vieillissement"
+      },
+      {
+        "id": "annale_onco_2027-01-10",
+        "label": "📄 Annale — Oncologie"
+      },
+      {
+        "id": "annale_mi_2027-01-10",
+        "label": "📄 Annale — Médecine interne"
+      },
+      {
+        "id": "annale_ped_2027-01-10",
+        "label": "📄 Annale — Pédiatrie"
+      },
+      {
+        "id": "annale_psy_2027-01-10",
+        "label": "📄 Annale — Psychiatrie"
+      }
+    ],
+    "2027-01-11": [
+      {
+        "id": "annale_hemato_2027-01-11",
+        "label": "📄 Annale — Hématologie"
+      },
+      {
+        "id": "annale_ger_2027-01-11",
+        "label": "📄 Annale — Gériatrie – Vieillissement"
+      },
+      {
+        "id": "annale_onco_2027-01-11",
+        "label": "📄 Annale — Oncologie"
+      },
+      {
+        "id": "annale_mi_2027-01-11",
+        "label": "📄 Annale — Médecine interne"
+      },
+      {
+        "id": "annale_ped_2027-01-11",
+        "label": "📄 Annale — Pédiatrie"
+      },
+      {
+        "id": "annale_psy_2027-01-11",
+        "label": "📄 Annale — Psychiatrie"
+      }
+    ],
+    "2027-01-12": [
+      {
+        "id": "annale_hemato_2027-01-12",
+        "label": "📄 Annale — Hématologie"
+      },
+      {
+        "id": "annale_ger_2027-01-12",
+        "label": "📄 Annale — Gériatrie – Vieillissement"
+      },
+      {
+        "id": "annale_onco_2027-01-12",
+        "label": "📄 Annale — Oncologie"
+      },
+      {
+        "id": "annale_mi_2027-01-12",
+        "label": "📄 Annale — Médecine interne"
+      },
+      {
+        "id": "annale_ped_2027-01-12",
+        "label": "📄 Annale — Pédiatrie"
+      },
+      {
+        "id": "annale_psy_2027-01-12",
+        "label": "📄 Annale — Psychiatrie"
+      }
+    ],
+    "2027-01-13": [
+      {
+        "id": "annale_mi_2027-01-13",
+        "label": "📄 Annale — Médecine interne"
+      },
+      {
+        "id": "annale_ped_2027-01-13",
+        "label": "📄 Annale — Pédiatrie"
+      },
+      {
+        "id": "annale_psy_2027-01-13",
+        "label": "📄 Annale — Psychiatrie"
+      }
+    ],
+    "2027-01-14": [
+      {
+        "id": "annale_mi_2027-01-14",
+        "label": "📄 Annale — Médecine interne"
+      },
+      {
+        "id": "annale_ped_2027-01-14",
+        "label": "📄 Annale — Pédiatrie"
+      },
+      {
+        "id": "annale_psy_2027-01-14",
+        "label": "📄 Annale — Psychiatrie"
+      }
     ]
   },
   "itemDifficulty": {
-    "130": "facile"
+    "130": "facile",
+    "315": "facile"
   },
   "lcaEntries": {},
   "sddItems": [
@@ -4383,11 +4601,11 @@
       {
         "id": "S1_i214_o1",
         "kind": "item",
-        "itemNum": 214,
+        "itemNum": 315,
         "mode": "revision",
         "idx": 13,
         "phase": "S1",
-        "overridden": false,
+        "overridden": true,
         "originalItemNum": 214
       }
     ]
