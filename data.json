@@ -2782,6 +2782,12 @@
     },
     "S1_i130_o1": {
       "itemNum": 119
+    },
+    "S1_i214_o1": {
+      "itemNum": 315
+    },
+    "S1_i315_o1": {
+      "itemNum": 214
     }
   },
   "subjectDeadlines": {
@@ -4229,5 +4235,161 @@
       356,
       "Information et suivi d'un patient en chirurgie ambulatoire"
     ]
-  ]
+  ],
+  "pinnedDayItems": {
+    "2026-08-24": [
+      {
+        "id": "S1_i108_o1",
+        "kind": "item",
+        "itemNum": 108,
+        "mode": "revision",
+        "idx": 0,
+        "phase": "S1",
+        "overridden": false,
+        "originalItemNum": 108
+      },
+      {
+        "id": "S1_i212_o1",
+        "kind": "item",
+        "itemNum": 212,
+        "mode": "revision",
+        "idx": 1,
+        "phase": "S1",
+        "overridden": false,
+        "originalItemNum": 212
+      }
+    ],
+    "2026-08-25": [
+      {
+        "id": "S1_i290_o1",
+        "kind": "item",
+        "itemNum": 290,
+        "mode": "revision",
+        "idx": 2,
+        "phase": "S1",
+        "overridden": false,
+        "originalItemNum": 290
+      },
+      {
+        "id": "S1_i185_o1",
+        "kind": "item",
+        "itemNum": 185,
+        "mode": "revision",
+        "idx": 3,
+        "phase": "S1",
+        "overridden": false,
+        "originalItemNum": 185
+      }
+    ],
+    "2026-08-26": [
+      {
+        "id": "S1_i47_o1",
+        "kind": "item",
+        "itemNum": 47,
+        "mode": "revision",
+        "idx": 4,
+        "phase": "S1",
+        "overridden": false,
+        "originalItemNum": 47
+      },
+      {
+        "id": "S1_i60_o1",
+        "kind": "item",
+        "itemNum": 60,
+        "mode": "revision",
+        "idx": 5,
+        "phase": "S1",
+        "overridden": false,
+        "originalItemNum": 60
+      }
+    ],
+    "2026-08-27": [
+      {
+        "id": "S1_i118_o1",
+        "kind": "item",
+        "itemNum": 123,
+        "mode": "revision",
+        "idx": 6,
+        "phase": "S1",
+        "overridden": true,
+        "originalItemNum": 118
+      },
+      {
+        "id": "S1_i213_o1",
+        "kind": "item",
+        "itemNum": 213,
+        "mode": "revision",
+        "idx": 7,
+        "phase": "S1",
+        "overridden": false,
+        "originalItemNum": 213
+      }
+    ],
+    "2026-08-28": [
+      {
+        "id": "S1_i291_o1",
+        "kind": "item",
+        "itemNum": 291,
+        "mode": "revision",
+        "idx": 8,
+        "phase": "S1",
+        "overridden": false,
+        "originalItemNum": 291
+      },
+      {
+        "id": "S1_i186_o1",
+        "kind": "item",
+        "itemNum": 1,
+        "mode": "revision",
+        "idx": 9,
+        "phase": "S1",
+        "overridden": true,
+        "originalItemNum": 186
+      }
+    ],
+    "2026-08-31": [
+      {
+        "id": "S1_i48_o1",
+        "kind": "item",
+        "itemNum": 49,
+        "mode": "revision",
+        "idx": 10,
+        "phase": "S1",
+        "overridden": true,
+        "originalItemNum": 48
+      },
+      {
+        "id": "S1_i61_o1",
+        "kind": "item",
+        "itemNum": 61,
+        "mode": "revision",
+        "idx": 11,
+        "phase": "S1",
+        "overridden": false,
+        "originalItemNum": 61
+      }
+    ],
+    "2026-09-01": [
+      {
+        "id": "S1_i119_o1",
+        "kind": "item",
+        "itemNum": 130,
+        "mode": "revision",
+        "idx": 12,
+        "phase": "S1",
+        "overridden": true,
+        "originalItemNum": 119
+      },
+      {
+        "id": "S1_i214_o1",
+        "kind": "item",
+        "itemNum": 214,
+        "mode": "revision",
+        "idx": 13,
+        "phase": "S1",
+        "overridden": false,
+        "originalItemNum": 214
+      }
+    ]
+  }
 }
