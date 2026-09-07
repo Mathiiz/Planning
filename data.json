@@ -1,19 +1,12 @@
 {
   "config": {
-    "start": "2026-08-24",
-    "s1End": "2027-01-21",
-    "exam": "2027-10-15",
-    "newCats": [
-      "ger",
-      "hemato",
-      "mi",
-      "onco",
-      "ped",
-      "psy"
-    ],
-    "studentYear": 5,
-    "showCountdownEdn": false,
-    "showCountdownEcos": false,
+    "start": "2026-09-07",
+    "s1End": "2027-02-04",
+    "exam": "2027-09-07",
+    "newCats": [],
+    "studentYear": 6,
+    "showCountdownEdn": true,
+    "showCountdownEcos": true,
     "ecosDate": "",
     "dailyItemsPhase1": 2,
     "dailyItemsPhase2": 3,
@@ -2591,7 +2584,7 @@
       ]
     ]
   ],
-  "darkMode": true,
+  "darkMode": false,
   "onboarded": true,
   "itemChecks": {
     "S1_i60_o1": true,
@@ -4607,6 +4600,28 @@
         "phase": "S1",
         "overridden": true,
         "originalItemNum": 214
+      }
+    ],
+    "2026-09-07": [
+      {
+        "id": "S1_i1_o1",
+        "kind": "item",
+        "itemNum": 1,
+        "mode": "revision",
+        "idx": 0,
+        "phase": "S1",
+        "overridden": false,
+        "originalItemNum": 1
+      },
+      {
+        "id": "S1_i2_o1",
+        "kind": "item",
+        "itemNum": 2,
+        "mode": "revision",
+        "idx": 1,
+        "phase": "S1",
+        "overridden": false,
+        "originalItemNum": 2
       }
     ]
   }
