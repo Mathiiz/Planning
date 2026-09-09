@@ -1086,6 +1086,7 @@ function taskForIndex(phase, idx){
 
 let DATA = null;
 let CAL = [];
+const deadlineDebounceTimers = {};
 let INDEX_DATE = {S1:{}, S2:{}};
 let PHASE_FINAL_QUOTA = {S1:0, S2:0, ECOS:0};
 let currentTab = 'today';
@@ -3133,14 +3134,23 @@ function renderSettings(){
   container.querySelectorAll('.deadline-input').forEach(inp=>{
     inp.addEventListener('change', e=>{
       const cat = e.target.getAttribute('data-cat');
-      if(!DATA.subjectDeadlines) DATA.subjectDeadlines = {};
-      if(e.target.value) DATA.subjectDeadlines[cat] = e.target.value;
-      else delete DATA.subjectDeadlines[cat];
-      rebuildAll();
-      CAL = buildCalendar(DATA.config, DATA.reportedDays);
-      scheduleAnnalesForDeadline(cat);
-      saveData();
-      render();
+      const val = e.target.value;
+      // Un <input type="date"> déclenche 'change' dès que la date redevient valide,
+      // souvent dès le 1er chiffre tapé dans l'année (jour/mois déjà remplis) : on
+      // attend une courte pause avant de traiter la valeur, pour laisser le temps de
+      // finir de taper sans que la page ne se redessine (et ne remonte) entre-temps.
+      if(deadlineDebounceTimers[cat]) clearTimeout(deadlineDebounceTimers[cat]);
+      deadlineDebounceTimers[cat] = setTimeout(()=>{
+        delete deadlineDebounceTimers[cat];
+        if(!DATA.subjectDeadlines) DATA.subjectDeadlines = {};
+        if(val) DATA.subjectDeadlines[cat] = val;
+        else delete DATA.subjectDeadlines[cat];
+        rebuildAll();
+        CAL = buildCalendar(DATA.config, DATA.reportedDays);
+        scheduleAnnalesForDeadline(cat);
+        saveData();
+        render();
+      }, 900);
     });
   });
 
