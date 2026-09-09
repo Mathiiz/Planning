@@ -2781,7 +2781,6 @@
   },
   "subjectDeadlines": {
     "hemato": "0020-01-19",
-    "ger": "0002-01-19",
     "psy": "0020-12-01"
   },
   "customTasks": {
@@ -4249,7 +4248,7 @@
         "kind": "item",
         "itemNum": 212,
         "mode": "revision",
-        "idx": 1,
+        "idx": 0,
         "phase": "S1",
         "overridden": false,
         "originalItemNum": 212
@@ -4285,6 +4284,16 @@
         "phase": "S1",
         "overridden": false,
         "originalItemNum": 60
+      },
+      {
+        "id": "S1_i213_o1",
+        "kind": "item",
+        "itemNum": 213,
+        "mode": "revision",
+        "idx": 2,
+        "phase": "S1",
+        "overridden": false,
+        "originalItemNum": 213
       }
     ],
     "2026-08-26": [
@@ -4327,6 +4336,16 @@
         "phase": "S1",
         "overridden": false,
         "originalItemNum": 61
+      },
+      {
+        "id": "S1_i214_o1",
+        "kind": "item",
+        "itemNum": 214,
+        "mode": "revision",
+        "idx": 4,
+        "phase": "S1",
+        "overridden": false,
+        "originalItemNum": 214
       }
     ],
     "2026-08-27": [
@@ -4369,6 +4388,16 @@
         "phase": "S1",
         "overridden": false,
         "originalItemNum": 214
+      },
+      {
+        "id": "S1_i215_o1",
+        "kind": "item",
+        "itemNum": 215,
+        "mode": "revision",
+        "idx": 6,
+        "phase": "S1",
+        "overridden": false,
+        "originalItemNum": 215
       }
     ],
     "2026-08-28": [
@@ -4411,6 +4440,16 @@
         "phase": "S1",
         "overridden": false,
         "originalItemNum": 120
+      },
+      {
+        "id": "S1_i216_o1",
+        "kind": "item",
+        "itemNum": 216,
+        "mode": "revision",
+        "idx": 8,
+        "phase": "S1",
+        "overridden": false,
+        "originalItemNum": 216
       }
     ],
     "2026-08-31": [
@@ -4453,6 +4492,16 @@
         "phase": "S1",
         "overridden": false,
         "originalItemNum": 63
+      },
+      {
+        "id": "S1_i217_o1",
+        "kind": "item",
+        "itemNum": 217,
+        "mode": "revision",
+        "idx": 10,
+        "phase": "S1",
+        "overridden": false,
+        "originalItemNum": 217
       }
     ],
     "2026-09-01": [
@@ -4495,6 +4544,16 @@
         "phase": "S1",
         "overridden": false,
         "originalItemNum": 216
+      },
+      {
+        "id": "S1_i218_o1",
+        "kind": "item",
+        "itemNum": 218,
+        "mode": "revision",
+        "idx": 12,
+        "phase": "S1",
+        "overridden": false,
+        "originalItemNum": 218
       }
     ],
     "2026-09-04": [
@@ -4537,6 +4596,16 @@
         "phase": "S1",
         "overridden": false,
         "originalItemNum": 122
+      },
+      {
+        "id": "S1_i219_o1",
+        "kind": "item",
+        "itemNum": 219,
+        "mode": "revision",
+        "idx": 14,
+        "phase": "S1",
+        "overridden": false,
+        "originalItemNum": 219
       }
     ],
     "2026-09-07": [
@@ -4579,6 +4648,16 @@
         "phase": "S1",
         "overridden": false,
         "originalItemNum": 65
+      },
+      {
+        "id": "S1_i220_o1",
+        "kind": "item",
+        "itemNum": 220,
+        "mode": "revision",
+        "idx": 16,
+        "phase": "S1",
+        "overridden": false,
+        "originalItemNum": 220
       }
     ],
     "2026-09-08": [
@@ -4621,6 +4700,16 @@
         "phase": "S1",
         "overridden": false,
         "originalItemNum": 218
+      },
+      {
+        "id": "S1_i315_o1",
+        "kind": "item",
+        "itemNum": 315,
+        "mode": "revision",
+        "idx": 18,
+        "phase": "S1",
+        "overridden": false,
+        "originalItemNum": 315
       }
     ],
     "2026-09-09": [
@@ -4663,6 +4752,16 @@
         "phase": "S1",
         "overridden": false,
         "originalItemNum": 124
+      },
+      {
+        "id": "S1_i316_o1",
+        "kind": "item",
+        "itemNum": 316,
+        "mode": "revision",
+        "idx": 20,
+        "phase": "S1",
+        "overridden": false,
+        "originalItemNum": 316
       }
     ]
   }
