@@ -968,6 +968,13 @@ function rebuildAll(){
   CURRENT_ITEMS = DATA.items;
   ITEM_BY_NUM = {};
   CURRENT_ITEMS.forEach(([n,t,cats])=>{ ITEM_BY_NUM[n] = {num:n, title:t, cats:cats, cat: cats[0]}; });
+  if(!CAL.length && DATA.config){
+    // Amorce : sans calendrier existant, impossible de savoir où se situe « aujourd'hui »
+    // dans le planning (quotaThroughToday), donc impossible de figer correctement les
+    // jours déjà passés. On construit un calendrier provisoire (le contenu des items n'a
+    // pas d'importance ici, seule la structure des jours compte) juste pour ça.
+    CAL = buildCalendar(DATA.config, DATA.reportedDays);
+  }
   S1_QUEUE = stabilizeQueue('S1', buildS1Queue(), buildS1QueueIgnoringDeadlines());
   S2_QUEUE = stabilizeQueue('S2', buildS2Queue(), buildS2QueueIgnoringDeadlines());
   const sdd = DATA.sddItems || [];
