@@ -2781,7 +2781,7 @@
   },
   "subjectDeadlines": {
     "hemato": "2027-01-19",
-    "psy": "0020-12-01",
+    "psy": "2027-01-21",
     "ger": "2027-01-19",
     "onco": "2027-01-19",
     "ped": "2027-01-21",
@@ -2842,6 +2842,10 @@
       {
         "id": "annale_mi_2027-01-07",
         "label": "📄 Annale — Médecine interne"
+      },
+      {
+        "id": "annale_psy_2027-01-07",
+        "label": "📄 Annale — Psychiatrie"
       }
     ],
     "2027-01-08": [
@@ -2864,6 +2868,10 @@
       {
         "id": "annale_mi_2027-01-08",
         "label": "📄 Annale — Médecine interne"
+      },
+      {
+        "id": "annale_psy_2027-01-08",
+        "label": "📄 Annale — Psychiatrie"
       }
     ],
     "2027-01-09": [
@@ -2886,6 +2894,10 @@
       {
         "id": "annale_mi_2027-01-09",
         "label": "📄 Annale — Médecine interne"
+      },
+      {
+        "id": "annale_psy_2027-01-09",
+        "label": "📄 Annale — Psychiatrie"
       }
     ],
     "2027-01-10": [
@@ -2908,6 +2920,10 @@
       {
         "id": "annale_mi_2027-01-10",
         "label": "📄 Annale — Médecine interne"
+      },
+      {
+        "id": "annale_psy_2027-01-10",
+        "label": "📄 Annale — Psychiatrie"
       }
     ],
     "2027-01-11": [
@@ -2930,6 +2946,10 @@
       {
         "id": "annale_mi_2027-01-11",
         "label": "📄 Annale — Médecine interne"
+      },
+      {
+        "id": "annale_psy_2027-01-11",
+        "label": "📄 Annale — Psychiatrie"
       }
     ],
     "2027-01-12": [
@@ -2952,6 +2972,10 @@
       {
         "id": "annale_mi_2027-01-12",
         "label": "📄 Annale — Médecine interne"
+      },
+      {
+        "id": "annale_psy_2027-01-12",
+        "label": "📄 Annale — Psychiatrie"
       }
     ],
     "2027-01-13": [
@@ -2962,6 +2986,10 @@
       {
         "id": "annale_mi_2027-01-13",
         "label": "📄 Annale — Médecine interne"
+      },
+      {
+        "id": "annale_psy_2027-01-13",
+        "label": "📄 Annale — Psychiatrie"
       }
     ],
     "2027-01-14": [
@@ -2972,6 +3000,10 @@
       {
         "id": "annale_mi_2027-01-14",
         "label": "📄 Annale — Médecine interne"
+      },
+      {
+        "id": "annale_psy_2027-01-14",
+        "label": "📄 Annale — Psychiatrie"
       }
     ]
   },
@@ -4412,7 +4444,7 @@
         "kind": "item",
         "itemNum": 108,
         "mode": "revision",
-        "idx": 1,
+        "idx": 0,
         "phase": "S1",
         "overridden": false,
         "originalItemNum": 108
@@ -4436,6 +4468,16 @@
         "phase": "S1",
         "overridden": false,
         "originalItemNum": 212
+      },
+      {
+        "id": "S1_i290_o1",
+        "kind": "item",
+        "itemNum": 290,
+        "mode": "revision",
+        "idx": 1,
+        "phase": "S1",
+        "overridden": false,
+        "originalItemNum": 290
       }
     ],
     "2026-08-25": [
@@ -4464,7 +4506,7 @@
         "kind": "item",
         "itemNum": 60,
         "mode": "revision",
-        "idx": 2,
+        "idx": 3,
         "phase": "S1",
         "overridden": false,
         "originalItemNum": 60
@@ -4484,7 +4526,7 @@
         "kind": "item",
         "itemNum": 212,
         "mode": "revision",
-        "idx": 3,
+        "idx": 2,
         "phase": "S1",
         "overridden": false,
         "originalItemNum": 212
@@ -4668,7 +4710,7 @@
         "kind": "item",
         "itemNum": 123,
         "mode": "revision",
-        "idx": 7,
+        "idx": 6,
         "phase": "S1",
         "overridden": true,
         "originalItemNum": 118
@@ -4770,7 +4812,7 @@
         "kind": "item",
         "itemNum": 213,
         "mode": "revision",
-        "idx": 9,
+        "idx": 8,
         "phase": "S1",
         "overridden": false,
         "originalItemNum": 213
@@ -4794,6 +4836,16 @@
         "phase": "S1",
         "overridden": false,
         "originalItemNum": 291
+      },
+      {
+        "id": "S1_i61_o1",
+        "kind": "item",
+        "itemNum": 61,
+        "mode": "revision",
+        "idx": 9,
+        "phase": "S1",
+        "overridden": false,
+        "originalItemNum": 61
       }
     ],
     "2026-08-31": [
@@ -5004,7 +5056,7 @@
         "kind": "item",
         "itemNum": 292,
         "mode": "revision",
-        "idx": 12,
+        "idx": 13,
         "phase": "S1",
         "overridden": false,
         "originalItemNum": 292
@@ -5034,7 +5086,7 @@
         "kind": "item",
         "itemNum": 130,
         "mode": "revision",
-        "idx": 13,
+        "idx": 12,
         "phase": "S1",
         "overridden": true,
         "originalItemNum": 119
@@ -5166,10 +5218,20 @@
         "kind": "item",
         "itemNum": 214,
         "mode": "revision",
-        "idx": 15,
+        "idx": 14,
         "phase": "S1",
         "overridden": false,
         "originalItemNum": 214
+      },
+      {
+        "id": "S1_i62_o1",
+        "kind": "item",
+        "itemNum": 62,
+        "mode": "revision",
+        "idx": 15,
+        "phase": "S1",
+        "overridden": false,
+        "originalItemNum": 62
       }
     ],
     "2026-09-07": [
@@ -5410,10 +5472,20 @@
         "kind": "item",
         "itemNum": 120,
         "mode": "revision",
-        "idx": 19,
+        "idx": 18,
         "phase": "S1",
         "overridden": false,
         "originalItemNum": 120
+      },
+      {
+        "id": "S1_i293_o1",
+        "kind": "item",
+        "itemNum": 293,
+        "mode": "revision",
+        "idx": 19,
+        "phase": "S1",
+        "overridden": false,
+        "originalItemNum": 293
       }
     ],
     "2026-09-09": [
@@ -5542,10 +5614,20 @@
         "kind": "item",
         "itemNum": 215,
         "mode": "revision",
-        "idx": 21,
+        "idx": 20,
         "phase": "S1",
         "overridden": false,
         "originalItemNum": 215
+      },
+      {
+        "id": "S1_i63_o1",
+        "kind": "item",
+        "itemNum": 63,
+        "mode": "revision",
+        "idx": 21,
+        "phase": "S1",
+        "overridden": false,
+        "originalItemNum": 63
       }
     ]
   }
