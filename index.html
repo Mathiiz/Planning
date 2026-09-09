@@ -3371,6 +3371,19 @@ async function init(){
 
   rebuildAll();
   CAL = buildCalendar(DATA.config, DATA.reportedDays);
+
+  if(!DATA.pinResetV1){
+    // Les jours passés étaient « épinglés » (pinnedDayItems) avec l'ordre pollué par
+    // l'ajout des échéances, avant que la file ne soit corrigée ci-dessus. On efface
+    // ces épingles une seule fois pour qu'elles se reconstruisent proprement à partir
+    // de la file désormais stabilisée (rien d'autre n'est perdu : les cases faites et
+    // les échanges manuels restent identifiés par item, pas par jour).
+    DATA.pinnedDayItems = {};
+    DATA.pinResetV1 = true;
+    CAL = buildCalendar(DATA.config, DATA.reportedDays);
+    saveData();
+  }
+
   rescheduleAllAnnales();
   applyTheme();
   updateTitles();
