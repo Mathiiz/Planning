@@ -2751,6 +2751,10 @@
     },
     "2026-09-03": {
       "type": "concours_blanc"
+    },
+    "2026-09-08": {
+      "type": "autre",
+      "label": "Garde"
     }
   },
   "itemOverrides": {
@@ -4678,6 +4682,26 @@
         "phase": "S1",
         "overridden": false,
         "originalItemNum": 50
+      },
+      {
+        "id": "S1_i63_o1",
+        "kind": "item",
+        "itemNum": 63,
+        "mode": "revision",
+        "idx": 18,
+        "phase": "S1",
+        "overridden": false,
+        "originalItemNum": 63
+      },
+      {
+        "id": "S1_i120_o1",
+        "kind": "item",
+        "itemNum": 120,
+        "mode": "revision",
+        "idx": 19,
+        "phase": "S1",
+        "overridden": false,
+        "originalItemNum": 120
       }
     ]
   }
