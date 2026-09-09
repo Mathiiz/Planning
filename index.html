@@ -910,13 +910,66 @@ function itemsPerDayFor(phase){
   return 2;
 }
 
+function buildS1QueueIgnoringDeadlines(){
+  const cats = currentNewCats();
+  const mode = (DATA && DATA.config && DATA.config.studyModeP1) || 'alterne';
+  if(cats.length===0) return CURRENT_ITEMS.map(([n])=>n);
+  if(mode === 'bloc'){
+    const out = [];
+    cats.forEach(c=>{ itemsOfPrimaryCat(c).forEach(n=>out.push(n)); });
+    return out;
+  }
+  return roundRobin(cats.map(itemsOfPrimaryCat));
+}
+
+function buildS2QueueIgnoringDeadlines(){
+  const mode = (DATA && DATA.config && DATA.config.studyModeP2) || 'alterne';
+  if(mode === 'bloc'){
+    const out = [];
+    ALL_CATS.forEach(c=>{ itemsOfCat(c).forEach(n=>{ if(!out.includes(n)) out.push(n); }); });
+    return out;
+  }
+  const seen = new Set();
+  const out = [];
+  roundRobin(ALL_CATS.map(c=>itemsOfCat(c))).forEach(n=>{ if(!seen.has(n)){ out.push(n); seen.add(n); } });
+  return out;
+}
+
+function stabilizeQueue(phase, idealQueue, baselineQueueForSeed){
+  // Fige le contenu déjà « consommé » (jours passés) : un changement de priorité
+  // (échéance, matière, mode d'étude) ne redistribue plus alors que les jours à
+  // venir, au lieu de faire apparaître d'un coup des dizaines d'items « en retard »
+  // sur des jours déjà passés.
+  if(!DATA.queueFreeze) DATA.queueFreeze = {S1:[], S2:[]};
+  const validIdeal = idealQueue.filter(n=>ITEM_BY_NUM[n]);
+  let frozen = (DATA.queueFreeze[phase] || []).filter(n=>ITEM_BY_NUM[n]);
+  const boundary = CAL.length ? Math.min(quotaThroughToday(phase), validIdeal.length) : 0;
+  if(boundary > frozen.length){
+    const frozenSet = new Set(frozen);
+    // Premier gel de cette phase : on reconstitue le planning « comme avant »
+    // (sans tenir compte des échéances qu'on vient d'ajouter) pour les jours déjà
+    // passés, afin de ne pas faire retomber d'un coup tous les items priorisés par
+    // une échéance comme « en retard ». À partir de là, les nouveaux jours qui
+    // s'écoulent suivent l'ordre de priorité actuel (donc les échéances s'appliquent
+    // normalement à partir de maintenant).
+    const source = (frozen.length===0 && baselineQueueForSeed)
+      ? baselineQueueForSeed.filter(n=>ITEM_BY_NUM[n] && !frozenSet.has(n))
+      : validIdeal.filter(n=>!frozenSet.has(n));
+    frozen = frozen.concat(source.slice(0, boundary - frozen.length));
+  }
+  DATA.queueFreeze[phase] = frozen;
+  const frozenSet2 = new Set(frozen);
+  const remainder = validIdeal.filter(n=>!frozenSet2.has(n));
+  return frozen.concat(remainder);
+}
+
 function rebuildAll(){
   DATA.items = DATA.items.map(([n,t,c])=>[n,t,normalizeCats(c)]);
   CURRENT_ITEMS = DATA.items;
   ITEM_BY_NUM = {};
   CURRENT_ITEMS.forEach(([n,t,cats])=>{ ITEM_BY_NUM[n] = {num:n, title:t, cats:cats, cat: cats[0]}; });
-  S1_QUEUE = buildS1Queue();
-  S2_QUEUE = buildS2Queue();
+  S1_QUEUE = stabilizeQueue('S1', buildS1Queue(), buildS1QueueIgnoringDeadlines());
+  S2_QUEUE = stabilizeQueue('S2', buildS2Queue(), buildS2QueueIgnoringDeadlines());
   const sdd = DATA.sddItems || [];
   SDD_QUEUE = sdd.map(([n])=>n);
   SDD_BY_NUM = {};
@@ -3150,7 +3203,7 @@ function renderSettings(){
         scheduleAnnalesForDeadline(cat);
         saveData();
         render();
-      }, 900);
+      }, 2000);
     });
   });
 
