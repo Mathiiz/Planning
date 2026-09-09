@@ -4,16 +4,16 @@
     "s1End": "2027-01-21",
     "exam": "2027-10-15",
     "newCats": [
+      "psy",
       "ger",
-      "hemato",
       "mi",
-      "onco",
       "ped",
-      "psy"
+      "onco",
+      "hemato"
     ],
     "studentYear": 5,
-    "showCountdownEdn": false,
-    "showCountdownEcos": false,
+    "showCountdownEdn": true,
+    "showCountdownEcos": true,
     "ecosDate": "",
     "dailyItemsPhase1": 2,
     "dailyItemsPhase2": 3,
@@ -2607,8 +2607,7 @@
     "S1_i291_o1": true,
     "S1_i213_o1": true,
     "S1_i62_o1": true,
-    "S1_i119_o1": true,
-    "S1_i214_o1": true
+    "S1_i119_o1": true
   },
   "checks": {
     "2026-08-29": {
@@ -2741,15 +2740,9 @@
     "2026-09-20": {},
     "2026-09-12": {},
     "2026-09-13": {},
-    "2026-09-05": {
-      "free": true
-    },
-    "2026-09-06": {
-      "lca": true
-    },
-    "2026-09-03": {
-      "custom_1788199341001_577": true
-    }
+    "2026-09-05": {},
+    "2026-09-06": {},
+    "2026-09-03": {}
   },
   "reportedDays": {
     "2026-09-02": {
@@ -2757,9 +2750,6 @@
       "label": "Garde"
     },
     "2026-09-03": {
-      "type": "concours_blanc"
-    },
-    "2026-09-04": {
       "type": "concours_blanc"
     }
   },
@@ -2787,21 +2777,12 @@
     },
     "S1_i130_o1": {
       "itemNum": 119
-    },
-    "S1_i214_o1": {
-      "itemNum": 315
-    },
-    "S1_i315_o1": {
-      "itemNum": 214
     }
   },
   "subjectDeadlines": {
-    "hemato": "2027-01-19",
-    "ger": "2027-01-19",
-    "onco": "2027-01-19",
-    "mi": "2027-01-21",
-    "ped": "2027-01-21",
-    "psy": "2027-01-21"
+    "hemato": "0020-01-19",
+    "ger": "0002-01-19",
+    "psy": "0020-12-01"
   },
   "customTasks": {
     "2026-09-03": [
@@ -2809,223 +2790,10 @@
         "id": "custom_1788199341001_577",
         "label": "🔁 Révision rapprochée — Item 213 : Anémie chez l'adulte et l'enfant (marqué difficile)"
       }
-    ],
-    "2027-01-05": [
-      {
-        "id": "annale_hemato_2027-01-05",
-        "label": "📄 Annale — Hématologie"
-      },
-      {
-        "id": "annale_ger_2027-01-05",
-        "label": "📄 Annale — Gériatrie – Vieillissement"
-      },
-      {
-        "id": "annale_onco_2027-01-05",
-        "label": "📄 Annale — Oncologie"
-      }
-    ],
-    "2027-01-06": [
-      {
-        "id": "annale_hemato_2027-01-06",
-        "label": "📄 Annale — Hématologie"
-      },
-      {
-        "id": "annale_ger_2027-01-06",
-        "label": "📄 Annale — Gériatrie – Vieillissement"
-      },
-      {
-        "id": "annale_onco_2027-01-06",
-        "label": "📄 Annale — Oncologie"
-      }
-    ],
-    "2027-01-07": [
-      {
-        "id": "annale_hemato_2027-01-07",
-        "label": "📄 Annale — Hématologie"
-      },
-      {
-        "id": "annale_ger_2027-01-07",
-        "label": "📄 Annale — Gériatrie – Vieillissement"
-      },
-      {
-        "id": "annale_onco_2027-01-07",
-        "label": "📄 Annale — Oncologie"
-      },
-      {
-        "id": "annale_mi_2027-01-07",
-        "label": "📄 Annale — Médecine interne"
-      },
-      {
-        "id": "annale_ped_2027-01-07",
-        "label": "📄 Annale — Pédiatrie"
-      },
-      {
-        "id": "annale_psy_2027-01-07",
-        "label": "📄 Annale — Psychiatrie"
-      }
-    ],
-    "2027-01-08": [
-      {
-        "id": "annale_hemato_2027-01-08",
-        "label": "📄 Annale — Hématologie"
-      },
-      {
-        "id": "annale_ger_2027-01-08",
-        "label": "📄 Annale — Gériatrie – Vieillissement"
-      },
-      {
-        "id": "annale_onco_2027-01-08",
-        "label": "📄 Annale — Oncologie"
-      },
-      {
-        "id": "annale_mi_2027-01-08",
-        "label": "📄 Annale — Médecine interne"
-      },
-      {
-        "id": "annale_ped_2027-01-08",
-        "label": "📄 Annale — Pédiatrie"
-      },
-      {
-        "id": "annale_psy_2027-01-08",
-        "label": "📄 Annale — Psychiatrie"
-      }
-    ],
-    "2027-01-09": [
-      {
-        "id": "annale_hemato_2027-01-09",
-        "label": "📄 Annale — Hématologie"
-      },
-      {
-        "id": "annale_ger_2027-01-09",
-        "label": "📄 Annale — Gériatrie – Vieillissement"
-      },
-      {
-        "id": "annale_onco_2027-01-09",
-        "label": "📄 Annale — Oncologie"
-      },
-      {
-        "id": "annale_mi_2027-01-09",
-        "label": "📄 Annale — Médecine interne"
-      },
-      {
-        "id": "annale_ped_2027-01-09",
-        "label": "📄 Annale — Pédiatrie"
-      },
-      {
-        "id": "annale_psy_2027-01-09",
-        "label": "📄 Annale — Psychiatrie"
-      }
-    ],
-    "2027-01-10": [
-      {
-        "id": "annale_hemato_2027-01-10",
-        "label": "📄 Annale — Hématologie"
-      },
-      {
-        "id": "annale_ger_2027-01-10",
-        "label": "📄 Annale — Gériatrie – Vieillissement"
-      },
-      {
-        "id": "annale_onco_2027-01-10",
-        "label": "📄 Annale — Oncologie"
-      },
-      {
-        "id": "annale_mi_2027-01-10",
-        "label": "📄 Annale — Médecine interne"
-      },
-      {
-        "id": "annale_ped_2027-01-10",
-        "label": "📄 Annale — Pédiatrie"
-      },
-      {
-        "id": "annale_psy_2027-01-10",
-        "label": "📄 Annale — Psychiatrie"
-      }
-    ],
-    "2027-01-11": [
-      {
-        "id": "annale_hemato_2027-01-11",
-        "label": "📄 Annale — Hématologie"
-      },
-      {
-        "id": "annale_ger_2027-01-11",
-        "label": "📄 Annale — Gériatrie – Vieillissement"
-      },
-      {
-        "id": "annale_onco_2027-01-11",
-        "label": "📄 Annale — Oncologie"
-      },
-      {
-        "id": "annale_mi_2027-01-11",
-        "label": "📄 Annale — Médecine interne"
-      },
-      {
-        "id": "annale_ped_2027-01-11",
-        "label": "📄 Annale — Pédiatrie"
-      },
-      {
-        "id": "annale_psy_2027-01-11",
-        "label": "📄 Annale — Psychiatrie"
-      }
-    ],
-    "2027-01-12": [
-      {
-        "id": "annale_hemato_2027-01-12",
-        "label": "📄 Annale — Hématologie"
-      },
-      {
-        "id": "annale_ger_2027-01-12",
-        "label": "📄 Annale — Gériatrie – Vieillissement"
-      },
-      {
-        "id": "annale_onco_2027-01-12",
-        "label": "📄 Annale — Oncologie"
-      },
-      {
-        "id": "annale_mi_2027-01-12",
-        "label": "📄 Annale — Médecine interne"
-      },
-      {
-        "id": "annale_ped_2027-01-12",
-        "label": "📄 Annale — Pédiatrie"
-      },
-      {
-        "id": "annale_psy_2027-01-12",
-        "label": "📄 Annale — Psychiatrie"
-      }
-    ],
-    "2027-01-13": [
-      {
-        "id": "annale_mi_2027-01-13",
-        "label": "📄 Annale — Médecine interne"
-      },
-      {
-        "id": "annale_ped_2027-01-13",
-        "label": "📄 Annale — Pédiatrie"
-      },
-      {
-        "id": "annale_psy_2027-01-13",
-        "label": "📄 Annale — Psychiatrie"
-      }
-    ],
-    "2027-01-14": [
-      {
-        "id": "annale_mi_2027-01-14",
-        "label": "📄 Annale — Médecine interne"
-      },
-      {
-        "id": "annale_ped_2027-01-14",
-        "label": "📄 Annale — Pédiatrie"
-      },
-      {
-        "id": "annale_psy_2027-01-14",
-        "label": "📄 Annale — Psychiatrie"
-      }
     ]
   },
   "itemDifficulty": {
-    "130": "facile",
-    "315": "facile"
+    "130": "facile"
   },
   "lcaEntries": {},
   "sddItems": [
@@ -4467,6 +4235,16 @@
         "originalItemNum": 108
       },
       {
+        "id": "S1_i60_o1",
+        "kind": "item",
+        "itemNum": 60,
+        "mode": "revision",
+        "idx": 1,
+        "phase": "S1",
+        "overridden": false,
+        "originalItemNum": 60
+      },
+      {
         "id": "S1_i212_o1",
         "kind": "item",
         "itemNum": 212,
@@ -4479,121 +4257,105 @@
     ],
     "2026-08-25": [
       {
-        "id": "S1_i290_o1",
-        "kind": "item",
-        "itemNum": 290,
-        "mode": "revision",
-        "idx": 2,
-        "phase": "S1",
-        "overridden": false,
-        "originalItemNum": 290
-      },
-      {
-        "id": "S1_i185_o1",
-        "kind": "item",
-        "itemNum": 185,
-        "mode": "revision",
-        "idx": 3,
-        "phase": "S1",
-        "overridden": false,
-        "originalItemNum": 185
-      }
-    ],
-    "2026-08-26": [
-      {
-        "id": "S1_i47_o1",
-        "kind": "item",
-        "itemNum": 47,
-        "mode": "revision",
-        "idx": 4,
-        "phase": "S1",
-        "overridden": false,
-        "originalItemNum": 47
-      },
-      {
-        "id": "S1_i60_o1",
-        "kind": "item",
-        "itemNum": 60,
-        "mode": "revision",
-        "idx": 5,
-        "phase": "S1",
-        "overridden": false,
-        "originalItemNum": 60
-      }
-    ],
-    "2026-08-27": [
-      {
         "id": "S1_i118_o1",
         "kind": "item",
         "itemNum": 123,
         "mode": "revision",
-        "idx": 6,
+        "idx": 3,
         "phase": "S1",
         "overridden": true,
         "originalItemNum": 118
-      },
-      {
-        "id": "S1_i213_o1",
-        "kind": "item",
-        "itemNum": 213,
-        "mode": "revision",
-        "idx": 7,
-        "phase": "S1",
-        "overridden": false,
-        "originalItemNum": 213
-      }
-    ],
-    "2026-08-28": [
-      {
-        "id": "S1_i291_o1",
-        "kind": "item",
-        "itemNum": 291,
-        "mode": "revision",
-        "idx": 8,
-        "phase": "S1",
-        "overridden": false,
-        "originalItemNum": 291
-      },
-      {
-        "id": "S1_i186_o1",
-        "kind": "item",
-        "itemNum": 1,
-        "mode": "revision",
-        "idx": 9,
-        "phase": "S1",
-        "overridden": true,
-        "originalItemNum": 186
-      }
-    ],
-    "2026-08-31": [
-      {
-        "id": "S1_i48_o1",
-        "kind": "item",
-        "itemNum": 49,
-        "mode": "revision",
-        "idx": 10,
-        "phase": "S1",
-        "overridden": true,
-        "originalItemNum": 48
       },
       {
         "id": "S1_i61_o1",
         "kind": "item",
         "itemNum": 61,
         "mode": "revision",
-        "idx": 11,
+        "idx": 3,
         "phase": "S1",
         "overridden": false,
         "originalItemNum": 61
+      },
+      {
+        "id": "S1_i60_o1",
+        "kind": "item",
+        "itemNum": 60,
+        "mode": "revision",
+        "idx": 2,
+        "phase": "S1",
+        "overridden": false,
+        "originalItemNum": 60
       }
     ],
-    "2026-09-01": [
+    "2026-08-26": [
       {
         "id": "S1_i119_o1",
         "kind": "item",
         "itemNum": 130,
         "mode": "revision",
-        "idx": 12,
+        "idx": 4,
+        "phase": "S1",
+        "overridden": true,
+        "originalItemNum": 119
+      },
+      {
+        "id": "S1_i62_o1",
+        "kind": "item",
+        "itemNum": 62,
+        "mode": "revision",
+        "idx": 5,
+        "phase": "S1",
+        "overridden": false,
+        "originalItemNum": 62
+      },
+      {
+        "id": "S1_i213_o1",
+        "kind": "item",
+        "itemNum": 213,
+        "mode": "revision",
+        "idx": 4,
+        "phase": "S1",
+        "overridden": false,
+        "originalItemNum": 213
+      },
+      {
+        "id": "S1_i61_o1",
+        "kind": "item",
+        "itemNum": 61,
+        "mode": "revision",
+        "idx": 5,
+        "phase": "S1",
+        "overridden": false,
+        "originalItemNum": 61
+      }
+    ],
+    "2026-08-27": [
+      {
+        "id": "S1_i120_o1",
+        "kind": "item",
+        "itemNum": 120,
+        "mode": "revision",
+        "idx": 6,
+        "phase": "S1",
+        "overridden": false,
+        "originalItemNum": 120
+      },
+      {
+        "id": "S1_i63_o1",
+        "kind": "item",
+        "itemNum": 63,
+        "mode": "revision",
+        "idx": 7,
+        "phase": "S1",
+        "overridden": false,
+        "originalItemNum": 63
+      },
+      {
+        "id": "S1_i119_o1",
+        "kind": "item",
+        "itemNum": 130,
+        "mode": "revision",
+        "idx": 6,
         "phase": "S1",
         "overridden": true,
         "originalItemNum": 119
@@ -4601,12 +4363,306 @@
       {
         "id": "S1_i214_o1",
         "kind": "item",
-        "itemNum": 315,
+        "itemNum": 214,
+        "mode": "revision",
+        "idx": 7,
+        "phase": "S1",
+        "overridden": false,
+        "originalItemNum": 214
+      }
+    ],
+    "2026-08-28": [
+      {
+        "id": "S1_i121_o1",
+        "kind": "item",
+        "itemNum": 121,
+        "mode": "revision",
+        "idx": 8,
+        "phase": "S1",
+        "overridden": false,
+        "originalItemNum": 121
+      },
+      {
+        "id": "S1_i64_o1",
+        "kind": "item",
+        "itemNum": 64,
+        "mode": "revision",
+        "idx": 9,
+        "phase": "S1",
+        "overridden": false,
+        "originalItemNum": 64
+      },
+      {
+        "id": "S1_i62_o1",
+        "kind": "item",
+        "itemNum": 62,
+        "mode": "revision",
+        "idx": 8,
+        "phase": "S1",
+        "overridden": false,
+        "originalItemNum": 62
+      },
+      {
+        "id": "S1_i120_o1",
+        "kind": "item",
+        "itemNum": 120,
+        "mode": "revision",
+        "idx": 9,
+        "phase": "S1",
+        "overridden": false,
+        "originalItemNum": 120
+      }
+    ],
+    "2026-08-31": [
+      {
+        "id": "S1_i122_o1",
+        "kind": "item",
+        "itemNum": 122,
+        "mode": "revision",
+        "idx": 10,
+        "phase": "S1",
+        "overridden": false,
+        "originalItemNum": 122
+      },
+      {
+        "id": "S1_i65_o1",
+        "kind": "item",
+        "itemNum": 65,
+        "mode": "revision",
+        "idx": 11,
+        "phase": "S1",
+        "overridden": false,
+        "originalItemNum": 65
+      },
+      {
+        "id": "S1_i215_o1",
+        "kind": "item",
+        "itemNum": 215,
+        "mode": "revision",
+        "idx": 10,
+        "phase": "S1",
+        "overridden": false,
+        "originalItemNum": 215
+      },
+      {
+        "id": "S1_i63_o1",
+        "kind": "item",
+        "itemNum": 63,
+        "mode": "revision",
+        "idx": 11,
+        "phase": "S1",
+        "overridden": false,
+        "originalItemNum": 63
+      }
+    ],
+    "2026-09-01": [
+      {
+        "id": "S1_i123_o1",
+        "kind": "item",
+        "itemNum": 118,
+        "mode": "revision",
+        "idx": 12,
+        "phase": "S1",
+        "overridden": true,
+        "originalItemNum": 123
+      },
+      {
+        "id": "S1_i66_o1",
+        "kind": "item",
+        "itemNum": 66,
         "mode": "revision",
         "idx": 13,
         "phase": "S1",
+        "overridden": false,
+        "originalItemNum": 66
+      },
+      {
+        "id": "S1_i121_o1",
+        "kind": "item",
+        "itemNum": 121,
+        "mode": "revision",
+        "idx": 12,
+        "phase": "S1",
+        "overridden": false,
+        "originalItemNum": 121
+      },
+      {
+        "id": "S1_i216_o1",
+        "kind": "item",
+        "itemNum": 216,
+        "mode": "revision",
+        "idx": 13,
+        "phase": "S1",
+        "overridden": false,
+        "originalItemNum": 216
+      }
+    ],
+    "2026-09-04": [
+      {
+        "id": "S1_i124_o1",
+        "kind": "item",
+        "itemNum": 124,
+        "mode": "revision",
+        "idx": 14,
+        "phase": "S1",
+        "overridden": false,
+        "originalItemNum": 124
+      },
+      {
+        "id": "S1_i67_o1",
+        "kind": "item",
+        "itemNum": 67,
+        "mode": "revision",
+        "idx": 15,
+        "phase": "S1",
+        "overridden": false,
+        "originalItemNum": 67
+      },
+      {
+        "id": "S1_i64_o1",
+        "kind": "item",
+        "itemNum": 64,
+        "mode": "revision",
+        "idx": 14,
+        "phase": "S1",
+        "overridden": false,
+        "originalItemNum": 64
+      },
+      {
+        "id": "S1_i122_o1",
+        "kind": "item",
+        "itemNum": 122,
+        "mode": "revision",
+        "idx": 15,
+        "phase": "S1",
+        "overridden": false,
+        "originalItemNum": 122
+      }
+    ],
+    "2026-09-07": [
+      {
+        "id": "S1_i125_o1",
+        "kind": "item",
+        "itemNum": 125,
+        "mode": "revision",
+        "idx": 16,
+        "phase": "S1",
+        "overridden": false,
+        "originalItemNum": 125
+      },
+      {
+        "id": "S1_i68_o1",
+        "kind": "item",
+        "itemNum": 68,
+        "mode": "revision",
+        "idx": 17,
+        "phase": "S1",
+        "overridden": false,
+        "originalItemNum": 68
+      },
+      {
+        "id": "S1_i217_o1",
+        "kind": "item",
+        "itemNum": 217,
+        "mode": "revision",
+        "idx": 16,
+        "phase": "S1",
+        "overridden": false,
+        "originalItemNum": 217
+      },
+      {
+        "id": "S1_i65_o1",
+        "kind": "item",
+        "itemNum": 65,
+        "mode": "revision",
+        "idx": 17,
+        "phase": "S1",
+        "overridden": false,
+        "originalItemNum": 65
+      }
+    ],
+    "2026-09-08": [
+      {
+        "id": "S1_i126_o1",
+        "kind": "item",
+        "itemNum": 126,
+        "mode": "revision",
+        "idx": 18,
+        "phase": "S1",
+        "overridden": false,
+        "originalItemNum": 126
+      },
+      {
+        "id": "S1_i69_o1",
+        "kind": "item",
+        "itemNum": 69,
+        "mode": "revision",
+        "idx": 19,
+        "phase": "S1",
+        "overridden": false,
+        "originalItemNum": 69
+      },
+      {
+        "id": "S1_i123_o1",
+        "kind": "item",
+        "itemNum": 118,
+        "mode": "revision",
+        "idx": 18,
+        "phase": "S1",
         "overridden": true,
-        "originalItemNum": 214
+        "originalItemNum": 123
+      },
+      {
+        "id": "S1_i218_o1",
+        "kind": "item",
+        "itemNum": 218,
+        "mode": "revision",
+        "idx": 19,
+        "phase": "S1",
+        "overridden": false,
+        "originalItemNum": 218
+      }
+    ],
+    "2026-09-09": [
+      {
+        "id": "S1_i127_o1",
+        "kind": "item",
+        "itemNum": 127,
+        "mode": "revision",
+        "idx": 20,
+        "phase": "S1",
+        "overridden": false,
+        "originalItemNum": 127
+      },
+      {
+        "id": "S1_i70_o1",
+        "kind": "item",
+        "itemNum": 70,
+        "mode": "revision",
+        "idx": 21,
+        "phase": "S1",
+        "overridden": false,
+        "originalItemNum": 70
+      },
+      {
+        "id": "S1_i66_o1",
+        "kind": "item",
+        "itemNum": 66,
+        "mode": "revision",
+        "idx": 20,
+        "phase": "S1",
+        "overridden": false,
+        "originalItemNum": 66
+      },
+      {
+        "id": "S1_i124_o1",
+        "kind": "item",
+        "itemNum": 124,
+        "mode": "revision",
+        "idx": 21,
+        "phase": "S1",
+        "overridden": false,
+        "originalItemNum": 124
       }
     ]
   }
