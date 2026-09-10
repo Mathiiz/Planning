@@ -256,6 +256,450 @@ window.addEventListener('pageshow', function(e){
   .onboard-mode-btn{flex:1;padding:9px;border:1px solid var(--rule);border-radius:var(--radius);background:var(--paper-raised);color:var(--ink-soft);font-family:var(--sans);font-size:12px;font-weight:700;cursor:pointer;}
   .onboard-mode-btn.active{background:var(--accent);color:#fff;border-color:var(--accent);}
   .onboard-submit{width:100%;margin-top:8px;padding:12px;border:none;border-radius:var(--radius);background:var(--accent);color:#fff;font-family:var(--sans);font-weight:700;font-size:14px;cursor:pointer;}
+  /* APPLE_UI_OVERHAUL_V1 */
+  :root{
+    --ink:#000000;
+    --ink-soft:#86868B;
+    --paper:#F5F5F7;
+    --paper-raised:#FFFFFF;
+    --navy:#FFFFFF;
+    --accent:#0071E3;
+    --accent-dark:#0066CC;
+    --amber:#FF9F0A;
+    --rule:transparent;
+    --rule-soft:transparent;
+    --white:#FFFFFF;
+    --danger:#FF3B30;
+    --radius:24px;
+    --sans:Inter,-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Helvetica Neue",Arial,sans-serif;
+    --mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Monaco,Consolas,monospace;
+  }
+  body.dark{
+    --ink:#FFFFFF;
+    --ink-soft:#98989D;
+    --paper:#000000;
+    --paper-raised:#111111;
+    --navy:#000000;
+    --accent:#2997FF;
+    --accent-dark:#409CFF;
+    --amber:#FF9F0A;
+    --rule:transparent;
+    --rule-soft:transparent;
+    --white:#FFFFFF;
+    --danger:#FF453A;
+  }
+
+  html{scroll-behavior:smooth;}
+  body{
+    min-height:100vh;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:var(--sans);
+    font-size:15px;
+    line-height:1.45;
+    letter-spacing:-.012em;
+    -webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility;
+    transition:background-color .5s ease-out,color .5s ease-out;
+  }
+  ::selection{background:rgba(0,113,227,.22);color:var(--ink);}
+  a{color:var(--accent);text-decoration:none;transition:all .5s ease-out;}
+  a:hover{color:var(--accent-dark);}
+  button,input,select,textarea{font:inherit;}
+  button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{
+    outline:3px solid rgba(0,113,227,.28);
+    outline-offset:2px;
+  }
+
+  /* Navigation / hero */
+  .chart-header{
+    position:relative;
+    z-index:30;
+    background:rgba(245,245,247,.78);
+    color:var(--ink);
+    padding:28px max(24px,calc((100vw - 1120px)/2)) 22px;
+    border:none;
+    box-shadow:none;
+    -webkit-backdrop-filter:saturate(180%) blur(24px);
+    backdrop-filter:saturate(180%) blur(24px);
+    transition:all .5s ease-out;
+  }
+  body.dark .chart-header{background:rgba(0,0,0,.78);color:#fff;}
+  .chart-header .eyebrow{
+    font-family:var(--sans);
+    font-size:12px;
+    font-weight:600;
+    letter-spacing:-.01em;
+    text-transform:none;
+    color:var(--ink-soft);
+    margin:0 0 8px;
+  }
+  .theme-btn{
+    border:none;
+    background:rgba(0,0,0,.055);
+    color:var(--ink);
+    border-radius:999px;
+    font-family:var(--sans);
+    font-size:12px;
+    font-weight:600;
+    padding:8px 13px;
+    cursor:pointer;
+    transition:all .5s ease-out;
+  }
+  body.dark .theme-btn{background:rgba(255,255,255,.09);color:#fff;}
+  .theme-btn:hover{transform:translateY(-1px);background:rgba(0,113,227,.12);}
+  .chart-header h1{
+    font-family:var(--sans);
+    font-size:clamp(32px,5vw,56px);
+    line-height:.98;
+    letter-spacing:-.045em;
+    font-weight:800;
+    color:var(--ink);
+    margin:0 0 24px;
+    max-width:900px;
+  }
+  body.dark .chart-header h1{color:#fff;}
+  .vitals{
+    display:grid;
+    grid-template-columns:repeat(4,minmax(0,1fr));
+    gap:10px;
+    border:none;
+  }
+  .vital{
+    min-width:0;
+    padding:15px 16px;
+    border:none;
+    border-radius:18px;
+    background:rgba(255,255,255,.78);
+    box-shadow:0 1px 2px rgba(0,0,0,.035);
+    transition:all .5s ease-out;
+  }
+  body.dark .vital{background:#111;box-shadow:none;}
+  .vital:hover{transform:translateY(-2px);}
+  .vital .num{
+    font-family:var(--sans);
+    font-size:24px;
+    font-weight:800;
+    line-height:1;
+    letter-spacing:-.04em;
+    color:var(--ink);
+  }
+  body.dark .vital .num{color:#fff;}
+  .vital .lbl{
+    font-size:11px;
+    font-weight:500;
+    letter-spacing:0;
+    text-transform:none;
+    color:var(--ink-soft);
+    margin-top:6px;
+  }
+
+  /* Sticky translucent navigation */
+  .tabbar{
+    position:sticky;
+    top:0;
+    z-index:100;
+    display:flex;
+    justify-content:center;
+    gap:4px;
+    padding:10px 14px;
+    background:rgba(245,245,247,.72);
+    border:none;
+    box-shadow:0 1px 0 rgba(0,0,0,.03),0 8px 30px rgba(0,0,0,.04);
+    -webkit-backdrop-filter:saturate(180%) blur(24px);
+    backdrop-filter:saturate(180%) blur(24px);
+  }
+  body.dark .tabbar{
+    background:rgba(0,0,0,.72);
+    box-shadow:0 1px 0 rgba(255,255,255,.06);
+  }
+  .tabbar button{
+    position:relative;
+    border:none;
+    border-radius:999px;
+    background:transparent;
+    color:var(--ink-soft);
+    font-family:var(--sans);
+    font-size:13px;
+    font-weight:600;
+    padding:9px 14px;
+    letter-spacing:-.01em;
+    transition:all .5s ease-out;
+  }
+  .tabbar button:hover{background:rgba(0,0,0,.05);color:var(--ink);transform:translateY(-1px);}
+  body.dark .tabbar button:hover{background:rgba(255,255,255,.08);color:#fff;}
+  .tabbar button.active{
+    color:var(--ink);
+    background:var(--white);
+    box-shadow:0 2px 12px rgba(0,0,0,.08);
+    border:none;
+  }
+  body.dark .tabbar button.active{color:#fff;background:#1C1C1E;box-shadow:none;}
+  .tabbar button .badge{top:2px;right:3px;background:var(--danger);border-radius:999px;font-family:var(--sans);font-size:9px;font-weight:700;line-height:16px;min-width:16px;padding:0 5px;}
+
+  /* Main canvas */
+  .wrap{
+    max-width:1120px;
+    margin:0 auto;
+    padding:44px 28px 120px;
+  }
+  .week-summary,.day-head,.task-card,.generic-list,.plan-row,.spec-card,.history-panel,.lca-row,.retard-row,.add-item-form,.settings-card,.subject-config-list,.item-manage-row{
+    border:none !important;
+    box-shadow:0 1px 2px rgba(0,0,0,.04),0 8px 30px rgba(0,0,0,.035);
+    transition:all .5s ease-out;
+  }
+  body.dark .week-summary,body.dark .day-head,body.dark .task-card,body.dark .generic-list,body.dark .plan-row,body.dark .spec-card,body.dark .history-panel,body.dark .lca-row,body.dark .retard-row,body.dark .add-item-form,body.dark .settings-card,body.dark .subject-config-list,body.dark .item-manage-row{
+    box-shadow:none;
+  }
+
+  .week-summary{
+    background:var(--white);
+    border-radius:28px;
+    padding:24px 26px;
+    margin-bottom:24px;
+  }
+  .week-summary .wtitle{
+    font-family:var(--sans);
+    font-size:24px;
+    line-height:1.05;
+    font-weight:800;
+    letter-spacing:-.03em;
+    margin:0 0 16px;
+  }
+  .week-summary .wrow{
+    font-size:14px;
+    padding:11px 0;
+    border:none;
+  }
+  .week-summary .wval{font-family:var(--sans);font-weight:700;}
+
+  .day-head{
+    background:var(--white);
+    border-radius:32px;
+    padding:34px 36px;
+    margin-bottom:24px;
+    overflow:hidden;
+  }
+  .day-head .stripe{width:4px;border-radius:999px;opacity:.95;}
+  .day-head .phase-lbl{
+    font-family:var(--sans);
+    font-size:12px;
+    font-weight:700;
+    text-transform:none;
+    letter-spacing:0;
+    margin-bottom:9px;
+  }
+  .day-head h2{
+    font-family:var(--sans);
+    font-size:clamp(30px,4vw,46px);
+    line-height:1.02;
+    font-weight:800;
+    letter-spacing:-.04em;
+    margin:0 0 8px;
+    text-transform:none;
+  }
+  .day-head .sub{font-size:15px;color:var(--ink-soft);}
+
+  /* Cards / bento feel */
+  .task-card{
+    background:var(--white);
+    border-radius:24px;
+    padding:22px 22px 20px;
+    margin-bottom:14px;
+    cursor:pointer;
+  }
+  @media (min-width:900px){
+    #app .task-card{width:calc(50% - 9px);display:inline-block;vertical-align:top;margin-right:10px;}
+    #app .task-card:nth-of-type(2n){margin-right:0;}
+  }
+  .task-card:hover,.spec-card:hover,.lca-row:hover,.retard-row:hover,.plan-row:hover,.item-manage-row:hover{
+    transform:translateY(-3px);
+    box-shadow:0 10px 35px rgba(0,0,0,.08);
+  }
+  body.dark .task-card:hover,body.dark .spec-card:hover,body.dark .lca-row:hover,body.dark .retard-row:hover,body.dark .plan-row:hover,body.dark .item-manage-row:hover{box-shadow:none;background:#161616;}
+  .task-card .top-row{gap:7px;margin-bottom:10px;}
+  .mode-badge,.cat-pill,.hist-mode{
+    border:none;
+    border-radius:999px;
+    font-family:var(--sans);
+    font-size:10px;
+    font-weight:700;
+    letter-spacing:0;
+    padding:5px 9px;
+  }
+  .task-card h3{
+    font-family:var(--sans);
+    font-size:21px;
+    line-height:1.14;
+    font-weight:800;
+    letter-spacing:-.025em;
+    margin:0 0 8px;
+  }
+  .task-hint{font-size:14px;color:var(--ink-soft);margin-bottom:16px;}
+  .task-check span{font-size:14px;font-weight:700;}
+  .task-check input[type=checkbox],.generic-list input[type=checkbox],.retard-row .rcheck input{
+    width:20px;height:20px;border:none;background:#E5E5EA;border-radius:7px;box-shadow:inset 0 0 0 1px rgba(0,0,0,.06);transition:all .5s ease-out;
+  }
+  body.dark .task-check input[type=checkbox],body.dark .generic-list input[type=checkbox],body.dark .retard-row .rcheck input{background:#2C2C2E;box-shadow:none;}
+  .task-check input[type=checkbox]:checked,.generic-list input[type=checkbox]:checked,.retard-row .rcheck input:checked{background:var(--accent);box-shadow:none;}
+
+  .generic-list{background:var(--white);border-radius:24px;overflow:hidden;}
+  .generic-list li{padding:17px 20px;border:none;font-size:14px;}
+  .generic-list li+li{border-top:1px solid rgba(0,0,0,.05);}
+  body.dark .generic-list li+li{border-top-color:rgba(255,255,255,.06);}
+  .generic-list label{font-weight:600;}
+
+  .plan-row{background:var(--white);border-radius:18px;padding:13px 15px;margin-bottom:8px;font-size:13px;}
+  .plan-row .pd{font-family:var(--sans);font-weight:600;width:88px;}
+  .plan-row .pitem{border-radius:999px;font-family:var(--sans);font-weight:700;padding:5px 9px;}
+
+  .section-title{font-family:var(--sans);font-size:28px;font-weight:800;letter-spacing:-.035em;margin:34px 0 14px;}
+  .spec-card{background:var(--white);border-radius:24px;padding:20px 22px;margin-bottom:12px;}
+  .spec-card .name{font-size:15px;font-weight:750;}
+  .spec-card .pct{font-family:var(--sans);font-size:12px;font-weight:700;}
+  .dualbar{height:7px;border-radius:999px;background:#E5E5EA;}
+  body.dark .dualbar{background:#2C2C2E;}
+
+  .history-panel{background:var(--white);border-radius:26px;padding:22px 24px;}
+  .history-panel h3{font-family:var(--sans);font-size:23px;font-weight:800;letter-spacing:-.03em;}
+  .hist-entry{padding:11px 0;border:none;}
+  .hist-entry + .hist-entry{border-top:1px solid rgba(0,0,0,.05);}
+  body.dark .hist-entry + .hist-entry{border-top-color:rgba(255,255,255,.06);}
+
+  .lca-streak{background:#000;color:#fff;border-radius:28px;padding:26px;margin-bottom:22px;box-shadow:none;}
+  .lca-streak .n{font-family:var(--sans);font-size:52px;font-weight:800;letter-spacing:-.06em;}
+  .lca-streak .l{font-family:var(--sans);font-size:12px;font-weight:600;color:#98989D;letter-spacing:0;}
+  .lca-row{background:var(--white);border-radius:20px;padding:16px 18px;margin-bottom:8px;}
+
+  .retard-row{background:var(--white);border-radius:24px;padding:18px 20px;margin-bottom:10px;}
+  .retard-row .rdate{font-family:var(--sans);font-size:11px;font-weight:700;}
+  .retard-row h4{font-family:var(--sans);font-size:18px;line-height:1.15;font-weight:800;letter-spacing:-.02em;margin:0 0 13px;}
+  .retard-row .rcheck span{font-size:14px;font-weight:700;}
+
+  /* Forms and controls */
+  .report-btn,.swap-toggle,.diff-btn,.btn-primary,.btn-secondary,.btn-danger{
+    border:none;
+    border-radius:999px;
+    font-family:var(--sans);
+    font-weight:700;
+    transition:all .5s ease-out;
+  }
+  .report-btn{background:#F2F2F7;color:var(--ink);padding:9px 14px;}
+  body.dark .report-btn{background:#1C1C1E;color:#fff;}
+  .report-btn:hover,.swap-toggle:hover,.diff-btn:hover,.btn-secondary:hover{transform:translateY(-1px);background:#E8E8ED;}
+  body.dark .report-btn:hover,body.dark .swap-toggle:hover,body.dark .diff-btn:hover,body.dark .btn-secondary:hover{background:#2C2C2E;}
+  .report-btn.active{background:var(--amber);color:#fff;}
+  .report-control select,.report-control input[type=text],.swap-panel input[type=text],
+  .add-item-form input[type=text],.add-item-form input[type=number],.add-item-form select,
+  .item-edit-form input[type=text],.item-edit-form select,
+  .settings-card input[type=date],.settings-card input[type=text],.settings-card input[type=password],.settings-card input[type=number],.settings-card select,.settings-card textarea,
+  .subject-row input[type=date],.onboard-card input[type=date],.onboard-card select,.onboard-card input[type=text],.onboard-card input[type=password]{
+    border:none !important;
+    background:#F2F2F7 !important;
+    color:var(--ink) !important;
+    border-radius:14px !important;
+    min-height:42px;
+    padding:10px 12px !important;
+    transition:all .5s ease-out;
+  }
+  body.dark .report-control select,body.dark .report-control input[type=text],body.dark .swap-panel input[type=text],
+  body.dark .add-item-form input[type=text],body.dark .add-item-form input[type=number],body.dark .add-item-form select,
+  body.dark .item-edit-form input[type=text],body.dark .item-edit-form select,
+  body.dark .settings-card input[type=date],body.dark .settings-card input[type=text],body.dark .settings-card input[type=password],body.dark .settings-card input[type=number],body.dark .settings-card select,body.dark .settings-card textarea,
+  body.dark .subject-row input[type=date],body.dark .onboard-card input[type=date],body.dark .onboard-card select,body.dark .onboard-card input[type=text],body.dark .onboard-card input[type=password]{background:#1C1C1E !important;color:#fff !important;}
+  .report-control select:focus,.report-control input[type=text]:focus,.swap-panel input[type=text]:focus,
+  .add-item-form input:focus,.add-item-form select:focus,.item-edit-form input:focus,.item-edit-form select:focus,
+  .settings-card input:focus,.settings-card select:focus,.settings-card textarea:focus,.subject-row input[type=date]:focus,.onboard-card input:focus,.onboard-card select:focus{
+    background:#fff !important;box-shadow:0 0 0 3px rgba(0,113,227,.14);
+  }
+  body.dark .report-control select:focus,body.dark .report-control input[type=text]:focus,body.dark .swap-panel input[type=text]:focus,body.dark .add-item-form input:focus,body.dark .add-item-form select:focus,body.dark .item-edit-form input:focus,body.dark .item-edit-form select:focus,body.dark .settings-card input:focus,body.dark .settings-card select:focus,body.dark .settings-card textarea:focus,body.dark .subject-row input[type=date]:focus,body.dark .onboard-card input:focus,body.dark .onboard-card select:focus{background:#2C2C2E !important;}
+  .btn-primary{background:var(--accent);color:#fff;padding:11px 18px;box-shadow:0 6px 18px rgba(0,113,227,.18);}
+  .btn-primary:hover{transform:translateY(-2px) scale(1.01);box-shadow:0 10px 25px rgba(0,113,227,.22);}
+  .btn-secondary{background:#F2F2F7;color:var(--ink);padding:9px 14px;}
+  body.dark .btn-secondary{background:#1C1C1E;color:#fff;}
+  .btn-danger{background:rgba(255,59,48,.10);color:var(--danger);padding:9px 14px;}
+  .btn-danger:hover{transform:translateY(-1px);background:rgba(255,59,48,.16);}
+  .diff-row{gap:7px;}
+  .diff-label{font-size:12px;font-weight:600;}
+  .diff-btn{background:#F2F2F7;color:var(--ink-soft);padding:7px 11px;}
+  body.dark .diff-btn{background:#1C1C1E;color:#98989D;}
+  .diff-btn.active{background:var(--accent);color:#fff;}
+
+  .dl-alert-row{border:none;background:#F2F2F7;border-radius:18px;padding:13px 15px;}
+  .dl-alert-row.urgent{background:rgba(255,159,10,.14);border:none;}
+  body.dark .dl-alert-row{background:#1C1C1E;}
+
+  .subject-config-list{background:var(--white);border-radius:20px;padding:6px 12px;}
+  .subject-row{padding:9px 0;border:none;font-size:13px;}
+  .subject-row + .subject-row{border-top:1px solid rgba(0,0,0,.05);}
+  body.dark .subject-row + .subject-row{border-top-color:rgba(255,255,255,.06);}
+
+  .add-item-form,.settings-card{background:var(--white);border-radius:28px;padding:24px;margin-bottom:22px;}
+  .add-item-form h4,.settings-card h3{font-family:var(--sans);font-size:22px;font-weight:800;letter-spacing:-.03em;margin:0 0 14px;}
+  .settings-group label{font-size:13px;font-weight:700;}
+  .settings-hint{font-size:12px;color:var(--ink-soft);line-height:1.5;}
+  .item-manage-row{background:var(--white);border-radius:20px;padding:16px 18px;margin-bottom:8px;}
+  .item-manage-row .imnum{font-family:var(--sans);font-size:11px;font-weight:700;color:var(--ink-soft);}
+  .item-manage-row .imtitle{font-size:15px;font-weight:750;letter-spacing:-.015em;}
+
+  /* Onboarding / modal */
+  .onboard-overlay{
+    background:rgba(0,0,0,.48);
+    -webkit-backdrop-filter:blur(14px);
+    backdrop-filter:blur(14px);
+    padding:24px;
+  }
+  .onboard-card{
+    background:rgba(255,255,255,.94);
+    border:none;
+    border-radius:32px;
+    max-width:620px;
+    padding:34px;
+    box-shadow:0 30px 90px rgba(0,0,0,.25);
+  }
+  body.dark .onboard-card{background:#111;box-shadow:0 30px 90px rgba(0,0,0,.65);}
+  .onboard-card h2{font-family:var(--sans);font-size:34px;font-weight:800;letter-spacing:-.045em;margin:0 0 8px;}
+  .onboard-card p.lead{font-size:15px;line-height:1.5;color:var(--ink-soft);margin-bottom:22px;}
+  .onboard-card label{font-size:13px;font-weight:700;margin-bottom:16px;}
+  .onboard-mode-switch{gap:6px;padding:4px;background:#F2F2F7;border-radius:999px;margin-bottom:24px;}
+  body.dark .onboard-mode-switch{background:#1C1C1E;}
+  .onboard-mode-btn{border:none;border-radius:999px;background:transparent;color:var(--ink-soft);padding:10px 14px;font-weight:700;transition:all .5s ease-out;}
+  .onboard-mode-btn.active{background:#fff;color:var(--ink);box-shadow:0 3px 12px rgba(0,0,0,.08);border:none;}
+  body.dark .onboard-mode-btn.active{background:#2C2C2E;color:#fff;box-shadow:none;}
+  .onboard-submit{width:100%;margin-top:10px;padding:13px 18px;border:none;border-radius:999px;background:var(--accent);color:#fff;font-weight:800;font-size:14px;box-shadow:0 8px 24px rgba(0,113,227,.2);transition:all .5s ease-out;}
+  .onboard-submit:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(0,113,227,.24);}
+
+  .empty-state{padding:120px 24px;text-align:center;}
+  .empty-state h2{font-family:var(--sans);font-size:36px;font-weight:800;letter-spacing:-.04em;color:var(--ink);}
+  .loading{padding:120px 24px;text-align:center;color:var(--ink-soft);font-family:var(--sans);font-size:14px;}
+  .back-link{font-family:var(--sans);font-size:13px;font-weight:700;text-decoration:none;color:var(--accent);margin-bottom:18px;}
+  footer.note{font-size:12px;color:var(--ink-soft);margin-top:40px;}
+
+  @media (max-width:899px){
+    .chart-header{padding:22px 18px 18px;}
+    .chart-header h1{font-size:34px;margin-bottom:18px;}
+    .vitals{grid-template-columns:repeat(2,minmax(0,1fr));}
+    .tabbar{justify-content:flex-start;overflow-x:auto;scrollbar-width:none;}
+    .tabbar::-webkit-scrollbar{display:none;}
+    .wrap{padding:28px 16px 90px;}
+    .day-head{padding:26px 24px;border-radius:26px;}
+    .week-summary{border-radius:24px;}
+    .task-card{border-radius:20px;padding:19px;}
+  }
+  @media (max-width:560px){
+    .chart-header .eyebrow{align-items:flex-start;gap:10px;}
+    .vital{padding:13px;}
+    .vital .num{font-size:20px;}
+    .day-head h2{font-size:31px;}
+    .week-summary .wtitle{font-size:21px;}
+    .task-card h3{font-size:19px;}
+    .onboard-card{padding:24px;border-radius:26px;}
+    .onboard-card h2{font-size:29px;}
+  }
+  @media (prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto;}
+    *,*:before,*:after{transition-duration:.01ms !important;animation-duration:.01ms !important;animation-iteration-count:1 !important;}
+  }
 </style>
 </head>
 <body>
@@ -310,7 +754,7 @@ window.addEventListener('pageshow', function(e){
       <label>Nom du dépôt<input type="text" id="obGhRepo" placeholder="ex: edn-planning"></label>
       <label>Nom du fichier de données<input type="text" id="obGhPath" placeholder="data.json"></label>
       <label>Branche<input type="text" id="obGhBranch" placeholder="main"></label>
-      <label>Token d'accès personnel GitHub<input type="password" id="obGhToken"></label>
+      <label>Token d'accès personnel GitHub<input type="password" id="obGhToken" autocomplete="off"></label>
       <span class="hint" id="obGhStatus" style="display:block;margin-bottom:10px;"></span>
       <button type="button" class="onboard-submit" id="obGhConnect">Récupérer mon planning</button>
     </div>
@@ -847,6 +1291,20 @@ function daysBetween(a,b){ return Math.round((b-a)/86400000); }
 function isWeekendDate(d){ const dow=d.getDay(); return dow===0||dow===6; }
 function todayDate(){ const t=new Date(); t.setHours(0,0,0,0); return t; }
 function todayIso(){ return toISO(todayDate()); }
+function validatePlanningDates(startIso, s1EndIso, examIso, ecosIso){
+  if(!startIso || !examIso) return 'La date de début et la date d’examen sont obligatoires.';
+  const start = parseISO(startIso);
+  const exam = parseISO(examIso);
+  const s1End = s1EndIso ? parseISO(s1EndIso) : null;
+  const ecos = ecosIso ? parseISO(ecosIso) : null;
+  if(isNaN(start.getTime()) || isNaN(exam.getTime())) return 'Les dates de début ou d’examen sont invalides.';
+  if(start > exam) return 'La date de début doit être antérieure ou égale à la date d’examen.';
+  if(s1End && isNaN(s1End.getTime())) return 'La date de fin d’apprentissage est invalide.';
+  if(s1End && (s1End < start || s1End > exam)) return 'La fin de l’apprentissage doit être comprise entre le début et l’examen.';
+  if(ecos && isNaN(ecos.getTime())) return 'La date des ECOS est invalide.';
+  if(ecos && ecos <= exam) return 'La date des ECOS doit être postérieure à la date de l’examen.';
+  return null;
+}
 
 function getDefaultConfig(){
   const now = todayDate();
@@ -1232,13 +1690,13 @@ function buildCalendar(cfg, reportedDays){
           day.tasks.push({id:'lca', kind:'generic', label:"LCA — 2 articles minimum (méthodologie + analyse critique)"});
         }
         day.tasks.push({id:'free', kind:'generic', label:"Révision libre — item ou matière de ton choix (rattrapage)"});
+        if(phase==='CONSOL') day.tasks.push({id:'rest', kind:'generic', label:"Repos actif — vraie coupure en fin de semaine"});
       }
     } else { // CONSOL
       day.tasks = reported ? [] : [
         {id:'anki_all', kind:'generic', label:"Anki — session complète (aucune nouvelle carte)"},
         {id:'qcm_blancs', kind:'generic', label:"QCM blancs / annales chronométrées, conditions d'examen"},
         {id:'flash', kind:'generic', label:"Relecture flash — points faibles identifiés"},
-        {id:'rest', kind:'generic', label:"Repos actif — vraie coupure en fin de semaine"},
       ];
     }
     days.push(day);
@@ -1323,7 +1781,8 @@ function findSwapCandidates(itemNum){
     const cap = PHASE_FINAL_QUOTA[phase] || 0;
     for(let idx=0; idx<cap; idx++){
       const s = getSlot(phase, idx);
-      if(s.itemNum === itemNum) out.push(s);
+      // Pas de swaps en chaîne : une case déjà permutée doit être remise d'abord à l'original.
+      if(s.itemNum === itemNum && !s.overridden) out.push(s);
     }
   });
   out.sort((a,b)=> (a.iso||'') < (b.iso||'') ? -1 : 1);
@@ -1331,25 +1790,42 @@ function findSwapCandidates(itemNum){
 }
 function performSwap(phaseA, idxA, nativeKeyA, itemA, slotB, itemB){
   DATA.itemOverrides = DATA.itemOverrides || {};
-  DATA.itemOverrides[nativeKeyA] = { itemNum: itemB };
-  DATA.itemOverrides[slotB.nativeKey] = { itemNum: itemA };
+  if(DATA.itemOverrides[nativeKeyA] || DATA.itemOverrides[slotB.nativeKey]){
+    alert('Une des deux cases est déjà permutée. Remets-la d’abord à son état d’origine.');
+    return;
+  }
+  const swapId = 'swap_' + Date.now() + '_' + Math.floor(Math.random()*1000);
+  DATA.itemOverrides[nativeKeyA] = { itemNum:itemB, swapId, partnerKey:slotB.nativeKey, previousItemNum:itemA };
+  DATA.itemOverrides[slotB.nativeKey] = { itemNum:itemA, swapId, partnerKey:nativeKeyA, previousItemNum:itemB };
   CAL = buildCalendar(DATA.config, DATA.reportedDays);
   saveData();
   render();
 }
 function undoSwap(nativeKey){
-  if(DATA.itemOverrides) delete DATA.itemOverrides[nativeKey];
+  const overrides = DATA.itemOverrides || {};
+  const current = overrides[nativeKey];
+  if(!current){ render(); return; }
+  const partnerKey = current.partnerKey;
+  const partner = partnerKey ? overrides[partnerKey] : null;
+  if(partner && current.swapId && partner.swapId === current.swapId){
+    delete overrides[nativeKey];
+    delete overrides[partnerKey];
+  }else{
+    // Compatibilité avec les anciens fichiers qui n'avaient pas de métadonnées de paire.
+    delete overrides[nativeKey];
+  }
   CAL = buildCalendar(DATA.config, DATA.reportedDays);
   saveData();
   render();
 }
 
-function addCustomTask(iso, label){
+function addCustomTask(iso, label, meta){
   if(!DATA.customTasks) DATA.customTasks = {};
   if(!DATA.customTasks[iso]) DATA.customTasks[iso] = [];
   const id = 'custom_' + Date.now() + '_' + Math.floor(Math.random()*1000);
-  DATA.customTasks[iso].push({id, label});
+  DATA.customTasks[iso].push(Object.assign({id, label}, meta||{}));
   saveData();
+  return id;
 }
 function removeCustomTask(iso, id){
   if(!DATA.customTasks || !DATA.customTasks[iso]) return;
@@ -1405,6 +1881,16 @@ function dayLoad(iso){
   const customCount = (DATA.customTasks && DATA.customTasks[iso]) ? DATA.customTasks[iso].length : 0;
   return itemCount + customCount;
 }
+function removeDifficultyBoosters(itemNum){
+  if(!DATA.customTasks) return;
+  const prefix = `🔁 Révision rapprochée — Item ${itemNum} :`;
+  Object.keys(DATA.customTasks).forEach(iso=>{
+    DATA.customTasks[iso] = (DATA.customTasks[iso]||[]).filter(t=>{
+      return !(t.autoType==='difficulty' && Number(t.itemNum)===Number(itemNum)) && !String(t.label||'').startsWith(prefix);
+    });
+    if(DATA.customTasks[iso].length===0) delete DATA.customTasks[iso];
+  });
+}
 function scheduleDifficultyBooster(itemNum){
   const item = ITEM_BY_NUM[itemNum];
   if(!item) return false;
@@ -1418,16 +1904,17 @@ function scheduleDifficultyBooster(itemNum){
   }
   if(!bestIso || bestLoad > 4) return false; // pas de créneau raisonnable : on renonce plutôt que de surcharger
   const label = `🔁 Révision rapprochée — Item ${itemNum} : ${item.title} (marqué difficile)`;
-  const existing = (DATA.customTasks && DATA.customTasks[bestIso]) || [];
-  if(!existing.some(t=>t.label===label)) addCustomTask(bestIso, label);
+  const existingAnywhere = Object.values(DATA.customTasks||{}).flat().some(t=>
+    (t.autoType==='difficulty' && Number(t.itemNum)===Number(itemNum)) || String(t.label||'').startsWith(`🔁 Révision rapprochée — Item ${itemNum} :`)
+  );
+  if(!existingAnywhere) addCustomTask(bestIso, label, {autoType:'difficulty', itemNum});
   return true;
 }
 function rateItemDifficulty(itemNum, level){
   if(!DATA.itemDifficulty) DATA.itemDifficulty = {};
   DATA.itemDifficulty[itemNum] = level;
-  if(level==='difficile'){
-    scheduleDifficultyBooster(itemNum);
-  }
+  if(level==='difficile') scheduleDifficultyBooster(itemNum);
+  else removeDifficultyBoosters(itemNum);
   saveData();
 }
 function bindDifficultyHandlers(container){
@@ -1504,6 +1991,8 @@ function bindSwapHandlers(container){
       if(!targetNum || !ITEM_BY_NUM[targetNum]){ resultsEl.innerHTML = `<p class="hist-empty">Item introuvable.</p>`; return; }
       if(targetNum === curItemNum){ resultsEl.innerHTML = `<p class="hist-empty">C'est déjà l'item affiché ici.</p>`; return; }
       if(!phase || isNaN(idx)){ resultsEl.innerHTML = `<p class="hist-empty">Échange indisponible pour cette case.</p>`; return; }
+      const currentSlot = getSlot(phase, idx);
+      if(currentSlot.overridden){ resultsEl.innerHTML = `<p class="hist-empty">Cette case est déjà permutée. Remets-la d'abord à l'original.</p>`; return; }
       const candidates = findSwapCandidates(targetNum).filter(c=> !(c.phase===phase && c.idx===idx));
       if(candidates.length===0){ resultsEl.innerHTML = `<p class="hist-empty">Aucune occurrence planifiée pour #${targetNum} — ${esc(ITEM_BY_NUM[targetNum].title)}.</p>`; return; }
       resultsEl.innerHTML = `<p style="font-size:11.5px;color:var(--ink-soft);margin:4px 0 6px;">Permuter avec l'item #${targetNum} (${esc(ITEM_BY_NUM[targetNum].title)}) :</p>` +
@@ -1606,32 +2095,67 @@ async function tryReconnectBackupFile(){
     setLinkStatus('Lié : ' + handle.name);
     const file = await handle.getFile();
     const text = await file.text();
-    if(text && text.trim()){
-      const parsed = JSON.parse(text);
-      DATA = Object.assign({itemChecks:{}, checks:{}, reportedDays:{}, darkMode:false, itemOverrides:{}, customTasks:{}, subjectDeadlines:{}, itemDifficulty:{}, lcaEntries:{}, sddItems: SDD_SEED_RAW.map(([n,t])=>[n,t]), pinnedDayItems:{}, onboarded:true}, parsed);
-      DATA.config = Object.assign(getDefaultConfig(), parsed.config || {});
-      if(!DATA.items) DATA.items = ITEMS_RAW.map(([n,t,c])=>[n,t,c]);
-      await saveData();
+    if(!(text && text.trim())) return;
+
+    const parsed = JSON.parse(text);
+    const localRaw = localStorage.getItem(STORAGE_KEY);
+    let localParsed = null;
+    try{ localParsed = localRaw ? JSON.parse(localRaw) : null; }catch(e){}
+
+    const backupTs = dataUpdatedAt(parsed);
+    const localTs = dataUpdatedAt(localParsed);
+    const localIsFreshDefault = localParsed && localParsed.onboarded === false && parsed.onboarded !== false;
+    const shouldRestore = !localRaw || localIsFreshDefault || (backupTs && localTs && Date.parse(backupTs) > Date.parse(localTs));
+
+    if(!shouldRestore){
+      setLinkStatus('Lié : ' + handle.name + ' · copie locale plus récente');
+      return;
     }
+
+    DATA = Object.assign({itemChecks:{}, checks:{}, reportedDays:{}, darkMode:false, itemOverrides:{}, customTasks:{}, subjectDeadlines:{}, itemDifficulty:{}, lcaEntries:{}, sddItems: SDD_SEED_RAW.map(([n,t])=>[n,t]), pinnedDayItems:{}, queueFreeze:{S1:[],S2:[]}, onboarded:true, _meta:{schemaVersion:DATA_SCHEMA_VERSION,updatedAt:backupTs||null}}, parsed);
+    DATA.config = Object.assign(getDefaultConfig(), parsed.config || {});
+    DATA._meta = Object.assign({schemaVersion:DATA_SCHEMA_VERSION,updatedAt:backupTs||null}, parsed._meta || {});
+    ensureDataMeta(DATA, backupTs);
+    if(!DATA.items) DATA.items = ITEMS_RAW.map(([n,t,c])=>[n,t,c]);
+    await saveData();
   }catch(e){ console.error('Reconnexion fichier de secours impossible', e); }
 }
 
 // ---------- storage ----------
 const STORAGE_KEY = 'edn-planner-data-v3';
+const DATA_SCHEMA_VERSION = 4;
+function dataUpdatedAt(data){
+  return data && data._meta && typeof data._meta.updatedAt === 'string' ? data._meta.updatedAt : null;
+}
+function latestIsoTimestamp(a,b,c){
+  const vals = [a,b,c].filter(v=>typeof v==='string' && !isNaN(Date.parse(v)));
+  if(!vals.length) return null;
+  return vals.sort().pop();
+}
+function ensureDataMeta(data, fallbackTime=null){
+  if(!data._meta || typeof data._meta!=='object') data._meta = {};
+  data._meta.schemaVersion = DATA_SCHEMA_VERSION;
+  if(!data._meta.updatedAt && fallbackTime) data._meta.updatedAt = fallbackTime;
+  return data;
+}
 async function loadData(){
   try{
     const raw = localStorage.getItem(STORAGE_KEY);
     if(raw){
       const parsed = JSON.parse(raw);
-      const data = Object.assign({itemChecks:{}, checks:{}, reportedDays:{}, darkMode:false, itemOverrides:{}, customTasks:{}, subjectDeadlines:{}, itemDifficulty:{}, lcaEntries:{}, sddItems: SDD_SEED_RAW.map(([n,t])=>[n,t]), pinnedDayItems:{}, onboarded:true}, parsed);
+      const data = Object.assign({itemChecks:{}, checks:{}, reportedDays:{}, darkMode:false, itemOverrides:{}, customTasks:{}, subjectDeadlines:{}, itemDifficulty:{}, lcaEntries:{}, sddItems: SDD_SEED_RAW.map(([n,t])=>[n,t]), pinnedDayItems:{}, queueFreeze:{S1:[],S2:[]}, onboarded:true, _meta:{schemaVersion:DATA_SCHEMA_VERSION,updatedAt:null}}, parsed);
       data.config = Object.assign(getDefaultConfig(), parsed.config || {});
+      data._meta = Object.assign({schemaVersion:DATA_SCHEMA_VERSION,updatedAt:null}, parsed._meta || {});
+      ensureDataMeta(data);
       if(!data.items) data.items = ITEMS_RAW.map(([n,t,c])=>[n,t,c]);
       return data;
     }
   }catch(e){ console.error('Erreur de lecture locale', e); }
-  return {config:getDefaultConfig(), itemChecks:{}, checks:{}, reportedDays:{}, darkMode:false, itemOverrides:{}, customTasks:{}, subjectDeadlines:{}, itemDifficulty:{}, lcaEntries:{}, sddItems: SDD_SEED_RAW.map(([n,t])=>[n,t]), pinnedDayItems:{}, onboarded:false, items: ITEMS_RAW.map(([n,t,c])=>[n,t,c])};
+  return ensureDataMeta({config:getDefaultConfig(), itemChecks:{}, checks:{}, reportedDays:{}, darkMode:false, itemOverrides:{}, customTasks:{}, subjectDeadlines:{}, itemDifficulty:{}, lcaEntries:{}, sddItems: SDD_SEED_RAW.map(([n,t])=>[n,t]), pinnedDayItems:{}, queueFreeze:{S1:[],S2:[]}, onboarded:false, items: ITEMS_RAW.map(([n,t,c])=>[n,t,c])});
 }
 async function saveData(){
+  ensureDataMeta(DATA);
+  DATA._meta.updatedAt = new Date().toISOString();
   try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(DATA)); }
   catch(e){ console.error('Erreur de sauvegarde locale', e); }
   writeBackupFile();
@@ -1653,10 +2177,16 @@ let currentGhStatus = '';
 function getGithubConfig(){
   try{
     const raw = localStorage.getItem(GH_CONFIG_KEY);
-    return raw ? JSON.parse(raw) : null;
+    if(!raw) return null;
+    const parsed = JSON.parse(raw) || {};
+    return parsed;
   }catch(e){ return null; }
 }
 function setGithubConfig(cfg){
+  cfg = cfg || {};
+  // Le PAT est volontairement conservé localement afin que l'application embarquée
+  // dans Notion puisse retrouver automatiquement la connexion après un rechargement.
+  // Utiliser de préférence un Fine-grained PAT limité au seul dépôt nécessaire.
   localStorage.setItem(GH_CONFIG_KEY, JSON.stringify(cfg));
   ghSha = null;
 }
@@ -1733,7 +2263,9 @@ function mergeData(remote, local, snapshot){
     itemDifficulty: mergeMap(remote.itemDifficulty, local.itemDifficulty, snapshot.itemDifficulty),
     lcaEntries: mergeMap(remote.lcaEntries, local.lcaEntries, snapshot.lcaEntries),
     sddItems: mergeScalar(remote.sddItems, local.sddItems, snapshot.sddItems),
-    pinnedDayItems: mergeMap(remote.pinnedDayItems, local.pinnedDayItems, snapshot.pinnedDayItems)
+    pinnedDayItems: mergeMap(remote.pinnedDayItems, local.pinnedDayItems, snapshot.pinnedDayItems),
+    queueFreeze: mergeScalar(remote.queueFreeze, local.queueFreeze, snapshot.queueFreeze),
+    _meta: {schemaVersion:DATA_SCHEMA_VERSION, updatedAt:latestIsoTimestamp(dataUpdatedAt(remote), dataUpdatedAt(local), dataUpdatedAt(snapshot))}
   };
 }
 
@@ -1777,10 +2309,16 @@ function unionArrayMap(remote, local){
 function connectMergeData(remote, local){
   remote = remote || {};
   local = local || {};
-  return {
-    config: remote.config || local.config,
-    items: remote.items || local.items,
-    darkMode: (remote.darkMode !== undefined) ? remote.darkMode : local.darkMode,
+  const rt = dataUpdatedAt(remote);
+  const lt = dataUpdatedAt(local);
+  const localHasMeaningfulData = !!local && (local.onboarded === true || Object.keys(local.itemChecks||{}).length>0 || Object.keys(local.checks||{}).length>0 || Object.keys(local.reportedDays||{}).length>0 || Object.keys(local.customTasks||{}).length>0);
+  const remoteIsNewer = !!rt && (lt ? Date.parse(rt) >= Date.parse(lt) : !localHasMeaningfulData);
+  const preferred = remoteIsNewer ? remote : local;
+  const fallback = remoteIsNewer ? local : remote;
+  return ensureDataMeta({
+    config: preferred.config || fallback.config,
+    items: preferred.items || fallback.items,
+    darkMode: (preferred.darkMode !== undefined) ? preferred.darkMode : fallback.darkMode,
     onboarded: true,
     itemChecks: unionBoolMap(remote.itemChecks, local.itemChecks),
     checks: unionNestedBoolMap(remote.checks, local.checks),
@@ -1790,14 +2328,11 @@ function connectMergeData(remote, local){
     customTasks: unionArrayMap(remote.customTasks, local.customTasks),
     itemDifficulty: unionGenericMap(remote.itemDifficulty, local.itemDifficulty),
     lcaEntries: unionGenericMap(remote.lcaEntries, local.lcaEntries),
-    sddItems: remote.sddItems || local.sddItems,
-    // pinnedDayItems n'est qu'un cache dérivé (quel item était affiché tel jour), pas un
-    // vrai travail utilisateur : contrairement aux autres champs, on ne le fusionne PAS
-    // par union — sinon les épingles d'un planning local temporaire (ex : session Notion
-    // qui repart de zéro) se mélangent avec les vraies épingles du distant. On garde
-    // uniquement celles du distant ; le cache se reconstruit tout seul pour le reste.
-    pinnedDayItems: remote.pinnedDayItems || {}
-  };
+    sddItems: preferred.sddItems || fallback.sddItems,
+    pinnedDayItems: preferred.pinnedDayItems || fallback.pinnedDayItems || {},
+    queueFreeze: preferred.queueFreeze || fallback.queueFreeze || {S1:[],S2:[]},
+    _meta: {schemaVersion:DATA_SCHEMA_VERSION, updatedAt:latestIsoTimestamp(rt,lt)}
+  });
 }
 
 async function githubLoadData(){
@@ -1876,8 +2411,9 @@ async function githubSyncNow(){
       if(res.ok){
         const j = await res.json();
         ghSha = j.content ? j.content.sha : null;
-        DATA = merged;
-        setGhSnapshot(merged);
+        DATA = ensureDataMeta(merged);
+        DATA._meta.updatedAt = latestIsoTimestamp(dataUpdatedAt(remoteData), dataUpdatedAt(DATA)) || new Date().toISOString();
+        setGhSnapshot(DATA);
         try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(DATA)); }catch(e){}
         rebuildAll();
         CAL = buildCalendar(DATA.config, DATA.reportedDays);
@@ -2038,10 +2574,13 @@ function retardList(){
       const satDate = dow === 6 ? d.date : addDays(d.date, -1);
       const satIso = toISO(satDate);
       const sunIso = toISO(addDays(satDate, 1));
+      const satDay = findDay(satIso);
+      const sunDay = findDay(sunIso);
+      const weekendReported = !!((satDay && satDay.reported) || (sunDay && sunDay.reported));
       if(!seenLcaWeekends.has(satIso)){
         seenLcaWeekends.add(satIso);
         const lcaDone = isGenericDone(satIso, 'lca') || isGenericDone(sunIso, 'lca');
-        if(!lcaDone && sunIso < today && currentStudentYear() >= 5){
+        if(!weekendReported && !lcaDone && sunIso < today && currentStudentYear() >= 5){
           out.push({
             type:'generic',
             iso: satIso,
@@ -2080,16 +2619,20 @@ function retardList(){
 
 function computeItemStatus(){
   const status = {};
-  const re = /^(?:S1|S2)_i(\d+)_o(\d+)$/;
-  Object.keys(DATA.itemChecks || {}).forEach(key=>{
-    if(!DATA.itemChecks[key]) return;
-    const m = re.exec(key);
-    if(!m) return;
-    const n = parseInt(m[1],10);
-    if(!ITEM_BY_NUM[n]) return; 
-    const occ = parseInt(m[2],10);
-    if(!status[n]) status[n] = {revision:false, entrainement:false};
-    if(occ===1) status[n].revision = true; else status[n].entrainement = true;
+  // La clé de progression est l'identifiant NATIF de la case. Après un swap,
+  // cette clé ne correspond plus nécessairement à l'item affiché. On parcourt
+  // donc les slots effectifs pour attribuer la case cochée au bon item.
+  ['S1','S2'].forEach(phase=>{
+    const cap = PHASE_FINAL_QUOTA[phase] || 0;
+    for(let idx=0; idx<cap; idx++){
+      const s = getSlot(phase, idx);
+      if(!s || !s.itemNum || !isItemTaskDone(s.nativeKey)) continue;
+      const n = s.itemNum;
+      if(!ITEM_BY_NUM[n]) continue;
+      if(!status[n]) status[n] = {revision:false, entrainement:false};
+      if(s.mode==='revision') status[n].revision = true;
+      else status[n].entrainement = true;
+    }
   });
   return status;
 }
@@ -2194,15 +2737,15 @@ function itemTaskHTML(task, opts){
   `;
   const swapUI = `
     <div class="swap-block" onclick="event.stopPropagation()">
-      <button type="button" class="swap-toggle" data-key="${key}">🔄 Changer l'item de cette case</button>
-      ${task.overridden ? `<button type="button" class="btn-secondary" data-unswap="${key}" style="margin-left:6px;padding:5px 10px;font-size:11px;">↺ Remettre l'item ${task.originalItemNum ? '#'+task.originalItemNum : "d'origine"}</button>` : ''}
-      <div class="swap-panel" id="swap-${key}">
+      ${task.overridden ? '' : `<button type="button" class="swap-toggle" data-key="${key}">🔄 Changer l'item de cette case</button>`}
+      ${task.overridden ? `<button type="button" class="btn-secondary" data-unswap="${key}" style="padding:5px 10px;font-size:11px;">↺ Remettre l'item ${task.originalItemNum ? '#'+task.originalItemNum : "d'origine"}</button>` : ''}
+      ${task.overridden ? '' : `<div class="swap-panel" id="swap-${key}">
         <div class="frow" style="display:flex;gap:6px;margin-top:8px;">
           <input type="text" id="swapInput-${key}" placeholder="N° ou mot-clé (ex: 226 ou asthme)">
           <button type="button" class="btn-secondary" data-swapsearch="${key}" data-swapphase="${task.phase||''}" data-swapidx="${task.idx!=null?task.idx:''}" data-swapcur="${item.num}">Chercher</button>
         </div>
         <div id="swapResults-${key}" style="margin-top:6px;"></div>
-      </div>
+      </div>`}
     </div>
   `;
   return `
@@ -3071,7 +3614,8 @@ function renderSettings(){
         <input type="text" id="ghRepo" placeholder="Nom du dépôt (ex: edn-planning)" value="${esc(ghCfg.repo||'')}">
         <input type="text" id="ghPath" placeholder="Nom du fichier de données (ex: data.json)" value="${esc(ghCfg.path||'data.json')}">
         <input type="text" id="ghBranch" placeholder="Branche (ex: main)" value="${esc(ghCfg.branch||'main')}">
-        <input type="password" id="ghToken" placeholder="Token d'accès personnel GitHub (PAT)" value="${esc(ghCfg.token||'')}">
+        <input type="password" id="ghToken" placeholder="PAT GitHub — laisser vide pour conserver celui enregistré" value="" autocomplete="off">
+        <span class="settings-hint">Le token est conservé localement dans ce navigateur pour éviter de le ressaisir à chaque ouverture de Notion. Utilise de préférence un token Fine-grained limité à ce dépôt.</span>
       </div>
       <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:10px;">
         <button type="button" id="btnGhSave" class="btn-primary">Enregistrer la connexion</button>
@@ -3119,13 +3663,19 @@ function renderSettings(){
     render();
   });
   document.getElementById('cfgStart').addEventListener('change', e=>{
-    DATA.config.start = e.target.value;
+    const candidate = e.target.value;
+    const err = validatePlanningDates(candidate, DATA.config.s1End, DATA.config.exam, DATA.config.ecosDate);
+    if(err){ alert(err); e.target.value = DATA.config.start || ''; return; }
+    DATA.config.start = candidate;
     CAL = buildCalendar(DATA.config, DATA.reportedDays);
     saveData();
     render();
   });
   document.getElementById('cfgS1End').addEventListener('change', e=>{
-    DATA.config.s1End = e.target.value;
+    const candidate = e.target.value;
+    const err = validatePlanningDates(DATA.config.start, candidate, DATA.config.exam, DATA.config.ecosDate);
+    if(err){ alert(err); e.target.value = DATA.config.s1End || ''; return; }
+    DATA.config.s1End = candidate;
     CAL = buildCalendar(DATA.config, DATA.reportedDays);
     saveData();
     render();
@@ -3159,14 +3709,21 @@ function renderSettings(){
     render();
   });
   document.getElementById('cfgExam').addEventListener('change', e=>{
-    DATA.config.exam = e.target.value;
+    const candidate = e.target.value;
+    const err = validatePlanningDates(DATA.config.start, DATA.config.s1End, candidate, DATA.config.ecosDate);
+    if(err){ alert(err); e.target.value = DATA.config.exam || ''; return; }
+    DATA.config.exam = candidate;
+    rebuildAll();
     CAL = buildCalendar(DATA.config, DATA.reportedDays);
     updateTitles();
     saveData();
     render();
   });
   document.getElementById('cfgEcos').addEventListener('change', e=>{
-    DATA.config.ecosDate = e.target.value;
+    const candidate = e.target.value;
+    const err = validatePlanningDates(DATA.config.start, DATA.config.s1End, DATA.config.exam, candidate);
+    if(err){ alert(err); e.target.value = DATA.config.ecosDate || ''; return; }
+    DATA.config.ecosDate = candidate;
     rebuildAll();
     CAL = buildCalendar(DATA.config, DATA.reportedDays);
     saveData();
@@ -3241,7 +3798,9 @@ function renderSettings(){
     const repo = document.getElementById('ghRepo').value.trim();
     const path = document.getElementById('ghPath').value.trim() || 'data.json';
     const branch = document.getElementById('ghBranch').value.trim() || 'main';
-    const token = document.getElementById('ghToken').value.trim();
+    const tokenInput = document.getElementById('ghToken').value.trim();
+    const currentCfg = getGithubConfig() || {};
+    const token = tokenInput || currentCfg.token || '';
     if(!owner || !repo || !token){ alert("Renseigne au moins l'utilisateur, le dépôt et le token."); return; }
     setGithubConfig({owner, repo, path, branch, token});
     setGithubStatus('Connexion en cours…');
@@ -3360,53 +3919,7 @@ function render(){
 }
 
 // ---------- initialisation ----------
-async function init(){
-  DATA = await loadData();
-  await tryReconnectBackupFile();
-
-  const ghCfg = getGithubConfig();
-  if(ghCfg && ghCfg.token && ghCfg.owner && ghCfg.repo){
-    const remote = await githubLoadData();
-    if(remote){
-      const hadSnapshot = localStorage.getItem(GH_SNAPSHOT_KEY) !== null;
-      if(hadSnapshot){
-        const snapshot = getGhSnapshot();
-        DATA = mergeData(remote, DATA, snapshot);
-      } else {
-        // Pas d'instantané établi sur cette session (ex : webview Notion qui repart de
-        // zéro à chaque ouverture) : comparer le local à un instantané vide ferait passer
-        // un planning local fraîchement généré pour « modifié » et écraserait le vrai
-        // planning distant. On fusionne par union à la place (jamais destructeur).
-        DATA = connectMergeData(remote, DATA);
-      }
-      setGhSnapshot(DATA);
-      DATA.config = Object.assign(getDefaultConfig(), DATA.config || {});
-      if(!DATA.items) DATA.items = ITEMS_RAW.map(([n,t,c])=>[n,t,c]);
-      if(!DATA.sddItems) DATA.sddItems = SDD_SEED_RAW.map(([n,t])=>[n,t]);
-    }
-  }
-
-  rebuildAll();
-  CAL = buildCalendar(DATA.config, DATA.reportedDays);
-
-  if(!DATA.pinResetV2){
-    // Les jours passés étaient « épinglés » (pinnedDayItems) avec un ordre pollué —
-    // d'abord par l'ajout des échéances, puis par la fusion d'un planning temporaire
-    // (session sans stockage local, ex : webview Notion) avec le vrai planning distant.
-    // On efface ces épingles pour qu'elles se reconstruisent proprement à partir de la
-    // file désormais stabilisée (rien d'autre n'est perdu : les cases faites et les
-    // échanges manuels restent identifiés par item, pas par jour).
-    DATA.pinnedDayItems = {};
-    DATA.pinResetV1 = true;
-    DATA.pinResetV2 = true;
-    CAL = buildCalendar(DATA.config, DATA.reportedDays);
-    saveData();
-  }
-
-  rescheduleAllAnnales();
-  applyTheme();
-  updateTitles();
-
+function bindStaticHandlers(){
   document.getElementById('themeToggle').addEventListener('click', ()=>{
     DATA.darkMode = !DATA.darkMode;
     applyTheme();
@@ -3463,6 +3976,7 @@ async function init(){
     DATA.config = Object.assign(getDefaultConfig(), DATA.config || {});
     if(!DATA.items) DATA.items = ITEMS_RAW.map(([n,t,c])=>[n,t,c]);
     DATA.onboarded = true;
+    ensureDataMeta(DATA); DATA._meta.updatedAt = new Date().toISOString();
     try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(DATA)); }catch(e){}
     setGhSnapshot(DATA);
     rebuildAll();
@@ -3478,15 +3992,19 @@ async function init(){
     const start = document.getElementById('obStart').value;
     const exam = document.getElementById('obExam').value;
     if(!start || !exam){ alert("Renseigne au moins la date de début et la date d'examen."); return; }
+    const s1EndVal = document.getElementById('obS1End').value;
+    const s1End = s1EndVal || toISO(addDays(parseISO(start),150));
+    const ecosCandidate = document.getElementById('obEcos').value || '';
+    const dateErr = validatePlanningDates(start, s1End, exam, ecosCandidate);
+    if(dateErr){ alert(dateErr); return; }
     DATA.config.studentYear = parseInt(document.getElementById('obStudentYear').value,10) || 6;
     DATA.config.start = start;
     DATA.config.exam = exam;
-    const s1EndVal = document.getElementById('obS1End').value;
-    DATA.config.s1End = s1EndVal || toISO(addDays(parseISO(start),150));
+    DATA.config.s1End = s1End;
     const mode = document.getElementById('obStudyMode').value;
     DATA.config.studyModeP1 = mode;
     DATA.config.studyModeP2 = mode;
-    DATA.config.ecosDate = document.getElementById('obEcos').value || '';
+    DATA.config.ecosDate = ecosCandidate;
     DATA.config.newCats = Array.from(document.querySelectorAll('.ob-newcat-check:checked')).map(el=>el.value);
     DATA.onboarded = true;
     rebuildAll();
@@ -3497,12 +4015,87 @@ async function init(){
     render();
   });
 
+}
+
+async function init(){
+  // 1) Bootstrap local state immediately. The UI must never wait for backup/GitHub I/O.
+  DATA = await loadData();
+  ensureDataMeta(DATA);
+  try{
+    rebuildAll();
+    CAL = buildCalendar(DATA.config, DATA.reportedDays);
+    applyTheme();
+    updateTitles();
+  }catch(err){
+    console.error('Erreur pendant le bootstrap local', err);
+    CAL = [];
+  }
+
+  // Bind all static controls before any network / File System Access operation.
+  bindStaticHandlers();
+
+  // Show the local UI immediately, even when a sync provider is slow or unavailable.
   if(!DATA.onboarded){
     renderObSubjectList();
     document.getElementById('obStart').value = DATA.config.start || toISO(todayDate());
     document.getElementById('obExam').value = DATA.config.exam || '';
     document.getElementById('obS1End').value = DATA.config.s1End || '';
     document.getElementById('onboardOverlay').classList.remove('hidden');
+  }
+  render();
+
+  // 2) Optional file-backup reconnection: do not make the first paint depend on it.
+  // A stalled permission prompt or an unavailable File System Access API must not freeze the app.
+  try{
+    await Promise.race([
+      tryReconnectBackupFile(),
+      new Promise(resolve=>setTimeout(resolve, 1200))
+    ]);
+    if(DATA && DATA._meta) DATA._meta.updatedAt = latestIsoTimestamp(dataUpdatedAt(DATA), new Date().toISOString());
+  }catch(err){
+    console.error('Reconnexion fichier de secours impossible', err);
+  }
+
+  // 3) GitHub sync happens after the local interface is already interactive.
+  try{
+    const ghCfg = getGithubConfig();
+    if(ghCfg && ghCfg.token && ghCfg.owner && ghCfg.repo){
+      const remote = await githubLoadData();
+      if(remote){
+        const hadSnapshot = localStorage.getItem(GH_SNAPSHOT_KEY) !== null;
+        if(hadSnapshot){
+          const snapshot = getGhSnapshot();
+          DATA = mergeData(remote, DATA, snapshot);
+        }else{
+          DATA = connectMergeData(remote, DATA);
+        }
+        ensureDataMeta(DATA);
+        setGhSnapshot(DATA);
+        DATA.config = Object.assign(getDefaultConfig(), DATA.config || {});
+        if(!DATA.items) DATA.items = ITEMS_RAW.map(([n,t,c])=>[n,t,c]);
+        if(!DATA.sddItems) DATA.sddItems = SDD_SEED_RAW.map(([n,t])=>[n,t]);
+        rebuildAll();
+        CAL = buildCalendar(DATA.config, DATA.reportedDays);
+      }
+    }
+  }catch(err){
+    console.error('Erreur de synchronisation au démarrage', err);
+  }
+
+  // 4) Finish startup. The UI remains usable even if step 2/3 failed or timed out.
+  try{
+    if(!DATA.pinResetV2){
+      DATA.pinnedDayItems = {};
+      DATA.pinResetV1 = true;
+      DATA.pinResetV2 = true;
+      CAL = buildCalendar(DATA.config, DATA.reportedDays);
+      saveData();
+    }
+    rescheduleAllAnnales();
+    applyTheme();
+    updateTitles();
+  }catch(err){
+    console.error('Erreur de finalisation du démarrage', err);
   }
 
   render();
