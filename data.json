@@ -3025,6 +3025,7 @@
   "itemDifficulty": {
     "130": "facile"
   },
+  "skippedItemTasks": {},
   "lcaEntries": {},
   "sddItems": [
     [
@@ -4725,6 +4726,6 @@
   },
   "_meta": {
     "schemaVersion": 4,
-    "updatedAt": "2026-09-10T14:42:59.945Z"
+    "updatedAt": "2026-09-10T14:58:00.731Z"
   }
 }
