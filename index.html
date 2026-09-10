@@ -3,28 +3,34 @@
 <head>
 <meta charset="UTF-8">
 <script>
-// Anti-cache : Notion (et les CDN intermédiaires) peuvent conserver une ancienne version de
-// cette page tant que son URL ne change pas. On force ici un rechargement avec un paramètre
-// de version unique à chaque ouverture, ce qui déclenche systématiquement un nouveau
-// téléchargement de la dernière version poussée sur GitHub plutôt qu'une copie en cache.
+// Anti-cache renforcé pour les intégrations Notion/GitHub Pages.
+// Notion peut conserver l'URL complète de l'iframe. Un simple "if (!v)" ne suffit donc pas :
+// une ancienne URL déjà munie d'un ?v=... peut être réutilisée indéfiniment.
+// On compare le paramètre courant à celui mémorisé dans la session, puis on effectue une seule
+// redirection vers un nouveau timestamp. Le second chargement s'arrête donc sans boucle.
 (function(){
   try{
     var url = new URL(window.location.href);
-    if(!url.searchParams.has('v')){
-      url.searchParams.set('v', Date.now());
+    if(url.protocol === 'file:') return;
+    var currentV = url.searchParams.get('v') || '';
+    var seenV = sessionStorage.getItem('edn-cache-bust-v1') || '';
+    if(currentV !== seenV){
+      var nextV = String(Date.now());
+      if(nextV === currentV) nextV = String(Date.now() + 1);
+      url.searchParams.set('v', nextV);
+      sessionStorage.setItem('edn-cache-bust-v1', nextV);
       window.location.replace(url.toString());
     }
-  }catch(e){ /* URL non standard (ex: file://) : on ignore, pas de cache distant concerné */ }
+  }catch(e){ /* URL/sessionStorage non disponibles : le reste de l'app continue normalement. */ }
 })();
-// Second filet de sécurité : si le navigateur restaure cette page depuis son cache mémoire
-// (bfcache — ex: retour en arrière, reprise d'un onglet resté ouvert) au lieu de la recharger
-// réellement, aucun script ne se ré-exécute et l'anti-cache ci-dessus ne se déclenche jamais.
-// "pageshow" avec persisted=true détecte précisément ce cas et force alors un rechargement.
 window.addEventListener('pageshow', function(e){
   if(e.persisted){
     try{
       var url2 = new URL(window.location.href);
-      url2.searchParams.set('v', Date.now());
+      if(url2.protocol === 'file:') return;
+      var nextV2 = String(Date.now());
+      url2.searchParams.set('v', nextV2);
+      sessionStorage.setItem('edn-cache-bust-v1', nextV2);
       window.location.replace(url2.toString());
     }catch(err){}
   }
@@ -196,6 +202,20 @@ window.addEventListener('pageshow', function(e){
   .btn-secondary{font-family:var(--sans);font-size:12.5px;padding:6px 12px;border-radius:var(--radius);border:1px solid var(--rule);background:var(--white);color:var(--ink-soft);cursor:pointer;}
   .btn-danger{font-family:var(--sans);font-size:12.5px;padding:6px 12px;border-radius:var(--radius);border:1px solid var(--danger);background:none;color:var(--danger);cursor:pointer;}
 
+  .task-actions-row{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;}
+  .task-remove-btn{border:none;background:transparent;color:var(--ink-soft);font-size:11.5px;font-weight:600;padding:6px 2px;cursor:pointer;border-radius:999px;transition:all .5s ease-out;}
+  .task-remove-btn:hover{color:var(--danger);background:rgba(255,59,48,.08);padding-left:9px;padding-right:9px;}
+  body.dark .task-remove-btn{color:#98989D;}
+  body.dark .task-remove-btn:hover{color:#FF453A;background:rgba(255,69,58,.12);}
+  .removed-items-panel{margin:16px 0 10px;padding:16px 18px;background:rgba(134,134,139,.08);border-radius:22px;}
+  body.dark .removed-items-panel{background:#111;}
+  .removed-items-header{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap;margin-bottom:10px;font-size:12px;font-weight:700;}
+  .removed-item-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 0;border-top:1px solid rgba(134,134,139,.14);font-size:12px;}
+  body.dark .removed-item-row{border-top-color:rgba(255,255,255,.08);}
+  .removed-item-row div{display:flex;flex-direction:column;gap:2px;min-width:0;}
+  .removed-item-row strong{font-size:12px;}
+  .removed-item-row span{color:var(--ink-soft);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:520px;}
+
   .swap-block{margin-top:10px;padding-top:10px;border-top:1px dashed var(--rule-soft);}
   .swap-toggle{font-family:var(--mono);font-size:11px;background:none;border:1px solid var(--rule);color:var(--ink-soft);border-radius:20px;padding:5px 10px;cursor:pointer;}
   .swap-panel{display:none;}
@@ -285,7 +305,7 @@ window.addEventListener('pageshow', function(e){
     --amber:#FF9F0A;
     --rule:transparent;
     --rule-soft:transparent;
-    --white:#FFFFFF;
+    --white:#1C1C1E;
     --danger:#FF453A;
   }
 
@@ -359,6 +379,39 @@ window.addEventListener('pageshow', function(e){
     max-width:900px;
   }
   body.dark .chart-header h1{color:#fff;}
+  body.dark .day-head,
+  body.dark .week-summary,
+  body.dark .task-card,
+  body.dark .generic-list,
+  body.dark .plan-row,
+  body.dark .spec-card,
+  body.dark .history-panel,
+  body.dark .lca-row,
+  body.dark .retard-row,
+  body.dark .add-item-form,
+  body.dark .settings-card,
+  body.dark .subject-config-list,
+  body.dark .item-manage-row,
+  body.dark .generic-list li,
+  body.dark .item-row{
+    background:#1C1C1E !important;
+    color:#fff;
+  }
+  body.dark .day-head .sub,
+  body.dark .task-hint,
+  body.dark .item-num,
+  body.dark .hist-count,
+  body.dark .diff-label,
+  body.dark .settings-hint,
+  body.dark .history-panel .hist-empty,
+  body.dark .retard-row .rdate,
+  body.dark .weekend-note{color:#98989D;}
+  body.dark .week-summary .wrow,
+  body.dark .subject-row,
+  body.dark .generic-list li+li,
+  body.dark .hist-entry,
+  body.dark .tabbar{border-color:transparent;}
+  body.dark .week-summary{box-shadow:0 1px 2px rgba(0,0,0,.18);}
   .vitals{
     display:grid;
     grid-template-columns:repeat(4,minmax(0,1fr));
@@ -1659,7 +1712,7 @@ function buildCalendar(cfg, reportedDays){
         const idx = baseIdx+i;
         const e = effectiveItemFor(phase, idx);
         INDEX_DATE[phase][idx] = iso;
-        freshTasks.push({id:e.nativeKey, kind:'item', itemNum:e.itemNum, mode:e.mode, idx, phase, overridden:e.overridden, originalItemNum:e.originalItemNum});
+        freshTasks.push({id:e.nativeKey, kind:'item', itemNum:e.itemNum, mode:e.mode, idx, phase, iso, overridden:e.overridden, originalItemNum:e.originalItemNum});
       }
       counters[phase]++;
       if(cur <= todayCutoff){
@@ -1673,7 +1726,7 @@ function buildCalendar(cfg, reportedDays){
         const pinned = DATA.pinnedDayItems[iso] || [];
         const freshById = {};
         freshTasks.forEach(t=>{ freshById[t.id] = t; });
-        const merged = pinned.map(p => freshById[p.id] || p);
+        const merged = pinned.map(p => { const t = freshById[p.id] || p; if(t && !t.iso) t.iso = iso; return t; });
         const mergedIds = new Set(merged.map(t=>t.id));
         freshTasks.forEach(t=>{ if(!mergedIds.has(t.id)){ merged.push(t); mergedIds.add(t.id); } });
         DATA.pinnedDayItems[iso] = merged;
@@ -1710,7 +1763,7 @@ function buildCalendar(cfg, reportedDays){
 
 function findDay(iso){ return CAL.find(d=>d.iso===iso); }
 
-const REPORTED_TYPE_LABELS = { repos:'Repos', partiel:'Partiel', concours_blanc:'Concours blanc', autre:'Autre' };
+const REPORTED_TYPE_LABELS = { repos:'Repos', garde:'Garde', repos_garde:'Repos de garde', partiel:'Partiel', concours_blanc:'Concours blanc', autre:'Autre' };
 function reportedDayLabel(entry){
   if(!entry) return 'Journée reportée';
   if(entry===true) return 'Journée reportée';
@@ -1737,6 +1790,8 @@ function reportControlHTML(day){
   return `<div class="report-control">
     <select id="reportType-${day.iso}">
       <option value="repos">Repos</option>
+      <option value="garde">Garde</option>
+      <option value="repos_garde">Repos de garde</option>
       <option value="partiel">Partiel</option>
       <option value="concours_blanc">Concours blanc</option>
       <option value="autre">Autre</option>
@@ -2112,7 +2167,7 @@ async function tryReconnectBackupFile(){
       return;
     }
 
-    DATA = Object.assign({itemChecks:{}, checks:{}, reportedDays:{}, darkMode:false, itemOverrides:{}, customTasks:{}, subjectDeadlines:{}, itemDifficulty:{}, lcaEntries:{}, sddItems: SDD_SEED_RAW.map(([n,t])=>[n,t]), pinnedDayItems:{}, queueFreeze:{S1:[],S2:[]}, onboarded:true, _meta:{schemaVersion:DATA_SCHEMA_VERSION,updatedAt:backupTs||null}}, parsed);
+    DATA = Object.assign({itemChecks:{}, checks:{}, reportedDays:{}, darkMode:false, itemOverrides:{}, customTasks:{}, subjectDeadlines:{}, itemDifficulty:{}, lcaEntries:{}, skippedItemTasks:{}, sddItems: SDD_SEED_RAW.map(([n,t])=>[n,t]), pinnedDayItems:{}, queueFreeze:{S1:[],S2:[]}, onboarded:true, _meta:{schemaVersion:DATA_SCHEMA_VERSION,updatedAt:backupTs||null}}, parsed);
     DATA.config = Object.assign(getDefaultConfig(), parsed.config || {});
     DATA._meta = Object.assign({schemaVersion:DATA_SCHEMA_VERSION,updatedAt:backupTs||null}, parsed._meta || {});
     ensureDataMeta(DATA, backupTs);
@@ -2136,6 +2191,7 @@ function ensureDataMeta(data, fallbackTime=null){
   if(!data._meta || typeof data._meta!=='object') data._meta = {};
   data._meta.schemaVersion = DATA_SCHEMA_VERSION;
   if(!data._meta.updatedAt && fallbackTime) data._meta.updatedAt = fallbackTime;
+  if(!data.skippedItemTasks || typeof data.skippedItemTasks!=='object') data.skippedItemTasks = {};
   return data;
 }
 async function loadData(){
@@ -2143,7 +2199,7 @@ async function loadData(){
     const raw = localStorage.getItem(STORAGE_KEY);
     if(raw){
       const parsed = JSON.parse(raw);
-      const data = Object.assign({itemChecks:{}, checks:{}, reportedDays:{}, darkMode:false, itemOverrides:{}, customTasks:{}, subjectDeadlines:{}, itemDifficulty:{}, lcaEntries:{}, sddItems: SDD_SEED_RAW.map(([n,t])=>[n,t]), pinnedDayItems:{}, queueFreeze:{S1:[],S2:[]}, onboarded:true, _meta:{schemaVersion:DATA_SCHEMA_VERSION,updatedAt:null}}, parsed);
+      const data = Object.assign({itemChecks:{}, checks:{}, reportedDays:{}, darkMode:false, itemOverrides:{}, customTasks:{}, subjectDeadlines:{}, itemDifficulty:{}, lcaEntries:{}, skippedItemTasks:{}, sddItems: SDD_SEED_RAW.map(([n,t])=>[n,t]), pinnedDayItems:{}, queueFreeze:{S1:[],S2:[]}, onboarded:true, _meta:{schemaVersion:DATA_SCHEMA_VERSION,updatedAt:null}}, parsed);
       data.config = Object.assign(getDefaultConfig(), parsed.config || {});
       data._meta = Object.assign({schemaVersion:DATA_SCHEMA_VERSION,updatedAt:null}, parsed._meta || {});
       ensureDataMeta(data);
@@ -2151,7 +2207,7 @@ async function loadData(){
       return data;
     }
   }catch(e){ console.error('Erreur de lecture locale', e); }
-  return ensureDataMeta({config:getDefaultConfig(), itemChecks:{}, checks:{}, reportedDays:{}, darkMode:false, itemOverrides:{}, customTasks:{}, subjectDeadlines:{}, itemDifficulty:{}, lcaEntries:{}, sddItems: SDD_SEED_RAW.map(([n,t])=>[n,t]), pinnedDayItems:{}, queueFreeze:{S1:[],S2:[]}, onboarded:false, items: ITEMS_RAW.map(([n,t,c])=>[n,t,c])});
+  return ensureDataMeta({config:getDefaultConfig(), itemChecks:{}, checks:{}, reportedDays:{}, darkMode:false, itemOverrides:{}, customTasks:{}, subjectDeadlines:{}, itemDifficulty:{}, lcaEntries:{}, skippedItemTasks:{}, sddItems: SDD_SEED_RAW.map(([n,t])=>[n,t]), pinnedDayItems:{}, queueFreeze:{S1:[],S2:[]}, onboarded:false, items: ITEMS_RAW.map(([n,t,c])=>[n,t,c])});
 }
 async function saveData(){
   ensureDataMeta(DATA);
@@ -2261,6 +2317,7 @@ function mergeData(remote, local, snapshot){
     subjectDeadlines: mergeMap(remote.subjectDeadlines, local.subjectDeadlines, snapshot.subjectDeadlines),
     customTasks: mergeMap(remote.customTasks, local.customTasks, snapshot.customTasks),
     itemDifficulty: mergeMap(remote.itemDifficulty, local.itemDifficulty, snapshot.itemDifficulty),
+    skippedItemTasks: mergeMap(remote.skippedItemTasks, local.skippedItemTasks, snapshot.skippedItemTasks),
     lcaEntries: mergeMap(remote.lcaEntries, local.lcaEntries, snapshot.lcaEntries),
     sddItems: mergeScalar(remote.sddItems, local.sddItems, snapshot.sddItems),
     pinnedDayItems: mergeMap(remote.pinnedDayItems, local.pinnedDayItems, snapshot.pinnedDayItems),
@@ -2327,6 +2384,7 @@ function connectMergeData(remote, local){
     subjectDeadlines: unionGenericMap(remote.subjectDeadlines, local.subjectDeadlines),
     customTasks: unionArrayMap(remote.customTasks, local.customTasks),
     itemDifficulty: unionGenericMap(remote.itemDifficulty, local.itemDifficulty),
+    skippedItemTasks: unionGenericMap(remote.skippedItemTasks, local.skippedItemTasks),
     lcaEntries: unionGenericMap(remote.lcaEntries, local.lcaEntries),
     sddItems: preferred.sddItems || fallback.sddItems,
     pinnedDayItems: preferred.pinnedDayItems || fallback.pinnedDayItems || {},
@@ -2461,7 +2519,7 @@ function importBackup(file){
   reader.onload = async (e) => {
     try{
       const parsed = JSON.parse(e.target.result);
-      DATA = Object.assign({itemChecks:{}, checks:{}, reportedDays:{}, darkMode:false, itemOverrides:{}, customTasks:{}, subjectDeadlines:{}, itemDifficulty:{}, lcaEntries:{}, sddItems: SDD_SEED_RAW.map(([n,t])=>[n,t]), pinnedDayItems:{}, onboarded:true}, parsed);
+      DATA = Object.assign({itemChecks:{}, checks:{}, reportedDays:{}, darkMode:false, itemOverrides:{}, customTasks:{}, subjectDeadlines:{}, itemDifficulty:{}, lcaEntries:{}, skippedItemTasks:{}, sddItems: SDD_SEED_RAW.map(([n,t])=>[n,t]), pinnedDayItems:{}, onboarded:true}, parsed);
       DATA.config = Object.assign(getDefaultConfig(), parsed.config || {});
       if(!DATA.items) DATA.items = ITEMS_RAW.map(([n,t,c])=>[n,t,c]);
       rebuildAll();
@@ -2479,6 +2537,19 @@ function importBackup(file){
 
 function dayChecks(iso){ if(!DATA.checks[iso]) DATA.checks[iso] = {}; return DATA.checks[iso]; }
 function isItemTaskDone(key){ return !!DATA.itemChecks[key]; }
+function itemSkipKey(iso, key){ return `${iso}::${key}`; }
+function isItemTaskSkipped(iso, key){ return !!((DATA.skippedItemTasks||{})[itemSkipKey(iso,key)]); }
+function setItemTaskSkipped(iso, key, skipped){
+  DATA.skippedItemTasks = DATA.skippedItemTasks || {};
+  const sk = itemSkipKey(iso,key);
+  if(skipped){
+    DATA.skippedItemTasks[sk] = true;
+    delete DATA.itemChecks[key];
+  }else{
+    delete DATA.skippedItemTasks[sk];
+  }
+  saveData();
+}
 function setItemTaskDone(key, val){ DATA.itemChecks[key] = val; saveData(); }
 function isGenericDone(iso, taskId){ return !!dayChecks(iso)[taskId]; }
 function setGenericDone(iso, taskId, val){ dayChecks(iso)[taskId] = val; saveData(); }
@@ -2530,8 +2601,9 @@ function uncompletedInRange(phase, cap){
   const out = [];
   for(let idx=0; idx<cap; idx++){
     const s = getSlot(phase, idx);
-    if(s && s.itemNum && !isItemTaskDone(s.nativeKey)) {
-      out.push({ key:s.nativeKey, itemNum:s.itemNum, mode:s.mode, phase, idx, overridden:s.overridden, originalItemNum:s.originalItemNum });
+    const iso = s && s.iso;
+    if(s && s.itemNum && !isItemTaskSkipped(iso, s.nativeKey) && !isItemTaskDone(s.nativeKey)) {
+      out.push({ key:s.nativeKey, itemNum:s.itemNum, mode:s.mode, phase, idx, iso, overridden:s.overridden, originalItemNum:s.originalItemNum });
     }
   }
   return out;
@@ -2560,7 +2632,7 @@ function retardList(){
     if(d.iso >= today) return;
     if(d.reported) return;
     (d.tasks||[]).forEach(t=>{
-      if(t.kind==='item' && !isItemTaskDone(t.id)){
+      if(t.kind==='item' && !isItemTaskSkipped(d.iso, t.id) && !isItemTaskDone(t.id)){
         out.push({ type:'item', phase:t.phase, idx:t.idx, itemNum:t.itemNum, mode:t.mode, key:t.id, iso:d.iso });
       }
     });
@@ -2645,6 +2717,7 @@ function itemHistory(itemNum){
     for(let idx=0; idx<cap; idx++){
       const s = getSlot(phase, idx);
       if(s && s.itemNum === itemNum){
+        if(isItemTaskSkipped(s.iso,s.nativeKey)) continue;
         entries.push({ phase, idx, mode:s.mode, done:isItemTaskDone(s.nativeKey), iso: s.iso });
         covered.add(s.nativeKey);
       }
@@ -2691,8 +2764,7 @@ function renderVitals(){
   let total=0, done=0;
   ['S1','S2'].forEach(phase=>{
     const cap = PHASE_FINAL_QUOTA[phase];
-    total += cap;
-    for(let idx=0; idx<cap; idx++){ if(isItemTaskDone(taskForIndex(phase,idx).key)) done++; }
+    for(let idx=0; idx<cap; idx++){ const slot=getSlot(phase,idx); if(slot && !isItemTaskSkipped(slot.iso,slot.nativeKey)){ total++; if(isItemTaskDone(slot.nativeKey)) done++; } }
   });
   const pct = total? Math.round(done/total*100) : 0;
   const day = findDay(todayIso());
@@ -2712,6 +2784,35 @@ function renderVitals(){
 
 function catPillsHTML(cats){
   return cats.map(c=>`<span class="cat-pill" style="background:${CAT_COLORS[c]||CAT_COLORS.other}">${CAT_LABELS[c]||c}</span>`).join('');
+}
+
+function removedItemTasksHTML(day){
+  if(!day || !day.tasks) return '';
+  const removed = day.tasks.filter(t=>t.kind==='item' && isItemTaskSkipped(day.iso,t.id));
+  if(!removed.length) return '';
+  return `<div class="removed-items-panel">
+    <div class="removed-items-header"><span>${removed.length} occurrence${removed.length>1?'s':''} retirée${removed.length>1?'s':''} de cette journée</span><span class="settings-hint">Elles restent supprimées du planning, sans être comptées comme faites.</span></div>
+    ${removed.map(t=>{
+      const item = ITEM_BY_NUM[t.itemNum];
+      return `<div class="removed-item-row">
+        <div><strong>${t.mode==='revision'?'Révision':'Entraînement'} · Item ${item?item.num:t.itemNum}</strong><span>${item?esc(item.title):''}</span></div>
+        <button type="button" class="btn-secondary" data-restore-item-day="${day.iso}" data-restore-item-key="${esc(t.id)}">Restaurer</button>
+      </div>`;
+    }).join('')}
+  </div>`;
+}
+
+function bindRemovedItemHandlers(container){
+  container.querySelectorAll('[data-restore-item-day]').forEach(btn=>{
+    btn.addEventListener('click', e=>{
+      e.stopPropagation();
+      const iso = btn.getAttribute('data-restore-item-day');
+      const key = btn.getAttribute('data-restore-item-key');
+      setItemTaskSkipped(iso,key,false);
+      CAL = buildCalendar(DATA.config, DATA.reportedDays);
+      render();
+    });
+  });
 }
 
 function itemTaskHTML(task, opts){
@@ -2758,10 +2859,13 @@ function itemTaskHTML(task, opts){
       </div>
       <h3>${esc(item.title)}</h3>
       <p class="task-hint">${hint}</p>
-      <label class="task-check" onclick="event.stopPropagation()">
-        <input type="checkbox" data-itemkey="${key}" ${done?'checked':''}>
-        <span>Fait</span>
-      </label>
+      <div class="task-actions-row" onclick="event.stopPropagation()">
+        <label class="task-check">
+          <input type="checkbox" data-itemkey="${key}" ${done?'checked':''}>
+          <span>Fait</span>
+        </label>
+        ${task.iso ? `<button type="button" class="task-remove-btn" data-remove-item-day="${task.iso}" data-remove-item-key="${esc(key)}">Retirer ce jour</button>` : ''}
+      </div>
       <div onclick="event.stopPropagation()">${diffUI}</div>
       ${swapUI}
     </div>
@@ -2795,6 +2899,19 @@ function genericListHTML(iso, tasks){
       <label for="g-${iso}-${t.id}">${esc(t.label)}</label>
     </li>`;
   }).join('') + `</ul>`;
+}
+
+function bindItemRemovalHandlers(container){
+  container.querySelectorAll('[data-remove-item-day]').forEach(btn=>{
+    btn.addEventListener('click', e=>{
+      e.stopPropagation();
+      const iso = btn.getAttribute('data-remove-item-day');
+      const key = btn.getAttribute('data-remove-item-key');
+      setItemTaskSkipped(iso,key,true);
+      CAL = buildCalendar(DATA.config, DATA.reportedDays);
+      render();
+    });
+  });
 }
 
 function bindTaskHandlers(container){
@@ -2840,6 +2957,8 @@ function bindTaskHandlers(container){
   });
   bindSwapHandlers(container);
   bindDifficultyHandlers(container);
+  bindItemRemovalHandlers(container);
+  bindRemovedItemHandlers(container);
 }
 function updateRetardBadgeOnly(){
   const rlen = retardList().length;
@@ -2857,7 +2976,7 @@ function weekSummaryHTML(){
   CAL.forEach(d=>{
     if(d.date < monday || d.date > sunday) return;
     if(!d.weekend && d.phase!=='CONSOL' && d.tasks){
-      d.tasks.forEach(t=>{ if(t.kind==='item'){ total++; if(isItemTaskDone(t.id)) done++; } });
+      d.tasks.forEach(t=>{ if(t.kind==='item' && !isItemTaskSkipped(d.iso,t.id)){ total++; if(isItemTaskDone(t.id)) done++; } });
     }
   });
   const satIso = toISO(addDays(monday,5));
@@ -2923,7 +3042,7 @@ function renderToday(){
 
   const custom = day.reported ? '' : customTasksHTML(day.iso);
 
-  container.innerHTML = deadlineAlertsHTML() + weekSummaryHTML() + head + body + custom + `<footer class="note">Plus de temps aujourd'hui ? Avance librement (onglet Planning). Moins de temps ? Marque cette journée (repos, partiel, concours blanc…), ou laisse simplement les items non faits — ils remonteront automatiquement demain.</footer>`;
+  container.innerHTML = deadlineAlertsHTML() + weekSummaryHTML() + head + body + (day.reported ? '' : removedItemTasksHTML(day)) + custom + `<footer class="note">Plus de temps aujourd'hui ? Avance librement (onglet Planning). Moins de temps ? Marque cette journée (repos, garde, repos de garde, partiel, concours blanc…), ou laisse simplement les items non faits — ils remonteront automatiquement demain.</footer>`;
   bindTaskHandlers(container);
   if(!day.reported) bindCustomTaskHandlers(container, day.iso);
   bindReportControl(container, day.iso);
@@ -2994,12 +3113,13 @@ function renderPlanning(){
       ${day.reported ? `<p class="sub">${reportedDayLabel(day.reportedInfo)}</p>` : ''}
       ${reportControlHTML(day)}
     </div>`;
+    const visibleItemTasks = (day.tasks||[]).filter(t=>t.kind!=='item' || !isItemTaskSkipped(day.iso,t.id));
     let body = day.reported
       ? `<p class="empty-state">${reportedDayLabel(day.reportedInfo)} — rien de prévu ce jour-là.</p>`
-      : ((day.tasks && day.tasks[0] && day.tasks[0].kind==='item') ? day.tasks.map(t=>itemTaskHTML(t)).join('')
+      : ((visibleItemTasks[0] && visibleItemTasks[0].kind==='item') ? visibleItemTasks.map(t=>itemTaskHTML(t)).join('')
         : (day.tasks && day.tasks[0] && day.tasks[0].kind==='sdd') ? day.tasks.map(t=>sddTaskHTML(t)).join('')
         : genericListHTML(day.iso, day.tasks||[]));
-    container.innerHTML = head + body + (day.reported ? '' : customTasksHTML(day.iso));
+    container.innerHTML = head + body + (day.reported ? '' : removedItemTasksHTML(day)) + (day.reported ? '' : customTasksHTML(day.iso));
     document.getElementById('backBtn').addEventListener('click', ()=>{ selectedDayIso=null; renderPlanning(); });
     bindTaskHandlers(container);
     if(!day.reported) bindCustomTaskHandlers(container, day.iso);
@@ -3015,8 +3135,8 @@ function renderPlanning(){
     let itemsHtml = '';
     if(day.reported){
       itemsHtml = `<span class="pitem" style="background:var(--rule);color:var(--ink-soft)">${reportedDayLabel(day.reportedInfo)}</span>`;
-    } else if(day.tasks[0] && day.tasks[0].kind==='item'){
-      itemsHtml = day.tasks.map(t=>{
+    } else if(day.tasks && day.tasks.some(t=>t.kind==='item' && !isItemTaskSkipped(day.iso,t.id))){
+      itemsHtml = day.tasks.filter(t=>t.kind==='item' && !isItemTaskSkipped(day.iso,t.id)).map(t=>{
         const it = ITEM_BY_NUM[t.itemNum];
         const bg = t.mode==='revision' ? 'var(--accent)' : 'var(--amber)';
         return `<span class="pitem" style="background:${bg}" title="${it?esc(it.title):''}">#${it?it.num:t.itemNum}</span>`;
@@ -3597,6 +3717,8 @@ function renderSettings(){
         <input type="date" id="newReportedDate">
         <select id="newReportedType">
           <option value="repos">Repos</option>
+          <option value="garde">Garde</option>
+          <option value="repos_garde">Repos de garde</option>
           <option value="partiel">Partiel</option>
           <option value="concours_blanc">Concours blanc</option>
           <option value="autre">Autre</option>
