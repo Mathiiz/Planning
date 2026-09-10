@@ -1791,7 +1791,12 @@ function connectMergeData(remote, local){
     itemDifficulty: unionGenericMap(remote.itemDifficulty, local.itemDifficulty),
     lcaEntries: unionGenericMap(remote.lcaEntries, local.lcaEntries),
     sddItems: remote.sddItems || local.sddItems,
-    pinnedDayItems: unionArrayMap(remote.pinnedDayItems, local.pinnedDayItems)
+    // pinnedDayItems n'est qu'un cache dérivé (quel item était affiché tel jour), pas un
+    // vrai travail utilisateur : contrairement aux autres champs, on ne le fusionne PAS
+    // par union — sinon les épingles d'un planning local temporaire (ex : session Notion
+    // qui repart de zéro) se mélangent avec les vraies épingles du distant. On garde
+    // uniquement celles du distant ; le cache se reconstruit tout seul pour le reste.
+    pinnedDayItems: remote.pinnedDayItems || {}
   };
 }
 
@@ -1856,8 +1861,10 @@ async function githubSyncNow(){
         return;
       }
 
-      const snapshot = getGhSnapshot();
-      const merged = remoteData ? mergeData(remoteData, DATA, snapshot) : DATA;
+      const hadSnapshot = localStorage.getItem(GH_SNAPSHOT_KEY) !== null;
+      const merged = remoteData
+        ? (hadSnapshot ? mergeData(remoteData, DATA, getGhSnapshot()) : connectMergeData(remoteData, DATA))
+        : DATA;
 
       const body = {
         message: 'Mise à jour planning — ' + new Date().toISOString(),
@@ -3361,8 +3368,18 @@ async function init(){
   if(ghCfg && ghCfg.token && ghCfg.owner && ghCfg.repo){
     const remote = await githubLoadData();
     if(remote){
-      const snapshot = getGhSnapshot();
-      DATA = mergeData(remote, DATA, snapshot);
+      const hadSnapshot = localStorage.getItem(GH_SNAPSHOT_KEY) !== null;
+      if(hadSnapshot){
+        const snapshot = getGhSnapshot();
+        DATA = mergeData(remote, DATA, snapshot);
+      } else {
+        // Pas d'instantané établi sur cette session (ex : webview Notion qui repart de
+        // zéro à chaque ouverture) : comparer le local à un instantané vide ferait passer
+        // un planning local fraîchement généré pour « modifié » et écraserait le vrai
+        // planning distant. On fusionne par union à la place (jamais destructeur).
+        DATA = connectMergeData(remote, DATA);
+      }
+      setGhSnapshot(DATA);
       DATA.config = Object.assign(getDefaultConfig(), DATA.config || {});
       if(!DATA.items) DATA.items = ITEMS_RAW.map(([n,t,c])=>[n,t,c]);
       if(!DATA.sddItems) DATA.sddItems = SDD_SEED_RAW.map(([n,t])=>[n,t]);
@@ -3372,14 +3389,16 @@ async function init(){
   rebuildAll();
   CAL = buildCalendar(DATA.config, DATA.reportedDays);
 
-  if(!DATA.pinResetV1){
-    // Les jours passés étaient « épinglés » (pinnedDayItems) avec l'ordre pollué par
-    // l'ajout des échéances, avant que la file ne soit corrigée ci-dessus. On efface
-    // ces épingles une seule fois pour qu'elles se reconstruisent proprement à partir
-    // de la file désormais stabilisée (rien d'autre n'est perdu : les cases faites et
-    // les échanges manuels restent identifiés par item, pas par jour).
+  if(!DATA.pinResetV2){
+    // Les jours passés étaient « épinglés » (pinnedDayItems) avec un ordre pollué —
+    // d'abord par l'ajout des échéances, puis par la fusion d'un planning temporaire
+    // (session sans stockage local, ex : webview Notion) avec le vrai planning distant.
+    // On efface ces épingles pour qu'elles se reconstruisent proprement à partir de la
+    // file désormais stabilisée (rien d'autre n'est perdu : les cases faites et les
+    // échanges manuels restent identifiés par item, pas par jour).
     DATA.pinnedDayItems = {};
     DATA.pinResetV1 = true;
+    DATA.pinResetV2 = true;
     CAL = buildCalendar(DATA.config, DATA.reportedDays);
     saveData();
   }
