@@ -4672,10 +4672,59 @@
         "overridden": false,
         "originalItemNum": 50
       }
+    ],
+    "2026-09-09": [
+      {
+        "id": "S1_i63_o1",
+        "kind": "item",
+        "itemNum": 63,
+        "mode": "revision",
+        "idx": 18,
+        "phase": "S1",
+        "overridden": false,
+        "originalItemNum": 63
+      },
+      {
+        "id": "S1_i120_o1",
+        "kind": "item",
+        "itemNum": 120,
+        "mode": "revision",
+        "idx": 19,
+        "phase": "S1",
+        "overridden": false,
+        "originalItemNum": 120
+      }
     ]
+  },
+  "queueFreeze": {
+    "S1": [
+      60,
+      108,
+      185,
+      47,
+      290,
+      212,
+      61,
+      118,
+      186,
+      48,
+      291,
+      213,
+      62,
+      119,
+      187,
+      49,
+      292,
+      214,
+      63,
+      120,
+      188,
+      50
+    ],
+    "S2": []
   },
   "_meta": {
     "schemaVersion": 4,
-    "updatedAt": "2026-09-10T14:42:13.844Z"
+    "updatedAt": "2026-09-10T14:42:59.945Z"
   }
 }
