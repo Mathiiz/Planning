@@ -2591,7 +2591,7 @@
       ]
     ]
   ],
-  "darkMode": false,
+  "darkMode": true,
   "onboarded": true,
   "itemChecks": {
     "S1_i60_o1": true,
@@ -4945,6 +4945,30 @@
         "overridden": false,
         "originalItemNum": 120
       }
+    ],
+    "2026-09-11": [
+      {
+        "id": "S1_i63_o1",
+        "kind": "item",
+        "itemNum": 63,
+        "mode": "revision",
+        "idx": 18,
+        "phase": "S1",
+        "iso": "2026-09-11",
+        "overridden": false,
+        "originalItemNum": 63
+      },
+      {
+        "id": "S1_i120_o1",
+        "kind": "item",
+        "itemNum": 120,
+        "mode": "revision",
+        "idx": 19,
+        "phase": "S1",
+        "iso": "2026-09-11",
+        "overridden": false,
+        "originalItemNum": 120
+      }
     ]
   },
   "queueFreeze": {
@@ -4976,6 +5000,6 @@
   },
   "_meta": {
     "schemaVersion": 4,
-    "updatedAt": "2026-09-11T13:36:25.743Z"
+    "updatedAt": "2026-09-11T13:38:32.209Z"
   }
 }
