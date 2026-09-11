@@ -12,7 +12,7 @@
       "hemato"
     ],
     "studentYear": 5,
-    "showCountdownEdn": true,
+    "showCountdownEdn": false,
     "showCountdownEcos": false,
     "ecosDate": "",
     "dailyItemsPhase1": 2,
@@ -4728,6 +4728,6 @@
   },
   "_meta": {
     "schemaVersion": 4,
-    "updatedAt": "2026-09-11T15:54:52.987Z"
+    "updatedAt": "2026-09-11T15:56:24.154Z"
   }
 }
