@@ -2611,7 +2611,8 @@
     "S1_i292_o1": true,
     "S1_i214_o1": false,
     "S1_i1_o1": true,
-    "S1_i49_o1": true
+    "S1_i49_o1": true,
+    "S1_i187_o1": true
   },
   "checks": {
     "2026-08-29": {
@@ -3049,6 +3050,7 @@
     ]
   },
   "itemDifficulty": {
+    "2": "facile",
     "130": "facile"
   },
   "skippedItemTasks": {},
@@ -4750,6 +4752,6 @@
   },
   "_meta": {
     "schemaVersion": 4,
-    "updatedAt": "2026-09-11T17:05:12.160Z"
+    "updatedAt": "2026-09-12T15:55:48.723Z"
   }
 }
