@@ -3063,7 +3063,8 @@
   },
   "itemDifficulty": {
     "2": "facile",
-    "130": "facile"
+    "130": "facile",
+    "133": "facile"
   },
   "skippedItemTasks": {},
   "lcaEntries": {},
@@ -4764,6 +4765,6 @@
   },
   "_meta": {
     "schemaVersion": 4,
-    "updatedAt": "2026-09-12T15:58:18.411Z"
+    "updatedAt": "2026-09-12T16:55:45.358Z"
   }
 }
