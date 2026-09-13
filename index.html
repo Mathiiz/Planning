@@ -1663,6 +1663,7 @@ let PHASE_FINAL_QUOTA = {S1:0, S2:0, ECOS:0};
 let currentTab = 'today';
 let selectedDayIso = null;
 let selectedItemNum = null;
+let progressSubview = null; // null | 'difficulty'
 
 function buildCalendar(cfg, reportedDays){
   reportedDays = reportedDays || {};
@@ -1924,52 +1925,25 @@ function bindCustomTaskHandlers(container, iso){
   });
 }
 
-// ---------- ressenti de difficulté & rappel rapproché ----------
-// une note "difficile" tente de programmer une révision rapprochée sur le jour le moins chargé
-// dans les 2 à 9 jours qui suivent (plutôt qu'un J+3 fixe qui peut tomber sur un jour déjà
-// saturé — DL serrée, plusieurs annales, etc.) ; si aucun jour raisonnable n'est trouvé dans
-// cette fenêtre, on renonce plutôt que de surcharger davantage un planning déjà tendu.
-function dayLoad(iso){
-  const day = findDay(iso);
-  if(!day || day.reported) return Infinity;
-  const itemCount = (day.tasks||[]).filter(t=>t.kind==='item' || t.kind==='sdd').length;
-  const customCount = (DATA.customTasks && DATA.customTasks[iso]) ? DATA.customTasks[iso].length : 0;
-  return itemCount + customCount;
-}
-function removeDifficultyBoosters(itemNum){
+// ---------- ressenti de difficulté ----------
+// La note (facile/moyen/difficile) sert uniquement à trier les items dans l'onglet
+// Progression, pour un retravail en autonomie — aucune reprogrammation automatique.
+function cleanupLegacyDifficultyBoosters(){
+  // Nettoyage ponctuel : retire les révisions rapprochées que l'app créait
+  // automatiquement par le passé quand un item était marqué « difficile ».
   if(!DATA.customTasks) return;
-  const prefix = `🔁 Révision rapprochée — Item ${itemNum} :`;
   Object.keys(DATA.customTasks).forEach(iso=>{
     DATA.customTasks[iso] = (DATA.customTasks[iso]||[]).filter(t=>{
-      return !(t.autoType==='difficulty' && Number(t.itemNum)===Number(itemNum)) && !String(t.label||'').startsWith(prefix);
+      return !(t.autoType==='difficulty' || String(t.label||'').startsWith('🔁 Révision rapprochée — Item '));
     });
     if(DATA.customTasks[iso].length===0) delete DATA.customTasks[iso];
   });
 }
-function scheduleDifficultyBooster(itemNum){
-  const item = ITEM_BY_NUM[itemNum];
-  if(!item) return false;
-  const today = todayDate();
-  let bestIso = null, bestLoad = Infinity;
-  for(let offset=2; offset<=9; offset++){
-    const iso = toISO(addDays(today, offset));
-    const load = dayLoad(iso);
-    if(load < bestLoad){ bestLoad = load; bestIso = iso; }
-    if(bestLoad <= 2) break; // jour déjà assez léger, pas la peine de chercher plus loin
-  }
-  if(!bestIso || bestLoad > 4) return false; // pas de créneau raisonnable : on renonce plutôt que de surcharger
-  const label = `🔁 Révision rapprochée — Item ${itemNum} : ${item.title} (marqué difficile)`;
-  const existingAnywhere = Object.values(DATA.customTasks||{}).flat().some(t=>
-    (t.autoType==='difficulty' && Number(t.itemNum)===Number(itemNum)) || String(t.label||'').startsWith(`🔁 Révision rapprochée — Item ${itemNum} :`)
-  );
-  if(!existingAnywhere) addCustomTask(bestIso, label, {autoType:'difficulty', itemNum});
-  return true;
-}
 function rateItemDifficulty(itemNum, level){
   if(!DATA.itemDifficulty) DATA.itemDifficulty = {};
   DATA.itemDifficulty[itemNum] = level;
-  if(level==='difficile') scheduleDifficultyBooster(itemNum);
-  else removeDifficultyBoosters(itemNum);
+  // Pas de reprogrammation automatique : la note sert uniquement à trier les items
+  // par difficulté (onglet Progression) pour un retravail en autonomie.
   saveData();
 }
 function bindDifficultyHandlers(container){
@@ -1979,6 +1953,14 @@ function bindDifficultyHandlers(container){
       const itemNum = parseInt(btn.getAttribute('data-diffitem'),10);
       const level = btn.getAttribute('data-difflevel');
       rateItemDifficulty(itemNum, level);
+      // Retour visuel immédiat (sans attendre le re-rendu complet) pour être sûr que
+      // le clic a bien été pris en compte.
+      const row = btn.closest('.diff-row');
+      if(row){
+        row.querySelectorAll('.diff-btn').forEach(b=>{
+          b.classList.toggle('active', b.getAttribute('data-difflevel')===level);
+        });
+      }
       render();
     });
   });
@@ -2677,12 +2659,9 @@ function retardList(){
       });
     }
 
-    const custom = (DATA.customTasks && DATA.customTasks[d.iso]) || [];
-    custom.forEach(ct=>{
-      if(!isGenericDone(d.iso, ct.id)){
-        out.push({type:'generic', iso:d.iso, label:ct.label, taskId:ct.id});
-      }
-    });
+    // Les révisions libres (tâches personnalisées ajoutées à la main) ne remontent pas
+    // dans le retard : ce sont des cases que tu gères toi-même en autonomie, pas des
+    // échéances imposées par le planning.
   });
 
   out.sort((a,b)=> (a.iso||'') < (b.iso||'') ? -1 : 1);
@@ -3192,6 +3171,7 @@ function renderItemHistory(itemNum){
 function renderProgress(){
   const container = document.getElementById('app');
   if(selectedItemNum){ renderItemHistory(selectedItemNum); return; }
+  if(progressSubview==='difficulty'){ renderDifficultyView(); return; }
 
   const status = computeItemStatus();
 
@@ -3209,7 +3189,9 @@ function renderProgress(){
       <div class="dualbar"><div class="seg-rev" style="width:${revPct}%"></div><div class="seg-ent" style="width:${Math.max(0,entPct-revPct)}%"></div></div>
     </div>`;
   }
+  const diffCount = Object.keys(DATA.itemDifficulty||{}).filter(n=>ITEM_BY_NUM[n]).length;
   let html = '';
+  html += `<button type="button" class="btn-secondary" id="btnShowDifficulty" style="margin-bottom:14px;">🔴🟡🟢 Trier mes items par difficulté${diffCount?` (${diffCount})`:''}</button>`;
   const newC = currentNewCats();
   if(newC.length > 0){
     html += `<p class="section-title">Matières de la période en cours (trimestre / semestre / stage)</p>`;
@@ -3222,10 +3204,59 @@ function renderProgress(){
   }
   html += `<p style="font-size:11px;color:var(--ink-soft);margin:14px 0;">Teal = items lus au moins une fois · ambre = items entraînés au moins une fois. Clique une matière pour voir le détail par item.</p>`;
   container.innerHTML = html;
+  document.getElementById('btnShowDifficulty').addEventListener('click', ()=>{
+    progressSubview = 'difficulty';
+    render();
+  });
   container.querySelectorAll('.spec-card').forEach(card=>{
     card.addEventListener('click', ()=>{
       const cat = card.getAttribute('data-cat');
       renderCatDetail(cat);
+    });
+  });
+}
+
+function renderDifficultyView(){
+  const container = document.getElementById('app');
+  const diffMap = DATA.itemDifficulty || {};
+  const order = {difficile:0, moyen:1, facile:2};
+  const emojiFor = {difficile:'🔴', moyen:'🟡', facile:'🟢'};
+  const labelFor = {difficile:'Difficile', moyen:'Moyen', facile:'Facile'};
+  const rated = Object.keys(diffMap)
+    .map(n=>parseInt(n,10))
+    .filter(n=>ITEM_BY_NUM[n] && diffMap[n])
+    .sort((a,b)=>{
+      const da = order[diffMap[a]] ?? 3, db = order[diffMap[b]] ?? 3;
+      if(da!==db) return da-db;
+      return a-b;
+    });
+
+  let rows;
+  if(rated.length===0){
+    rows = `<p class="empty-state">Aucun item noté pour l'instant — note "Facile / Moyen / Difficile" sur une case du planning (bouton "Ressenti") pour qu'il apparaisse ici.</p>`;
+  } else {
+    rows = `<ul class="item-list">` + rated.map(n=>{
+      const item = ITEM_BY_NUM[n];
+      const lvl = diffMap[n];
+      return `<li class="item-row" data-item="${n}">
+        <span class="inum">${emojiFor[lvl]||''} #${n}</span>
+        <span class="ititle">${esc(item.title)}</span>
+        <span class="icount">${labelFor[lvl]||lvl}</span>
+      </li>`;
+    }).join('') + `</ul>`;
+  }
+  container.innerHTML = `
+    <button class="back-link" id="backBtn">← Retour à la progression</button>
+    <p class="section-title">Items à retravailler, triés par difficulté</p>
+    <p style="font-size:11.5px;color:var(--ink-soft);margin:-6px 0 14px;">🔴 difficile en premier, puis 🟡 moyen, puis 🟢 facile — à toi de les reprendre en autonomie, à ton rythme, dans tes révisions libres.</p>
+    ${rows}
+  `;
+  document.getElementById('backBtn').addEventListener('click', ()=>{ progressSubview = null; render(); });
+  container.querySelectorAll('.item-row').forEach(row=>{
+    row.addEventListener('click', ()=>{
+      selectedItemNum = parseInt(row.getAttribute('data-item'),10);
+      progressSubview = null;
+      renderItemHistory(selectedItemNum);
     });
   });
 }
@@ -4053,6 +4084,7 @@ function bindStaticHandlers(){
       currentTab = btn.getAttribute('data-tab');
       selectedDayIso = null;
       selectedItemNum = null;
+      progressSubview = null;
       document.querySelectorAll('#tabbar button').forEach(b=>b.classList.toggle('active', b===btn));
       render();
     });
@@ -4211,6 +4243,11 @@ async function init(){
       DATA.pinResetV1 = true;
       DATA.pinResetV2 = true;
       CAL = buildCalendar(DATA.config, DATA.reportedDays);
+      saveData();
+    }
+    if(!DATA.difficultyBoosterCleanupV1){
+      cleanupLegacyDifficultyBoosters();
+      DATA.difficultyBoosterCleanupV1 = true;
       saveData();
     }
     rescheduleAllAnnales();
