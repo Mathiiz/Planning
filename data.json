@@ -2613,7 +2613,8 @@
     "S1_i1_o1": true,
     "S1_i49_o1": true,
     "S1_i187_o1": true,
-    "S1_i120_o1": true
+    "S1_i120_o1": true,
+    "S1_i63_o1": true
   },
   "checks": {
     "2026-08-29": {
@@ -3073,7 +3074,8 @@
   "itemDifficulty": {
     "2": "facile",
     "130": "facile",
-    "133": "facile"
+    "133": "facile",
+    "351": "facile"
   },
   "skippedItemTasks": {},
   "lcaEntries": {},
@@ -4774,6 +4776,6 @@
   },
   "_meta": {
     "schemaVersion": 4,
-    "updatedAt": "2026-09-13T11:57:04.046Z"
+    "updatedAt": "2026-09-13T21:50:20.993Z"
   }
 }
