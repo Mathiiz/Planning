@@ -2843,12 +2843,6 @@
     "mi": "2027-01-21"
   },
   "customTasks": {
-    "2026-09-03": [
-      {
-        "id": "custom_1788199341001_577",
-        "label": "🔁 Révision rapprochée — Item 213 : Anémie chez l'adulte et l'enfant (marqué difficile)"
-      }
-    ],
     "2027-01-05": [
       {
         "id": "annale_hemato_2027-01-05",
@@ -4766,6 +4760,6 @@
   },
   "_meta": {
     "schemaVersion": 4,
-    "updatedAt": "2026-09-13T11:15:36.729Z"
+    "updatedAt": "2026-09-13T11:16:48.300Z"
   }
 }
