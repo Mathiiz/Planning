@@ -12,13 +12,26 @@
   try{
     var url = new URL(window.location.href);
     if(url.protocol === 'file:') return;
-    var currentV = url.searchParams.get('v') || '';
-    var seenV = sessionStorage.getItem('edn-cache-bust-v1') || '';
+    var currentV = url.searchParams.get('v');
+    if(currentV === null){
+      // Aucun paramètre anti-cache du tout : c'est le cas typique de Notion, qui recharge
+      // systématiquement l'URL d'origine (sans le paramètre ajouté à la volée) et sans
+      // mémoire de session d'un chargement à l'autre. Il faut alors TOUJOURS en ajouter un
+      // neuf, sans passer par la comparaison sessionStorage ci-dessous (qui ne se déclenche
+      // jamais quand les deux valeurs comparées sont vides).
+      var nextV0 = String(Date.now());
+      url.searchParams.set('v', nextV0);
+      try{ sessionStorage.setItem('edn-cache-bust-v1', nextV0); }catch(e0){}
+      window.location.replace(url.toString());
+      return;
+    }
+    var seenV = '';
+    try{ seenV = sessionStorage.getItem('edn-cache-bust-v1') || ''; }catch(e1){}
     if(currentV !== seenV){
       var nextV = String(Date.now());
       if(nextV === currentV) nextV = String(Date.now() + 1);
       url.searchParams.set('v', nextV);
-      sessionStorage.setItem('edn-cache-bust-v1', nextV);
+      try{ sessionStorage.setItem('edn-cache-bust-v1', nextV); }catch(e2){}
       window.location.replace(url.toString());
     }
   }catch(e){ /* URL/sessionStorage non disponibles : le reste de l'app continue normalement. */ }
