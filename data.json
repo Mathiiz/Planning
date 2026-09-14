@@ -2591,7 +2591,7 @@
       ]
     ]
   ],
-  "darkMode": true,
+  "darkMode": false,
   "onboarded": true,
   "itemChecks": {
     "S1_i60_o1": true,
@@ -4776,6 +4776,6 @@
   },
   "_meta": {
     "schemaVersion": 4,
-    "updatedAt": "2026-09-13T21:50:20.993Z"
+    "updatedAt": "2026-09-14T11:31:21.762Z"
   }
 }
