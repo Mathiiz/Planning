@@ -2759,7 +2759,8 @@
     },
     "2026-09-03": {
       "custom_1788199341001_577": true
-    }
+    },
+    "2026-09-14": {}
   },
   "reportedDays": {
     "2026-09-02": {
@@ -3080,6 +3081,12 @@
       {
         "id": "annale_mi_2027-01-14",
         "label": "📄 Annale — Médecine interne"
+      }
+    ],
+    "2026-09-14": [
+      {
+        "id": "custom_1789403707241_335",
+        "label": "Items 47, 59, 256 - Suivi médical pédiatrique"
       }
     ]
   },
@@ -4812,6 +4819,6 @@
   },
   "_meta": {
     "schemaVersion": 4,
-    "updatedAt": "2026-09-14T15:46:07.452Z"
+    "updatedAt": "2026-09-14T16:35:07.241Z"
   }
 }
