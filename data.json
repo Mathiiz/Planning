@@ -2614,7 +2614,8 @@
     "S1_i49_o1": true,
     "S1_i187_o1": true,
     "S1_i120_o1": true,
-    "S1_i63_o1": true
+    "S1_i63_o1": true,
+    "S1_i293_o1": true
   },
   "checks": {
     "2026-08-29": {
@@ -3098,6 +3099,7 @@
     "2": "facile",
     "130": "facile",
     "133": "facile",
+    "293": "facile",
     "351": "facile"
   },
   "skippedItemTasks": {
@@ -4794,6 +4796,30 @@
         "overridden": false,
         "originalItemNum": 50
       }
+    ],
+    "2026-09-15": [
+      {
+        "id": "S1_i293_o1",
+        "kind": "item",
+        "itemNum": 293,
+        "mode": "revision",
+        "idx": 22,
+        "phase": "S1",
+        "iso": "2026-09-15",
+        "overridden": false,
+        "originalItemNum": 293
+      },
+      {
+        "id": "S1_i215_o1",
+        "kind": "item",
+        "itemNum": 215,
+        "mode": "revision",
+        "idx": 23,
+        "phase": "S1",
+        "iso": "2026-09-15",
+        "overridden": false,
+        "originalItemNum": 215
+      }
     ]
   },
   "queueFreeze": {
@@ -4819,12 +4845,14 @@
       63,
       120,
       188,
-      50
+      50,
+      293,
+      215
     ],
     "S2": []
   },
   "_meta": {
     "schemaVersion": 4,
-    "updatedAt": "2026-09-15T11:39:24.291Z"
+    "updatedAt": "2026-09-15T12:55:28.949Z"
   }
 }
