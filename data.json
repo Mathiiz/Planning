@@ -2783,6 +2783,10 @@
     },
     "2026-09-09": {
       "type": "repos_garde"
+    },
+    "2026-09-16": {
+      "type": "repos",
+      "label": "Revision ECOS stage"
     }
   },
   "itemOverrides": {
@@ -2878,6 +2882,18 @@
       "swapId": "swap_1789477015164_606",
       "partnerKey": "S1_i188_o1",
       "previousItemNum": 3
+    },
+    "S1_i215_o1": {
+      "itemNum": 317,
+      "swapId": "swap_1789652745628_534",
+      "partnerKey": "S1_i317_o1",
+      "previousItemNum": 215
+    },
+    "S1_i317_o1": {
+      "itemNum": 215,
+      "swapId": "swap_1789652745628_534",
+      "partnerKey": "S1_i215_o1",
+      "previousItemNum": 317
     }
   },
   "subjectDeadlines": {
@@ -4825,12 +4841,12 @@
       {
         "id": "S1_i215_o1",
         "kind": "item",
-        "itemNum": 215,
+        "itemNum": 317,
         "mode": "revision",
         "idx": 23,
         "phase": "S1",
         "iso": "2026-09-15",
-        "overridden": false,
+        "overridden": true,
         "originalItemNum": 215
       }
     ],
@@ -4880,6 +4896,28 @@
         "iso": "2026-09-17",
         "overridden": false,
         "originalItemNum": 64
+      },
+      {
+        "id": "S1_i121_o1",
+        "kind": "item",
+        "itemNum": 121,
+        "mode": "revision",
+        "idx": 24,
+        "phase": "S1",
+        "iso": "2026-09-17",
+        "overridden": false,
+        "originalItemNum": 121
+      },
+      {
+        "id": "S1_i294_o1",
+        "kind": "item",
+        "itemNum": 294,
+        "mode": "revision",
+        "idx": 25,
+        "phase": "S1",
+        "iso": "2026-09-17",
+        "overridden": false,
+        "originalItemNum": 294
       }
     ]
   },
@@ -4918,6 +4956,6 @@
   },
   "_meta": {
     "schemaVersion": 4,
-    "updatedAt": "2026-09-17T13:41:09.263Z"
+    "updatedAt": "2026-09-17T13:45:45.629Z"
   }
 }
