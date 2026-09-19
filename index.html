@@ -1960,11 +1960,15 @@ function cleanupLegacyDifficultyBoosters(){
     if(DATA.customTasks[iso].length===0) delete DATA.customTasks[iso];
   });
 }
-function rateItemDifficulty(itemNum, level){
+function toggleItemDifficulty(itemNum){
   if(!DATA.itemDifficulty) DATA.itemDifficulty = {};
-  DATA.itemDifficulty[itemNum] = level;
-  // Pas de reprogrammation automatique : la note sert uniquement à trier les items
-  // par difficulté (onglet Progression) pour un retravail en autonomie.
+  if(DATA.itemDifficulty[itemNum] === 'difficile'){
+    delete DATA.itemDifficulty[itemNum];
+  } else {
+    DATA.itemDifficulty[itemNum] = 'difficile';
+  }
+  // Sert uniquement à constituer la liste des items difficiles (onglet Progression),
+  // à retravailler en autonomie — aucune action automatique de l'app.
   saveData();
 }
 function bindDifficultyHandlers(container){
@@ -1972,16 +1976,12 @@ function bindDifficultyHandlers(container){
     btn.addEventListener('click', (e)=>{
       e.stopPropagation();
       const itemNum = parseInt(btn.getAttribute('data-diffitem'),10);
-      const level = btn.getAttribute('data-difflevel');
-      rateItemDifficulty(itemNum, level);
+      toggleItemDifficulty(itemNum);
       // Retour visuel immédiat (sans attendre le re-rendu complet) pour être sûr que
       // le clic a bien été pris en compte.
-      const row = btn.closest('.diff-row');
-      if(row){
-        row.querySelectorAll('.diff-btn').forEach(b=>{
-          b.classList.toggle('active', b.getAttribute('data-difflevel')===level);
-        });
-      }
+      const isDiff = DATA.itemDifficulty && DATA.itemDifficulty[itemNum] === 'difficile';
+      btn.classList.toggle('active', isDiff);
+      btn.textContent = isDiff ? '🔴 Marqué difficile' : '🔴 Marquer difficile';
       render();
     });
   });
@@ -2828,12 +2828,10 @@ function itemTaskHTML(task, opts){
   const key = task.id || task.key;
   const histCount = itemHistory(task.itemNum).filter(h=>h.done).length;
   const diff = (DATA.itemDifficulty && DATA.itemDifficulty[task.itemNum]) || null;
+  const isDiff = diff === 'difficile';
   const diffUI = `
     <div class="diff-row">
-      <span class="diff-label">Ressenti :</span>
-      <button type="button" class="diff-btn ${diff==='facile'?'active':''}" data-diffitem="${item.num}" data-difflevel="facile">🟢 Facile</button>
-      <button type="button" class="diff-btn ${diff==='moyen'?'active':''}" data-diffitem="${item.num}" data-difflevel="moyen">🟡 Moyen</button>
-      <button type="button" class="diff-btn ${diff==='difficile'?'active':''}" data-diffitem="${item.num}" data-difflevel="difficile">🔴 Difficile</button>
+      <button type="button" class="diff-btn ${isDiff?'active':''}" data-diffitem="${item.num}">${isDiff ? '🔴 Marqué difficile' : '🔴 Marquer difficile'}</button>
     </div>
   `;
   const swapUI = `
@@ -3210,9 +3208,9 @@ function renderProgress(){
       <div class="dualbar"><div class="seg-rev" style="width:${revPct}%"></div><div class="seg-ent" style="width:${Math.max(0,entPct-revPct)}%"></div></div>
     </div>`;
   }
-  const diffCount = Object.keys(DATA.itemDifficulty||{}).filter(n=>ITEM_BY_NUM[n]).length;
+  const diffCount = Object.keys(DATA.itemDifficulty||{}).filter(n=>ITEM_BY_NUM[n] && DATA.itemDifficulty[n]==='difficile').length;
   let html = '';
-  html += `<button type="button" class="btn-secondary" id="btnShowDifficulty" style="margin-bottom:14px;">🔴🟡🟢 Trier mes items par difficulté${diffCount?` (${diffCount})`:''}</button>`;
+  html += `<button type="button" class="btn-secondary" id="btnShowDifficulty" style="margin-bottom:14px;">🔴 Mes items difficiles${diffCount?` (${diffCount})`:''}</button>`;
   const newC = currentNewCats();
   if(newC.length > 0){
     html += `<p class="section-title">Matières de la période en cours (trimestre / semestre / stage)</p>`;
@@ -3240,39 +3238,39 @@ function renderProgress(){
 function renderDifficultyView(){
   const container = document.getElementById('app');
   const diffMap = DATA.itemDifficulty || {};
-  const order = {difficile:0, moyen:1, facile:2};
-  const emojiFor = {difficile:'🔴', moyen:'🟡', facile:'🟢'};
-  const labelFor = {difficile:'Difficile', moyen:'Moyen', facile:'Facile'};
   const rated = Object.keys(diffMap)
     .map(n=>parseInt(n,10))
-    .filter(n=>ITEM_BY_NUM[n] && diffMap[n])
-    .sort((a,b)=>{
-      const da = order[diffMap[a]] ?? 3, db = order[diffMap[b]] ?? 3;
-      if(da!==db) return da-db;
-      return a-b;
-    });
+    .filter(n=>ITEM_BY_NUM[n] && diffMap[n]==='difficile')
+    .sort((a,b)=>a-b);
 
   let rows;
   if(rated.length===0){
-    rows = `<p class="empty-state">Aucun item noté pour l'instant — note "Facile / Moyen / Difficile" sur une case du planning (bouton "Ressenti") pour qu'il apparaisse ici.</p>`;
+    rows = `<p class="empty-state">Aucun item marqué difficile pour l'instant — utilise le bouton "🔴 Marquer difficile" sur une case du planning pour qu'il apparaisse ici.</p>`;
   } else {
     rows = `<ul class="item-list">` + rated.map(n=>{
       const item = ITEM_BY_NUM[n];
-      const lvl = diffMap[n];
       return `<li class="item-row" data-item="${n}">
-        <span class="inum">${emojiFor[lvl]||''} #${n}</span>
+        <span class="inum">🔴 #${n}</span>
         <span class="ititle">${esc(item.title)}</span>
-        <span class="icount">${labelFor[lvl]||lvl}</span>
+        <button type="button" class="btn-secondary" data-removediff="${n}" style="font-size:11px;padding:4px 9px;" onclick="event.stopPropagation()">Retirer</button>
       </li>`;
     }).join('') + `</ul>`;
   }
   container.innerHTML = `
     <button class="back-link" id="backBtn">← Retour à la progression</button>
-    <p class="section-title">Items à retravailler, triés par difficulté</p>
-    <p style="font-size:11.5px;color:var(--ink-soft);margin:-6px 0 14px;">🔴 difficile en premier, puis 🟡 moyen, puis 🟢 facile — à toi de les reprendre en autonomie, à ton rythme, dans tes révisions libres.</p>
+    <p class="section-title">Items difficiles à retravailler</p>
+    <p style="font-size:11.5px;color:var(--ink-soft);margin:-6px 0 14px;">À toi de les reprendre en autonomie, à ton rythme, dans tes révisions libres — retire-les de la liste une fois travaillés.</p>
     ${rows}
   `;
   document.getElementById('backBtn').addEventListener('click', ()=>{ progressSubview = null; render(); });
+  container.querySelectorAll('[data-removediff]').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const n = parseInt(btn.getAttribute('data-removediff'),10);
+      if(DATA.itemDifficulty) delete DATA.itemDifficulty[n];
+      saveData();
+      renderDifficultyView();
+    });
+  });
   container.querySelectorAll('.item-row').forEach(row=>{
     row.addEventListener('click', ()=>{
       selectedItemNum = parseInt(row.getAttribute('data-item'),10);
