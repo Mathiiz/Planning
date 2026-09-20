@@ -2755,10 +2755,12 @@
     },
     "2026-09-20": {},
     "2026-09-12": {
-      "free": true
+      "free": true,
+      "lca": true
     },
     "2026-09-13": {
-      "free": true
+      "free": true,
+      "lca": true
     },
     "2026-09-05": {
       "lca": true,
@@ -4977,6 +4979,6 @@
   },
   "_meta": {
     "schemaVersion": 4,
-    "updatedAt": "2026-09-20T14:34:19.517Z"
+    "updatedAt": "2026-09-20T14:35:47.987Z"
   }
 }
