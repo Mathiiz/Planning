@@ -2780,7 +2780,8 @@
     },
     "2026-09-14": {
       "custom_1789403707241_335": true
-    }
+    },
+    "2026-09-21": {}
   },
   "reportedDays": {
     "2026-09-02": {
@@ -3183,6 +3184,12 @@
       {
         "id": "custom_1789403707241_335",
         "label": "Items 47, 59, 256 - Suivi médical pédiatrique"
+      }
+    ],
+    "2026-09-21": [
+      {
+        "id": "custom_1789995418700_356",
+        "label": "Item 245 - Insuffisance surrénale (pédiatrie)"
       }
     ]
   },
@@ -5022,6 +5029,6 @@
   },
   "_meta": {
     "schemaVersion": 4,
-    "updatedAt": "2026-09-21T12:55:07.598Z"
+    "updatedAt": "2026-09-21T12:56:58.700Z"
   }
 }
