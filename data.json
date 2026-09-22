@@ -2783,7 +2783,8 @@
     },
     "2026-09-21": {
       "custom_1789995418700_356": true
-    }
+    },
+    "2026-09-22": {}
   },
   "reportedDays": {
     "2026-09-02": {
@@ -3193,6 +3194,12 @@
         "id": "custom_1789995418700_356",
         "label": "Item 245 - Insuffisance surrénale (pédiatrie)"
       }
+    ],
+    "2026-09-22": [
+      {
+        "id": "custom_1790079223190_612",
+        "label": "Item 81,89 - Altération chronique de la vision et de l'audition"
+      }
     ]
   },
   "itemDifficulty": {
@@ -3203,9 +3210,7 @@
     "351": "facile"
   },
   "skippedItemTasks": {
-    "2026-09-14::S1_i50_o1": true,
-    "2026-09-21::S1_i51_o1": true,
-    "2026-09-22::S1_i295_o1": true
+    "2026-09-14::S1_i50_o1": true
   },
   "lcaEntries": {},
   "sddItems": [
@@ -5059,6 +5064,6 @@
   },
   "_meta": {
     "schemaVersion": 4,
-    "updatedAt": "2026-09-22T12:13:14.489Z"
+    "updatedAt": "2026-09-22T13:03:29.739Z"
   }
 }
