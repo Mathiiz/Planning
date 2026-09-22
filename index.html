@@ -2600,27 +2600,6 @@ function quotaThroughToday(phase){
   return 0;
 }
 
-function uncompletedInRange(phase, cap){
-  const out = [];
-  for(let idx=0; idx<cap; idx++){
-    const s = getSlot(phase, idx);
-    const iso = s && s.iso;
-    if(s && s.itemNum && !isItemTaskSkipped(iso, s.nativeKey) && !isItemTaskDone(s.nativeKey)) {
-      out.push({ key:s.nativeKey, itemNum:s.itemNum, mode:s.mode, phase, idx, iso, overridden:s.overridden, originalItemNum:s.originalItemNum });
-    }
-  }
-  return out;
-}
-
-function todaysDynamicTasks(){
-  const today = findDay(todayIso());
-  if(!today || today.weekend || today.phase==='CONSOL' || today.phase==='ECOS' || today.reported) return [];
-  const perDay = itemsPerDayFor(today.phase);
-  const cap = quotaThroughToday(today.phase);
-  const pending = uncompletedInRange(today.phase, cap);
-  return pending.slice(0, perDay);
-}
-
 function retardList(){
   const out = [];
   const today = todayIso();
@@ -3030,9 +3009,9 @@ function renderToday(){
   } else if(day.weekend || day.phase==='CONSOL'){
     body = genericListHTML(day.iso, day.tasks);
   } else {
-    const tasks = todaysDynamicTasks();
+    const tasks = (day.tasks||[]).filter(t=>t.kind==='item' && !isItemTaskSkipped(day.iso, t.id));
     if(tasks.length===0){
-      body = `<div class="empty-state"><p>Aucun item en attente pour aujourd'hui — tu es à jour !</p></div>`;
+      body = `<div class="empty-state"><p>Aucun item prévu pour aujourd'hui.</p></div>`;
     } else {
       body = tasks.map(t => itemTaskHTML(t)).join('');
     }
