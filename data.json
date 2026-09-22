@@ -3203,7 +3203,8 @@
     "351": "facile"
   },
   "skippedItemTasks": {
-    "2026-09-14::S1_i50_o1": true
+    "2026-09-14::S1_i50_o1": true,
+    "2026-09-21::S1_i51_o1": true
   },
   "lcaEntries": {},
   "sddItems": [
@@ -4992,6 +4993,30 @@
         "overridden": false,
         "originalItemNum": 51
       }
+    ],
+    "2026-09-22": [
+      {
+        "id": "S1_i122_o1",
+        "kind": "item",
+        "itemNum": 122,
+        "mode": "revision",
+        "idx": 30,
+        "phase": "S1",
+        "iso": "2026-09-22",
+        "overridden": false,
+        "originalItemNum": 122
+      },
+      {
+        "id": "S1_i295_o1",
+        "kind": "item",
+        "itemNum": 295,
+        "mode": "revision",
+        "idx": 31,
+        "phase": "S1",
+        "iso": "2026-09-22",
+        "overridden": false,
+        "originalItemNum": 295
+      }
     ]
   },
   "queueFreeze": {
@@ -5025,12 +5050,14 @@
       216,
       64,
       189,
-      51
+      51,
+      122,
+      295
     ],
     "S2": []
   },
   "_meta": {
     "schemaVersion": 4,
-    "updatedAt": "2026-09-22T11:46:05.374Z"
+    "updatedAt": "2026-09-22T11:50:49.303Z"
   }
 }
