@@ -79,6 +79,8 @@ window.addEventListener('pageshow', function(e){
   .chart-header{background:var(--navy);color:#fff;padding:18px 20px 14px;position:sticky;top:0;z-index:20;}
   .chart-header .eyebrow{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:#9FB3C8;margin:0 0 4px;display:flex;justify-content:space-between;align-items:center;}
   .theme-btn{background:none;border:1px solid rgba(255,255,255,.25);color:#fff;border-radius:20px;font-size:10px;padding:3px 9px;cursor:pointer;font-family:var(--mono);}
+  .header-actions{display:flex;align-items:center;gap:6px;}
+  .theme-btn.icon-btn{padding:3px 8px;font-size:12px;line-height:1;}
   .chart-header h1{font-family:var(--serif);font-weight:600;font-size:20px;margin:0 0 12px;letter-spacing:.01em;color:#fff;}
   .vitals{display:flex;border-top:1px solid rgba(255,255,255,.14);border-bottom:1px solid rgba(255,255,255,.14);flex-wrap:wrap;}
   .vital{flex:1 1 100px;padding:9px 12px;border-right:1px solid rgba(255,255,255,.14);}
@@ -388,7 +390,7 @@ window.addEventListener('pageshow', function(e){
   }
   /* Mode sombre indisponible tant qu'une palette personnalisée est active :
      c'est la couleur de fond choisie qui décide alors clair/sombre. */
-  body.custom-theme .theme-btn{display:none;}
+  body.custom-theme #themeToggle{display:none;}
   .chart-header h1{
     font-family:var(--sans);
     font-size:clamp(32px,5vw,56px);
@@ -836,7 +838,7 @@ window.addEventListener('pageshow', function(e){
 </div>
 
 <div class="chart-header">
-  <p class="eyebrow"><span>Dossier de révision personnel</span><button class="theme-btn" id="themeToggle">Mode sombre</button></p>
+  <p class="eyebrow"><span>Dossier de révision personnel</span><span class="header-actions"><button class="theme-btn" id="themeToggle">Mode sombre</button><button class="theme-btn icon-btn" id="settingsGearBtn" title="Paramètres" aria-label="Paramètres">⚙️</button></span></p>
   <h1 id="headerTitle">EDN — Planning de révisions</h1>
   <div class="vitals" id="vitals"></div>
 </div>
@@ -849,7 +851,6 @@ window.addEventListener('pageshow', function(e){
   <button data-tab="lca">LCA</button>
   <button data-tab="items">Items</button>
   <button data-tab="sdd">SDD</button>
-  <button data-tab="settings">Paramètres</button>
 </div>
 
 <div class="wrap" id="app"><div class="loading">Chargement du dossier…</div></div>
@@ -3663,6 +3664,7 @@ function renderSettings(){
   }
 
   container.innerHTML = `
+    <button class="back-link" id="settingsBackBtn">← Retour</button>
     <div class="settings-card">
       <h3>Affichage & Compteurs du bandeau</h3>
       <div class="settings-group">
@@ -4062,6 +4064,12 @@ function renderSettings(){
     document.querySelectorAll('.ob-newcat-check').forEach(cb=>{ cb.checked = currentNewCats().includes(cb.value); });
     document.getElementById('onboardOverlay').classList.remove('hidden');
   });
+
+  document.getElementById('settingsBackBtn').addEventListener('click', ()=>{
+    currentTab = 'today';
+    document.querySelectorAll('#tabbar button').forEach(b=>b.classList.toggle('active', b.getAttribute('data-tab')==='today'));
+    render();
+  });
 }
 
 // ---------- annales, programmées automatiquement 1 à 2 semaines avant la DL d'une matière ----------
@@ -4194,6 +4202,15 @@ function bindStaticHandlers(){
     DATA.darkMode = !DATA.darkMode;
     applyTheme();
     saveData();
+  });
+
+  document.getElementById('settingsGearBtn').addEventListener('click', ()=>{
+    currentTab = 'settings';
+    selectedDayIso = null;
+    selectedItemNum = null;
+    progressSubview = null;
+    document.querySelectorAll('#tabbar button').forEach(b=>b.classList.remove('active'));
+    render();
   });
 
   document.querySelectorAll('#tabbar button').forEach(btn=>{
