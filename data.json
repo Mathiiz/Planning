@@ -2787,6 +2787,9 @@
     },
     "2026-09-22": {
       "custom_1790079223190_612": true
+    },
+    "2026-09-23": {
+      "custom_1790179100917_371": true
     }
   },
   "reportedDays": {
@@ -3202,6 +3205,12 @@
       {
         "id": "custom_1790079223190_612",
         "label": "Item 81,89 - Altération chronique de la vision et de l'audition"
+      }
+    ],
+    "2026-09-23": [
+      {
+        "id": "custom_1790179100917_371",
+        "label": "Item 240 - Hypoglycémie (pédiatrie)"
       }
     ]
   },
@@ -5027,6 +5036,30 @@
         "overridden": false,
         "originalItemNum": 295
       }
+    ],
+    "2026-09-23": [
+      {
+        "id": "S1_i217_o1",
+        "kind": "item",
+        "itemNum": 217,
+        "mode": "revision",
+        "idx": 32,
+        "phase": "S1",
+        "iso": "2026-09-23",
+        "overridden": false,
+        "originalItemNum": 217
+      },
+      {
+        "id": "S1_i65_o1",
+        "kind": "item",
+        "itemNum": 65,
+        "mode": "revision",
+        "idx": 33,
+        "phase": "S1",
+        "iso": "2026-09-23",
+        "overridden": false,
+        "originalItemNum": 65
+      }
     ]
   },
   "queueFreeze": {
@@ -5062,12 +5095,14 @@
       189,
       51,
       122,
-      295
+      295,
+      217,
+      65
     ],
     "S2": []
   },
   "_meta": {
     "schemaVersion": 4,
-    "updatedAt": "2026-09-23T15:28:53.185Z"
+    "updatedAt": "2026-09-23T15:58:23.878Z"
   }
 }
