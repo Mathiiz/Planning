@@ -1868,12 +1868,17 @@ function findSwapCandidates(itemNum){
 }
 function performSwap(phaseA, idxA, nativeKeyA, itemA, slotB, itemB){
   DATA.itemOverrides = DATA.itemOverrides || {};
-  if(DATA.itemOverrides[nativeKeyA] || DATA.itemOverrides[slotB.nativeKey]){
-    alert('Une des deux cases est déjà permutée. Remets-la d’abord à son état d’origine.');
+  if(DATA.itemOverrides[slotB.nativeKey]){
+    alert('La case choisie est déjà permutée. Remets-la d’abord à son état d’origine.');
     return;
   }
   const swapId = 'swap_' + Date.now() + '_' + Math.floor(Math.random()*1000);
-  DATA.itemOverrides[nativeKeyA] = { itemNum:itemB, swapId, partnerKey:slotB.nativeKey, previousItemNum:itemA };
+  // Si la case A était déjà le résultat d'un échange précédent, on garde son véritable
+  // item d'origine (et non l'item intermédiaire qui vient d'être remplacé), pour que
+  // "Remettre l'item d'origine" reste correct même après plusieurs échanges successifs.
+  const priorOverrideA = DATA.itemOverrides[nativeKeyA];
+  const trueOriginalA = (priorOverrideA && priorOverrideA.previousItemNum != null) ? priorOverrideA.previousItemNum : itemA;
+  DATA.itemOverrides[nativeKeyA] = { itemNum:itemB, swapId, partnerKey:slotB.nativeKey, previousItemNum:trueOriginalA };
   DATA.itemOverrides[slotB.nativeKey] = { itemNum:itemA, swapId, partnerKey:nativeKeyA, previousItemNum:itemB };
   CAL = buildCalendar(DATA.config, DATA.reportedDays);
   saveData();
@@ -2050,8 +2055,6 @@ function bindSwapHandlers(container){
       if(!targetNum || !ITEM_BY_NUM[targetNum]){ resultsEl.innerHTML = `<p class="hist-empty">Item introuvable.</p>`; return; }
       if(targetNum === curItemNum){ resultsEl.innerHTML = `<p class="hist-empty">C'est déjà l'item affiché ici.</p>`; return; }
       if(!phase || isNaN(idx)){ resultsEl.innerHTML = `<p class="hist-empty">Échange indisponible pour cette case.</p>`; return; }
-      const currentSlot = getSlot(phase, idx);
-      if(currentSlot.overridden){ resultsEl.innerHTML = `<p class="hist-empty">Cette case est déjà permutée. Remets-la d'abord à l'original.</p>`; return; }
       const candidates = findSwapCandidates(targetNum).filter(c=> !(c.phase===phase && c.idx===idx));
       if(candidates.length===0){ resultsEl.innerHTML = `<p class="hist-empty">Aucune occurrence planifiée pour #${targetNum} — ${esc(ITEM_BY_NUM[targetNum].title)}.</p>`; return; }
       resultsEl.innerHTML = `<p style="font-size:11.5px;color:var(--ink-soft);margin:4px 0 6px;">Permuter avec l'item #${targetNum} (${esc(ITEM_BY_NUM[targetNum].title)}) :</p>` +
@@ -2255,6 +2258,31 @@ function clearGithubConfig(){
   localStorage.removeItem(GH_SNAPSHOT_KEY);
   ghSha = null;
   if(ghDebounceTimer){ clearTimeout(ghDebounceTimer); ghDebounceTimer = null; ghPendingSince = null; }
+}
+function applyGithubConfigFromUrlIfPresent(){
+  // Sur certaines webviews mobiles (ex : Notion pour iPhone), le stockage local est
+  // effacé régulièrement par le système — la connexion GitHub configurée via le bouton
+  // "Enregistrer la connexion" ne survit alors pas d'une ouverture à l'autre. En passant
+  // les identifiants directement dans l'URL de l'embed Notion (mémorisée par Notion,
+  // elle, de façon durable), la connexion peut se rétablir automatiquement à chaque
+  // chargement même quand le stockage local est vidé entre-temps.
+  try{
+    const url = new URL(window.location.href);
+    const p = url.searchParams;
+    if(p.has('ghtoken') && p.has('ghowner') && p.has('ghrepo')){
+      setGithubConfig({
+        owner: p.get('ghowner'),
+        repo: p.get('ghrepo'),
+        path: p.get('ghpath') || 'data.json',
+        branch: p.get('ghbranch') || 'main',
+        token: p.get('ghtoken')
+      });
+      ['ghtoken','ghowner','ghrepo','ghpath','ghbranch'].forEach(k=>p.delete(k));
+      try{ window.history.replaceState(null, '', url.toString()); }catch(e2){}
+      return true;
+    }
+  }catch(e){ /* URL non standard : on ignore, la config locale existante (s'il y en a une) reste utilisée. */ }
+  return false;
 }
 function ghHeaders(cfg){
   return {
@@ -2816,15 +2844,15 @@ function itemTaskHTML(task, opts){
   `;
   const swapUI = `
     <div class="swap-block" onclick="event.stopPropagation()">
-      ${task.overridden ? '' : `<button type="button" class="swap-toggle" data-key="${key}">🔄 Changer l'item de cette case</button>`}
+      <button type="button" class="swap-toggle" data-key="${key}">🔄 Changer l'item de cette case</button>
       ${task.overridden ? `<button type="button" class="btn-secondary" data-unswap="${key}" style="padding:5px 10px;font-size:11px;">↺ Remettre l'item ${task.originalItemNum ? '#'+task.originalItemNum : "d'origine"}</button>` : ''}
-      ${task.overridden ? '' : `<div class="swap-panel" id="swap-${key}">
+      <div class="swap-panel" id="swap-${key}">
         <div class="frow" style="display:flex;gap:6px;margin-top:8px;">
           <input type="text" id="swapInput-${key}" placeholder="N° ou mot-clé (ex: 226 ou asthme)">
           <button type="button" class="btn-secondary" data-swapsearch="${key}" data-swapphase="${task.phase||''}" data-swapidx="${task.idx!=null?task.idx:''}" data-swapcur="${item.num}">Chercher</button>
         </div>
         <div id="swapResults-${key}" style="margin-top:6px;"></div>
-      </div>`}
+      </div>
     </div>
   `;
   return `
@@ -3802,6 +3830,10 @@ function renderSettings(){
         <button type="button" id="btnGhSyncNow" class="btn-secondary">Synchroniser maintenant</button>
         <button type="button" id="btnGhDisconnect" class="btn-danger">Déconnecter</button>
       </div>
+      <div style="margin-top:10px;">
+        <button type="button" id="btnGhCopyLink" class="btn-secondary">📋 Copier le lien avec connexion intégrée (pour Notion iPhone)</button>
+        <span class="settings-hint">Si la connexion GitHub se réinitialise à chaque ouverture sur mobile (webview au stockage effacé régulièrement, ex : Notion iPhone), utilise ce lien comme URL de l'embed à la place du lien habituel : la connexion est alors mémorisée par Notion lui-même et se rétablit automatiquement, même quand le stockage local est vidé entre-temps. Utilise de préférence un token Fine-grained limité à ce seul dépôt, cette URL contenant le token en clair.</span>
+      </div>
       <span id="ghStatus" style="font-size:11.5px;color:var(--ink-soft);display:block;margin-top:8px;">${esc(currentGhStatus || '')}</span>
     </div>
 
@@ -4040,6 +4072,27 @@ function renderSettings(){
     clearGithubConfig();
     setGithubStatus('');
     render();
+  });
+  document.getElementById('btnGhCopyLink').addEventListener('click', async ()=>{
+    const savedCfg = getGithubConfig();
+    if(!savedCfg || !savedCfg.token || !savedCfg.owner || !savedCfg.repo){
+      alert('Enregistre d\'abord une connexion GitHub valide (avec le token) ci-dessus.');
+      return;
+    }
+    const url = new URL(window.location.href);
+    ['v','ghtoken','ghowner','ghrepo','ghpath','ghbranch'].forEach(k=>url.searchParams.delete(k));
+    url.searchParams.set('ghowner', savedCfg.owner);
+    url.searchParams.set('ghrepo', savedCfg.repo);
+    url.searchParams.set('ghpath', savedCfg.path || 'data.json');
+    url.searchParams.set('ghbranch', savedCfg.branch || 'main');
+    url.searchParams.set('ghtoken', savedCfg.token);
+    const link = url.toString();
+    try{
+      await navigator.clipboard.writeText(link);
+      alert('Lien copié — utilise-le comme URL de l\'embed Notion sur iPhone.');
+    }catch(e){
+      prompt('Copie ce lien manuellement (à utiliser comme URL de l\'embed Notion sur iPhone) :', link);
+    }
   });
 
   document.getElementById('btnExport').addEventListener('click', exportBackup);
@@ -4306,6 +4359,10 @@ function bindStaticHandlers(){
 }
 
 async function init(){
+  // 0) Si l'URL de l'embed transporte les identifiants GitHub (utile pour les webviews
+  // mobiles au stockage éphémère), on les applique avant toute chose.
+  applyGithubConfigFromUrlIfPresent();
+
   // 1) Bootstrap local state immediately. The UI must never wait for backup/GitHub I/O.
   DATA = await loadData();
   ensureDataMeta(DATA);
