@@ -2627,7 +2627,9 @@
     "S1_i217_o1": true,
     "S1_i65_o1": true,
     "S1_i190_o1": true,
-    "S1_i52_o1": true
+    "S1_i52_o1": true,
+    "S1_i296_o1": true,
+    "S1_i123_o1": true
   },
   "checks": {
     "2026-08-29": {
@@ -2822,7 +2824,10 @@
       "itemNum": 123
     },
     "S1_i123_o1": {
-      "itemNum": 118
+      "itemNum": 128,
+      "swapId": "swap_1790416158161_712",
+      "partnerKey": "S1_i128_o1",
+      "previousItemNum": 118
     },
     "S1_i48_o1": {
       "itemNum": 49
@@ -2942,9 +2947,9 @@
       "previousItemNum": 216
     },
     "S1_i296_o1": {
-      "itemNum": 216,
-      "swapId": "swap_1789820881215_197",
-      "partnerKey": "S1_i216_o1",
+      "itemNum": 320,
+      "swapId": "swap_1790416132562_457",
+      "partnerKey": "S1_i320_o1",
       "previousItemNum": 296
     },
     "S1_i64_o1": {
@@ -3018,6 +3023,18 @@
       "swapId": "swap_1790261702608_707",
       "partnerKey": "S1_i52_o1",
       "previousItemNum": 345
+    },
+    "S1_i320_o1": {
+      "itemNum": 216,
+      "swapId": "swap_1790416132562_457",
+      "partnerKey": "S1_i296_o1",
+      "previousItemNum": 320
+    },
+    "S1_i128_o1": {
+      "itemNum": 118,
+      "swapId": "swap_1790416158161_712",
+      "partnerKey": "S1_i123_o1",
+      "previousItemNum": 128
     }
   },
   "subjectDeadlines": {
@@ -5136,6 +5153,30 @@
         "overridden": true,
         "originalItemNum": 52
       }
+    ],
+    "2026-09-25": [
+      {
+        "id": "S1_i123_o1",
+        "kind": "item",
+        "itemNum": 128,
+        "mode": "revision",
+        "idx": 36,
+        "phase": "S1",
+        "iso": "2026-09-25",
+        "overridden": true,
+        "originalItemNum": 123
+      },
+      {
+        "id": "S1_i296_o1",
+        "kind": "item",
+        "itemNum": 320,
+        "mode": "revision",
+        "idx": 37,
+        "phase": "S1",
+        "iso": "2026-09-25",
+        "overridden": true,
+        "originalItemNum": 296
+      }
     ]
   },
   "queueFreeze": {
@@ -5175,12 +5216,14 @@
       217,
       65,
       190,
-      52
+      52,
+      123,
+      296
     ],
     "S2": []
   },
   "_meta": {
     "schemaVersion": 4,
-    "updatedAt": "2026-09-26T09:48:20.746Z"
+    "updatedAt": "2026-09-26T09:49:21.879Z"
   }
 }
