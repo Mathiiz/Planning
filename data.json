@@ -18,7 +18,23 @@
     "dailyItemsPhase1": 2,
     "dailyItemsPhase2": 3,
     "studyModeP1": "alterne",
-    "studyModeP2": "alterne"
+    "studyModeP2": "alterne",
+    "weeklySchedule": {
+      "lca": {
+        "count": 1,
+        "days": [
+          "SA",
+          "SU"
+        ],
+        "periodWeeks": 1,
+        "startDate": ""
+      },
+      "rest": {
+        "days": [],
+        "periodWeeks": 1,
+        "startDate": ""
+      }
+    }
   },
   "items": [
     [
@@ -4864,6 +4880,50 @@
         "iso": "2026-08-31",
         "overridden": false,
         "originalItemNum": 213
+      },
+      {
+        "id": "S1_i62_o1",
+        "kind": "item",
+        "itemNum": 62,
+        "mode": "revision",
+        "idx": 12,
+        "phase": "S1",
+        "iso": "2026-08-31",
+        "overridden": false,
+        "originalItemNum": 62
+      },
+      {
+        "id": "S1_i119_o1",
+        "kind": "item",
+        "itemNum": 130,
+        "mode": "revision",
+        "idx": 13,
+        "phase": "S1",
+        "iso": "2026-08-31",
+        "overridden": true,
+        "originalItemNum": 119
+      },
+      {
+        "id": "S1_i187_o1",
+        "kind": "item",
+        "itemNum": 2,
+        "mode": "revision",
+        "idx": 14,
+        "phase": "S1",
+        "iso": "2026-08-31",
+        "overridden": true,
+        "originalItemNum": 187
+      },
+      {
+        "id": "S1_i49_o1",
+        "kind": "item",
+        "itemNum": 55,
+        "mode": "revision",
+        "idx": 15,
+        "phase": "S1",
+        "iso": "2026-08-31",
+        "overridden": true,
+        "originalItemNum": 49
       }
     ],
     "2026-09-01": [
@@ -4888,6 +4948,50 @@
         "iso": "2026-09-01",
         "overridden": true,
         "originalItemNum": 119
+      },
+      {
+        "id": "S1_i187_o1",
+        "kind": "item",
+        "itemNum": 2,
+        "mode": "revision",
+        "idx": 14,
+        "phase": "S1",
+        "iso": "2026-09-01",
+        "overridden": true,
+        "originalItemNum": 187
+      },
+      {
+        "id": "S1_i49_o1",
+        "kind": "item",
+        "itemNum": 55,
+        "mode": "revision",
+        "idx": 15,
+        "phase": "S1",
+        "iso": "2026-09-01",
+        "overridden": true,
+        "originalItemNum": 49
+      },
+      {
+        "id": "S1_i292_o1",
+        "kind": "item",
+        "itemNum": 292,
+        "mode": "revision",
+        "idx": 16,
+        "phase": "S1",
+        "iso": "2026-09-01",
+        "overridden": false,
+        "originalItemNum": 292
+      },
+      {
+        "id": "S1_i214_o1",
+        "kind": "item",
+        "itemNum": 316,
+        "mode": "revision",
+        "idx": 17,
+        "phase": "S1",
+        "iso": "2026-09-01",
+        "overridden": true,
+        "originalItemNum": 214
       }
     ],
     "2026-09-07": [
@@ -4912,6 +5016,50 @@
         "iso": "2026-09-07",
         "overridden": true,
         "originalItemNum": 49
+      },
+      {
+        "id": "S1_i63_o1",
+        "kind": "item",
+        "itemNum": 351,
+        "mode": "revision",
+        "idx": 18,
+        "phase": "S1",
+        "iso": "2026-09-07",
+        "overridden": true,
+        "originalItemNum": 63
+      },
+      {
+        "id": "S1_i120_o1",
+        "kind": "item",
+        "itemNum": 133,
+        "mode": "revision",
+        "idx": 19,
+        "phase": "S1",
+        "iso": "2026-09-07",
+        "overridden": true,
+        "originalItemNum": 120
+      },
+      {
+        "id": "S1_i293_o1",
+        "kind": "item",
+        "itemNum": 293,
+        "mode": "revision",
+        "idx": 22,
+        "phase": "S1",
+        "iso": "2026-09-07",
+        "overridden": false,
+        "originalItemNum": 293
+      },
+      {
+        "id": "S1_i215_o1",
+        "kind": "item",
+        "itemNum": 317,
+        "mode": "revision",
+        "idx": 23,
+        "phase": "S1",
+        "iso": "2026-09-07",
+        "overridden": true,
+        "originalItemNum": 215
       }
     ],
     "2026-09-10": [
@@ -4936,6 +5084,50 @@
         "iso": "2026-09-10",
         "overridden": true,
         "originalItemNum": 214
+      },
+      {
+        "id": "S1_i188_o1",
+        "kind": "item",
+        "itemNum": 3,
+        "mode": "revision",
+        "idx": 20,
+        "phase": "S1",
+        "iso": "2026-09-10",
+        "overridden": true,
+        "originalItemNum": 188
+      },
+      {
+        "id": "S1_i50_o1",
+        "kind": "item",
+        "itemNum": 50,
+        "mode": "revision",
+        "idx": 21,
+        "phase": "S1",
+        "iso": "2026-09-10",
+        "overridden": false,
+        "originalItemNum": 50
+      },
+      {
+        "id": "S1_i121_o1",
+        "kind": "item",
+        "itemNum": 9,
+        "mode": "revision",
+        "idx": 24,
+        "phase": "S1",
+        "iso": "2026-09-10",
+        "overridden": true,
+        "originalItemNum": 121
+      },
+      {
+        "id": "S1_i294_o1",
+        "kind": "item",
+        "itemNum": 294,
+        "mode": "revision",
+        "idx": 25,
+        "phase": "S1",
+        "iso": "2026-09-10",
+        "overridden": false,
+        "originalItemNum": 294
       }
     ],
     "2026-09-11": [
@@ -4960,6 +5152,50 @@
         "iso": "2026-09-11",
         "overridden": true,
         "originalItemNum": 120
+      },
+      {
+        "id": "S1_i293_o1",
+        "kind": "item",
+        "itemNum": 293,
+        "mode": "revision",
+        "idx": 22,
+        "phase": "S1",
+        "iso": "2026-09-11",
+        "overridden": false,
+        "originalItemNum": 293
+      },
+      {
+        "id": "S1_i215_o1",
+        "kind": "item",
+        "itemNum": 317,
+        "mode": "revision",
+        "idx": 23,
+        "phase": "S1",
+        "iso": "2026-09-11",
+        "overridden": true,
+        "originalItemNum": 215
+      },
+      {
+        "id": "S1_i216_o1",
+        "kind": "item",
+        "itemNum": 296,
+        "mode": "revision",
+        "idx": 26,
+        "phase": "S1",
+        "iso": "2026-09-11",
+        "overridden": true,
+        "originalItemNum": 216
+      },
+      {
+        "id": "S1_i64_o1",
+        "kind": "item",
+        "itemNum": 352,
+        "mode": "revision",
+        "idx": 27,
+        "phase": "S1",
+        "iso": "2026-09-11",
+        "overridden": true,
+        "originalItemNum": 64
       }
     ],
     "2026-09-14": [
@@ -4984,6 +5220,50 @@
         "iso": "2026-09-14",
         "overridden": false,
         "originalItemNum": 50
+      },
+      {
+        "id": "S1_i216_o1",
+        "kind": "item",
+        "itemNum": 296,
+        "mode": "revision",
+        "idx": 26,
+        "phase": "S1",
+        "iso": "2026-09-14",
+        "overridden": true,
+        "originalItemNum": 216
+      },
+      {
+        "id": "S1_i64_o1",
+        "kind": "item",
+        "itemNum": 352,
+        "mode": "revision",
+        "idx": 27,
+        "phase": "S1",
+        "iso": "2026-09-14",
+        "overridden": true,
+        "originalItemNum": 64
+      },
+      {
+        "id": "S1_i217_o1",
+        "kind": "item",
+        "itemNum": 318,
+        "mode": "revision",
+        "idx": 32,
+        "phase": "S1",
+        "iso": "2026-09-14",
+        "overridden": true,
+        "originalItemNum": 217
+      },
+      {
+        "id": "S1_i65_o1",
+        "kind": "item",
+        "itemNum": 353,
+        "mode": "revision",
+        "idx": 33,
+        "phase": "S1",
+        "iso": "2026-09-14",
+        "overridden": true,
+        "originalItemNum": 65
       }
     ],
     "2026-09-15": [
@@ -5008,6 +5288,50 @@
         "iso": "2026-09-15",
         "overridden": true,
         "originalItemNum": 215
+      },
+      {
+        "id": "S1_i189_o1",
+        "kind": "item",
+        "itemNum": 22,
+        "mode": "revision",
+        "idx": 28,
+        "phase": "S1",
+        "iso": "2026-09-15",
+        "overridden": true,
+        "originalItemNum": 189
+      },
+      {
+        "id": "S1_i51_o1",
+        "kind": "item",
+        "itemNum": 51,
+        "mode": "revision",
+        "idx": 29,
+        "phase": "S1",
+        "iso": "2026-09-15",
+        "overridden": false,
+        "originalItemNum": 51
+      },
+      {
+        "id": "S1_i190_o1",
+        "kind": "item",
+        "itemNum": 59,
+        "mode": "revision",
+        "idx": 34,
+        "phase": "S1",
+        "iso": "2026-09-15",
+        "overridden": true,
+        "originalItemNum": 190
+      },
+      {
+        "id": "S1_i52_o1",
+        "kind": "item",
+        "itemNum": 345,
+        "mode": "revision",
+        "idx": 35,
+        "phase": "S1",
+        "iso": "2026-09-15",
+        "overridden": true,
+        "originalItemNum": 52
       }
     ],
     "2026-09-17": [
@@ -5032,6 +5356,50 @@
         "iso": "2026-09-17",
         "overridden": false,
         "originalItemNum": 294
+      },
+      {
+        "id": "S1_i122_o1",
+        "kind": "item",
+        "itemNum": 122,
+        "mode": "revision",
+        "idx": 30,
+        "phase": "S1",
+        "iso": "2026-09-17",
+        "overridden": false,
+        "originalItemNum": 122
+      },
+      {
+        "id": "S1_i295_o1",
+        "kind": "item",
+        "itemNum": 295,
+        "mode": "revision",
+        "idx": 31,
+        "phase": "S1",
+        "iso": "2026-09-17",
+        "overridden": false,
+        "originalItemNum": 295
+      },
+      {
+        "id": "S1_i123_o1",
+        "kind": "item",
+        "itemNum": 128,
+        "mode": "revision",
+        "idx": 36,
+        "phase": "S1",
+        "iso": "2026-09-17",
+        "overridden": true,
+        "originalItemNum": 123
+      },
+      {
+        "id": "S1_i296_o1",
+        "kind": "item",
+        "itemNum": 320,
+        "mode": "revision",
+        "idx": 37,
+        "phase": "S1",
+        "iso": "2026-09-17",
+        "overridden": true,
+        "originalItemNum": 296
       }
     ],
     "2026-09-18": [
@@ -5056,6 +5424,50 @@
         "iso": "2026-09-18",
         "overridden": true,
         "originalItemNum": 64
+      },
+      {
+        "id": "S1_i217_o1",
+        "kind": "item",
+        "itemNum": 318,
+        "mode": "revision",
+        "idx": 32,
+        "phase": "S1",
+        "iso": "2026-09-18",
+        "overridden": true,
+        "originalItemNum": 217
+      },
+      {
+        "id": "S1_i65_o1",
+        "kind": "item",
+        "itemNum": 353,
+        "mode": "revision",
+        "idx": 33,
+        "phase": "S1",
+        "iso": "2026-09-18",
+        "overridden": true,
+        "originalItemNum": 65
+      },
+      {
+        "id": "S1_i218_o1",
+        "kind": "item",
+        "itemNum": 218,
+        "mode": "revision",
+        "idx": 38,
+        "phase": "S1",
+        "iso": "2026-09-18",
+        "overridden": false,
+        "originalItemNum": 218
+      },
+      {
+        "id": "S1_i66_o1",
+        "kind": "item",
+        "itemNum": 66,
+        "mode": "revision",
+        "idx": 39,
+        "phase": "S1",
+        "iso": "2026-09-18",
+        "overridden": false,
+        "originalItemNum": 66
       }
     ],
     "2026-09-21": [
@@ -5080,6 +5492,50 @@
         "iso": "2026-09-21",
         "overridden": false,
         "originalItemNum": 51
+      },
+      {
+        "id": "S1_i123_o1",
+        "kind": "item",
+        "itemNum": 128,
+        "mode": "revision",
+        "idx": 36,
+        "phase": "S1",
+        "iso": "2026-09-21",
+        "overridden": true,
+        "originalItemNum": 123
+      },
+      {
+        "id": "S1_i296_o1",
+        "kind": "item",
+        "itemNum": 320,
+        "mode": "revision",
+        "idx": 37,
+        "phase": "S1",
+        "iso": "2026-09-21",
+        "overridden": true,
+        "originalItemNum": 296
+      },
+      {
+        "id": "S1_i219_o1",
+        "kind": "item",
+        "itemNum": 219,
+        "mode": "revision",
+        "idx": 44,
+        "phase": "S1",
+        "iso": "2026-09-21",
+        "overridden": false,
+        "originalItemNum": 219
+      },
+      {
+        "id": "S1_i67_o1",
+        "kind": "item",
+        "itemNum": 67,
+        "mode": "revision",
+        "idx": 45,
+        "phase": "S1",
+        "iso": "2026-09-21",
+        "overridden": false,
+        "originalItemNum": 67
       }
     ],
     "2026-09-22": [
@@ -5104,6 +5560,50 @@
         "iso": "2026-09-22",
         "overridden": false,
         "originalItemNum": 295
+      },
+      {
+        "id": "S1_i218_o1",
+        "kind": "item",
+        "itemNum": 218,
+        "mode": "revision",
+        "idx": 38,
+        "phase": "S1",
+        "iso": "2026-09-22",
+        "overridden": false,
+        "originalItemNum": 218
+      },
+      {
+        "id": "S1_i66_o1",
+        "kind": "item",
+        "itemNum": 66,
+        "mode": "revision",
+        "idx": 39,
+        "phase": "S1",
+        "iso": "2026-09-22",
+        "overridden": false,
+        "originalItemNum": 66
+      },
+      {
+        "id": "S1_i192_o1",
+        "kind": "item",
+        "itemNum": 192,
+        "mode": "revision",
+        "idx": 46,
+        "phase": "S1",
+        "iso": "2026-09-22",
+        "overridden": false,
+        "originalItemNum": 192
+      },
+      {
+        "id": "S1_i54_o1",
+        "kind": "item",
+        "itemNum": 54,
+        "mode": "revision",
+        "idx": 47,
+        "phase": "S1",
+        "iso": "2026-09-22",
+        "overridden": false,
+        "originalItemNum": 54
       }
     ],
     "2026-09-23": [
@@ -5128,6 +5628,50 @@
         "iso": "2026-09-23",
         "overridden": true,
         "originalItemNum": 65
+      },
+      {
+        "id": "S1_i191_o1",
+        "kind": "item",
+        "itemNum": 191,
+        "mode": "revision",
+        "idx": 40,
+        "phase": "S1",
+        "iso": "2026-09-23",
+        "overridden": false,
+        "originalItemNum": 191
+      },
+      {
+        "id": "S1_i53_o1",
+        "kind": "item",
+        "itemNum": 53,
+        "mode": "revision",
+        "idx": 41,
+        "phase": "S1",
+        "iso": "2026-09-23",
+        "overridden": false,
+        "originalItemNum": 53
+      },
+      {
+        "id": "S1_i125_o1",
+        "kind": "item",
+        "itemNum": 125,
+        "mode": "revision",
+        "idx": 48,
+        "phase": "S1",
+        "iso": "2026-09-23",
+        "overridden": false,
+        "originalItemNum": 125
+      },
+      {
+        "id": "S1_i299_o1",
+        "kind": "item",
+        "itemNum": 299,
+        "mode": "revision",
+        "idx": 49,
+        "phase": "S1",
+        "iso": "2026-09-23",
+        "overridden": false,
+        "originalItemNum": 299
       }
     ],
     "2026-09-24": [
@@ -5152,6 +5696,50 @@
         "iso": "2026-09-24",
         "overridden": true,
         "originalItemNum": 52
+      },
+      {
+        "id": "S1_i124_o1",
+        "kind": "item",
+        "itemNum": 124,
+        "mode": "revision",
+        "idx": 42,
+        "phase": "S1",
+        "iso": "2026-09-24",
+        "overridden": false,
+        "originalItemNum": 124
+      },
+      {
+        "id": "S1_i298_o1",
+        "kind": "item",
+        "itemNum": 298,
+        "mode": "revision",
+        "idx": 43,
+        "phase": "S1",
+        "iso": "2026-09-24",
+        "overridden": false,
+        "originalItemNum": 298
+      },
+      {
+        "id": "S1_i220_o1",
+        "kind": "item",
+        "itemNum": 220,
+        "mode": "revision",
+        "idx": 50,
+        "phase": "S1",
+        "iso": "2026-09-24",
+        "overridden": false,
+        "originalItemNum": 220
+      },
+      {
+        "id": "S1_i68_o1",
+        "kind": "item",
+        "itemNum": 68,
+        "mode": "revision",
+        "idx": 51,
+        "phase": "S1",
+        "iso": "2026-09-24",
+        "overridden": false,
+        "originalItemNum": 68
       }
     ],
     "2026-09-25": [
@@ -5176,6 +5764,606 @@
         "iso": "2026-09-25",
         "overridden": true,
         "originalItemNum": 296
+      },
+      {
+        "id": "S1_i219_o1",
+        "kind": "item",
+        "itemNum": 219,
+        "mode": "revision",
+        "idx": 44,
+        "phase": "S1",
+        "iso": "2026-09-25",
+        "overridden": false,
+        "originalItemNum": 219
+      },
+      {
+        "id": "S1_i67_o1",
+        "kind": "item",
+        "itemNum": 67,
+        "mode": "revision",
+        "idx": 45,
+        "phase": "S1",
+        "iso": "2026-09-25",
+        "overridden": false,
+        "originalItemNum": 67
+      },
+      {
+        "id": "S1_i193_o1",
+        "kind": "item",
+        "itemNum": 193,
+        "mode": "revision",
+        "idx": 52,
+        "phase": "S1",
+        "iso": "2026-09-25",
+        "overridden": false,
+        "originalItemNum": 193
+      },
+      {
+        "id": "S1_i55_o1",
+        "kind": "item",
+        "itemNum": 49,
+        "mode": "revision",
+        "idx": 53,
+        "phase": "S1",
+        "iso": "2026-09-25",
+        "overridden": true,
+        "originalItemNum": 55
+      }
+    ],
+    "2026-09-28": [
+      {
+        "id": "S1_i218_o1",
+        "kind": "item",
+        "itemNum": 218,
+        "mode": "revision",
+        "idx": 38,
+        "phase": "S1",
+        "iso": "2026-09-28",
+        "overridden": false,
+        "originalItemNum": 218
+      },
+      {
+        "id": "S1_i66_o1",
+        "kind": "item",
+        "itemNum": 66,
+        "mode": "revision",
+        "idx": 39,
+        "phase": "S1",
+        "iso": "2026-09-28",
+        "overridden": false,
+        "originalItemNum": 66
+      },
+      {
+        "id": "S1_i125_o1",
+        "kind": "item",
+        "itemNum": 125,
+        "mode": "revision",
+        "idx": 48,
+        "phase": "S1",
+        "iso": "2026-09-28",
+        "overridden": false,
+        "originalItemNum": 125
+      },
+      {
+        "id": "S1_i299_o1",
+        "kind": "item",
+        "itemNum": 299,
+        "mode": "revision",
+        "idx": 49,
+        "phase": "S1",
+        "iso": "2026-09-28",
+        "overridden": false,
+        "originalItemNum": 299
+      },
+      {
+        "id": "S1_i194_o1",
+        "kind": "item",
+        "itemNum": 194,
+        "mode": "revision",
+        "idx": 58,
+        "phase": "S1",
+        "iso": "2026-09-28",
+        "overridden": false,
+        "originalItemNum": 194
+      },
+      {
+        "id": "S1_i56_o1",
+        "kind": "item",
+        "itemNum": 56,
+        "mode": "revision",
+        "idx": 59,
+        "phase": "S1",
+        "iso": "2026-09-28",
+        "overridden": false,
+        "originalItemNum": 56
+      }
+    ],
+    "2026-08-29": [
+      {
+        "id": "S1_i291_o1",
+        "kind": "item",
+        "itemNum": 291,
+        "mode": "revision",
+        "idx": 10,
+        "phase": "S1",
+        "iso": "2026-08-29",
+        "overridden": false,
+        "originalItemNum": 291
+      },
+      {
+        "id": "S1_i213_o1",
+        "kind": "item",
+        "itemNum": 213,
+        "mode": "revision",
+        "idx": 11,
+        "phase": "S1",
+        "iso": "2026-08-29",
+        "overridden": false,
+        "originalItemNum": 213
+      },
+      {
+        "id": "lca",
+        "kind": "generic",
+        "label": "LCA — article (méthodologie + analyse critique)",
+        "iso": "2026-08-29"
+      },
+      {
+        "id": "free",
+        "kind": "generic",
+        "label": "Révision libre — item ou matière de ton choix",
+        "iso": "2026-08-29"
+      },
+      {
+        "id": "lca",
+        "kind": "generic",
+        "label": "LCA — article (méthodologie + analyse critique)"
+      },
+      {
+        "id": "free",
+        "kind": "generic",
+        "label": "Révision libre — item ou matière de ton choix"
+      }
+    ],
+    "2026-09-05": [
+      {
+        "id": "S1_i292_o1",
+        "kind": "item",
+        "itemNum": 292,
+        "mode": "revision",
+        "idx": 16,
+        "phase": "S1",
+        "iso": "2026-09-05",
+        "overridden": false,
+        "originalItemNum": 292
+      },
+      {
+        "id": "S1_i214_o1",
+        "kind": "item",
+        "itemNum": 316,
+        "mode": "revision",
+        "idx": 17,
+        "phase": "S1",
+        "iso": "2026-09-05",
+        "overridden": true,
+        "originalItemNum": 214
+      },
+      {
+        "id": "lca",
+        "kind": "generic",
+        "label": "LCA — article (méthodologie + analyse critique)",
+        "iso": "2026-09-05"
+      },
+      {
+        "id": "free",
+        "kind": "generic",
+        "label": "Révision libre — item ou matière de ton choix",
+        "iso": "2026-09-05"
+      },
+      {
+        "id": "S1_i63_o1",
+        "kind": "item",
+        "itemNum": 351,
+        "mode": "revision",
+        "idx": 18,
+        "phase": "S1",
+        "iso": "2026-09-05",
+        "overridden": true,
+        "originalItemNum": 63
+      },
+      {
+        "id": "S1_i120_o1",
+        "kind": "item",
+        "itemNum": 133,
+        "mode": "revision",
+        "idx": 19,
+        "phase": "S1",
+        "iso": "2026-09-05",
+        "overridden": true,
+        "originalItemNum": 120
+      },
+      {
+        "id": "lca",
+        "kind": "generic",
+        "label": "LCA — article (méthodologie + analyse critique)"
+      },
+      {
+        "id": "free",
+        "kind": "generic",
+        "label": "Révision libre — item ou matière de ton choix"
+      }
+    ],
+    "2026-09-12": [
+      {
+        "id": "S1_i121_o1",
+        "kind": "item",
+        "itemNum": 9,
+        "mode": "revision",
+        "idx": 24,
+        "phase": "S1",
+        "iso": "2026-09-12",
+        "overridden": true,
+        "originalItemNum": 121
+      },
+      {
+        "id": "S1_i294_o1",
+        "kind": "item",
+        "itemNum": 294,
+        "mode": "revision",
+        "idx": 25,
+        "phase": "S1",
+        "iso": "2026-09-12",
+        "overridden": false,
+        "originalItemNum": 294
+      },
+      {
+        "id": "lca",
+        "kind": "generic",
+        "label": "LCA — article (méthodologie + analyse critique)",
+        "iso": "2026-09-12"
+      },
+      {
+        "id": "free",
+        "kind": "generic",
+        "label": "Révision libre — item ou matière de ton choix",
+        "iso": "2026-09-12"
+      },
+      {
+        "id": "S1_i189_o1",
+        "kind": "item",
+        "itemNum": 22,
+        "mode": "revision",
+        "idx": 28,
+        "phase": "S1",
+        "iso": "2026-09-12",
+        "overridden": true,
+        "originalItemNum": 189
+      },
+      {
+        "id": "S1_i51_o1",
+        "kind": "item",
+        "itemNum": 51,
+        "mode": "revision",
+        "idx": 29,
+        "phase": "S1",
+        "iso": "2026-09-12",
+        "overridden": false,
+        "originalItemNum": 51
+      },
+      {
+        "id": "lca",
+        "kind": "generic",
+        "label": "LCA — article (méthodologie + analyse critique)"
+      },
+      {
+        "id": "free",
+        "kind": "generic",
+        "label": "Révision libre — item ou matière de ton choix"
+      }
+    ],
+    "2026-09-19": [
+      {
+        "id": "S1_i190_o1",
+        "kind": "item",
+        "itemNum": 59,
+        "mode": "revision",
+        "idx": 34,
+        "phase": "S1",
+        "iso": "2026-09-19",
+        "overridden": true,
+        "originalItemNum": 190
+      },
+      {
+        "id": "S1_i52_o1",
+        "kind": "item",
+        "itemNum": 345,
+        "mode": "revision",
+        "idx": 35,
+        "phase": "S1",
+        "iso": "2026-09-19",
+        "overridden": true,
+        "originalItemNum": 52
+      },
+      {
+        "id": "lca",
+        "kind": "generic",
+        "label": "LCA — article (méthodologie + analyse critique)",
+        "iso": "2026-09-19"
+      },
+      {
+        "id": "free",
+        "kind": "generic",
+        "label": "Révision libre — item ou matière de ton choix",
+        "iso": "2026-09-19"
+      },
+      {
+        "id": "S1_i191_o1",
+        "kind": "item",
+        "itemNum": 191,
+        "mode": "revision",
+        "idx": 40,
+        "phase": "S1",
+        "iso": "2026-09-19",
+        "overridden": false,
+        "originalItemNum": 191
+      },
+      {
+        "id": "S1_i53_o1",
+        "kind": "item",
+        "itemNum": 53,
+        "mode": "revision",
+        "idx": 41,
+        "phase": "S1",
+        "iso": "2026-09-19",
+        "overridden": false,
+        "originalItemNum": 53
+      },
+      {
+        "id": "lca",
+        "kind": "generic",
+        "label": "LCA — article (méthodologie + analyse critique)"
+      },
+      {
+        "id": "free",
+        "kind": "generic",
+        "label": "Révision libre — item ou matière de ton choix"
+      }
+    ],
+    "2026-09-26": [
+      {
+        "id": "S1_i192_o1",
+        "kind": "item",
+        "itemNum": 192,
+        "mode": "revision",
+        "idx": 46,
+        "phase": "S1",
+        "iso": "2026-09-26",
+        "overridden": false,
+        "originalItemNum": 192
+      },
+      {
+        "id": "S1_i54_o1",
+        "kind": "item",
+        "itemNum": 54,
+        "mode": "revision",
+        "idx": 47,
+        "phase": "S1",
+        "iso": "2026-09-26",
+        "overridden": false,
+        "originalItemNum": 54
+      },
+      {
+        "id": "lca",
+        "kind": "generic",
+        "label": "LCA — article (méthodologie + analyse critique)",
+        "iso": "2026-09-26"
+      },
+      {
+        "id": "free",
+        "kind": "generic",
+        "label": "Révision libre — item ou matière de ton choix",
+        "iso": "2026-09-26"
+      },
+      {
+        "id": "S1_i126_o1",
+        "kind": "item",
+        "itemNum": 126,
+        "mode": "revision",
+        "idx": 54,
+        "phase": "S1",
+        "iso": "2026-09-26",
+        "overridden": false,
+        "originalItemNum": 126
+      },
+      {
+        "id": "S1_i300_o1",
+        "kind": "item",
+        "itemNum": 300,
+        "mode": "revision",
+        "idx": 55,
+        "phase": "S1",
+        "iso": "2026-09-26",
+        "overridden": false,
+        "originalItemNum": 300
+      },
+      {
+        "id": "lca",
+        "kind": "generic",
+        "label": "LCA — article (méthodologie + analyse critique)"
+      },
+      {
+        "id": "free",
+        "kind": "generic",
+        "label": "Révision libre — item ou matière de ton choix"
+      }
+    ],
+    "2026-08-30": [
+      {
+        "id": "S1_i62_o1",
+        "kind": "item",
+        "itemNum": 62,
+        "mode": "revision",
+        "idx": 12,
+        "phase": "S1",
+        "iso": "2026-08-30",
+        "overridden": false,
+        "originalItemNum": 62
+      },
+      {
+        "id": "S1_i119_o1",
+        "kind": "item",
+        "itemNum": 130,
+        "mode": "revision",
+        "idx": 13,
+        "phase": "S1",
+        "iso": "2026-08-30",
+        "overridden": true,
+        "originalItemNum": 119
+      },
+      {
+        "id": "lca",
+        "kind": "generic",
+        "label": "LCA — article (méthodologie + analyse critique)"
+      },
+      {
+        "id": "free",
+        "kind": "generic",
+        "label": "Révision libre — item ou matière de ton choix"
+      }
+    ],
+    "2026-09-06": [
+      {
+        "id": "S1_i188_o1",
+        "kind": "item",
+        "itemNum": 3,
+        "mode": "revision",
+        "idx": 20,
+        "phase": "S1",
+        "iso": "2026-09-06",
+        "overridden": true,
+        "originalItemNum": 188
+      },
+      {
+        "id": "S1_i50_o1",
+        "kind": "item",
+        "itemNum": 50,
+        "mode": "revision",
+        "idx": 21,
+        "phase": "S1",
+        "iso": "2026-09-06",
+        "overridden": false,
+        "originalItemNum": 50
+      },
+      {
+        "id": "lca",
+        "kind": "generic",
+        "label": "LCA — article (méthodologie + analyse critique)"
+      },
+      {
+        "id": "free",
+        "kind": "generic",
+        "label": "Révision libre — item ou matière de ton choix"
+      }
+    ],
+    "2026-09-13": [
+      {
+        "id": "S1_i122_o1",
+        "kind": "item",
+        "itemNum": 122,
+        "mode": "revision",
+        "idx": 30,
+        "phase": "S1",
+        "iso": "2026-09-13",
+        "overridden": false,
+        "originalItemNum": 122
+      },
+      {
+        "id": "S1_i295_o1",
+        "kind": "item",
+        "itemNum": 295,
+        "mode": "revision",
+        "idx": 31,
+        "phase": "S1",
+        "iso": "2026-09-13",
+        "overridden": false,
+        "originalItemNum": 295
+      },
+      {
+        "id": "lca",
+        "kind": "generic",
+        "label": "LCA — article (méthodologie + analyse critique)"
+      },
+      {
+        "id": "free",
+        "kind": "generic",
+        "label": "Révision libre — item ou matière de ton choix"
+      }
+    ],
+    "2026-09-20": [
+      {
+        "id": "S1_i124_o1",
+        "kind": "item",
+        "itemNum": 124,
+        "mode": "revision",
+        "idx": 42,
+        "phase": "S1",
+        "iso": "2026-09-20",
+        "overridden": false,
+        "originalItemNum": 124
+      },
+      {
+        "id": "S1_i298_o1",
+        "kind": "item",
+        "itemNum": 298,
+        "mode": "revision",
+        "idx": 43,
+        "phase": "S1",
+        "iso": "2026-09-20",
+        "overridden": false,
+        "originalItemNum": 298
+      },
+      {
+        "id": "lca",
+        "kind": "generic",
+        "label": "LCA — article (méthodologie + analyse critique)"
+      },
+      {
+        "id": "free",
+        "kind": "generic",
+        "label": "Révision libre — item ou matière de ton choix"
+      }
+    ],
+    "2026-09-27": [
+      {
+        "id": "S1_i315_o1",
+        "kind": "item",
+        "itemNum": 315,
+        "mode": "revision",
+        "idx": 56,
+        "phase": "S1",
+        "iso": "2026-09-27",
+        "overridden": false,
+        "originalItemNum": 315
+      },
+      {
+        "id": "S1_i69_o1",
+        "kind": "item",
+        "itemNum": 69,
+        "mode": "revision",
+        "idx": 57,
+        "phase": "S1",
+        "iso": "2026-09-27",
+        "overridden": false,
+        "originalItemNum": 69
+      },
+      {
+        "id": "lca",
+        "kind": "generic",
+        "label": "LCA — article (méthodologie + analyse critique)"
+      },
+      {
+        "id": "free",
+        "kind": "generic",
+        "label": "Révision libre — item ou matière de ton choix"
       }
     ]
   },
@@ -5218,12 +6406,14 @@
       190,
       52,
       123,
-      296
+      296,
+      218,
+      66
     ],
     "S2": []
   },
   "_meta": {
     "schemaVersion": 4,
-    "updatedAt": "2026-09-27T22:31:38.887Z"
+    "updatedAt": "2026-09-27T22:32:27.812Z"
   }
 }
