@@ -154,6 +154,27 @@ window.addEventListener('pageshow', function(e){
   .plan-row .pitems{flex:1;display:flex;gap:5px;flex-wrap:wrap;}
   .plan-row .pitem{font-family:var(--mono);font-size:10px;padding:1px 5px;border-radius:2px;color:#fff;}
   .month-divider{font-family:var(--serif);font-size:15px;font-weight:600;margin:20px 0 8px;padding-bottom:5px;border-bottom:1px solid var(--rule);}
+  .cal-nav{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:10px;}
+  .cal-nav select{font-family:var(--sans);font-size:12.5px;padding:6px 8px;border:1px solid var(--rule);border-radius:8px;background:var(--paper-raised);color:var(--ink);}
+  .cal-nav .btn-secondary{padding:6px 10px;font-size:12.5px;}
+  .cal-nav #calToday{margin-left:auto;}
+  .cal-weekday-header{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:4px;}
+  .cal-weekday-header span{text-align:center;font-family:var(--mono);font-size:10px;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.05em;}
+  .cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;}
+  .cal-cell{min-height:58px;background:var(--white);border:1px solid var(--rule-soft);border-radius:8px;padding:4px;cursor:pointer;display:flex;flex-direction:column;gap:3px;}
+  .cal-cell:hover{border-color:var(--accent);}
+  .cal-cell.out{background:none;border-color:transparent;cursor:default;}
+  .cal-cell.today{border-color:var(--accent);border-width:2px;}
+  .cal-daynum{font-family:var(--mono);font-size:10.5px;color:var(--ink-soft);}
+  .cal-cell.today .cal-daynum{color:var(--accent);font-weight:700;}
+  .cal-dots{display:flex;gap:3px;flex-wrap:wrap;}
+  .cal-dot{width:8px;height:8px;border-radius:50%;display:inline-block;}
+  .cal-tag{font-family:var(--sans);font-size:9.5px;font-weight:600;padding:2px 5px;border-radius:4px;color:#fff;align-self:flex-start;}
+  @media (max-width:600px){
+    .cal-cell{min-height:42px;padding:3px;}
+    .cal-tag{font-size:8.5px;padding:1px 3px;}
+    .cal-weekday-header span{font-size:9px;}
+  }
   .weekend-note{font-size:11.5px;color:var(--ink-soft);background:var(--paper-raised);border:1px dashed var(--rule);border-radius:var(--radius);padding:10px 12px;margin-bottom:14px;}
 
   .spec-card{background:var(--white);border:1px solid var(--rule-soft);border-radius:var(--radius);padding:13px 16px;margin-bottom:8px;cursor:pointer;}
@@ -519,12 +540,12 @@ window.addEventListener('pageshow', function(e){
     margin:0 auto;
     padding:44px 28px 120px;
   }
-  .week-summary,.day-head,.task-card,.generic-list,.plan-row,.spec-card,.history-panel,.lca-row,.retard-row,.add-item-form,.settings-card,.subject-config-list,.item-manage-row{
+  .week-summary,.day-head,.task-card,.generic-list,.plan-row,.spec-card,.history-panel,.lca-row,.retard-row,.add-item-form,.settings-card,.subject-config-list,.item-manage-row,.cal-cell{
     border:none !important;
     box-shadow:0 1px 2px rgba(0,0,0,.04),0 8px 30px rgba(0,0,0,.035);
     transition:all .5s ease-out;
   }
-  body.dark .week-summary,body.dark .day-head,body.dark .task-card,body.dark .generic-list,body.dark .plan-row,body.dark .spec-card,body.dark .history-panel,body.dark .lca-row,body.dark .retard-row,body.dark .add-item-form,body.dark .settings-card,body.dark .subject-config-list,body.dark .item-manage-row{
+  body.dark .week-summary,body.dark .day-head,body.dark .task-card,body.dark .generic-list,body.dark .plan-row,body.dark .spec-card,body.dark .history-panel,body.dark .lca-row,body.dark .retard-row,body.dark .add-item-form,body.dark .settings-card,body.dark .subject-config-list,body.dark .item-manage-row,body.dark .cal-cell{
     box-shadow:none;
   }
 
@@ -1364,6 +1385,34 @@ function fmtLong(d){ return d.toLocaleDateString('fr-FR',{weekday:'long',day:'nu
 function fmtMonthYear(d){ const s=d.toLocaleDateString('fr-FR',{month:'long',year:'numeric'}); return s.charAt(0).toUpperCase()+s.slice(1); }
 function daysBetween(a,b){ return Math.round((b-a)/86400000); }
 function isWeekendDate(d){ const dow=d.getDay(); return dow===0||dow===6; }
+const DOW_CODES = ['SU','MO','TU','WE','TH','FR','SA'];
+const DOW_LABELS = {MO:'Lun',TU:'Mar',WE:'Mer',TH:'Jeu',FR:'Ven',SA:'Sam',SU:'Dim'};
+function dowCode(d){ return DOW_CODES[d.getDay()]; }
+function getWeeklySchedule(kind){
+  const ws = (DATA && DATA.config && DATA.config.weeklySchedule) || {};
+  const defaults = {
+    lca:  { count:2, days:['SA','SU'], periodWeeks:1, startDate:'' },
+    free: { count:1, days:['SA','SU'], periodWeeks:1, startDate:'' },
+    rest: { days:['SA','SU'], periodWeeks:1, startDate:'' }
+  };
+  return Object.assign({}, defaults[kind], ws[kind]||{});
+}
+function isScheduledOccurrence(date, sched){
+  if(!sched || !Array.isArray(sched.days) || sched.days.length===0) return false;
+  if(!sched.days.includes(dowCode(date))) return false;
+  const refRaw = sched.startDate || (DATA && DATA.config && DATA.config.start);
+  const ref = refRaw ? parseISO(refRaw) : date;
+  // La planification ne démarre qu'à partir de cette date précise (ex : LCA qui ne
+  // commence qu'en 5ᵉ année) — pas de rattrapage rétroactif avant ce point de départ.
+  if(date < ref) return false;
+  const period = Math.max(1, parseInt(sched.periodWeeks,10) || 1);
+  if(period <= 1) return true;
+  const weekIndex = Math.floor(daysBetween(ref, date) / 7);
+  return ((weekIndex % period) + period) % period === 0;
+}
+function isConfiguredRestDay(date){
+  return isScheduledOccurrence(date, getWeeklySchedule('rest'));
+}
 function todayDate(){ const t=new Date(); t.setHours(0,0,0,0); return t; }
 function todayIso(){ return toISO(todayDate()); }
 function validatePlanningDates(startIso, s1EndIso, examIso, ecosIso){
@@ -1395,7 +1444,15 @@ function getDefaultConfig(){
     studyModeP1: 'alterne',
     studyModeP2: 'alterne',
     showCountdownEdn: true,
-    showCountdownEcos: true
+    showCountdownEcos: true,
+    // Organisation hebdomadaire : mêmes options (jours de la semaine + période en
+    // semaines) pour la LCA, la révision libre et le repos. Valeurs par défaut =
+    // comportement historique (week-end = samedi + dimanche, chaque semaine).
+    weeklySchedule: {
+      lca:  { count:2, days:['SA','SU'], periodWeeks:1 },
+      free: { count:1, days:['SA','SU'], periodWeeks:1 },
+      rest: { days:['SA','SU'], periodWeeks:1 }
+    }
   };
 }
 
@@ -1686,6 +1743,7 @@ let currentTab = 'today';
 let selectedDayIso = null;
 let selectedItemNum = null;
 let progressSubview = null; // null | 'difficulty'
+let planningViewMonth = null; // Date (1er du mois affiché) dans la vue calendrier du Planning
 
 function buildCalendar(cfg, reportedDays){
   reportedDays = reportedDays || {};
@@ -1704,7 +1762,7 @@ function buildCalendar(cfg, reportedDays){
   let cur = new Date(start);
   const todayCutoff = todayDate();
   while(cur <= finalDate){
-    const weekend = isWeekendDate(cur);
+    const weekend = isConfiguredRestDay(cur);
     let phase;
     if(cur > exam) phase='ECOS';
     else if(cur >= consolStart) phase='CONSOL';
@@ -1760,20 +1818,33 @@ function buildCalendar(cfg, reportedDays){
     } else if(!weekend && (phase==='S1'||phase==='S2')){
       day.tasks = [];
     } else if(weekend){
+      // Jour de repos configuré : véritable coupure, aucun contenu (ni item, ni LCA,
+      // ni révision libre) — voir plus bas pour ces deux dernières, indépendantes.
       day.tasks = [];
-      if(!reported){
-        if(currentStudentYear() >= 5){
-          day.tasks.push({id:'lca', kind:'generic', label:"LCA — 2 articles minimum (méthodologie + analyse critique)"});
-        }
-        day.tasks.push({id:'free', kind:'generic', label:"Révision libre — item ou matière de ton choix (rattrapage)"});
-        if(phase==='CONSOL') day.tasks.push({id:'rest', kind:'generic', label:"Repos actif — vraie coupure en fin de semaine"});
-      }
     } else { // CONSOL
       day.tasks = reported ? [] : [
         {id:'anki_all', kind:'generic', label:"Anki — session complète (aucune nouvelle carte)"},
         {id:'qcm_blancs', kind:'generic', label:"QCM blancs / annales chronométrées, conditions d'examen"},
         {id:'flash', kind:'generic', label:"Relecture flash — points faibles identifiés"},
       ];
+    }
+
+    // LCA et révision libre : planifiées indépendamment du repos, chacune selon ses
+    // propres jours de la semaine et sa propre période (en semaines) — elles peuvent
+    // donc tomber n'importe quel jour, y compris un jour de repos ou un jour d'item.
+    if(!reported && phase!=='ECOS'){
+      if(currentStudentYear() >= 5 && isScheduledOccurrence(cur, getWeeklySchedule('lca'))){
+        const lcaCount = Math.max(1, parseInt(getWeeklySchedule('lca').count,10) || 1);
+        for(let i=0;i<lcaCount;i++){
+          day.tasks.push({id: lcaCount>1 ? 'lca_'+i : 'lca', kind:'generic', label: lcaCount>1 ? `LCA — article ${i+1}/${lcaCount} (méthodologie + analyse critique)` : "LCA — article (méthodologie + analyse critique)"});
+        }
+      }
+      if(isScheduledOccurrence(cur, getWeeklySchedule('free'))){
+        const freeCount = Math.max(1, parseInt(getWeeklySchedule('free').count,10) || 1);
+        for(let i=0;i<freeCount;i++){
+          day.tasks.push({id: freeCount>1 ? 'free_'+i : 'free', kind:'generic', label: freeCount>1 ? `Révision libre ${i+1}/${freeCount} — item ou matière de ton choix` : "Révision libre — item ou matière de ton choix"});
+        }
+      }
     }
     days.push(day);
     cur = addDays(cur,1);
@@ -2632,7 +2703,6 @@ function quotaThroughToday(phase){
 function retardList(){
   const out = [];
   const today = todayIso();
-  const seenLcaWeekends = new Set();
 
   // Items en retard : basé directement sur ce qui est réellement affiché/figé pour chaque
   // jour passé (day.tasks), et non sur un recalcul indépendant de position dans la file —
@@ -2651,46 +2721,19 @@ function retardList(){
 
   CAL.forEach(d=>{
     if(d.iso >= today) return;
-
-    if(d.weekend){
-      const dow = d.date.getDay();
-      const satDate = dow === 6 ? d.date : addDays(d.date, -1);
-      const satIso = toISO(satDate);
-      const sunIso = toISO(addDays(satDate, 1));
-      const satDay = findDay(satIso);
-      const sunDay = findDay(sunIso);
-      const weekendReported = !!((satDay && satDay.reported) || (sunDay && sunDay.reported));
-      if(!seenLcaWeekends.has(satIso)){
-        seenLcaWeekends.add(satIso);
-        const lcaDone = isGenericDone(satIso, 'lca') || isGenericDone(sunIso, 'lca');
-        if(!weekendReported && !lcaDone && sunIso < today && currentStudentYear() >= 5){
-          out.push({
-            type:'generic',
-            iso: satIso,
-            label: "LCA du week-end (" + fmtShort(satDate) + ") — 2 articles",
-            taskId: 'lca',
-            isLcaWeekend: true,
-            satIso: satIso,
-            sunIso: sunIso
-          });
-        }
-      }
+    if(d.phase==='CONSOL'){
       (d.tasks||[]).forEach(t=>{
-        if(t.kind==='generic' && t.id !== 'lca' && !isGenericDone(d.iso, t.id)){
-          out.push({type:'generic', iso:d.iso, label:t.label, taskId:t.id});
-        }
-      });
-    } else if(d.phase==='CONSOL'){
-      (d.tasks||[]).forEach(t=>{
-        if(t.kind==='generic' && !isGenericDone(d.iso, t.id)){
+        const isLcaOrFree = t.kind==='generic' && (String(t.id).startsWith('lca') || String(t.id).startsWith('free'));
+        if(t.kind==='generic' && !isLcaOrFree && !isGenericDone(d.iso, t.id)){
           out.push({type:'generic', iso:d.iso, label:t.label, taskId:t.id});
         }
       });
     }
 
-    // Les révisions libres (tâches personnalisées ajoutées à la main) ne remontent pas
+    // La LCA et les révisions libres (planifiées ou ajoutées à la main) ne remontent pas
     // dans le retard : ce sont des cases que tu gères toi-même en autonomie, pas des
-    // échéances imposées par le planning.
+    // échéances imposées par le planning. Le suivi de la LCA se fait via son propre
+    // indicateur de série (onglet LCA), pas via la pression du retard.
   });
 
   out.sort((a,b)=> (a.iso||'') < (b.iso||'') ? -1 : 1);
@@ -2935,14 +2978,7 @@ function bindTaskHandlers(container){
     cb.addEventListener('change', e=>{
       const iso = e.target.getAttribute('data-genericiso');
       const id = e.target.getAttribute('data-genericid');
-      const sat = e.target.getAttribute('data-lcasat');
-      const sun = e.target.getAttribute('data-lcasun');
-      if(sat && sun){
-        setGenericDone(sat, 'lca', e.target.checked);
-        setGenericDone(sun, 'lca', e.target.checked);
-      } else {
-        setGenericDone(iso, id, e.target.checked);
-      }
+      setGenericDone(iso, id, e.target.checked);
       const li = e.target.closest('li') || e.target.closest('.retard-row');
       if(li) li.classList.toggle('done', e.target.checked);
       renderVitals();
@@ -2979,20 +3015,20 @@ function weekSummaryHTML(){
   const monday = addDays(today, -dow);
   const sunday = addDays(monday,6);
   let total=0, done=0;
+  let lcaTotal=0, lcaDone=0;
   CAL.forEach(d=>{
     if(d.date < monday || d.date > sunday) return;
     if(!d.weekend && d.phase!=='CONSOL' && d.tasks){
       d.tasks.forEach(t=>{ if(t.kind==='item' && !isItemTaskSkipped(d.iso,t.id)){ total++; if(isItemTaskDone(t.id)) done++; } });
     }
+    if(d.tasks) d.tasks.forEach(t=>{ if(t.kind==='generic' && String(t.id).startsWith('lca')){ lcaTotal++; if(isGenericDone(d.iso,t.id)) lcaDone++; } });
   });
-  const satIso = toISO(addDays(monday,5));
-  const sunIso = toISO(sunday);
-  const lcaOk = isGenericDone(satIso,'lca') || isGenericDone(sunIso,'lca');
+  const lcaOk = lcaTotal>0 && lcaDone===lcaTotal;
   return `
     <div class="week-summary">
       <p class="wtitle">Cette semaine (${fmtShort(monday)} – ${fmtShort(sunday)})</p>
       <div class="wrow"><span>Items du programme</span><span class="wval ${total>0 && done===total?'ok':''}">${done} / ${total}</span></div>
-      <div class="wrow"><span>LCA du week-end</span><span class="wval ${lcaOk?'ok':'warn'}">${lcaOk?'Faite ✓':'Pas encore faite'}</span></div>
+      ${lcaTotal>0 ? `<div class="wrow"><span>LCA</span><span class="wval ${lcaOk?'ok':'warn'}">${lcaDone} / ${lcaTotal}${lcaOk?' ✓':''}</span></div>` : ''}
     </div>
   `;
 }
@@ -3025,7 +3061,7 @@ function renderToday(){
       <div class="stripe" style="background:${color}"></div>
       <p class="phase-lbl" style="color:${color}">${phaseLabel(day.phase)}</p>
       <h2>${fmtLong(day.date)}</h2>
-      <p class="sub">${day.reported ? reportedDayLabel(day.reportedInfo) : day.weekend ? (day.phase==='ECOS' ? 'Entraînement ECOS — 4 SDD' : 'Week-end — LCA obligatoire') : (day.phase==='CONSOL' ? 'Pas de contenu nouveau' : day.phase==='ECOS' ? 'Entraînement ECOS — 4 SDD' : '')}</p>
+      <p class="sub">${day.reported ? reportedDayLabel(day.reportedInfo) : day.weekend ? (day.phase==='ECOS' ? 'Entraînement ECOS — 4 SDD' : 'Jour de repos') : (day.phase==='CONSOL' ? 'Pas de contenu nouveau' : day.phase==='ECOS' ? 'Entraînement ECOS — 4 SDD' : '')}</p>
       ${reportControlHTML(day)}
     </div>
   `;
@@ -3083,13 +3119,11 @@ function renderRetard(){
         </label>
       </div>`;
     } else {
-      const isLca = entry.isLcaWeekend;
-      const extraAttr = isLca ? `data-lcasat="${entry.satIso}" data-lcasun="${entry.sunIso}"` : '';
       return `<div class="retard-row">
         <div class="rtop"><span class="rdate">${d?fmtShort(d):''} · en retard depuis ${ageDays}j</span></div>
         <h4>${esc(entry.label)}</h4>
         <label class="rcheck">
-          <input type="checkbox" data-genericiso="${entry.iso}" data-genericid="${entry.taskId}" ${extraAttr}>
+          <input type="checkbox" data-genericiso="${entry.iso}" data-genericid="${entry.taskId}">
           <span>Marquer comme fait</span>
         </label>
       </div>`;
@@ -3102,6 +3136,18 @@ function renderRetard(){
   });
 }
 
+function buildMonthMatrix(year, monthIndex){
+  const first = new Date(year, monthIndex, 1);
+  const startOffset = (first.getDay()+6)%7; // 0 = lundi
+  const daysInMonth = new Date(year, monthIndex+1, 0).getDate();
+  const cells = [];
+  for(let i=0;i<startOffset;i++) cells.push(null);
+  for(let d=1; d<=daysInMonth; d++) cells.push(new Date(year, monthIndex, d));
+  while(cells.length % 7 !== 0) cells.push(null);
+  const weeks = [];
+  for(let i=0;i<cells.length;i+=7) weeks.push(cells.slice(i,i+7));
+  return weeks;
+}
 function renderPlanning(){
   const container = document.getElementById('app');
   if(!CAL || CAL.length===0){
@@ -3132,42 +3178,104 @@ function renderPlanning(){
     bindReportControl(container, day.iso);
     return;
   }
-  let html = '';
-  let lastMonth = '';
-  CAL.forEach(day=>{
-    const m = fmtMonthYear(day.date);
-    if(m !== lastMonth){ html += `<div class="month-divider">${m}</div>`; lastMonth = m; }
-    const color = phaseColor(day.phase);
-    let itemsHtml = '';
-    if(day.reported){
-      itemsHtml = `<span class="pitem" style="background:var(--rule);color:var(--ink-soft)">${reportedDayLabel(day.reportedInfo)}</span>`;
-    } else if(day.tasks && day.tasks.some(t=>t.kind==='item' && !isItemTaskSkipped(day.iso,t.id))){
-      itemsHtml = day.tasks.filter(t=>t.kind==='item' && !isItemTaskSkipped(day.iso,t.id)).map(t=>{
-        const it = ITEM_BY_NUM[t.itemNum];
-        const bg = t.mode==='revision' ? 'var(--accent)' : 'var(--amber)';
-        return `<span class="pitem" style="background:${bg}" title="${it?esc(it.title):''}">#${it?it.num:t.itemNum}</span>`;
-      }).join('');
-    } else if(day.weekend){
-      const hasLca = day.tasks.some(t=>t.id==='lca');
-      itemsHtml = `<span class="pitem" style="background:${color}">${hasLca?'LCA + libre':'libre'}</span>`;
-    } else if(day.tasks[0] && day.tasks[0].kind==='sdd'){
-      itemsHtml = day.tasks.map(t=>{
-        const sdd = SDD_BY_NUM[t.num];
-        return `<span class="pitem" style="background:${color}" title="${sdd?esc(sdd.title):''}">SDD${t.num}</span>`;
-      }).join('');
-    } else if(day.phase==='ECOS'){
-      itemsHtml = `<span class="pitem" style="background:var(--rule);color:var(--ink-soft)">aucune SDD</span>`;
-    } else {
-      itemsHtml = `<span class="pitem" style="background:${color}">consolidation</span>`;
-    }
-    html += `<div class="plan-row" data-iso="${day.iso}" style="border-left-color:${color}">
-      <span class="pd">${fmtShort(day.date)}</span>
-      <span class="pitems">${itemsHtml}</span>
-    </div>`;
+  const firstCalDate = CAL[0].date;
+  const lastCalDate = CAL[CAL.length-1].date;
+  if(!planningViewMonth){
+    planningViewMonth = new Date(todayDate().getFullYear(), todayDate().getMonth(), 1);
+  }
+  const minMonth = new Date(firstCalDate.getFullYear(), firstCalDate.getMonth(), 1);
+  const maxMonth = new Date(lastCalDate.getFullYear(), lastCalDate.getMonth(), 1);
+  if(planningViewMonth < minMonth) planningViewMonth = minMonth;
+  if(planningViewMonth > maxMonth) planningViewMonth = maxMonth;
+
+  const year = planningViewMonth.getFullYear();
+  const monthIdx = planningViewMonth.getMonth();
+  const weeks = buildMonthMatrix(year, monthIdx);
+  const todayIsoStr = todayIso();
+  const monthNames = ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'];
+  const minYear = firstCalDate.getFullYear(), maxYear = lastCalDate.getFullYear();
+  let yearOptions = '';
+  for(let y=minYear;y<=maxYear;y++){ yearOptions += `<option value="${y}" ${y===year?'selected':''}>${y}</option>`; }
+  const monthOptions = monthNames.map((m,i)=>`<option value="${i}" ${i===monthIdx?'selected':''}>${m}</option>`).join('');
+
+  let gridHtml = `
+    <div class="cal-nav">
+      <button type="button" id="calPrev" class="btn-secondary">←</button>
+      <select id="calMonthSel">${monthOptions}</select>
+      <select id="calYearSel">${yearOptions}</select>
+      <button type="button" id="calNext" class="btn-secondary">→</button>
+      <button type="button" id="calToday" class="btn-secondary">Aujourd'hui</button>
+    </div>
+    <div class="cal-weekday-header">${['Lun','Mar','Mer','Jeu','Ven','Sam','Dim'].map(l=>`<span>${l}</span>`).join('')}</div>
+    <div class="cal-grid">
+  `;
+  weeks.forEach(week=>{
+    week.forEach(date=>{
+      if(!date){ gridHtml += `<div class="cal-cell out"></div>`; return; }
+      const iso = toISO(date);
+      const day = findDay(iso);
+      if(!day){ gridHtml += `<div class="cal-cell out"><span class="cal-daynum">${date.getDate()}</span></div>`; return; }
+      const isToday = iso === todayIsoStr;
+      let inner = '';
+      if(day.reported){
+        inner = `<span class="cal-tag" style="background:var(--rule);color:var(--ink-soft)" title="${esc(reportedDayLabel(day.reportedInfo))}">${esc(reportedDayLabel(day.reportedInfo))}</span>`;
+      } else {
+        const itemTasks = (day.tasks||[]).filter(t=>t.kind==='item' && !isItemTaskSkipped(day.iso,t.id));
+        if(itemTasks.length>0){
+          const cats = [];
+          itemTasks.forEach(t=>{ const it=ITEM_BY_NUM[t.itemNum]; const c = it && it.cats && it.cats[0]; if(c && !cats.includes(c)) cats.push(c); });
+          inner = `<div class="cal-dots">${cats.slice(0,6).map(c=>`<span class="cal-dot" style="background:${CAT_COLORS[c]||CAT_COLORS.other}" title="${esc(CAT_LABELS[c]||c)}"></span>`).join('')}${cats.length>6?`<span style="font-size:9px;color:var(--ink-soft);">+${cats.length-6}</span>`:''}</div>`;
+        } else if(day.tasks && day.tasks.some(t=>t.kind==='sdd')){
+          inner = `<span class="cal-tag" style="background:${phaseColor('ECOS')}">SDD</span>`;
+        } else if(day.weekend || (day.tasks && day.tasks.some(t=>t.kind==='generic' && (String(t.id).startsWith('lca') || String(t.id).startsWith('free'))))){
+          const hasLca = day.tasks.some(t=>String(t.id).startsWith('lca'));
+          const hasFree = day.tasks.some(t=>String(t.id).startsWith('free'));
+          const label = hasLca && hasFree ? 'LCA+libre' : hasLca ? 'LCA' : hasFree ? 'Libre' : 'Repos';
+          inner = `<span class="cal-tag" style="background:${phaseColor(day.phase)}">${label}</span>`;
+        } else if(day.phase==='CONSOL'){
+          inner = `<span class="cal-tag" style="background:${phaseColor('CONSOL')}">Consol.</span>`;
+        } else if(day.phase==='ECOS'){
+          inner = `<span class="cal-tag" style="background:var(--rule);color:var(--ink-soft)">—</span>`;
+        }
+      }
+      gridHtml += `<div class="cal-cell ${isToday?'today':''}" data-iso="${iso}">
+        <span class="cal-daynum">${date.getDate()}</span>
+        ${inner}
+      </div>`;
+    });
   });
-  container.innerHTML = `<p class="weekend-note">Aperçu nominal (hors reports/retards).</p>` + html;
-  container.querySelectorAll('.plan-row').forEach(row=>{
-    row.addEventListener('click', ()=>{ selectedDayIso = row.getAttribute('data-iso'); renderPlanning(); });
+  gridHtml += `</div>`;
+
+  container.innerHTML = `<p class="weekend-note">Aperçu nominal (hors reports/retards). Touche un jour pour voir le détail.</p>` + gridHtml;
+
+  container.querySelectorAll('.cal-cell[data-iso]').forEach(cell=>{
+    cell.addEventListener('click', ()=>{
+      const iso = cell.getAttribute('data-iso');
+      selectedDayIso = iso;
+      const d = parseISO(iso);
+      planningViewMonth = new Date(d.getFullYear(), d.getMonth(), 1);
+      renderPlanning();
+    });
+  });
+  document.getElementById('calPrev').addEventListener('click', ()=>{
+    planningViewMonth = new Date(year, monthIdx-1, 1);
+    renderPlanning();
+  });
+  document.getElementById('calNext').addEventListener('click', ()=>{
+    planningViewMonth = new Date(year, monthIdx+1, 1);
+    renderPlanning();
+  });
+  document.getElementById('calToday').addEventListener('click', ()=>{
+    planningViewMonth = new Date(todayDate().getFullYear(), todayDate().getMonth(), 1);
+    renderPlanning();
+  });
+  document.getElementById('calMonthSel').addEventListener('change', e=>{
+    planningViewMonth = new Date(year, parseInt(e.target.value,10), 1);
+    renderPlanning();
+  });
+  document.getElementById('calYearSel').addEventListener('change', e=>{
+    planningViewMonth = new Date(parseInt(e.target.value,10), monthIdx, 1);
+    renderPlanning();
   });
 }
 
@@ -3318,52 +3426,52 @@ function renderCatDetail(cat){
 function renderLCA(){
   const container = document.getElementById('app');
   const today = todayDate();
-  const allSaturdays = CAL.filter(d => d.date.getDay()===6);
-  const pastSaturdays = allSaturdays.filter(d=>d.date <= today).reverse();
+  const lcaDays = CAL.filter(d => d.tasks && d.tasks.some(t=>t.kind==='generic' && String(t.id).startsWith('lca')));
+  const pastLcaDays = lcaDays.filter(d=>d.date <= today).slice().reverse();
+
+  function lcaTasksFor(d){ return d.tasks.filter(t=>t.kind==='generic' && String(t.id).startsWith('lca')); }
+  function dayFullyDone(d){ const ts=lcaTasksFor(d); return ts.length>0 && ts.every(t=>isGenericDone(d.iso, t.id)); }
 
   let streak = 0;
-  for(const sat of pastSaturdays){
-    const sunIso = toISO(addDays(sat.date,1));
-    if(isGenericDone(sat.iso,'lca') || isGenericDone(sunIso,'lca')) streak++; else break;
+  for(const d of pastLcaDays){
+    if(dayFullyDone(d)) streak++; else break;
   }
 
   const methodoOptions = ['Essai randomisé','Cohorte','Cas-témoins','Méta-analyse / revue systématique','Étude transversale','Autre'];
 
   let rows = '';
-  allSaturdays.forEach(sat=>{
-    const sunDate = addDays(sat.date,1);
-    const sunIso = toISO(sunDate);
-    const done = isGenericDone(sat.iso,'lca') || isGenericDone(sunIso,'lca');
-    const entry = (DATA.lcaEntries && DATA.lcaEntries[sat.iso]) || {};
+  lcaDays.forEach(d=>{
+    const lcaTasks = lcaTasksFor(d);
+    const done = dayFullyDone(d);
+    const entry = (DATA.lcaEntries && DATA.lcaEntries[d.iso]) || {};
     const hasNote = !!(entry.title || entry.notes);
     rows += `<div class="lca-row ${done?'done':''}">
-      <span>${fmtShort(sat.date)} – ${fmtShort(sunDate)}</span>
-      <input type="checkbox" data-sat="${sat.iso}" data-sun="${sunIso}" ${done?'checked':''}>
+      <span>${fmtShort(d.date)}${lcaTasks.length>1?` — ${lcaTasks.length} articles`:''}</span>
+      <input type="checkbox" data-lcaday="${d.iso}" ${done?'checked':''}>
     </div>
-    <button type="button" class="swap-toggle" data-lcatoggle="${sat.iso}" style="margin:-6px 0 10px;">📝 ${hasNote? 'Voir / modifier la fiche' : 'Ajouter la fiche de lecture'}</button>
-    <div class="swap-panel lca-notes" id="lcanotes-${sat.iso}">
-      <div class="frow"><input type="text" class="lca-title" data-lcatitle="${sat.iso}" placeholder="Titre de l'article" value="${esc(entry.title||'')}"></div>
+    <button type="button" class="swap-toggle" data-lcatoggle="${d.iso}" style="margin:-6px 0 10px;">📝 ${hasNote? 'Voir / modifier la fiche' : 'Ajouter la fiche de lecture'}</button>
+    <div class="swap-panel lca-notes" id="lcanotes-${d.iso}">
+      <div class="frow"><input type="text" class="lca-title" data-lcatitle="${d.iso}" placeholder="Titre de l'article" value="${esc(entry.title||'')}"></div>
       <div class="frow" style="margin-top:6px;">
-        <select class="lca-methodo" data-lcamethodo="${sat.iso}">
+        <select class="lca-methodo" data-lcamethodo="${d.iso}">
           <option value="">Méthodologie…</option>
           ${methodoOptions.map(m=>`<option value="${m}" ${entry.methodo===m?'selected':''}>${m}</option>`).join('')}
         </select>
       </div>
-      <textarea class="lca-note-text" data-lcanote="${sat.iso}" placeholder="Points clés, pièges méthodo repérés…" style="width:100%;margin-top:6px;min-height:60px;font-family:var(--sans);font-size:13px;padding:8px;border:1px solid var(--rule);border-radius:var(--radius);background:var(--paper-raised);color:var(--ink);">${esc(entry.notes||'')}</textarea>
+      <textarea class="lca-note-text" data-lcanote="${d.iso}" placeholder="Points clés, pièges méthodo repérés…" style="width:100%;margin-top:6px;min-height:60px;font-family:var(--sans);font-size:13px;padding:8px;border:1px solid var(--rule);border-radius:var(--radius);background:var(--paper-raised);color:var(--ink);">${esc(entry.notes||'')}</textarea>
     </div>
     `;
   });
 
   container.innerHTML = `
-    <div class="lca-streak"><div class="n">${streak}</div><div class="l">week-end${streak>1?'s':''} de LCA d'affilée</div></div>
-    ${rows || '<p class="hist-empty">Aucun week-end programmé dans le calendrier actuel.</p>'}
+    <div class="lca-streak"><div class="n">${streak}</div><div class="l">séance${streak>1?'s':''} de LCA d'affilée</div></div>
+    ${rows || '<p class="hist-empty">Aucune séance de LCA programmée — vérifie ta configuration dans Paramètres → Organisation hebdomadaire (et ton année d\'étude, LCA à partir de la 5ᵉ année).</p>'}
   `;
   container.querySelectorAll('.lca-row input').forEach(cb=>{
     cb.addEventListener('change', e=>{
-      const sat = e.target.getAttribute('data-sat');
-      const sun = e.target.getAttribute('data-sun');
-      setGenericDone(sat,'lca', e.target.checked);
-      setGenericDone(sun,'lca', e.target.checked);
+      const iso = e.target.getAttribute('data-lcaday');
+      const d = findDay(iso);
+      if(d) lcaTasksFor(d).forEach(t=> setGenericDone(iso, t.id, e.target.checked));
       renderVitals();
       renderLCA();
     });
@@ -3665,6 +3773,33 @@ function renderSddManager(){
 }
 
 // ---------- PAGE DÉDIÉE PARAMÈTRES ----------
+function weeklyScheduleBlockHTML(kind, label, showCount){
+  const sched = getWeeklySchedule(kind);
+  const days = sched.days || [];
+  const dayBoxes = DOW_CODES.filter(c=>c!=='SU').concat(['SU']).map(c=>`
+    <label style="display:flex;flex-direction:column;align-items:center;gap:2px;font-size:10.5px;">
+      <input type="checkbox" class="ws-day" data-wskind="${kind}" value="${c}" ${days.includes(c)?'checked':''}>
+      ${DOW_LABELS[c]}
+    </label>`).join('');
+  return `
+    <div class="ws-block" style="margin-bottom:14px;padding-bottom:14px;border-bottom:1px solid var(--rule);">
+      <p style="font-weight:600;font-size:13px;margin:0 0 8px;">${esc(label)}</p>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px;">${dayBoxes}</div>
+      <div style="display:flex;gap:14px;flex-wrap:wrap;align-items:flex-end;">
+        ${showCount ? `<label style="min-width:140px;">Nombre${kind==='lca'?" d'articles":' de révisions'}
+          <input type="number" class="ws-count" data-wskind="${kind}" min="1" max="10" value="${sched.count||1}">
+        </label>` : ''}
+        <label style="min-width:160px;">Période (en semaines)
+          <input type="number" class="ws-period" data-wskind="${kind}" min="1" max="12" value="${sched.periodWeeks||1}">
+        </label>
+        <label style="min-width:170px;">Démarrer à partir du
+          <input type="date" class="ws-startdate" data-wskind="${kind}" value="${sched.startDate||''}">
+        </label>
+      </div>
+      <span class="settings-hint" style="display:block;margin-top:4px;">Laisse vide pour démarrer dès le début du planning (${(DATA.config && DATA.config.start)||''}).</span>
+    </div>
+  `;
+}
 function renderSettings(){
   const container = document.getElementById('app');
   const cfg = DATA.config;
@@ -3784,6 +3919,15 @@ function renderSettings(){
           <span class="settings-hint">Si renseignée, la période entre les EDN et cette date bascule automatiquement en entraînement ECOS (4 SDD par jour).</span>
         </label>
       </div>
+    </div>
+
+    <div class="settings-card">
+      <h3>Organisation hebdomadaire — LCA, révision libre & repos</h3>
+      <span class="settings-hint" style="display:block;margin-bottom:10px;">Pour chacun, choisis le(s) jour(s) de la semaine, et la période (tous les combien de semaines — 1 = chaque semaine, 2 = une semaine sur deux, etc.).</span>
+      ${weeklyScheduleBlockHTML('lca', 'LCA', true)}
+      ${weeklyScheduleBlockHTML('free', 'Révision libre', true)}
+      ${weeklyScheduleBlockHTML('rest', 'Repos', false)}
+      <span class="settings-hint" style="display:block;margin-top:4px;">Un jour de repos est une vraie coupure : aucun item, aucune LCA, aucune révision libre ce jour-là, même s'il correspond aussi à un jour choisi pour la LCA ou la révision libre.</span>
     </div>
 
     <div class="settings-card">
@@ -3971,6 +4115,39 @@ function renderSettings(){
     CAL = buildCalendar(DATA.config, DATA.reportedDays);
     saveData();
     render();
+  });
+
+  function updateWeeklySchedule(kind, patch){
+    if(!DATA.config.weeklySchedule) DATA.config.weeklySchedule = {};
+    DATA.config.weeklySchedule[kind] = Object.assign({}, getWeeklySchedule(kind), patch);
+    CAL = buildCalendar(DATA.config, DATA.reportedDays);
+    saveData();
+    render();
+  }
+  container.querySelectorAll('.ws-day').forEach(cb=>{
+    cb.addEventListener('change', ()=>{
+      const kind = cb.getAttribute('data-wskind');
+      const checked = Array.from(container.querySelectorAll(`.ws-day[data-wskind="${kind}"]:checked`)).map(el=>el.value);
+      updateWeeklySchedule(kind, {days: checked});
+    });
+  });
+  container.querySelectorAll('.ws-count').forEach(inp=>{
+    inp.addEventListener('change', ()=>{
+      const kind = inp.getAttribute('data-wskind');
+      updateWeeklySchedule(kind, {count: Math.max(1, parseInt(inp.value,10)||1)});
+    });
+  });
+  container.querySelectorAll('.ws-period').forEach(inp=>{
+    inp.addEventListener('change', ()=>{
+      const kind = inp.getAttribute('data-wskind');
+      updateWeeklySchedule(kind, {periodWeeks: Math.max(1, parseInt(inp.value,10)||1)});
+    });
+  });
+  container.querySelectorAll('.ws-startdate').forEach(inp=>{
+    inp.addEventListener('change', ()=>{
+      const kind = inp.getAttribute('data-wskind');
+      updateWeeklySchedule(kind, {startDate: inp.value || ''});
+    });
   });
 
   document.getElementById('btnCfgSelectAll').addEventListener('click', ()=>{
