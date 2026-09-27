@@ -2066,33 +2066,6 @@ function bindDifficultyHandlers(container){
   });
 }
 
-function deadlineAlertsHTML(){
-  const dl = DATA.subjectDeadlines || {};
-  const cats = Object.keys(dl);
-  if(cats.length===0) return '';
-  const itemStatus = computeItemStatus();
-  const status = {};
-  Object.keys(itemStatus).forEach(n=>{ status[n] = itemStatus[n].revision; });
-  const today = todayDate();
-  const rows = cats.map(c=>{
-    const daysLeft = daysBetween(today, parseISO(dl[c]));
-    const nums = itemsOfCat(c);
-    const total = nums.length;
-    const done = nums.filter(n=>status[n]).length;
-    return { cat:c, daysLeft, total, done, remaining: total-done };
-  }).filter(r=>r.daysLeft >= -1).sort((a,b)=>a.daysLeft-b.daysLeft);
-  if(rows.length===0) return '';
-  return `<div class="dl-alerts">` + rows.map(r=>{
-    const urgent = r.daysLeft <= 7;
-    const label = r.daysLeft < 0 ? 'DL dépassée' : (r.daysLeft===0 ? 'DL aujourd\u2019hui' : `DL dans ${r.daysLeft} j`);
-    const statusLabel = r.remaining>0 ? `${r.done}/${r.total} vus · ${r.remaining} restants` : `${r.total}/${r.total} vus — tout vu ✓`;
-    return `<div class="dl-alert-row ${urgent?'urgent':''}">
-      <span class="dl-cat">${CAT_LABELS[r.cat]||r.cat}</span>
-      <span class="dl-detail">${label} · ${statusLabel}</span>
-    </div>`;
-  }).join('') + `</div>`;
-}
-
 function bindSwapHandlers(container){
   container.querySelectorAll('.swap-toggle').forEach(btn=>{
     btn.addEventListener('click', (e)=>{
@@ -3086,7 +3059,7 @@ function renderToday(){
 
   const custom = day.reported ? '' : customTasksHTML(day.iso);
 
-  container.innerHTML = deadlineAlertsHTML() + weekSummaryHTML() + head + body + (day.reported ? '' : removedItemTasksHTML(day)) + custom + `<footer class="note">Plus de temps aujourd'hui ? Avance librement (onglet Planning). Moins de temps ? Marque cette journée (repos, garde, repos de garde, partiel, concours blanc…), ou laisse simplement les items non faits — ils remonteront automatiquement demain.</footer>`;
+  container.innerHTML = weekSummaryHTML() + head + body + (day.reported ? '' : removedItemTasksHTML(day)) + custom + `<footer class="note">Plus de temps aujourd'hui ? Avance librement (onglet Planning). Moins de temps ? Marque cette journée (repos, garde, repos de garde, partiel, concours blanc…), ou laisse simplement les items non faits — ils remonteront automatiquement demain.</footer>`;
   bindTaskHandlers(container);
   if(!day.reported) bindCustomTaskHandlers(container, day.iso);
   bindReportControl(container, day.iso);
