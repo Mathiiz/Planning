@@ -21,7 +21,7 @@
     "studyModeP2": "alterne",
     "weeklySchedule": {
       "lca": {
-        "count": 1,
+        "count": 2,
         "days": [
           "SA",
           "SU"
@@ -30,7 +30,10 @@
         "startDate": ""
       },
       "rest": {
-        "days": [],
+        "days": [
+          "SA",
+          "SU"
+        ],
         "periodWeeks": 1,
         "startDate": ""
       }
@@ -5916,6 +5919,18 @@
       {
         "id": "lca",
         "kind": "generic",
+        "label": "LCA — article (méthodologie + analyse critique)",
+        "iso": "2026-08-29"
+      },
+      {
+        "id": "free",
+        "kind": "generic",
+        "label": "Révision libre — item ou matière de ton choix",
+        "iso": "2026-08-29"
+      },
+      {
+        "id": "lca",
+        "kind": "generic",
         "label": "LCA — article (méthodologie + analyse critique)"
       },
       {
@@ -5980,6 +5995,18 @@
         "iso": "2026-09-05",
         "overridden": true,
         "originalItemNum": 120
+      },
+      {
+        "id": "lca",
+        "kind": "generic",
+        "label": "LCA — article (méthodologie + analyse critique)",
+        "iso": "2026-09-05"
+      },
+      {
+        "id": "free",
+        "kind": "generic",
+        "label": "Révision libre — item ou matière de ton choix",
+        "iso": "2026-09-05"
       },
       {
         "id": "lca",
@@ -6052,6 +6079,18 @@
       {
         "id": "lca",
         "kind": "generic",
+        "label": "LCA — article (méthodologie + analyse critique)",
+        "iso": "2026-09-12"
+      },
+      {
+        "id": "free",
+        "kind": "generic",
+        "label": "Révision libre — item ou matière de ton choix",
+        "iso": "2026-09-12"
+      },
+      {
+        "id": "lca",
+        "kind": "generic",
         "label": "LCA — article (méthodologie + analyse critique)"
       },
       {
@@ -6116,6 +6155,18 @@
         "iso": "2026-09-19",
         "overridden": false,
         "originalItemNum": 53
+      },
+      {
+        "id": "lca",
+        "kind": "generic",
+        "label": "LCA — article (méthodologie + analyse critique)",
+        "iso": "2026-09-19"
+      },
+      {
+        "id": "free",
+        "kind": "generic",
+        "label": "Révision libre — item ou matière de ton choix",
+        "iso": "2026-09-19"
       },
       {
         "id": "lca",
@@ -6188,6 +6239,18 @@
       {
         "id": "lca",
         "kind": "generic",
+        "label": "LCA — article (méthodologie + analyse critique)",
+        "iso": "2026-09-26"
+      },
+      {
+        "id": "free",
+        "kind": "generic",
+        "label": "Révision libre — item ou matière de ton choix",
+        "iso": "2026-09-26"
+      },
+      {
+        "id": "lca",
+        "kind": "generic",
         "label": "LCA — article (méthodologie + analyse critique)"
       },
       {
@@ -6218,6 +6281,52 @@
         "iso": "2026-08-30",
         "overridden": true,
         "originalItemNum": 119
+      },
+      {
+        "id": "lca",
+        "kind": "generic",
+        "label": "LCA — article (méthodologie + analyse critique)",
+        "iso": "2026-08-30"
+      },
+      {
+        "id": "free",
+        "kind": "generic",
+        "label": "Révision libre — item ou matière de ton choix",
+        "iso": "2026-08-30"
+      },
+      {
+        "id": "lca",
+        "kind": "generic",
+        "label": "LCA — article (méthodologie + analyse critique)",
+        "iso": "2026-08-30"
+      },
+      {
+        "id": "free",
+        "kind": "generic",
+        "label": "Révision libre — item ou matière de ton choix",
+        "iso": "2026-08-30"
+      },
+      {
+        "id": "S1_i291_o1",
+        "kind": "item",
+        "itemNum": 291,
+        "mode": "revision",
+        "idx": 10,
+        "phase": "S1",
+        "iso": "2026-08-30",
+        "overridden": false,
+        "originalItemNum": 291
+      },
+      {
+        "id": "S1_i213_o1",
+        "kind": "item",
+        "itemNum": 213,
+        "mode": "revision",
+        "idx": 11,
+        "phase": "S1",
+        "iso": "2026-08-30",
+        "overridden": false,
+        "originalItemNum": 213
       },
       {
         "id": "lca",
@@ -6256,6 +6365,52 @@
       {
         "id": "lca",
         "kind": "generic",
+        "label": "LCA — article (méthodologie + analyse critique)",
+        "iso": "2026-09-06"
+      },
+      {
+        "id": "free",
+        "kind": "generic",
+        "label": "Révision libre — item ou matière de ton choix",
+        "iso": "2026-09-06"
+      },
+      {
+        "id": "lca",
+        "kind": "generic",
+        "label": "LCA — article (méthodologie + analyse critique)",
+        "iso": "2026-09-06"
+      },
+      {
+        "id": "free",
+        "kind": "generic",
+        "label": "Révision libre — item ou matière de ton choix",
+        "iso": "2026-09-06"
+      },
+      {
+        "id": "S1_i292_o1",
+        "kind": "item",
+        "itemNum": 292,
+        "mode": "revision",
+        "idx": 16,
+        "phase": "S1",
+        "iso": "2026-09-06",
+        "overridden": false,
+        "originalItemNum": 292
+      },
+      {
+        "id": "S1_i214_o1",
+        "kind": "item",
+        "itemNum": 316,
+        "mode": "revision",
+        "idx": 17,
+        "phase": "S1",
+        "iso": "2026-09-06",
+        "overridden": true,
+        "originalItemNum": 214
+      },
+      {
+        "id": "lca",
+        "kind": "generic",
         "label": "LCA — article (méthodologie + analyse critique)"
       },
       {
@@ -6286,6 +6441,52 @@
         "iso": "2026-09-13",
         "overridden": false,
         "originalItemNum": 295
+      },
+      {
+        "id": "lca",
+        "kind": "generic",
+        "label": "LCA — article (méthodologie + analyse critique)",
+        "iso": "2026-09-13"
+      },
+      {
+        "id": "free",
+        "kind": "generic",
+        "label": "Révision libre — item ou matière de ton choix",
+        "iso": "2026-09-13"
+      },
+      {
+        "id": "lca",
+        "kind": "generic",
+        "label": "LCA — article (méthodologie + analyse critique)",
+        "iso": "2026-09-13"
+      },
+      {
+        "id": "free",
+        "kind": "generic",
+        "label": "Révision libre — item ou matière de ton choix",
+        "iso": "2026-09-13"
+      },
+      {
+        "id": "S1_i121_o1",
+        "kind": "item",
+        "itemNum": 9,
+        "mode": "revision",
+        "idx": 24,
+        "phase": "S1",
+        "iso": "2026-09-13",
+        "overridden": true,
+        "originalItemNum": 121
+      },
+      {
+        "id": "S1_i294_o1",
+        "kind": "item",
+        "itemNum": 294,
+        "mode": "revision",
+        "idx": 25,
+        "phase": "S1",
+        "iso": "2026-09-13",
+        "overridden": false,
+        "originalItemNum": 294
       },
       {
         "id": "lca",
@@ -6324,6 +6525,52 @@
       {
         "id": "lca",
         "kind": "generic",
+        "label": "LCA — article (méthodologie + analyse critique)",
+        "iso": "2026-09-20"
+      },
+      {
+        "id": "free",
+        "kind": "generic",
+        "label": "Révision libre — item ou matière de ton choix",
+        "iso": "2026-09-20"
+      },
+      {
+        "id": "lca",
+        "kind": "generic",
+        "label": "LCA — article (méthodologie + analyse critique)",
+        "iso": "2026-09-20"
+      },
+      {
+        "id": "free",
+        "kind": "generic",
+        "label": "Révision libre — item ou matière de ton choix",
+        "iso": "2026-09-20"
+      },
+      {
+        "id": "S1_i190_o1",
+        "kind": "item",
+        "itemNum": 59,
+        "mode": "revision",
+        "idx": 34,
+        "phase": "S1",
+        "iso": "2026-09-20",
+        "overridden": true,
+        "originalItemNum": 190
+      },
+      {
+        "id": "S1_i52_o1",
+        "kind": "item",
+        "itemNum": 345,
+        "mode": "revision",
+        "idx": 35,
+        "phase": "S1",
+        "iso": "2026-09-20",
+        "overridden": true,
+        "originalItemNum": 52
+      },
+      {
+        "id": "lca",
+        "kind": "generic",
         "label": "LCA — article (méthodologie + analyse critique)"
       },
       {
@@ -6354,6 +6601,52 @@
         "iso": "2026-09-27",
         "overridden": false,
         "originalItemNum": 69
+      },
+      {
+        "id": "lca",
+        "kind": "generic",
+        "label": "LCA — article (méthodologie + analyse critique)",
+        "iso": "2026-09-27"
+      },
+      {
+        "id": "free",
+        "kind": "generic",
+        "label": "Révision libre — item ou matière de ton choix",
+        "iso": "2026-09-27"
+      },
+      {
+        "id": "lca",
+        "kind": "generic",
+        "label": "LCA — article (méthodologie + analyse critique)",
+        "iso": "2026-09-27"
+      },
+      {
+        "id": "free",
+        "kind": "generic",
+        "label": "Révision libre — item ou matière de ton choix",
+        "iso": "2026-09-27"
+      },
+      {
+        "id": "S1_i192_o1",
+        "kind": "item",
+        "itemNum": 192,
+        "mode": "revision",
+        "idx": 46,
+        "phase": "S1",
+        "iso": "2026-09-27",
+        "overridden": false,
+        "originalItemNum": 192
+      },
+      {
+        "id": "S1_i54_o1",
+        "kind": "item",
+        "itemNum": 54,
+        "mode": "revision",
+        "idx": 47,
+        "phase": "S1",
+        "iso": "2026-09-27",
+        "overridden": false,
+        "originalItemNum": 54
       },
       {
         "id": "lca",
@@ -6408,12 +6701,32 @@
       123,
       296,
       218,
-      66
+      66,
+      191,
+      53,
+      124,
+      298,
+      219,
+      67,
+      192,
+      54,
+      125,
+      299,
+      220,
+      68,
+      193,
+      55,
+      126,
+      300,
+      315,
+      69,
+      194,
+      56
     ],
     "S2": []
   },
   "_meta": {
     "schemaVersion": 4,
-    "updatedAt": "2026-09-27T22:32:27.812Z"
+    "updatedAt": "2026-09-27T22:34:11.509Z"
   }
 }
