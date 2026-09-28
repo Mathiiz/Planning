@@ -3054,6 +3054,18 @@
       "swapId": "swap_1790416158161_712",
       "partnerKey": "S1_i123_o1",
       "previousItemNum": 128
+    },
+    "S1_i218_o1": {
+      "itemNum": 51,
+      "swapId": "swap_1790587875042_608",
+      "partnerKey": "S1_i51_o1",
+      "previousItemNum": 218
+    },
+    "S1_i51_o1": {
+      "itemNum": 218,
+      "swapId": "swap_1790587875042_608",
+      "partnerKey": "S1_i218_o1",
+      "previousItemNum": 51
     }
   },
   "subjectDeadlines": {
@@ -4748,10 +4760,12 @@
         "itemNum": 60,
         "mode": "revision",
         "idx": 0,
+        "idxKnown": true,
         "phase": "S1",
         "iso": "2026-08-24",
         "overridden": false,
-        "originalItemNum": 60
+        "originalItemNum": 60,
+        "dayCap": 2
       },
       {
         "id": "S1_i108_o1",
@@ -4759,10 +4773,12 @@
         "itemNum": 108,
         "mode": "revision",
         "idx": 1,
+        "idxKnown": true,
         "phase": "S1",
         "iso": "2026-08-24",
         "overridden": false,
-        "originalItemNum": 108
+        "originalItemNum": 108,
+        "dayCap": 2
       }
     ],
     "2026-08-25": [
@@ -4772,10 +4788,12 @@
         "itemNum": 185,
         "mode": "revision",
         "idx": 2,
+        "idxKnown": true,
         "phase": "S1",
         "iso": "2026-08-25",
         "overridden": false,
-        "originalItemNum": 185
+        "originalItemNum": 185,
+        "dayCap": 2
       },
       {
         "id": "S1_i47_o1",
@@ -4783,10 +4801,12 @@
         "itemNum": 47,
         "mode": "revision",
         "idx": 3,
+        "idxKnown": true,
         "phase": "S1",
         "iso": "2026-08-25",
         "overridden": false,
-        "originalItemNum": 47
+        "originalItemNum": 47,
+        "dayCap": 2
       }
     ],
     "2026-08-26": [
@@ -4796,10 +4816,12 @@
         "itemNum": 290,
         "mode": "revision",
         "idx": 4,
+        "idxKnown": true,
         "phase": "S1",
         "iso": "2026-08-26",
         "overridden": false,
-        "originalItemNum": 290
+        "originalItemNum": 290,
+        "dayCap": 2
       },
       {
         "id": "S1_i212_o1",
@@ -4807,10 +4829,12 @@
         "itemNum": 212,
         "mode": "revision",
         "idx": 5,
+        "idxKnown": true,
         "phase": "S1",
         "iso": "2026-08-26",
         "overridden": false,
-        "originalItemNum": 212
+        "originalItemNum": 212,
+        "dayCap": 2
       }
     ],
     "2026-08-27": [
@@ -4820,10 +4844,12 @@
         "itemNum": 61,
         "mode": "revision",
         "idx": 6,
+        "idxKnown": true,
         "phase": "S1",
         "iso": "2026-08-27",
         "overridden": false,
-        "originalItemNum": 61
+        "originalItemNum": 61,
+        "dayCap": 2
       },
       {
         "id": "S1_i118_o1",
@@ -4831,10 +4857,12 @@
         "itemNum": 123,
         "mode": "revision",
         "idx": 7,
+        "idxKnown": true,
         "phase": "S1",
         "iso": "2026-08-27",
         "overridden": true,
-        "originalItemNum": 118
+        "originalItemNum": 118,
+        "dayCap": 2
       }
     ],
     "2026-08-28": [
@@ -4844,10 +4872,12 @@
         "itemNum": 1,
         "mode": "revision",
         "idx": 8,
+        "idxKnown": true,
         "phase": "S1",
         "iso": "2026-08-28",
         "overridden": true,
-        "originalItemNum": 186
+        "originalItemNum": 186,
+        "dayCap": 2
       },
       {
         "id": "S1_i48_o1",
@@ -4855,10 +4885,12 @@
         "itemNum": 49,
         "mode": "revision",
         "idx": 9,
+        "idxKnown": true,
         "phase": "S1",
         "iso": "2026-08-28",
         "overridden": true,
-        "originalItemNum": 48
+        "originalItemNum": 48,
+        "dayCap": 2
       }
     ],
     "2026-08-31": [
@@ -4868,10 +4900,12 @@
         "itemNum": 291,
         "mode": "revision",
         "idx": 10,
+        "idxKnown": true,
         "phase": "S1",
         "iso": "2026-08-31",
         "overridden": false,
-        "originalItemNum": 291
+        "originalItemNum": 291,
+        "dayCap": 6
       },
       {
         "id": "S1_i213_o1",
@@ -4879,10 +4913,12 @@
         "itemNum": 213,
         "mode": "revision",
         "idx": 11,
+        "idxKnown": true,
         "phase": "S1",
         "iso": "2026-08-31",
         "overridden": false,
-        "originalItemNum": 213
+        "originalItemNum": 213,
+        "dayCap": 6
       },
       {
         "id": "S1_i62_o1",
@@ -4890,10 +4926,12 @@
         "itemNum": 62,
         "mode": "revision",
         "idx": 12,
+        "idxKnown": true,
         "phase": "S1",
         "iso": "2026-08-31",
         "overridden": false,
-        "originalItemNum": 62
+        "originalItemNum": 62,
+        "dayCap": 6
       },
       {
         "id": "S1_i119_o1",
@@ -4901,10 +4939,12 @@
         "itemNum": 130,
         "mode": "revision",
         "idx": 13,
+        "idxKnown": true,
         "phase": "S1",
         "iso": "2026-08-31",
         "overridden": true,
-        "originalItemNum": 119
+        "originalItemNum": 119,
+        "dayCap": 6
       },
       {
         "id": "S1_i187_o1",
@@ -4912,10 +4952,12 @@
         "itemNum": 2,
         "mode": "revision",
         "idx": 14,
+        "idxKnown": true,
         "phase": "S1",
         "iso": "2026-08-31",
         "overridden": true,
-        "originalItemNum": 187
+        "originalItemNum": 187,
+        "dayCap": 6
       },
       {
         "id": "S1_i49_o1",
@@ -4923,10 +4965,12 @@
         "itemNum": 55,
         "mode": "revision",
         "idx": 15,
+        "idxKnown": true,
         "phase": "S1",
         "iso": "2026-08-31",
         "overridden": true,
-        "originalItemNum": 49
+        "originalItemNum": 49,
+        "dayCap": 6
       }
     ],
     "2026-09-01": [
@@ -4936,10 +4980,12 @@
         "itemNum": 62,
         "mode": "revision",
         "idx": 12,
+        "idxKnown": true,
         "phase": "S1",
         "iso": "2026-09-01",
         "overridden": false,
-        "originalItemNum": 62
+        "originalItemNum": 62,
+        "dayCap": 6
       },
       {
         "id": "S1_i119_o1",
@@ -4947,10 +4993,12 @@
         "itemNum": 130,
         "mode": "revision",
         "idx": 13,
+        "idxKnown": true,
         "phase": "S1",
         "iso": "2026-09-01",
         "overridden": true,
-        "originalItemNum": 119
+        "originalItemNum": 119,
+        "dayCap": 6
       },
       {
         "id": "S1_i187_o1",
@@ -4958,10 +5006,12 @@
         "itemNum": 2,
         "mode": "revision",
         "idx": 14,
+        "idxKnown": true,
         "phase": "S1",
         "iso": "2026-09-01",
         "overridden": true,
-        "originalItemNum": 187
+        "originalItemNum": 187,
+        "dayCap": 6
       },
       {
         "id": "S1_i49_o1",
@@ -4969,10 +5019,12 @@
         "itemNum": 55,
         "mode": "revision",
         "idx": 15,
+        "idxKnown": true,
         "phase": "S1",
         "iso": "2026-09-01",
         "overridden": true,
-        "originalItemNum": 49
+        "originalItemNum": 49,
+        "dayCap": 6
       },
       {
         "id": "S1_i292_o1",
@@ -4980,10 +5032,12 @@
         "itemNum": 292,
         "mode": "revision",
         "idx": 16,
+        "idxKnown": true,
         "phase": "S1",
         "iso": "2026-09-01",
         "overridden": false,
-        "originalItemNum": 292
+        "originalItemNum": 292,
+        "dayCap": 6
       },
       {
         "id": "S1_i214_o1",
@@ -4991,10 +5045,12 @@
         "itemNum": 316,
         "mode": "revision",
         "idx": 17,
+        "idxKnown": true,
         "phase": "S1",
         "iso": "2026-09-01",
         "overridden": true,
-        "originalItemNum": 214
+        "originalItemNum": 214,
+        "dayCap": 6
       }
     ],
     "2026-09-07": [
@@ -5004,10 +5060,12 @@
         "itemNum": 2,
         "mode": "revision",
         "idx": 14,
+        "idxKnown": true,
         "phase": "S1",
         "iso": "2026-09-07",
         "overridden": true,
-        "originalItemNum": 187
+        "originalItemNum": 187,
+        "dayCap": 6
       },
       {
         "id": "S1_i49_o1",
@@ -5015,10 +5073,12 @@
         "itemNum": 55,
         "mode": "revision",
         "idx": 15,
+        "idxKnown": true,
         "phase": "S1",
         "iso": "2026-09-07",
         "overridden": true,
-        "originalItemNum": 49
+        "originalItemNum": 49,
+        "dayCap": 6
       },
       {
         "id": "S1_i63_o1",
@@ -5026,10 +5086,12 @@
         "itemNum": 351,
         "mode": "revision",
         "idx": 18,
+        "idxKnown": true,
         "phase": "S1",
         "iso": "2026-09-07",
         "overridden": true,
-        "originalItemNum": 63
+        "originalItemNum": 63,
+        "dayCap": 6
       },
       {
         "id": "S1_i120_o1",
@@ -5037,10 +5099,12 @@
         "itemNum": 133,
         "mode": "revision",
         "idx": 19,
+        "idxKnown": true,
         "phase": "S1",
         "iso": "2026-09-07",
         "overridden": true,
-        "originalItemNum": 120
+        "originalItemNum": 120,
+        "dayCap": 6
       },
       {
         "id": "S1_i293_o1",
@@ -5048,10 +5112,12 @@
         "itemNum": 293,
         "mode": "revision",
         "idx": 22,
+        "idxKnown": true,
         "phase": "S1",
         "iso": "2026-09-07",
         "overridden": false,
-        "originalItemNum": 293
+        "originalItemNum": 293,
+        "dayCap": 6
       },
       {
         "id": "S1_i215_o1",
@@ -5059,10 +5125,12 @@
         "itemNum": 317,
         "mode": "revision",
         "idx": 23,
+        "idxKnown": true,
         "phase": "S1",
         "iso": "2026-09-07",
         "overridden": true,
-        "originalItemNum": 215
+        "originalItemNum": 215,
+        "dayCap": 6
       }
     ],
     "2026-09-10": [
@@ -5072,10 +5140,12 @@
         "itemNum": 292,
         "mode": "revision",
         "idx": 16,
+        "idxKnown": true,
         "phase": "S1",
         "iso": "2026-09-10",
         "overridden": false,
-        "originalItemNum": 292
+        "originalItemNum": 292,
+        "dayCap": 5
       },
       {
         "id": "S1_i214_o1",
@@ -5083,10 +5153,12 @@
         "itemNum": 316,
         "mode": "revision",
         "idx": 17,
+        "idxKnown": true,
         "phase": "S1",
         "iso": "2026-09-10",
         "overridden": true,
-        "originalItemNum": 214
+        "originalItemNum": 214,
+        "dayCap": 5
       },
       {
         "id": "S1_i188_o1",
@@ -5094,21 +5166,12 @@
         "itemNum": 3,
         "mode": "revision",
         "idx": 20,
+        "idxKnown": true,
         "phase": "S1",
         "iso": "2026-09-10",
         "overridden": true,
-        "originalItemNum": 188
-      },
-      {
-        "id": "S1_i50_o1",
-        "kind": "item",
-        "itemNum": 50,
-        "mode": "revision",
-        "idx": 21,
-        "phase": "S1",
-        "iso": "2026-09-10",
-        "overridden": false,
-        "originalItemNum": 50
+        "originalItemNum": 188,
+        "dayCap": 5
       },
       {
         "id": "S1_i121_o1",
@@ -5116,10 +5179,12 @@
         "itemNum": 9,
         "mode": "revision",
         "idx": 24,
+        "idxKnown": true,
         "phase": "S1",
         "iso": "2026-09-10",
         "overridden": true,
-        "originalItemNum": 121
+        "originalItemNum": 121,
+        "dayCap": 5
       },
       {
         "id": "S1_i294_o1",
@@ -5127,10 +5192,12 @@
         "itemNum": 294,
         "mode": "revision",
         "idx": 25,
+        "idxKnown": true,
         "phase": "S1",
         "iso": "2026-09-10",
         "overridden": false,
-        "originalItemNum": 294
+        "originalItemNum": 294,
+        "dayCap": 5
       }
     ],
     "2026-09-11": [
@@ -5140,10 +5207,12 @@
         "itemNum": 351,
         "mode": "revision",
         "idx": 18,
+        "idxKnown": true,
         "phase": "S1",
         "iso": "2026-09-11",
         "overridden": true,
-        "originalItemNum": 63
+        "originalItemNum": 63,
+        "dayCap": 6
       },
       {
         "id": "S1_i120_o1",
@@ -5151,10 +5220,12 @@
         "itemNum": 133,
         "mode": "revision",
         "idx": 19,
+        "idxKnown": true,
         "phase": "S1",
         "iso": "2026-09-11",
         "overridden": true,
-        "originalItemNum": 120
+        "originalItemNum": 120,
+        "dayCap": 6
       },
       {
         "id": "S1_i293_o1",
@@ -5162,10 +5233,12 @@
         "itemNum": 293,
         "mode": "revision",
         "idx": 22,
+        "idxKnown": true,
         "phase": "S1",
         "iso": "2026-09-11",
         "overridden": false,
-        "originalItemNum": 293
+        "originalItemNum": 293,
+        "dayCap": 6
       },
       {
         "id": "S1_i215_o1",
@@ -5173,10 +5246,12 @@
         "itemNum": 317,
         "mode": "revision",
         "idx": 23,
+        "idxKnown": true,
         "phase": "S1",
         "iso": "2026-09-11",
         "overridden": true,
-        "originalItemNum": 215
+        "originalItemNum": 215,
+        "dayCap": 6
       },
       {
         "id": "S1_i216_o1",
@@ -5184,10 +5259,12 @@
         "itemNum": 296,
         "mode": "revision",
         "idx": 26,
+        "idxKnown": true,
         "phase": "S1",
         "iso": "2026-09-11",
         "overridden": true,
-        "originalItemNum": 216
+        "originalItemNum": 216,
+        "dayCap": 6
       },
       {
         "id": "S1_i64_o1",
@@ -5195,10 +5272,12 @@
         "itemNum": 352,
         "mode": "revision",
         "idx": 27,
+        "idxKnown": true,
         "phase": "S1",
         "iso": "2026-09-11",
         "overridden": true,
-        "originalItemNum": 64
+        "originalItemNum": 64,
+        "dayCap": 6
       }
     ],
     "2026-09-14": [
@@ -5208,21 +5287,12 @@
         "itemNum": 3,
         "mode": "revision",
         "idx": 20,
+        "idxKnown": true,
         "phase": "S1",
         "iso": "2026-09-14",
         "overridden": true,
-        "originalItemNum": 188
-      },
-      {
-        "id": "S1_i50_o1",
-        "kind": "item",
-        "itemNum": 50,
-        "mode": "revision",
-        "idx": 21,
-        "phase": "S1",
-        "iso": "2026-09-14",
-        "overridden": false,
-        "originalItemNum": 50
+        "originalItemNum": 188,
+        "dayCap": 5
       },
       {
         "id": "S1_i216_o1",
@@ -5230,10 +5300,12 @@
         "itemNum": 296,
         "mode": "revision",
         "idx": 26,
+        "idxKnown": true,
         "phase": "S1",
         "iso": "2026-09-14",
         "overridden": true,
-        "originalItemNum": 216
+        "originalItemNum": 216,
+        "dayCap": 5
       },
       {
         "id": "S1_i64_o1",
@@ -5241,10 +5313,12 @@
         "itemNum": 352,
         "mode": "revision",
         "idx": 27,
+        "idxKnown": true,
         "phase": "S1",
         "iso": "2026-09-14",
         "overridden": true,
-        "originalItemNum": 64
+        "originalItemNum": 64,
+        "dayCap": 5
       },
       {
         "id": "S1_i217_o1",
@@ -5252,10 +5326,12 @@
         "itemNum": 318,
         "mode": "revision",
         "idx": 32,
+        "idxKnown": true,
         "phase": "S1",
         "iso": "2026-09-14",
         "overridden": true,
-        "originalItemNum": 217
+        "originalItemNum": 217,
+        "dayCap": 5
       },
       {
         "id": "S1_i65_o1",
@@ -5263,10 +5339,12 @@
         "itemNum": 353,
         "mode": "revision",
         "idx": 33,
+        "idxKnown": true,
         "phase": "S1",
         "iso": "2026-09-14",
         "overridden": true,
-        "originalItemNum": 65
+        "originalItemNum": 65,
+        "dayCap": 5
       }
     ],
     "2026-09-15": [
@@ -5276,10 +5354,12 @@
         "itemNum": 293,
         "mode": "revision",
         "idx": 22,
+        "idxKnown": true,
         "phase": "S1",
         "iso": "2026-09-15",
         "overridden": false,
-        "originalItemNum": 293
+        "originalItemNum": 293,
+        "dayCap": 5
       },
       {
         "id": "S1_i215_o1",
@@ -5287,10 +5367,12 @@
         "itemNum": 317,
         "mode": "revision",
         "idx": 23,
+        "idxKnown": true,
         "phase": "S1",
         "iso": "2026-09-15",
         "overridden": true,
-        "originalItemNum": 215
+        "originalItemNum": 215,
+        "dayCap": 5
       },
       {
         "id": "S1_i189_o1",
@@ -5298,21 +5380,12 @@
         "itemNum": 22,
         "mode": "revision",
         "idx": 28,
+        "idxKnown": true,
         "phase": "S1",
         "iso": "2026-09-15",
         "overridden": true,
-        "originalItemNum": 189
-      },
-      {
-        "id": "S1_i51_o1",
-        "kind": "item",
-        "itemNum": 51,
-        "mode": "revision",
-        "idx": 29,
-        "phase": "S1",
-        "iso": "2026-09-15",
-        "overridden": false,
-        "originalItemNum": 51
+        "originalItemNum": 189,
+        "dayCap": 5
       },
       {
         "id": "S1_i190_o1",
@@ -5320,10 +5393,12 @@
         "itemNum": 59,
         "mode": "revision",
         "idx": 34,
+        "idxKnown": true,
         "phase": "S1",
         "iso": "2026-09-15",
         "overridden": true,
-        "originalItemNum": 190
+        "originalItemNum": 190,
+        "dayCap": 5
       },
       {
         "id": "S1_i52_o1",
@@ -5331,10 +5406,12 @@
         "itemNum": 345,
         "mode": "revision",
         "idx": 35,
+        "idxKnown": true,
         "phase": "S1",
         "iso": "2026-09-15",
         "overridden": true,
-        "originalItemNum": 52
+        "originalItemNum": 52,
+        "dayCap": 5
       }
     ],
     "2026-09-17": [
@@ -5344,10 +5421,12 @@
         "itemNum": 9,
         "mode": "revision",
         "idx": 24,
+        "idxKnown": true,
         "phase": "S1",
         "iso": "2026-09-17",
         "overridden": true,
-        "originalItemNum": 121
+        "originalItemNum": 121,
+        "dayCap": 5
       },
       {
         "id": "S1_i294_o1",
@@ -5355,21 +5434,12 @@
         "itemNum": 294,
         "mode": "revision",
         "idx": 25,
+        "idxKnown": true,
         "phase": "S1",
         "iso": "2026-09-17",
         "overridden": false,
-        "originalItemNum": 294
-      },
-      {
-        "id": "S1_i122_o1",
-        "kind": "item",
-        "itemNum": 122,
-        "mode": "revision",
-        "idx": 30,
-        "phase": "S1",
-        "iso": "2026-09-17",
-        "overridden": false,
-        "originalItemNum": 122
+        "originalItemNum": 294,
+        "dayCap": 5
       },
       {
         "id": "S1_i295_o1",
@@ -5377,10 +5447,12 @@
         "itemNum": 295,
         "mode": "revision",
         "idx": 31,
+        "idxKnown": true,
         "phase": "S1",
         "iso": "2026-09-17",
         "overridden": false,
-        "originalItemNum": 295
+        "originalItemNum": 295,
+        "dayCap": 5
       },
       {
         "id": "S1_i123_o1",
@@ -5388,10 +5460,12 @@
         "itemNum": 128,
         "mode": "revision",
         "idx": 36,
+        "idxKnown": true,
         "phase": "S1",
         "iso": "2026-09-17",
         "overridden": true,
-        "originalItemNum": 123
+        "originalItemNum": 123,
+        "dayCap": 5
       },
       {
         "id": "S1_i296_o1",
@@ -5399,10 +5473,12 @@
         "itemNum": 320,
         "mode": "revision",
         "idx": 37,
+        "idxKnown": true,
         "phase": "S1",
         "iso": "2026-09-17",
         "overridden": true,
-        "originalItemNum": 296
+        "originalItemNum": 296,
+        "dayCap": 5
       }
     ],
     "2026-09-18": [
@@ -5412,10 +5488,12 @@
         "itemNum": 296,
         "mode": "revision",
         "idx": 26,
+        "idxKnown": true,
         "phase": "S1",
         "iso": "2026-09-18",
         "overridden": true,
-        "originalItemNum": 216
+        "originalItemNum": 216,
+        "dayCap": 4
       },
       {
         "id": "S1_i64_o1",
@@ -5423,10 +5501,12 @@
         "itemNum": 352,
         "mode": "revision",
         "idx": 27,
+        "idxKnown": true,
         "phase": "S1",
         "iso": "2026-09-18",
         "overridden": true,
-        "originalItemNum": 64
+        "originalItemNum": 64,
+        "dayCap": 4
       },
       {
         "id": "S1_i217_o1",
@@ -5434,10 +5514,12 @@
         "itemNum": 318,
         "mode": "revision",
         "idx": 32,
+        "idxKnown": true,
         "phase": "S1",
         "iso": "2026-09-18",
         "overridden": true,
-        "originalItemNum": 217
+        "originalItemNum": 217,
+        "dayCap": 4
       },
       {
         "id": "S1_i65_o1",
@@ -5445,32 +5527,12 @@
         "itemNum": 353,
         "mode": "revision",
         "idx": 33,
+        "idxKnown": true,
         "phase": "S1",
         "iso": "2026-09-18",
         "overridden": true,
-        "originalItemNum": 65
-      },
-      {
-        "id": "S1_i218_o1",
-        "kind": "item",
-        "itemNum": 218,
-        "mode": "revision",
-        "idx": 38,
-        "phase": "S1",
-        "iso": "2026-09-18",
-        "overridden": false,
-        "originalItemNum": 218
-      },
-      {
-        "id": "S1_i66_o1",
-        "kind": "item",
-        "itemNum": 66,
-        "mode": "revision",
-        "idx": 39,
-        "phase": "S1",
-        "iso": "2026-09-18",
-        "overridden": false,
-        "originalItemNum": 66
+        "originalItemNum": 65,
+        "dayCap": 4
       }
     ],
     "2026-09-21": [
@@ -5480,21 +5542,12 @@
         "itemNum": 22,
         "mode": "revision",
         "idx": 28,
+        "idxKnown": true,
         "phase": "S1",
         "iso": "2026-09-21",
         "overridden": true,
-        "originalItemNum": 189
-      },
-      {
-        "id": "S1_i51_o1",
-        "kind": "item",
-        "itemNum": 51,
-        "mode": "revision",
-        "idx": 29,
-        "phase": "S1",
-        "iso": "2026-09-21",
-        "overridden": false,
-        "originalItemNum": 51
+        "originalItemNum": 189,
+        "dayCap": 3
       },
       {
         "id": "S1_i123_o1",
@@ -5502,10 +5555,12 @@
         "itemNum": 128,
         "mode": "revision",
         "idx": 36,
+        "idxKnown": true,
         "phase": "S1",
         "iso": "2026-09-21",
         "overridden": true,
-        "originalItemNum": 123
+        "originalItemNum": 123,
+        "dayCap": 3
       },
       {
         "id": "S1_i296_o1",
@@ -5513,100 +5568,40 @@
         "itemNum": 320,
         "mode": "revision",
         "idx": 37,
+        "idxKnown": true,
         "phase": "S1",
         "iso": "2026-09-21",
         "overridden": true,
-        "originalItemNum": 296
-      },
-      {
-        "id": "S1_i219_o1",
-        "kind": "item",
-        "itemNum": 219,
-        "mode": "revision",
-        "idx": 44,
-        "phase": "S1",
-        "iso": "2026-09-21",
-        "overridden": false,
-        "originalItemNum": 219
-      },
-      {
-        "id": "S1_i67_o1",
-        "kind": "item",
-        "itemNum": 67,
-        "mode": "revision",
-        "idx": 45,
-        "phase": "S1",
-        "iso": "2026-09-21",
-        "overridden": false,
-        "originalItemNum": 67
+        "originalItemNum": 296,
+        "dayCap": 3
       }
     ],
     "2026-09-22": [
-      {
-        "id": "S1_i122_o1",
-        "kind": "item",
-        "itemNum": 122,
-        "mode": "revision",
-        "idx": 30,
-        "phase": "S1",
-        "iso": "2026-09-22",
-        "overridden": false,
-        "originalItemNum": 122
-      },
       {
         "id": "S1_i295_o1",
         "kind": "item",
         "itemNum": 295,
         "mode": "revision",
         "idx": 31,
+        "idxKnown": true,
         "phase": "S1",
         "iso": "2026-09-22",
         "overridden": false,
-        "originalItemNum": 295
+        "originalItemNum": 295,
+        "dayCap": 2
       },
       {
         "id": "S1_i218_o1",
         "kind": "item",
-        "itemNum": 218,
+        "itemNum": 51,
         "mode": "revision",
         "idx": 38,
+        "idxKnown": true,
         "phase": "S1",
         "iso": "2026-09-22",
-        "overridden": false,
-        "originalItemNum": 218
-      },
-      {
-        "id": "S1_i66_o1",
-        "kind": "item",
-        "itemNum": 66,
-        "mode": "revision",
-        "idx": 39,
-        "phase": "S1",
-        "iso": "2026-09-22",
-        "overridden": false,
-        "originalItemNum": 66
-      },
-      {
-        "id": "S1_i192_o1",
-        "kind": "item",
-        "itemNum": 192,
-        "mode": "revision",
-        "idx": 46,
-        "phase": "S1",
-        "iso": "2026-09-22",
-        "overridden": false,
-        "originalItemNum": 192
-      },
-      {
-        "id": "S1_i54_o1",
-        "kind": "item",
-        "itemNum": 54,
-        "mode": "revision",
-        "idx": 47,
-        "phase": "S1",
-        "iso": "2026-09-22",
-        "overridden": false,
-        "originalItemNum": 54
+        "overridden": true,
+        "originalItemNum": 218,
+        "dayCap": 2
       }
     ],
     "2026-09-23": [
@@ -5616,10 +5611,12 @@
         "itemNum": 318,
         "mode": "revision",
         "idx": 32,
+        "idxKnown": true,
         "phase": "S1",
         "iso": "2026-09-23",
         "overridden": true,
-        "originalItemNum": 217
+        "originalItemNum": 217,
+        "dayCap": 2
       },
       {
         "id": "S1_i65_o1",
@@ -5627,54 +5624,12 @@
         "itemNum": 353,
         "mode": "revision",
         "idx": 33,
+        "idxKnown": true,
         "phase": "S1",
         "iso": "2026-09-23",
         "overridden": true,
-        "originalItemNum": 65
-      },
-      {
-        "id": "S1_i191_o1",
-        "kind": "item",
-        "itemNum": 191,
-        "mode": "revision",
-        "idx": 40,
-        "phase": "S1",
-        "iso": "2026-09-23",
-        "overridden": false,
-        "originalItemNum": 191
-      },
-      {
-        "id": "S1_i53_o1",
-        "kind": "item",
-        "itemNum": 53,
-        "mode": "revision",
-        "idx": 41,
-        "phase": "S1",
-        "iso": "2026-09-23",
-        "overridden": false,
-        "originalItemNum": 53
-      },
-      {
-        "id": "S1_i125_o1",
-        "kind": "item",
-        "itemNum": 125,
-        "mode": "revision",
-        "idx": 48,
-        "phase": "S1",
-        "iso": "2026-09-23",
-        "overridden": false,
-        "originalItemNum": 125
-      },
-      {
-        "id": "S1_i299_o1",
-        "kind": "item",
-        "itemNum": 299,
-        "mode": "revision",
-        "idx": 49,
-        "phase": "S1",
-        "iso": "2026-09-23",
-        "overridden": false,
-        "originalItemNum": 299
+        "originalItemNum": 65,
+        "dayCap": 2
       }
     ],
     "2026-09-24": [
@@ -5684,10 +5639,12 @@
         "itemNum": 59,
         "mode": "revision",
         "idx": 34,
+        "idxKnown": true,
         "phase": "S1",
         "iso": "2026-09-24",
         "overridden": true,
-        "originalItemNum": 190
+        "originalItemNum": 190,
+        "dayCap": 2
       },
       {
         "id": "S1_i52_o1",
@@ -5695,54 +5652,12 @@
         "itemNum": 345,
         "mode": "revision",
         "idx": 35,
+        "idxKnown": true,
         "phase": "S1",
         "iso": "2026-09-24",
         "overridden": true,
-        "originalItemNum": 52
-      },
-      {
-        "id": "S1_i124_o1",
-        "kind": "item",
-        "itemNum": 124,
-        "mode": "revision",
-        "idx": 42,
-        "phase": "S1",
-        "iso": "2026-09-24",
-        "overridden": false,
-        "originalItemNum": 124
-      },
-      {
-        "id": "S1_i298_o1",
-        "kind": "item",
-        "itemNum": 298,
-        "mode": "revision",
-        "idx": 43,
-        "phase": "S1",
-        "iso": "2026-09-24",
-        "overridden": false,
-        "originalItemNum": 298
-      },
-      {
-        "id": "S1_i220_o1",
-        "kind": "item",
-        "itemNum": 220,
-        "mode": "revision",
-        "idx": 50,
-        "phase": "S1",
-        "iso": "2026-09-24",
-        "overridden": false,
-        "originalItemNum": 220
-      },
-      {
-        "id": "S1_i68_o1",
-        "kind": "item",
-        "itemNum": 68,
-        "mode": "revision",
-        "idx": 51,
-        "phase": "S1",
-        "iso": "2026-09-24",
-        "overridden": false,
-        "originalItemNum": 68
+        "originalItemNum": 52,
+        "dayCap": 2
       }
     ],
     "2026-09-25": [
@@ -5752,10 +5667,12 @@
         "itemNum": 128,
         "mode": "revision",
         "idx": 36,
+        "idxKnown": true,
         "phase": "S1",
         "iso": "2026-09-25",
         "overridden": true,
-        "originalItemNum": 123
+        "originalItemNum": 123,
+        "dayCap": 2
       },
       {
         "id": "S1_i296_o1",
@@ -5763,67 +5680,27 @@
         "itemNum": 320,
         "mode": "revision",
         "idx": 37,
+        "idxKnown": true,
         "phase": "S1",
         "iso": "2026-09-25",
         "overridden": true,
-        "originalItemNum": 296
-      },
-      {
-        "id": "S1_i219_o1",
-        "kind": "item",
-        "itemNum": 219,
-        "mode": "revision",
-        "idx": 44,
-        "phase": "S1",
-        "iso": "2026-09-25",
-        "overridden": false,
-        "originalItemNum": 219
-      },
-      {
-        "id": "S1_i67_o1",
-        "kind": "item",
-        "itemNum": 67,
-        "mode": "revision",
-        "idx": 45,
-        "phase": "S1",
-        "iso": "2026-09-25",
-        "overridden": false,
-        "originalItemNum": 67
-      },
-      {
-        "id": "S1_i193_o1",
-        "kind": "item",
-        "itemNum": 193,
-        "mode": "revision",
-        "idx": 52,
-        "phase": "S1",
-        "iso": "2026-09-25",
-        "overridden": false,
-        "originalItemNum": 193
-      },
-      {
-        "id": "S1_i55_o1",
-        "kind": "item",
-        "itemNum": 49,
-        "mode": "revision",
-        "idx": 53,
-        "phase": "S1",
-        "iso": "2026-09-25",
-        "overridden": true,
-        "originalItemNum": 55
+        "originalItemNum": 296,
+        "dayCap": 2
       }
     ],
     "2026-09-28": [
       {
         "id": "S1_i218_o1",
         "kind": "item",
-        "itemNum": 218,
+        "itemNum": 51,
         "mode": "revision",
         "idx": 38,
+        "idxKnown": true,
         "phase": "S1",
         "iso": "2026-09-28",
-        "overridden": false,
-        "originalItemNum": 218
+        "overridden": true,
+        "originalItemNum": 218,
+        "dayCap": 2
       },
       {
         "id": "S1_i66_o1",
@@ -5831,54 +5708,12 @@
         "itemNum": 66,
         "mode": "revision",
         "idx": 39,
+        "idxKnown": true,
         "phase": "S1",
         "iso": "2026-09-28",
         "overridden": false,
-        "originalItemNum": 66
-      },
-      {
-        "id": "S1_i125_o1",
-        "kind": "item",
-        "itemNum": 125,
-        "mode": "revision",
-        "idx": 48,
-        "phase": "S1",
-        "iso": "2026-09-28",
-        "overridden": false,
-        "originalItemNum": 125
-      },
-      {
-        "id": "S1_i299_o1",
-        "kind": "item",
-        "itemNum": 299,
-        "mode": "revision",
-        "idx": 49,
-        "phase": "S1",
-        "iso": "2026-09-28",
-        "overridden": false,
-        "originalItemNum": 299
-      },
-      {
-        "id": "S1_i194_o1",
-        "kind": "item",
-        "itemNum": 194,
-        "mode": "revision",
-        "idx": 58,
-        "phase": "S1",
-        "iso": "2026-09-28",
-        "overridden": false,
-        "originalItemNum": 194
-      },
-      {
-        "id": "S1_i56_o1",
-        "kind": "item",
-        "itemNum": 56,
-        "mode": "revision",
-        "idx": 59,
-        "phase": "S1",
-        "iso": "2026-09-28",
-        "overridden": false,
-        "originalItemNum": 56
+        "originalItemNum": 66,
+        "dayCap": 2
       }
     ],
     "2026-08-29": [
@@ -6727,14 +6562,190 @@
   },
   "_meta": {
     "schemaVersion": 4,
-    "updatedAt": "2026-09-28T09:29:55.735Z"
+    "updatedAt": "2026-09-28T09:31:15.048Z"
   },
   "customTheme": {
     "enabled": false,
     "bg": "#f5f5f7",
     "accent": "#0071e3"
   },
-  "pastDayMeta": {},
+  "pastDayMeta": {
+    "2026-08-24": {
+      "r": 0,
+      "l": 0,
+      "f": 0
+    },
+    "2026-08-25": {
+      "r": 0,
+      "l": 0,
+      "f": 0
+    },
+    "2026-08-26": {
+      "r": 0,
+      "l": 0,
+      "f": 0
+    },
+    "2026-08-27": {
+      "r": 0,
+      "l": 0,
+      "f": 0
+    },
+    "2026-08-28": {
+      "r": 0,
+      "l": 0,
+      "f": 0
+    },
+    "2026-08-29": {
+      "r": 1,
+      "l": 2,
+      "f": 1
+    },
+    "2026-08-30": {
+      "r": 1,
+      "l": 2,
+      "f": 1
+    },
+    "2026-08-31": {
+      "r": 0,
+      "l": 0,
+      "f": 0
+    },
+    "2026-09-01": {
+      "r": 0,
+      "l": 0,
+      "f": 0
+    },
+    "2026-09-02": {
+      "r": 0,
+      "l": 0,
+      "f": 0
+    },
+    "2026-09-03": {
+      "r": 0,
+      "l": 0,
+      "f": 0
+    },
+    "2026-09-04": {
+      "r": 0,
+      "l": 0,
+      "f": 0
+    },
+    "2026-09-05": {
+      "r": 1,
+      "l": 2,
+      "f": 1
+    },
+    "2026-09-06": {
+      "r": 1,
+      "l": 2,
+      "f": 1
+    },
+    "2026-09-07": {
+      "r": 0,
+      "l": 0,
+      "f": 0
+    },
+    "2026-09-08": {
+      "r": 0,
+      "l": 0,
+      "f": 0
+    },
+    "2026-09-09": {
+      "r": 0,
+      "l": 0,
+      "f": 0
+    },
+    "2026-09-10": {
+      "r": 0,
+      "l": 0,
+      "f": 0
+    },
+    "2026-09-11": {
+      "r": 0,
+      "l": 0,
+      "f": 0
+    },
+    "2026-09-12": {
+      "r": 1,
+      "l": 2,
+      "f": 1
+    },
+    "2026-09-13": {
+      "r": 1,
+      "l": 2,
+      "f": 1
+    },
+    "2026-09-14": {
+      "r": 0,
+      "l": 0,
+      "f": 0
+    },
+    "2026-09-15": {
+      "r": 0,
+      "l": 0,
+      "f": 0
+    },
+    "2026-09-16": {
+      "r": 0,
+      "l": 0,
+      "f": 0
+    },
+    "2026-09-17": {
+      "r": 0,
+      "l": 0,
+      "f": 0
+    },
+    "2026-09-18": {
+      "r": 0,
+      "l": 0,
+      "f": 0
+    },
+    "2026-09-19": {
+      "r": 1,
+      "l": 2,
+      "f": 1
+    },
+    "2026-09-20": {
+      "r": 1,
+      "l": 2,
+      "f": 1
+    },
+    "2026-09-21": {
+      "r": 0,
+      "l": 0,
+      "f": 0
+    },
+    "2026-09-22": {
+      "r": 0,
+      "l": 0,
+      "f": 0
+    },
+    "2026-09-23": {
+      "r": 0,
+      "l": 0,
+      "f": 0
+    },
+    "2026-09-24": {
+      "r": 0,
+      "l": 0,
+      "f": 0
+    },
+    "2026-09-25": {
+      "r": 0,
+      "l": 0,
+      "f": 0
+    },
+    "2026-09-26": {
+      "r": 1,
+      "l": 2,
+      "f": 1
+    },
+    "2026-09-27": {
+      "r": 1,
+      "l": 2,
+      "f": 1
+    }
+  },
   "pinResetV1": true,
   "pinResetV2": true,
   "difficultyBoosterCleanupV1": true
