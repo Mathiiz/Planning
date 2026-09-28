@@ -6727,6 +6727,15 @@
   },
   "_meta": {
     "schemaVersion": 4,
-    "updatedAt": "2026-09-27T22:34:11.509Z"
-  }
+    "updatedAt": "2026-09-28T09:29:55.735Z"
+  },
+  "customTheme": {
+    "enabled": false,
+    "bg": "#f5f5f7",
+    "accent": "#0071e3"
+  },
+  "pastDayMeta": {},
+  "pinResetV1": true,
+  "pinResetV2": true,
+  "difficultyBoosterCleanupV1": true
 }
