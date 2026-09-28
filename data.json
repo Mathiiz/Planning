@@ -29,7 +29,10 @@
         "startDate": "2026-09-28"
       },
       "rest": {
-        "days": [],
+        "days": [
+          "SA",
+          "SU"
+        ],
         "periodWeeks": 1,
         "startDate": ""
       },
@@ -6554,7 +6557,7 @@
   },
   "_meta": {
     "schemaVersion": 4,
-    "updatedAt": "2026-09-28T10:13:50.660Z"
+    "updatedAt": "2026-09-28T10:31:03.261Z"
   },
   "customTheme": {
     "enabled": false,
