@@ -2655,7 +2655,8 @@
     "S1_i190_o1": true,
     "S1_i52_o1": true,
     "S1_i296_o1": true,
-    "S1_i123_o1": true
+    "S1_i123_o1": true,
+    "S1_i218_o1": true
   },
   "checks": {
     "2026-08-29": {
@@ -6569,7 +6570,7 @@
   },
   "_meta": {
     "schemaVersion": 4,
-    "updatedAt": "2026-09-28T12:56:12.540Z"
+    "updatedAt": "2026-09-28T15:53:25.544Z"
   },
   "customTheme": {
     "enabled": false,
