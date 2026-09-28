@@ -154,6 +154,10 @@ window.addEventListener('pageshow', function(e){
   .plan-row .pitems{flex:1;display:flex;gap:5px;flex-wrap:wrap;}
   .plan-row .pitem{font-family:var(--mono);font-size:10px;padding:1px 5px;border-radius:2px;color:#fff;}
   .month-divider{font-family:var(--serif);font-size:15px;font-weight:600;margin:20px 0 8px;padding-bottom:5px;border-bottom:1px solid var(--rule);}
+  .plan-warning{background:rgba(217,119,6,.10);border-left:3px solid var(--amber);border-radius:10px;padding:10px 12px;margin-bottom:14px;font-size:12px;color:var(--ink);}
+  .plan-warning .pw-title{font-weight:700;margin:0 0 6px;font-size:12.5px;}
+  .plan-warning .pw-row{margin:0 0 8px;line-height:1.45;}
+  .plan-warning .pw-foot{margin:4px 0 0;color:var(--ink-soft);font-size:11px;}
   .cal-nav{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:10px;}
   .cal-nav select{font-family:var(--sans);font-size:12.5px;padding:6px 8px;border:1px solid var(--rule);border-radius:8px;background:var(--paper-raised);color:var(--ink);}
   .cal-nav .btn-secondary{padding:6px 10px;font-size:12.5px;}
@@ -1535,7 +1539,13 @@ function stabilizeQueue(phase, idealQueue, baselineQueueForSeed){
   if(!DATA.queueFreeze) DATA.queueFreeze = {S1:[], S2:[]};
   const validIdeal = idealQueue.filter(n=>ITEM_BY_NUM[n]);
   let frozen = (DATA.queueFreeze[phase] || []).filter(n=>ITEM_BY_NUM[n]);
-  const boundary = CAL.length ? Math.min(quotaThroughToday(phase), validIdeal.length) : 0;
+  let pinnedCount = 0;
+  const perDayNow = itemsPerDayFor(phase);
+  Object.keys(DATA.pinnedDayItems || {}).forEach(iso=>{
+    const n = (DATA.pinnedDayItems[iso]||[]).filter(e=>e && String(e.id).startsWith(phase+'_i')).length;
+    pinnedCount += Math.min(n, perDayNow);
+  });
+  const boundary = Math.min(pinnedCount, validIdeal.length);
   if(boundary > frozen.length){
     const frozenSet = new Set(frozen);
     // Premier gel de cette phase : on reconstitue le planning « comme avant »
@@ -1741,11 +1751,48 @@ let CAL = [];
 const deadlineDebounceTimers = {};
 let INDEX_DATE = {S1:{}, S2:{}};
 let PHASE_FINAL_QUOTA = {S1:0, S2:0, ECOS:0};
+let PHASE_TODAY_QUOTA = {S1:0, S2:0};
 let currentTab = 'today';
 let selectedDayIso = null;
 let selectedItemNum = null;
 let progressSubview = null; // null | 'difficulty'
 let planningViewMonth = null; // Date (1er du mois affiché) dans la vue calendrier du Planning
+
+// ---------- calendrier : jours passés figés ----------
+// Règle de fond : un jour déjà passé (ou aujourd'hui) n'est JAMAIS recalculé à cause d'un
+// changement de réglage. Ses items sont « épinglés » (DATA.pinnedDayItems, avec le nombre
+// d'items décidé à l'époque : dayCap) et sa structure (repos, nb de LCA, nb de révisions
+// libres) est mémorisée (DATA.pastDayMeta). Seuls aujourd'hui (pour un éventuel complément
+// si le nombre d'items/jour augmente) et les jours à venir suivent les réglages actuels.
+function parsePinnedId(id){
+  const m = /^(S1|S2)_i(\d+)_o(\d+)$/.exec(String(id));
+  return m ? { phase:m[1], item:parseInt(m[2],10), occ:parseInt(m[3],10) } : null;
+}
+function slotIdxForKey(id){
+  const info = parsePinnedId(id);
+  if(!info) return null;
+  const q = info.phase==='S1' ? S1_QUEUE : S2_QUEUE;
+  if(!q.length) return null;
+  const pos = q.indexOf(info.item);
+  if(pos < 0) return null;
+  return pos + (info.occ-1)*q.length;
+}
+function materializePinnedEntry(p, iso){
+  const info = parsePinnedId(p.id);
+  const ov = DATA.itemOverrides && DATA.itemOverrides[p.id];
+  const natural = info ? info.item : (p.originalItemNum != null ? p.originalItemNum : p.itemNum);
+  const idx = info ? slotIdxForKey(p.id) : null;
+  return {
+    id:p.id, kind:'item',
+    itemNum: ov ? ov.itemNum : natural,
+    mode: info ? (info.occ===1 ? 'revision' : 'entrainement') : p.mode,
+    idx: (idx!=null ? idx : (typeof p.idx==='number' ? p.idx : null)),
+    idxKnown: idx!=null,
+    phase: p.phase || (info && info.phase),
+    iso, overridden: !!ov, originalItemNum: natural,
+    dayCap: p.dayCap
+  };
+}
 
 function buildCalendar(cfg, reportedDays){
   reportedDays = reportedDays || {};
@@ -1758,70 +1805,131 @@ function buildCalendar(cfg, reportedDays){
   const consolStart = addDays(exam,-21);
   const ecosDate = cfg.ecosDate ? parseISO(cfg.ecosDate) : null;
   const finalDate = (ecosDate && !isNaN(ecosDate.getTime()) && ecosDate > exam) ? ecosDate : exam;
-  const days = [];
-  INDEX_DATE = {S1:{}, S2:{}};
-  let counters = {S1:0, S2:0, ECOS:0};
-  let cur = new Date(start);
   const todayCutoff = todayDate();
+  const todayIsoStr = toISO(todayCutoff);
+  if(!DATA.pinnedDayItems) DATA.pinnedDayItems = {};
+  if(!DATA.pastDayMeta) DATA.pastDayMeta = {};
+  INDEX_DATE = {S1:{}, S2:{}};
+
+  // 1) Structure de chaque jour (repos / LCA / révision libre), figée pour les jours passés.
+  const lcaSched = getWeeklySchedule('lca');
+  const freeSched = getWeeklySchedule('free');
+  const metas = [];
+  let cur = new Date(start);
   while(cur <= finalDate){
-    const weekend = isConfiguredRestDay(cur);
+    const iso = toISO(cur);
     let phase;
     if(cur > exam) phase='ECOS';
     else if(cur >= consolStart) phase='CONSOL';
     else if(cur < s1End) phase='S1';
     else phase='S2';
-
-    const iso = toISO(cur);
     const reportedEntry = reportedDays[iso] || null;
     const reported = !!reportedEntry;
-    const day = { date:new Date(cur), iso, phase, weekend, reported, reportedInfo: reportedEntry };
+    let weekend = isConfiguredRestDay(cur);
+    let lcaCount = 0, freeCount = 0;
+    if(phase!=='ECOS'){
+      if(currentStudentYear() >= 5 && isScheduledOccurrence(cur, lcaSched)) lcaCount = Math.max(1, parseInt(lcaSched.count,10) || 1);
+      if(isScheduledOccurrence(cur, freeSched)) freeCount = Math.max(1, parseInt(freeSched.count,10) || 1);
+    }
+    if(iso < todayIsoStr){
+      const m = DATA.pastDayMeta[iso];
+      if(m){ weekend = !!m.r; lcaCount = m.l||0; freeCount = m.f||0; }
+      else DATA.pastDayMeta[iso] = { r: weekend?1:0, l: lcaCount, f: freeCount };
+    }
+    const queueLen = phase==='S1' ? S1_QUEUE.length : phase==='S2' ? S2_QUEUE.length : 0;
+    const isItemDay = !weekend && (phase==='S1'||phase==='S2') && !reported && queueLen>0;
+    metas.push({ date:new Date(cur), iso, phase, reported, reportedEntry, weekend, lcaCount, freeCount, isItemDay });
+    cur = addDays(cur,1);
+  }
 
+  // 2) Jours passés / aujourd'hui déjà épinglés : on reprend tels quels leurs items (sans rien
+  //    y ajouter) et on marque leurs cases comme utilisées. Un jour qui dépasse le nombre
+  //    d'items qui avait été décidé pour lui (données abîmées par d'anciens recalculs) est
+  //    ramené à ce nombre : les items faits sont toujours conservés, les autres retournent
+  //    dans le stock et seront replanifiés sur les jours à venir.
+  const usedIdx = {S1:new Set(), S2:new Set()};
+  const usedKeys = new Set();
+  const maxIdxAll = {S1:-1, S2:-1}, maxIdxToday = {S1:-1, S2:-1};
+  const frozen = {};
+  metas.forEach(m=>{
+    if(!m.isItemDay || m.iso > todayIsoStr) return;
+    const raw = DATA.pinnedDayItems[m.iso];
+    if(!Array.isArray(raw) || raw.length===0) return;
+    let list = raw.map(p=>materializePinnedEntry(p, m.iso)).filter(e=>e.phase && ITEM_BY_NUM[e.itemNum]);
+    if(list.length===0) return;
+    const caps = list.map(e=>e.dayCap).filter(v=>typeof v==='number');
+    let cap = (caps.length===list.length) ? Math.max(...caps) : itemsPerDayFor(m.phase);
+    const doneCount = list.filter(e=>isItemTaskDone(e.id)).length;
+    const limit = Math.max(cap, doneCount);
+    if(list.length > limit){
+      const rank = e => (isItemTaskDone(e.id) ? 0 : (isItemTaskSkipped(m.iso, e.id) ? 2 : 1));
+      const kept = list.slice().sort((a,b)=> rank(a)-rank(b) || ((a.idx==null?1e9:a.idx)-(b.idx==null?1e9:b.idx))).slice(0, limit);
+      const keptIds = new Set(kept.map(e=>e.id));
+      list = list.filter(e=>keptIds.has(e.id));
+    }
+    list.forEach(e=>{ e.dayCap = list.length; });
+    frozen[m.iso] = list;
+    list.forEach(e=>{
+      usedKeys.add(e.id);
+      if(e.idx!=null && e.idxKnown){
+        usedIdx[e.phase].add(e.idx);
+        INDEX_DATE[e.phase][e.idx] = m.iso;
+        if(e.idx > maxIdxAll[e.phase]) maxIdxAll[e.phase] = e.idx;
+        if(e.idx > maxIdxToday[e.phase]) maxIdxToday[e.phase] = e.idx;
+      }
+    });
+  });
+
+  const nextScan = {S1:0, S2:0};
+  function allocEntry(phase, iso, isDayToday){
+    const used = usedIdx[phase];
+    let i = nextScan[phase];
+    while(used.has(i) || usedKeys.has(taskForIndex(phase, i).key)) i++;
+    used.add(i); nextScan[phase] = i+1;
+    const e = effectiveItemFor(phase, i);
+    usedKeys.add(e.nativeKey);
+    INDEX_DATE[phase][i] = iso;
+    if(i > maxIdxAll[phase]) maxIdxAll[phase] = i;
+    if(iso <= todayIsoStr && i > maxIdxToday[phase]) maxIdxToday[phase] = i;
+    return { id:e.nativeKey, kind:'item', itemNum:e.itemNum, mode:e.mode, idx:i, phase, iso, overridden:e.overridden, originalItemNum:e.originalItemNum };
+  }
+
+  // 3) Construction des jours
+  const days = [];
+  let ecosCounter = 0;
+  metas.forEach(m=>{
+    const { iso, phase, reported, weekend } = m;
+    const day = { date:m.date, iso, phase, weekend, reported, reportedInfo: m.reportedEntry };
     if(phase==='ECOS'){
       day.tasks = [];
       if(!reported && SDD_QUEUE.length>0){
-        const baseIdx = counters.ECOS*SDD_PER_DAY;
+        const baseIdx = ecosCounter*SDD_PER_DAY;
         for(let i=0;i<SDD_PER_DAY;i++){
           const idx = baseIdx+i;
           const t = sddTaskForIndex(idx);
           if(t) day.tasks.push({id:t.key, kind:'sdd', num:t.num, idx});
         }
-        counters.ECOS++;
+        ecosCounter++;
       }
-    } else if(!weekend && (phase==='S1'||phase==='S2') && !reported && (phase==='S1'?S1_QUEUE.length:S2_QUEUE.length)>0){
+    } else if(m.isItemDay){
       const perDay = itemsPerDayFor(phase);
-      const baseIdx = counters[phase]*perDay;
-      const freshTasks = [];
-      for(let i=0;i<perDay;i++){
-        const idx = baseIdx+i;
-        const e = effectiveItemFor(phase, idx);
-        INDEX_DATE[phase][idx] = iso;
-        freshTasks.push({id:e.nativeKey, kind:'item', itemNum:e.itemNum, mode:e.mode, idx, phase, iso, overridden:e.overridden, originalItemNum:e.originalItemNum});
-      }
-      counters[phase]++;
-      if(cur <= todayCutoff){
-        // jour déjà atteint (aujourd'hui ou passé) : on ne supprime jamais un item qui y était
-        // déjà (et potentiellement fait) suite à un changement de priorité/DL — on ajoute les
-        // nouveaux venus sans retirer les anciens. En revanche, pour une case déjà présente
-        // (même clé native), on rafraîchit ses données depuis le calcul du jour : c'est ce qui
-        // permet à un échange manuel d'item sur cette case de bien se répercuter ici, au lieu
-        // de rester bloqué sur l'ancien item figé.
-        if(!DATA.pinnedDayItems) DATA.pinnedDayItems = {};
-        const pinned = DATA.pinnedDayItems[iso] || [];
-        const freshById = {};
-        freshTasks.forEach(t=>{ freshById[t.id] = t; });
-        const merged = pinned.map(p => { const t = freshById[p.id] || p; if(t && !t.iso) t.iso = iso; return t; });
-        const mergedIds = new Set(merged.map(t=>t.id));
-        freshTasks.forEach(t=>{ if(!mergedIds.has(t.id)){ merged.push(t); mergedIds.add(t.id); } });
-        DATA.pinnedDayItems[iso] = merged;
-        day.tasks = merged;
+      const isToday = iso === todayIsoStr;
+      let entries = (frozen[iso] || []).slice();
+      if(iso <= todayIsoStr){
+        let want = 0;
+        if(entries.length === 0) want = perDay;
+        else if(isToday && entries.length < perDay) want = perDay - entries.length;
+        for(let i=0;i<want;i++) entries.push(allocEntry(phase, iso));
+        entries.forEach(e=>{ e.dayCap = entries.length; });
+        DATA.pinnedDayItems[iso] = entries;
       } else {
-        day.tasks = freshTasks;
+        for(let i=0;i<perDay;i++) entries.push(allocEntry(phase, iso));
       }
+      day.tasks = entries;
     } else if(!weekend && (phase==='S1'||phase==='S2')){
       day.tasks = [];
     } else if(weekend){
-      // Jour de repos configuré : véritable coupure, aucun contenu (ni item, ni LCA,
-      // ni révision libre) — voir plus bas pour ces deux dernières, indépendantes.
+      // Jour de repos : véritable coupure, aucun item.
       day.tasks = [];
     } else { // CONSOL
       day.tasks = reported ? [] : [
@@ -1831,29 +1939,23 @@ function buildCalendar(cfg, reportedDays){
       ];
     }
 
-    // LCA et révision libre : planifiées indépendamment du repos, chacune selon ses
-    // propres jours de la semaine et sa propre période (en semaines) — elles peuvent
-    // donc tomber n'importe quel jour, y compris un jour de repos ou un jour d'item.
+    // LCA et révision libre : indépendantes du repos ; leur nombre est figé pour les jours passés.
     if(!reported && phase!=='ECOS'){
-      if(currentStudentYear() >= 5 && isScheduledOccurrence(cur, getWeeklySchedule('lca'))){
-        const lcaCount = Math.max(1, parseInt(getWeeklySchedule('lca').count,10) || 1);
-        for(let i=0;i<lcaCount;i++){
-          day.tasks.push({id: lcaCount>1 ? 'lca_'+i : 'lca', kind:'generic', label: lcaCount>1 ? `LCA — article ${i+1}/${lcaCount} (méthodologie + analyse critique)` : "LCA — article (méthodologie + analyse critique)"});
-        }
+      const lcaCount = m.lcaCount, freeCount = m.freeCount;
+      for(let i=0;i<lcaCount;i++){
+        day.tasks.push({id: lcaCount>1 ? 'lca_'+i : 'lca', kind:'generic', label: lcaCount>1 ? `LCA — article ${i+1}/${lcaCount} (méthodologie + analyse critique)` : "LCA — article (méthodologie + analyse critique)"});
       }
-      if(isScheduledOccurrence(cur, getWeeklySchedule('free'))){
-        const freeCount = Math.max(1, parseInt(getWeeklySchedule('free').count,10) || 1);
-        for(let i=0;i<freeCount;i++){
-          day.tasks.push({id: freeCount>1 ? 'free_'+i : 'free', kind:'generic', label: freeCount>1 ? `Révision libre ${i+1}/${freeCount} — item ou matière de ton choix` : "Révision libre — item ou matière de ton choix"});
-        }
+      for(let i=0;i<freeCount;i++){
+        day.tasks.push({id: freeCount>1 ? 'free_'+i : 'free', kind:'generic', label: freeCount>1 ? `Révision libre ${i+1}/${freeCount} — item ou matière de ton choix` : "Révision libre — item ou matière de ton choix"});
       }
     }
     days.push(day);
-    cur = addDays(cur,1);
-  }
-  PHASE_FINAL_QUOTA.S1 = counters.S1 * itemsPerDayFor('S1');
-  PHASE_FINAL_QUOTA.S2 = counters.S2 * itemsPerDayFor('S2');
-  PHASE_FINAL_QUOTA.ECOS = counters.ECOS * SDD_PER_DAY;
+  });
+
+  PHASE_FINAL_QUOTA.S1 = maxIdxAll.S1 + 1;
+  PHASE_FINAL_QUOTA.S2 = maxIdxAll.S2 + 1;
+  PHASE_FINAL_QUOTA.ECOS = ecosCounter * SDD_PER_DAY;
+  PHASE_TODAY_QUOTA = { S1: maxIdxToday.S1 + 1, S2: maxIdxToday.S2 + 1 };
   return days;
 }
 
@@ -2382,8 +2484,11 @@ function mergeScalar(remote, local, snapshot){
   return local!==undefined ? local : remote;
 }
 function mergeData(remote, local, snapshot){
-  remote = remote || {}; snapshot = snapshot || {};
-  return {
+  remote = remote || {}; snapshot = snapshot || {}; local = local || {};
+  // Les champs non listés ci-dessous (drapeaux de migration, thème personnalisé, mémoire des
+  // jours passés…) ne doivent pas disparaître à la synchro : on part de l'union des deux côtés
+  // (le local prime), puis on écrase avec le résultat de la fusion champ par champ.
+  return Object.assign({}, remote, local, {
     config: mergeMap(remote.config, local.config, snapshot.config),
     items: mergeScalar(remote.items, local.items, snapshot.items),
     darkMode: mergeScalar(remote.darkMode, local.darkMode, snapshot.darkMode),
@@ -2399,9 +2504,10 @@ function mergeData(remote, local, snapshot){
     lcaEntries: mergeMap(remote.lcaEntries, local.lcaEntries, snapshot.lcaEntries),
     sddItems: mergeScalar(remote.sddItems, local.sddItems, snapshot.sddItems),
     pinnedDayItems: mergeMap(remote.pinnedDayItems, local.pinnedDayItems, snapshot.pinnedDayItems),
+    pastDayMeta: mergeMap(remote.pastDayMeta, local.pastDayMeta, snapshot.pastDayMeta),
     queueFreeze: mergeScalar(remote.queueFreeze, local.queueFreeze, snapshot.queueFreeze),
     _meta: {schemaVersion:DATA_SCHEMA_VERSION, updatedAt:latestIsoTimestamp(dataUpdatedAt(remote), dataUpdatedAt(local), dataUpdatedAt(snapshot))}
-  };
+  });
 }
 
 // ---------- fusion spécifique à la première connexion d'un nouvel appareil ----------
@@ -2450,7 +2556,7 @@ function connectMergeData(remote, local){
   const remoteIsNewer = !!rt && (lt ? Date.parse(rt) >= Date.parse(lt) : !localHasMeaningfulData);
   const preferred = remoteIsNewer ? remote : local;
   const fallback = remoteIsNewer ? local : remote;
-  return ensureDataMeta({
+  return ensureDataMeta(Object.assign({}, fallback, preferred, {
     config: preferred.config || fallback.config,
     items: preferred.items || fallback.items,
     darkMode: (preferred.darkMode !== undefined) ? preferred.darkMode : fallback.darkMode,
@@ -2466,9 +2572,10 @@ function connectMergeData(remote, local){
     lcaEntries: unionGenericMap(remote.lcaEntries, local.lcaEntries),
     sddItems: preferred.sddItems || fallback.sddItems,
     pinnedDayItems: preferred.pinnedDayItems || fallback.pinnedDayItems || {},
+    pastDayMeta: preferred.pastDayMeta || fallback.pastDayMeta || {},
     queueFreeze: preferred.queueFreeze || fallback.queueFreeze || {S1:[],S2:[]},
     _meta: {schemaVersion:DATA_SCHEMA_VERSION, updatedAt:latestIsoTimestamp(rt,lt)}
-  });
+  }));
 }
 
 async function githubLoadData(){
@@ -2637,42 +2744,103 @@ function phaseLabel(phase){
   return phase==='S1' ? 'Période en cours — apprentissage & découverte' : phase==='S2' ? 'Révision générale — programme complet' : phase==='ECOS' ? 'Entraînement ECOS (SDD)' : 'Consolidation finale';
 }
 
-function quotaBeforeToday(phase){
-  const t = todayDate();
-  if(CAL.length && t < CAL[0].date) return 0;
-  if(CAL.length && t > CAL[CAL.length-1].date) return PHASE_FINAL_QUOTA[phase];
-  const today = findDay(todayIso());
-  if(!today) return PHASE_FINAL_QUOTA[phase];
-  if(today.phase === phase){
-    let n = 0;
-    for(const d of CAL){
-      if(d.iso === today.iso) break;
-      if(!d.weekend && d.phase===phase && !d.reported) n++;
-    }
-    return n * itemsPerDayFor(phase);
-  }
-  const order = {S1:0, S2:1, CONSOL:2, ECOS:3};
-  if(order[today.phase] > order[phase]) return PHASE_FINAL_QUOTA[phase];
-  return 0;
+// ---------- faisabilité du planning (garde-fou) ----------
+// Compare ce qu'il reste à voir avec le nombre de places réellement disponibles d'ici une
+// échéance, et explique pourquoi ça ne rentre pas (rythme, jours de repos, jours reportés…).
+function fmtLongDate(d){ return String(d.getDate()).padStart(2,'0')+'/'+String(d.getMonth()+1).padStart(2,'0')+'/'+d.getFullYear(); }
+function slotStatsBefore(limitIso, phases){
+  const todayStr = todayIso();
+  let slots=0, workdays=0, restDays=0, reportedCount=0;
+  CAL.forEach(d=>{
+    if(d.iso < todayStr || d.iso >= limitIso) return;
+    if(!phases.includes(d.phase)) return;
+    if(d.weekend){ restDays++; return; }
+    if(d.reported){ reportedCount++; return; }
+    let n = (d.tasks||[]).filter(t=>t.kind==='item' && !isItemTaskSkipped(d.iso,t.id) && !(d.iso===todayStr && isItemTaskDone(t.id))).length;
+    if(n===0) return;
+    workdays++; slots += n;
+  });
+  return { slots, workdays, restDays, reportedCount };
 }
-function quotaThroughToday(phase){
-  const t = todayDate();
-  if(CAL.length && t < CAL[0].date) return 0;
-  if(CAL.length && t > CAL[CAL.length-1].date) return PHASE_FINAL_QUOTA[phase];
-  const today = findDay(todayIso());
-  if(!today) return PHASE_FINAL_QUOTA[phase];
-  if(today.phase === phase){
-    if(today.reported) return quotaBeforeToday(phase);
-    let n = 0;
-    for(const d of CAL){
-      if(!d.weekend && d.phase===phase && !d.reported) n++;
-      if(d.iso === today.iso) break;
+function reasonText(st, need){
+  const perDay = st.workdays ? Math.round(st.slots/st.workdays*10)/10 : 0;
+  let t = `${st.slots} place${st.slots>1?'s':''} disponible${st.slots>1?'s':''} (${st.workdays} jour${st.workdays>1?'s':''} d’étude × ~${perDay} item${perDay>1?'s':''}/jour`;
+  const excl = [];
+  if(st.restDays) excl.push(`${st.restDays} jour${st.restDays>1?'s':''} de repos`);
+  if(st.reportedCount) excl.push(`${st.reportedCount} jour${st.reportedCount>1?'s':''} reporté${st.reportedCount>1?'s':''}`);
+  t += excl.length ? `, hors ${excl.join(' et ')})` : ')';
+  const needPerDay = st.workdays ? Math.ceil(need/st.workdays) : null;
+  const advice = [];
+  if(needPerDay) advice.push(`passer à ${needPerDay} items/jour`);
+  advice.push('repousser l’échéance');
+  if(st.restDays) advice.push('retirer des jours de repos');
+  return t + ` — ${advice.join(', ')}.`;
+}
+function planFeasibilityIssues(){
+  const issues = [];
+  if(!CAL.length || !DATA || !DATA.config) return issues;
+  const todayStr = todayIso();
+  const status = computeItemStatus();
+  const unseen = n => !(status[n] && status[n].revision);
+  const cfg = DATA.config;
+
+  // a) Échéances (DL) de matières
+  const dl = DATA.subjectDeadlines || {};
+  const dlList = Object.keys(dl).filter(c=>dl[c] && dl[c] >= todayStr).sort((a,b)=> dl[a] < dl[b] ? -1 : 1);
+  const cumulative = new Set();
+  dlList.forEach(c=>{
+    itemsOfCat(c).forEach(n=>{ if(unseen(n)) cumulative.add(n); });
+    const need = cumulative.size;
+    const st = slotStatsBefore(dl[c], ['S1','S2']);
+    if(need > st.slots){
+      const withPrev = dlList.filter(x=>dl[x] < dl[c]).length>0 ? ' (en comptant les matières dont l’échéance est plus proche)' : '';
+      issues.push({
+        title: `${CAT_LABELS[c]||c} — échéance du ${fmtLongDate(parseISO(dl[c]))}`,
+        detail: `Il reste ${need} item${need>1?'s':''} à voir${withPrev}, mais seulement ${reasonText(st, need)}`
+      });
     }
-    return n * itemsPerDayFor(phase);
+  });
+
+  // b) Fin de la période d'apprentissage (S1) : items des matières en cours
+  if(cfg.s1End && S1_QUEUE.length){
+    const remaining = S1_QUEUE.filter(n=>!isItemTaskDone('S1_i'+n+'_o1')).length;
+    const st = slotStatsBefore(cfg.s1End, ['S1']);
+    if(remaining > st.slots && cfg.s1End >= todayStr){
+      issues.push({
+        title: `Fin de la période d’apprentissage (${fmtLongDate(parseISO(cfg.s1End))})`,
+        detail: `${remaining} item${remaining>1?'s':''} des matières en cours restent à voir en première lecture, mais seulement ${reasonText(st, remaining)}`
+      });
+    }
   }
-  const order = {S1:0, S2:1, CONSOL:2, ECOS:3};
-  if(order[today.phase] > order[phase]) return PHASE_FINAL_QUOTA[phase];
-  return 0;
+
+  // c) Programme complet avant la consolidation
+  if(cfg.exam && S2_QUEUE.length){
+    const consol = toISO(addDays(parseISO(cfg.exam), -21));
+    if(consol >= todayStr){
+      const remaining = S2_QUEUE.filter(n=>!isItemTaskDone('S2_i'+n+'_o1')).length;
+      const st = slotStatsBefore(consol, ['S2']);
+      if(remaining > st.slots){
+        issues.push({
+          title: `Programme complet avant la consolidation (${fmtLongDate(parseISO(consol))})`,
+          detail: `${remaining} item${remaining>1?'s':''} restent à voir en révision générale, mais seulement ${reasonText(st, remaining)}`
+        });
+      }
+    }
+  }
+  return issues;
+}
+function planWarningsHTML(){
+  let issues = [];
+  try{ issues = planFeasibilityIssues(); }catch(e){ console.error('Diagnostic de faisabilité', e); }
+  if(issues.length===0) return '';
+  return `<div class="plan-warning"><p class="pw-title">⚠️ Tous les items ne rentrent pas dans le planning actuel</p>` +
+    issues.map(i=>`<p class="pw-row"><strong>${esc(i.title)}</strong><br>${esc(i.detail)}</p>`).join('') +
+    `<p class="pw-foot">Les jours déjà passés ne sont jamais modifiés : seuls aujourd’hui et les jours à venir suivent tes réglages.</p></div>`;
+}
+
+function quotaThroughToday(phase){
+  // Nombre de cases (indices de la file) déjà attribuées à des jours atteints (passés ou aujourd'hui).
+  return (PHASE_TODAY_QUOTA && PHASE_TODAY_QUOTA[phase]) || 0;
 }
 
 function retardList(){
@@ -3059,7 +3227,7 @@ function renderToday(){
 
   const custom = day.reported ? '' : customTasksHTML(day.iso);
 
-  container.innerHTML = weekSummaryHTML() + head + body + (day.reported ? '' : removedItemTasksHTML(day)) + custom + `<footer class="note">Plus de temps aujourd'hui ? Avance librement (onglet Planning). Moins de temps ? Marque cette journée (repos, garde, repos de garde, partiel, concours blanc…), ou laisse simplement les items non faits — ils remonteront automatiquement demain.</footer>`;
+  container.innerHTML = planWarningsHTML() + weekSummaryHTML() + head + body + (day.reported ? '' : removedItemTasksHTML(day)) + custom + `<footer class="note">Plus de temps aujourd'hui ? Avance librement (onglet Planning). Moins de temps ? Marque cette journée (repos, garde, repos de garde, partiel, concours blanc…), ou laisse simplement les items non faits — ils restent sur leur jour et apparaissent dans l'onglet Retard.</footer>`;
   bindTaskHandlers(container);
   if(!day.reported) bindCustomTaskHandlers(container, day.iso);
   bindReportControl(container, day.iso);
@@ -3304,7 +3472,7 @@ function renderProgress(){
     </div>`;
   }
   const diffCount = Object.keys(DATA.itemDifficulty||{}).filter(n=>ITEM_BY_NUM[n] && DATA.itemDifficulty[n]==='difficile').length;
-  let html = '';
+  let html = planWarningsHTML();
   html += `<button type="button" class="btn-secondary" id="btnShowDifficulty" style="margin-bottom:14px;">🔴 Mes items difficiles${diffCount?` (${diffCount})`:''}</button>`;
   const newC = currentNewCats();
   if(newC.length > 0){
@@ -3807,6 +3975,7 @@ function renderSettings(){
 
   container.innerHTML = `
     <button class="back-link" id="settingsBackBtn">← Retour</button>
+    ${planWarningsHTML()}
     <div class="settings-card">
       <h3>Affichage & Compteurs du bandeau</h3>
       <div class="settings-group">
@@ -3875,6 +4044,7 @@ function renderSettings(){
             <input type="number" id="cfgDailyP2" min="1" max="10" value="${cfg.dailyItemsPhase2||3}">
           </label>
         </div>
+        <span class="settings-hint" style="display:block;margin:-4px 0 10px;">Un changement de rythme (ou de réglages) s’applique à partir d’aujourd’hui : les jours déjà passés ne sont jamais modifiés.</span>
         <div style="display:flex;gap:10px;flex-wrap:wrap;">
           <label style="flex:1;min-width:200px;">Organisation — Période d'apprentissage
             <select id="cfgStudyModeP1">
@@ -4585,13 +4755,10 @@ async function init(){
 
   // 4) Finish startup. The UI remains usable even if step 2/3 failed or timed out.
   try{
-    if(!DATA.pinResetV2){
-      DATA.pinnedDayItems = {};
-      DATA.pinResetV1 = true;
-      DATA.pinResetV2 = true;
-      CAL = buildCalendar(DATA.config, DATA.reportedDays);
-      saveData();
-    }
+    // Anciennes migrations qui effaçaient les jours épinglés : supprimées. Le calendrier fige
+    // désormais lui-même les jours passés (et répare les jours abîmés, cf. buildCalendar),
+    // sans jamais rien effacer.
+    if(!DATA.pinResetV2){ DATA.pinResetV1 = true; DATA.pinResetV2 = true; }
     if(!DATA.difficultyBoosterCleanupV1){
       cleanupLegacyDifficultyBoosters();
       DATA.difficultyBoosterCleanupV1 = true;
