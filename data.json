@@ -23,19 +23,23 @@
       "lca": {
         "count": 2,
         "days": [
-          "SA",
           "SU"
         ],
+        "periodWeeks": 1,
+        "startDate": "2026-09-28"
+      },
+      "rest": {
+        "days": [],
         "periodWeeks": 1,
         "startDate": ""
       },
-      "rest": {
+      "free": {
+        "count": 2,
         "days": [
-          "SA",
-          "SU"
+          "SA"
         ],
         "periodWeeks": 1,
-        "startDate": ""
+        "startDate": "2026-09-28"
       }
     }
   },
@@ -6562,7 +6566,7 @@
   },
   "_meta": {
     "schemaVersion": 4,
-    "updatedAt": "2026-09-28T09:31:15.048Z"
+    "updatedAt": "2026-09-28T09:32:34.419Z"
   },
   "customTheme": {
     "enabled": false,
