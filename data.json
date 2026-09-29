@@ -2831,6 +2831,9 @@
     },
     "2026-09-23": {
       "custom_1790179100917_371": true
+    },
+    "2026-09-29": {
+      "custom_1790702989848_657": true
     }
   },
   "reportedDays": {
@@ -3340,6 +3343,12 @@
         "id": "custom_1790179100917_371",
         "label": "Item 240 - Hypoglycémie (pédiatrie)"
       }
+    ],
+    "2026-09-29": [
+      {
+        "id": "custom_1790702989848_657",
+        "label": "Item 45 - Spécificités des maladies génétiques, à propos d'une maladie chromosomique : la trisomie 21"
+      }
     ]
   },
   "itemDifficulty": {
@@ -3351,7 +3360,8 @@
   },
   "skippedItemTasks": {
     "2026-09-14::S1_i50_o1": true,
-    "2026-09-22::S1_i122_o1": true
+    "2026-09-22::S1_i122_o1": true,
+    "2026-09-29::S1_i51_o1": true
   },
   "lcaEntries": {},
   "sddItems": [
@@ -6521,6 +6531,34 @@
         "kind": "generic",
         "label": "Révision libre — item ou matière de ton choix"
       }
+    ],
+    "2026-09-29": [
+      {
+        "id": "S1_i50_o1",
+        "kind": "item",
+        "itemNum": 50,
+        "mode": "revision",
+        "idx": 21,
+        "idxKnown": true,
+        "phase": "S1",
+        "iso": "2026-09-29",
+        "overridden": false,
+        "originalItemNum": 50,
+        "dayCap": 2
+      },
+      {
+        "id": "S1_i51_o1",
+        "kind": "item",
+        "itemNum": 51,
+        "mode": "revision",
+        "idx": 29,
+        "idxKnown": true,
+        "phase": "S1",
+        "iso": "2026-09-29",
+        "overridden": false,
+        "originalItemNum": 51,
+        "dayCap": 2
+      }
     ]
   },
   "queueFreeze": {
@@ -6590,7 +6628,7 @@
   },
   "_meta": {
     "schemaVersion": 4,
-    "updatedAt": "2026-09-29T17:29:33.962Z"
+    "updatedAt": "2026-09-29T18:18:04.066Z"
   },
   "customTheme": {
     "enabled": false,
@@ -6772,6 +6810,12 @@
       "r": 1,
       "l": 2,
       "f": 1
+    },
+    "2026-09-28": {
+      "r": 0,
+      "l": 0,
+      "f": 0,
+      "s": 1
     }
   },
   "pinResetV1": true,
