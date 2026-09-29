@@ -2833,7 +2833,8 @@
       "custom_1790179100917_371": true
     },
     "2026-09-29": {
-      "custom_1790702989848_657": true
+      "custom_1790702989848_657": true,
+      "custom_1790710865695_98": false
     }
   },
   "reportedDays": {
@@ -3348,10 +3349,6 @@
       {
         "id": "custom_1790702989848_657",
         "label": "Item 45 - Spécificités des maladies génétiques, à propos d'une maladie chromosomique : la trisomie 21"
-      },
-      {
-        "id": "custom_1790710865695_98",
-        "label": "Item 45 Spécificités des maladies génétiques, à propos d'une maladie d'instabilité : le syndrome de l'X fragile"
       }
     ]
   },
@@ -6634,7 +6631,7 @@
   },
   "_meta": {
     "schemaVersion": 4,
-    "updatedAt": "2026-09-29T19:41:05.696Z"
+    "updatedAt": "2026-09-29T19:59:14.906Z"
   },
   "customTheme": {
     "enabled": false,
