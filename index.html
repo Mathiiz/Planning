@@ -8,6 +8,9 @@
 // une ancienne URL déjà munie d'un ?v=... peut être réutilisée indéfiniment.
 // On compare le paramètre courant à celui mémorisé dans la session, puis on effectue une seule
 // redirection vers un nouveau timestamp. Le second chargement s'arrête donc sans boucle.
+// IMPORTANT : tous les paramètres existants (dont ghtoken/ghowner/ghrepo) sont TOUJOURS
+// conservés lors des redirections — sinon la connexion GitHub intégrée dans l'URL serait
+// perdue dès la première redirection anti-cache (c'était le bug sur Notion iPhone).
 (function(){
   try{
     var url = new URL(window.location.href);
@@ -20,6 +23,7 @@
       // neuf, sans passer par la comparaison sessionStorage ci-dessous (qui ne se déclenche
       // jamais quand les deux valeurs comparées sont vides).
       var nextV0 = String(Date.now());
+      // On ajoute ?v= SANS toucher aux autres paramètres déjà présents (ghtoken, etc.)
       url.searchParams.set('v', nextV0);
       try{ sessionStorage.setItem('edn-cache-bust-v1', nextV0); }catch(e0){}
       window.location.replace(url.toString());
@@ -30,6 +34,7 @@
     if(currentV !== seenV){
       var nextV = String(Date.now());
       if(nextV === currentV) nextV = String(Date.now() + 1);
+      // On met à jour ?v= SANS supprimer les autres paramètres (ghtoken, etc.)
       url.searchParams.set('v', nextV);
       try{ sessionStorage.setItem('edn-cache-bust-v1', nextV); }catch(e2){}
       window.location.replace(url.toString());
@@ -42,6 +47,7 @@ window.addEventListener('pageshow', function(e){
       var url2 = new URL(window.location.href);
       if(url2.protocol === 'file:') return;
       var nextV2 = String(Date.now());
+      // Idem : on met à jour ?v= sans toucher aux autres paramètres
       url2.searchParams.set('v', nextV2);
       sessionStorage.setItem('edn-cache-bust-v1', nextV2);
       window.location.replace(url2.toString());
@@ -1397,6 +1403,7 @@ function dowCode(d){ return DOW_CODES[d.getDay()]; }
 function getWeeklySchedule(kind){
   const ws = (DATA && DATA.config && DATA.config.weeklySchedule) || {};
   const defaults = {
+    study:{ days:['MO','TU','WE','TH','FR','SA','SU'], periodWeeks:1, startDate:'' },
     lca:  { count:2, days:['SA','SU'], periodWeeks:1, startDate:'' },
     free: { count:1, days:['SA','SU'], periodWeeks:1, startDate:'' },
     rest: { days:['SA','SU'], periodWeeks:1, startDate:'' }
@@ -1455,6 +1462,7 @@ function getDefaultConfig(){
     // semaines) pour la LCA, la révision libre et le repos. Valeurs par défaut =
     // comportement historique (week-end = samedi + dimanche, chaque semaine).
     weeklySchedule: {
+      study:{ days:['MO','TU','WE','TH','FR','SA','SU'], periodWeeks:1 },
       lca:  { count:2, days:['SA','SU'], periodWeeks:1 },
       free: { count:1, days:['SA','SU'], periodWeeks:1 },
       rest: { days:['SA','SU'], periodWeeks:1 }
@@ -1811,7 +1819,8 @@ function buildCalendar(cfg, reportedDays){
   if(!DATA.pastDayMeta) DATA.pastDayMeta = {};
   INDEX_DATE = {S1:{}, S2:{}};
 
-  // 1) Structure de chaque jour (repos / LCA / révision libre), figée pour les jours passés.
+  // 1) Structure de chaque jour (repos / cours / LCA / révision libre), figée pour les jours passés.
+  const studySched = getWeeklySchedule('study');
   const lcaSched = getWeeklySchedule('lca');
   const freeSched = getWeeklySchedule('free');
   const metas = [];
@@ -1831,13 +1840,14 @@ function buildCalendar(cfg, reportedDays){
       if(currentStudentYear() >= 5 && isScheduledOccurrence(cur, lcaSched)) lcaCount = Math.max(1, parseInt(lcaSched.count,10) || 1);
       if(isScheduledOccurrence(cur, freeSched)) freeCount = Math.max(1, parseInt(freeSched.count,10) || 1);
     }
+    let studyDay = isScheduledOccurrence(cur, studySched);
     if(iso < todayIsoStr){
       const m = DATA.pastDayMeta[iso];
-      if(m){ weekend = !!m.r; lcaCount = m.l||0; freeCount = m.f||0; }
-      else DATA.pastDayMeta[iso] = { r: weekend?1:0, l: lcaCount, f: freeCount };
+      if(m){ weekend = !!m.r; lcaCount = m.l||0; freeCount = m.f||0; if(m.s!==undefined) studyDay = !!m.s; }
+      else DATA.pastDayMeta[iso] = { r: weekend?1:0, l: lcaCount, f: freeCount, s: studyDay?1:0 };
     }
     const queueLen = phase==='S1' ? S1_QUEUE.length : phase==='S2' ? S2_QUEUE.length : 0;
-    const isItemDay = !weekend && (phase==='S1'||phase==='S2') && !reported && queueLen>0;
+    const isItemDay = !weekend && (phase==='S1'||phase==='S2') && !reported && queueLen>0 && studyDay;
     metas.push({ date:new Date(cur), iso, phase, reported, reportedEntry, weekend, lcaCount, freeCount, isItemDay });
     cur = addDays(cur,1);
   }
@@ -1865,6 +1875,24 @@ function buildCalendar(cfg, reportedDays){
       const rank = e => (isItemTaskDone(e.id) ? 0 : (isItemTaskSkipped(m.iso, e.id) ? 2 : 1));
       const kept = list.slice().sort((a,b)=> rank(a)-rank(b) || ((a.idx==null?1e9:a.idx)-(b.idx==null?1e9:b.idx))).slice(0, limit);
       const keptIds = new Set(kept.map(e=>e.id));
+      // Une case retirée d'un jour (trop d'items pour sa capacité actuelle) retourne au stock
+      // et pourra être replanifiée ailleurs, avec sa clé native d'origine réutilisée telle
+      // quelle. Si cette case portait un échange (interchanger), il faut l'annuler ici :
+      // sinon le nouvel emplacement qui hérite de cette clé afficherait à tort l'item permuté
+      // d'un jour totalement différent, et une action sur l'un des deux affecterait l'autre.
+      list.filter(e=>!keptIds.has(e.id)).forEach(e=>{
+        const ov = DATA.itemOverrides && DATA.itemOverrides[e.id];
+        if(ov){
+          const partnerKey = ov.partnerKey;
+          const partner = partnerKey ? DATA.itemOverrides[partnerKey] : null;
+          if(partner && ov.swapId && partner.swapId === ov.swapId){
+            delete DATA.itemOverrides[e.id];
+            delete DATA.itemOverrides[partnerKey];
+          } else {
+            delete DATA.itemOverrides[e.id];
+          }
+        }
+      });
       list = list.filter(e=>keptIds.has(e.id));
     }
     list.forEach(e=>{ e.dayCap = list.length; });
@@ -1939,8 +1967,11 @@ function buildCalendar(cfg, reportedDays){
       ];
     }
 
-    // LCA et révision libre : indépendantes du repos ; leur nombre est figé pour les jours passés.
-    if(!reported && phase!=='ECOS'){
+    // LCA et révision libre : placées sur les jours choisis en paramètres, indépendamment
+    // des jours d'items — mais un jour de repos reste une vraie coupure (aucune LCA, aucune
+    // révision libre ce jour-là, même s'il correspond aussi à un jour choisi pour elles).
+    // Leur nombre est figé pour les jours passés.
+    if(!reported && !weekend && phase!=='ECOS'){
       const lcaCount = m.lcaCount, freeCount = m.freeCount;
       for(let i=0;i<lcaCount;i++){
         day.tasks.push({id: lcaCount>1 ? 'lca_'+i : 'lca', kind:'generic', label: lcaCount>1 ? `LCA — article ${i+1}/${lcaCount} (méthodologie + analyse critique)` : "LCA — article (méthodologie + analyse critique)"});
@@ -2053,6 +2084,13 @@ function performSwap(phaseA, idxA, nativeKeyA, itemA, slotB, itemB){
   // "Remettre l'item d'origine" reste correct même après plusieurs échanges successifs.
   const priorOverrideA = DATA.itemOverrides[nativeKeyA];
   const trueOriginalA = (priorOverrideA && priorOverrideA.previousItemNum != null) ? priorOverrideA.previousItemNum : itemA;
+  // La case A était déjà appariée à une AUTRE case (échange précédent avec un partenaire
+  // différent de celui choisi ici) : cette ancienne case doit redevenir indépendante
+  // (retrouver son propre item), sinon elle reste liée à un swapId périmé et peut continuer
+  // à afficher/réagir comme si elle faisait encore partie de cet échange.
+  if(priorOverrideA && priorOverrideA.partnerKey && priorOverrideA.partnerKey !== slotB.nativeKey){
+    delete DATA.itemOverrides[priorOverrideA.partnerKey];
+  }
   DATA.itemOverrides[nativeKeyA] = { itemNum:itemB, swapId, partnerKey:slotB.nativeKey, previousItemNum:trueOriginalA };
   DATA.itemOverrides[slotB.nativeKey] = { itemNum:itemA, swapId, partnerKey:nativeKeyA, previousItemNum:itemB };
   CAL = buildCalendar(DATA.config, DATA.reportedDays);
@@ -3364,6 +3402,9 @@ function renderPlanning(){
         inner = `<span class="cal-tag" style="background:var(--rule);color:var(--ink-soft)" title="${esc(reportedDayLabel(day.reportedInfo))}">${esc(reportedDayLabel(day.reportedInfo))}</span>`;
       } else {
         const itemTasks = (day.tasks||[]).filter(t=>t.kind==='item' && !isItemTaskSkipped(day.iso,t.id));
+        const hasLcaTask = day.tasks && day.tasks.some(t=>t.kind==='generic' && String(t.id).startsWith('lca'));
+        const hasFreeTask = day.tasks && day.tasks.some(t=>t.kind==='generic' && String(t.id).startsWith('free'));
+        const lcaFreeLabel = hasLcaTask && hasFreeTask ? 'LCA+libre' : hasLcaTask ? 'LCA' : hasFreeTask ? 'Libre' : '';
         if(itemTasks.length>0){
           const shown = itemTasks.slice(0,4);
           const extra = itemTasks.length - shown.length;
@@ -3371,7 +3412,7 @@ function renderPlanning(){
             const it = ITEM_BY_NUM[t.itemNum];
             const c = it && it.cats && it.cats[0];
             return `<span class="cal-item-badge" style="background:${CAT_COLORS[c]||CAT_COLORS.other}" title="${it?esc(it.title):''}">#${it?it.num:t.itemNum}</span>`;
-          }).join('')}${extra>0?`<span style="font-size:9px;color:var(--ink-soft);">+${extra}</span>`:''}</div>`;
+          }).join('')}${extra>0?`<span style="font-size:9px;color:var(--ink-soft);">+${extra}</span>`:''}</div>${lcaFreeLabel?`<span class="cal-tag" style="background:${phaseColor(day.phase)}">${lcaFreeLabel}</span>`:''}`;
         } else if(day.tasks && day.tasks.some(t=>t.kind==='sdd')){
           inner = `<span class="cal-tag" style="background:${phaseColor('ECOS')}">SDD</span>`;
         } else if(day.weekend || (day.tasks && day.tasks.some(t=>t.kind==='generic' && (String(t.id).startsWith('lca') || String(t.id).startsWith('free'))))){
@@ -4071,12 +4112,14 @@ function renderSettings(){
     </div>
 
     <div class="settings-card">
-      <h3>Organisation hebdomadaire — LCA, révision libre & repos</h3>
+      <h3>Organisation hebdomadaire — cours, LCA, révision libre & repos</h3>
       <span class="settings-hint" style="display:block;margin-bottom:10px;">Pour chacun, choisis le(s) jour(s) de la semaine, et la période (tous les combien de semaines — 1 = chaque semaine, 2 = une semaine sur deux, etc.).</span>
+      ${weeklyScheduleBlockHTML('study', 'Cours (items)', false)}
+      <span class="settings-hint" style="display:block;margin:-8px 0 14px;">Coche les jours où tu révises des items. Décoche par exemple "Vendredi" pour "tous les jours sauf le vendredi", ou laisse uniquement Lun-Ven pour "tous les jours sauf le week-end".</span>
       ${weeklyScheduleBlockHTML('lca', 'LCA', true)}
       ${weeklyScheduleBlockHTML('free', 'Révision libre', true)}
       ${weeklyScheduleBlockHTML('rest', 'Repos', false)}
-      <span class="settings-hint" style="display:block;margin-top:4px;">Un jour de repos est une vraie coupure : aucun item, aucune LCA, aucune révision libre ce jour-là, même s'il correspond aussi à un jour choisi pour la LCA ou la révision libre.</span>
+      <span class="settings-hint" style="display:block;margin-top:4px;">Un jour de repos est une vraie coupure : aucun item, aucune LCA, aucune révision libre ce jour-là, même s'il correspond aussi à un jour choisi pour les cours, la LCA ou la révision libre.</span>
     </div>
 
     <div class="settings-card">
