@@ -3,6 +3,7 @@
     "start": "2026-08-24",
     "s1End": "2027-01-21",
     "exam": "2027-10-15",
+    "ecosDate": "",
     "newCats": [
       "psy",
       "ger",
@@ -12,13 +13,12 @@
       "hemato"
     ],
     "studentYear": 5,
-    "showCountdownEdn": false,
-    "showCountdownEcos": false,
-    "ecosDate": "",
     "dailyItemsPhase1": 2,
     "dailyItemsPhase2": 3,
     "studyModeP1": "alterne",
     "studyModeP2": "alterne",
+    "showCountdownEdn": false,
+    "showCountdownEcos": false,
     "weeklySchedule": {
       "lca": {
         "count": 2,
@@ -2659,7 +2659,8 @@
     "S1_i218_o1": true,
     "S1_i66_o1": true,
     "S1_i50_o1": true,
-    "S1_i193_o1": true
+    "S1_i193_o1": true,
+    "S1_i68_o1": true
   },
   "checks": {
     "2026-08-29": {
@@ -6613,6 +6614,32 @@
         "originalItemNum": 193,
         "dayCap": 2
       }
+    ],
+    "2026-10-01": [
+      {
+        "id": "S1_i122_o1",
+        "kind": "item",
+        "itemNum": 122,
+        "mode": "revision",
+        "idx": 30,
+        "phase": "S1",
+        "iso": "2026-10-01",
+        "overridden": false,
+        "originalItemNum": 122,
+        "dayCap": 2
+      },
+      {
+        "id": "S1_i191_o1",
+        "kind": "item",
+        "itemNum": 191,
+        "mode": "revision",
+        "idx": 40,
+        "phase": "S1",
+        "iso": "2026-10-01",
+        "overridden": false,
+        "originalItemNum": 191,
+        "dayCap": 2
+      }
     ]
   },
   "queueFreeze": {
@@ -6698,7 +6725,7 @@
   },
   "_meta": {
     "schemaVersion": 4,
-    "updatedAt": "2026-09-30T16:55:33.122Z"
+    "updatedAt": "2026-09-30T23:23:10.612Z"
   },
   "customTheme": {
     "enabled": false,
@@ -6888,6 +6915,12 @@
       "s": 1
     },
     "2026-09-29": {
+      "r": 0,
+      "l": 0,
+      "f": 0,
+      "s": 1
+    },
+    "2026-09-30": {
       "r": 0,
       "l": 0,
       "f": 0,
