@@ -2631,7 +2631,13 @@ function connectMergeData(remote, local){
   const rt = dataUpdatedAt(remote);
   const lt = dataUpdatedAt(local);
   const localHasMeaningfulData = !!local && (local.onboarded === true || Object.keys(local.itemChecks||{}).length>0 || Object.keys(local.checks||{}).length>0 || Object.keys(local.reportedDays||{}).length>0 || Object.keys(local.customTasks||{}).length>0);
-  const remoteIsNewer = !!rt && (lt ? Date.parse(rt) >= Date.parse(lt) : !localHasMeaningfulData);
+  // Travail réellement fait sur CET appareil (coches, jours reportés, tâches perso). Un simple
+  // planning vierge ou fraîchement recréé n'en fait pas partie : son horodatage est celui du
+  // moment où l'app s'est ouverte, il ne doit jamais l'emporter sur une vraie sauvegarde.
+  const localHasWork = !!local && (Object.keys(local.itemChecks||{}).length>0 || Object.keys(local.checks||{}).length>0 || Object.keys(local.reportedDays||{}).length>0 || Object.keys(local.customTasks||{}).length>0);
+  const remoteIsNewer = (!localHasWork && !!remote.config)
+    ? true
+    : (!!rt && (lt ? Date.parse(rt) >= Date.parse(lt) : !localHasMeaningfulData));
   const preferred = remoteIsNewer ? remote : local;
   const fallback = remoteIsNewer ? local : remote;
   return ensureDataMeta(Object.assign({}, fallback, preferred, {
