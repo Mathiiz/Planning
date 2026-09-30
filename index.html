@@ -2457,6 +2457,33 @@ function clearGithubConfig(){
   ghSha = null;
   if(ghDebounceTimer){ clearTimeout(ghDebounceTimer); ghDebounceTimer = null; ghPendingSince = null; }
 }
+// Copie fiable : dans un embed Notion, navigator.clipboard est souvent refusé, et alert/prompt
+// sont bloqués. On tente d'abord la copie « classique » (dans le clic, donc autorisée), puis
+// l'API moderne ; si les deux échouent, l'appelant affiche le lien à copier à la main.
+function copyTextRobust(text){
+  try{
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    ta.setAttribute('readonly','');
+    ta.style.position = 'fixed'; ta.style.top = '0'; ta.style.left = '-9999px'; ta.style.opacity = '0';
+    document.body.appendChild(ta);
+    let ok = false;
+    try{
+      ta.focus(); ta.select();
+      try{ ta.setSelectionRange(0, text.length); }catch(e0){}
+      ok = !!(document.execCommand && document.execCommand('copy'));
+    }finally{
+      document.body.removeChild(ta);
+    }
+    if(ok) return Promise.resolve(true);
+  }catch(e1){}
+  try{
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      return navigator.clipboard.writeText(text).then(()=>true, ()=>false);
+    }
+  }catch(e2){}
+  return Promise.resolve(false);
+}
 function applyGithubConfigFromUrlIfPresent(){
   // Sur certaines webviews mobiles (ex : Notion pour iPhone), le stockage local est
   // effacé régulièrement par le système — la connexion GitHub configurée via le bouton
@@ -4183,6 +4210,8 @@ function renderSettings(){
       </div>
       <div style="margin-top:10px;">
         <button type="button" id="btnGhCopyLink" class="btn-secondary">📋 Copier le lien avec connexion intégrée (pour Notion iPhone)</button>
+        <span id="ghCopyMsg" class="settings-hint" style="display:block;margin-top:6px;"></span>
+        <div id="ghLinkBox" style="display:none;margin-top:6px;"><input type="text" id="ghLinkField" readonly style="width:100%;font-size:11px;"></div>
         <span class="settings-hint">Si la connexion GitHub se réinitialise à chaque ouverture sur mobile (webview au stockage effacé régulièrement, ex : Notion iPhone), utilise ce lien comme URL de l'embed à la place du lien habituel : la connexion est alors mémorisée par Notion lui-même et se rétablit automatiquement, même quand le stockage local est vidé entre-temps. Utilise de préférence un token Fine-grained limité à ce seul dépôt, cette URL contenant le token en clair.</span>
       </div>
       <span id="ghStatus" style="font-size:11.5px;color:var(--ink-soft);display:block;margin-top:8px;">${esc(currentGhStatus || '')}</span>
@@ -4458,9 +4487,14 @@ function renderSettings(){
     render();
   });
   document.getElementById('btnGhCopyLink').addEventListener('click', async ()=>{
+    const msg = document.getElementById('ghCopyMsg');
+    const box = document.getElementById('ghLinkBox');
+    const field = document.getElementById('ghLinkField');
+    function say(text, isError){ msg.textContent = text; msg.style.color = isError ? 'var(--danger)' : 'var(--ink-soft)'; }
     const savedCfg = getGithubConfig();
     if(!savedCfg || !savedCfg.token || !savedCfg.owner || !savedCfg.repo){
-      alert('Enregistre d\'abord une connexion GitHub valide (avec le token) ci-dessus.');
+      box.style.display = 'none';
+      say('Enregistre d’abord une connexion GitHub valide (avec le token) ci-dessus.', true);
       return;
     }
     const url = new URL(window.location.href);
@@ -4471,11 +4505,16 @@ function renderSettings(){
     url.searchParams.set('ghbranch', savedCfg.branch || 'main');
     url.searchParams.set('ghtoken', savedCfg.token);
     const link = url.toString();
-    try{
-      await navigator.clipboard.writeText(link);
-      alert('Lien copié — utilise-le comme URL de l\'embed Notion sur iPhone.');
-    }catch(e){
-      prompt('Copie ce lien manuellement (à utiliser comme URL de l\'embed Notion sur iPhone) :', link);
+    field.value = link;
+    const ok = await copyTextRobust(link);
+    if(ok){
+      box.style.display = 'none';
+      say('Lien copié ✓ — colle-le comme URL de l’embed Notion sur iPhone.', false);
+    }else{
+      // Copie automatique refusée par la page hôte : on affiche le lien, déjà sélectionné.
+      box.style.display = 'block';
+      field.focus(); field.select();
+      say('La copie automatique est bloquée ici : le lien est sélectionné ci-dessous, fais Cmd+C (ou Ctrl+C).', true);
     }
   });
 
