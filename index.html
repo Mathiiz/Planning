@@ -2423,7 +2423,12 @@ const GH_DEBOUNCE_MS = 15000;
 const GH_MAX_WAIT_MS = 60000;
 let currentGhStatus = '';
 
+// Copie en mémoire de la connexion : dans la webview de Notion sur iPhone, le stockage local
+// peut être vide, effacé ou refusé. La connexion venue du lien (ou saisie) reste alors
+// utilisable pendant toute la session, sans dépendre de ce stockage.
+let ghConfigMemory = null;
 function getGithubConfig(){
+  if(ghConfigMemory) return ghConfigMemory;
   try{
     const raw = localStorage.getItem(GH_CONFIG_KEY);
     if(!raw) return null;
@@ -2431,17 +2436,24 @@ function getGithubConfig(){
     return parsed;
   }catch(e){ return null; }
 }
+function hasGhSnapshot(){
+  try{ return localStorage.getItem(GH_SNAPSHOT_KEY) !== null; }catch(e){ return false; }
+}
 function setGithubConfig(cfg){
   cfg = cfg || {};
   // Le PAT est volontairement conservé localement afin que l'application embarquée
   // dans Notion puisse retrouver automatiquement la connexion après un rechargement.
   // Utiliser de préférence un Fine-grained PAT limité au seul dépôt nécessaire.
-  localStorage.setItem(GH_CONFIG_KEY, JSON.stringify(cfg));
+  ghConfigMemory = cfg;
+  try{ localStorage.setItem(GH_CONFIG_KEY, JSON.stringify(cfg)); }catch(e){ console.warn('Stockage local indisponible : connexion GitHub gardée en mémoire pour cette session.'); }
   ghSha = null;
 }
 function clearGithubConfig(){
-  localStorage.removeItem(GH_CONFIG_KEY);
-  localStorage.removeItem(GH_SNAPSHOT_KEY);
+  ghConfigMemory = null;
+  try{
+    localStorage.removeItem(GH_CONFIG_KEY);
+    localStorage.removeItem(GH_SNAPSHOT_KEY);
+  }catch(e){}
   ghSha = null;
   if(ghDebounceTimer){ clearTimeout(ghDebounceTimer); ghDebounceTimer = null; ghPendingSince = null; }
 }
@@ -2463,8 +2475,9 @@ function applyGithubConfigFromUrlIfPresent(){
         branch: p.get('ghbranch') || 'main',
         token: p.get('ghtoken')
       });
-      ['ghtoken','ghowner','ghrepo','ghpath','ghbranch'].forEach(k=>p.delete(k));
-      try{ window.history.replaceState(null, '', url.toString()); }catch(e2){}
+      // L'URL est volontairement laissée intacte : au retour dans l'app Notion (page restaurée ou
+      // rechargée), la connexion doit pouvoir être relue depuis l'URL, y compris quand le
+      // stockage local a été vidé entre-temps.
       return true;
     }
   }catch(e){ /* URL non standard : on ignore, la config locale existante (s'il y en a une) reste utilisée. */ }
@@ -2627,7 +2640,9 @@ async function githubLoadData(){
     const j = await res.json();
     ghSha = j.sha;
     const parsed = JSON.parse(b64DecodeUtf8(j.content.replace(/\n/g,'')));
-    setGhSnapshot(parsed);
+    // (la référence de fusion est enregistrée par l'appelant, APRÈS la fusion : l'enregistrer
+    // ici faisait passer tout ce qui manque en local pour une suppression volontaire, donc les
+    // données distantes étaient écartées sur un appareil au stockage vide.)
     setGithubStatus('Synchronisé ✓');
     return parsed;
   }catch(e){
@@ -2677,7 +2692,7 @@ async function githubSyncNow(){
         return;
       }
 
-      const hadSnapshot = localStorage.getItem(GH_SNAPSHOT_KEY) !== null;
+      const hadSnapshot = hasGhSnapshot();
       const merged = remoteData
         ? (hadSnapshot ? mergeData(remoteData, DATA, getGhSnapshot()) : connectMergeData(remoteData, DATA))
         : DATA;
@@ -4749,12 +4764,20 @@ async function init(){
   bindStaticHandlers();
 
   // Show the local UI immediately, even when a sync provider is slow or unavailable.
-  if(!DATA.onboarded){
+  function showOnboardingOverlay(){
     renderObSubjectList();
     document.getElementById('obStart').value = DATA.config.start || toISO(todayDate());
     document.getElementById('obExam').value = DATA.config.exam || '';
     document.getElementById('obS1End').value = DATA.config.s1End || '';
     document.getElementById('onboardOverlay').classList.remove('hidden');
+  }
+  // Une connexion GitHub existe (lien ou stockage) : on tente d'abord de récupérer la sauvegarde
+  // avant d'afficher l'écran de bienvenue (sur iPhone/Notion le stockage local repart vide à
+  // chaque ouverture, l'app croit donc démarrer à neuf alors que la sauvegarde existe).
+  const ghAtStart = getGithubConfig();
+  const hasGhConnection = !!(ghAtStart && ghAtStart.token && ghAtStart.owner && ghAtStart.repo);
+  if(!DATA.onboarded && !hasGhConnection){
+    showOnboardingOverlay();
   }
   render();
 
@@ -4774,9 +4797,13 @@ async function init(){
   try{
     const ghCfg = getGithubConfig();
     if(ghCfg && ghCfg.token && ghCfg.owner && ghCfg.repo){
-      const remote = await githubLoadData();
+      const hadSnapshot = hasGhSnapshot();
+      // Garde-fou : si GitHub ne répond pas, on ne bloque pas l'app indéfiniment.
+      const remote = await Promise.race([
+        githubLoadData(),
+        new Promise(resolve=>setTimeout(()=>resolve(null), 12000))
+      ]);
       if(remote){
-        const hadSnapshot = localStorage.getItem(GH_SNAPSHOT_KEY) !== null;
         if(hadSnapshot){
           const snapshot = getGhSnapshot();
           DATA = mergeData(remote, DATA, snapshot);
@@ -4795,6 +4822,16 @@ async function init(){
   }catch(err){
     console.error('Erreur de synchronisation au démarrage', err);
   }
+
+  // Après la tentative de récupération : sauvegarde retrouvée → on ferme l'écran de bienvenue ;
+  // rien de retrouvé → on l'affiche pour permettre un nouveau départ ou une reconnexion.
+  try{
+    if(DATA.onboarded){
+      document.getElementById('onboardOverlay').classList.add('hidden');
+    }else{
+      showOnboardingOverlay();
+    }
+  }catch(err){ console.error('Erreur écran de bienvenue', err); }
 
   // 4) Finish startup. The UI remains usable even if step 2/3 failed or timed out.
   try{
