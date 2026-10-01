@@ -3124,6 +3124,18 @@
       "swapId": "swap_1790787333113_787",
       "partnerKey": "S1_i68_o1",
       "previousItemNum": 70
+    },
+    "S1_i122_o1": {
+      "itemNum": 129,
+      "swapId": "swap_1790843503404_500",
+      "partnerKey": "S1_i129_o1",
+      "previousItemNum": 122
+    },
+    "S1_i129_o1": {
+      "itemNum": 122,
+      "swapId": "swap_1790843503404_500",
+      "partnerKey": "S1_i122_o1",
+      "previousItemNum": 129
     }
   },
   "subjectDeadlines": {
@@ -6619,12 +6631,13 @@
       {
         "id": "S1_i122_o1",
         "kind": "item",
-        "itemNum": 122,
+        "itemNum": 129,
         "mode": "revision",
         "idx": 30,
+        "idxKnown": true,
         "phase": "S1",
         "iso": "2026-10-01",
-        "overridden": false,
+        "overridden": true,
         "originalItemNum": 122,
         "dayCap": 2
       },
@@ -6634,6 +6647,7 @@
         "itemNum": 191,
         "mode": "revision",
         "idx": 40,
+        "idxKnown": true,
         "phase": "S1",
         "iso": "2026-10-01",
         "overridden": false,
@@ -6725,7 +6739,7 @@
   },
   "_meta": {
     "schemaVersion": 4,
-    "updatedAt": "2026-09-30T23:23:10.612Z"
+    "updatedAt": "2026-10-01T08:31:43.408Z"
   },
   "customTheme": {
     "enabled": false,
