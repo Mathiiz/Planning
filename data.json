@@ -2660,7 +2660,8 @@
     "S1_i66_o1": true,
     "S1_i50_o1": true,
     "S1_i193_o1": true,
-    "S1_i68_o1": true
+    "S1_i68_o1": true,
+    "S1_i122_o1": true
   },
   "checks": {
     "2026-08-29": {
@@ -6739,7 +6740,7 @@
   },
   "_meta": {
     "schemaVersion": 4,
-    "updatedAt": "2026-10-01T08:31:43.408Z"
+    "updatedAt": "2026-10-01T11:03:23.551Z"
   },
   "customTheme": {
     "enabled": false,
