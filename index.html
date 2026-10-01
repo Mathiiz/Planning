@@ -2484,6 +2484,47 @@ function copyTextRobust(text){
   }catch(e2){}
   return Promise.resolve(false);
 }
+const GH_DISABLED_KEY = 'edn-planner-github-disabled-v1';
+function ghLinkSignature(owner, repo, token){ return owner + '/' + repo + '/' + String(token||'').slice(-6); }
+// Déconnexion : efface la connexion et, si elle venait du lien (identifiants dans l'URL),
+// mémorise ce refus pour que ce lien ne la rétablisse pas au prochain chargement.
+function disconnectGithub(){
+  let fromLink = false;
+  try{
+    const p = new URL(window.location.href).searchParams;
+    if(p.has('ghtoken') && p.has('ghowner') && p.has('ghrepo')){
+      fromLink = true;
+      try{ localStorage.setItem(GH_DISABLED_KEY, ghLinkSignature(p.get('ghowner'), p.get('ghrepo'), p.get('ghtoken'))); }catch(e){}
+    }
+  }catch(e){}
+  clearGithubConfig();
+  return fromLink;
+}
+// Bouton « Déconnecter » : confirmation en deux temps DANS la page. confirm() est bloqué dans
+// les pages intégrées (Notion sur iPhone) : il répond « non » sans rien afficher, ce qui rendait
+// le bouton inopérant.
+function bindGithubDisconnect(btn){
+  if(!btn) return;
+  const label = btn.textContent;
+  const askMsg = 'Appuie à nouveau sur « Confirmer la déconnexion » pour couper la synchronisation GitHub (tes données restent en local).';
+  let armed = false, timer = null;
+  function reset(){ armed = false; btn.textContent = label; if(timer){ clearTimeout(timer); timer = null; } }
+  btn.addEventListener('click', ()=>{
+    if(!armed){
+      armed = true;
+      btn.textContent = 'Confirmer la déconnexion';
+      setGithubStatus(askMsg);
+      timer = setTimeout(()=>{ if(armed){ reset(); if(currentGhStatus === askMsg) setGithubStatus(''); } }, 6000);
+      return;
+    }
+    reset();
+    const fromLink = disconnectGithub();
+    setGithubStatus(fromLink
+      ? 'Déconnecté ✓ Pour que Notion ne te reconnecte pas à la prochaine ouverture, remplace aussi l’URL de l’embed par le lien normal (sans identifiants).'
+      : 'Déconnecté ✓ — tes données restent en local.');
+    render();
+  });
+}
 function applyGithubConfigFromUrlIfPresent(){
   // Sur certaines webviews mobiles (ex : Notion pour iPhone), le stockage local est
   // effacé régulièrement par le système — la connexion GitHub configurée via le bouton
@@ -2495,6 +2536,10 @@ function applyGithubConfigFromUrlIfPresent(){
     const url = new URL(window.location.href);
     const p = url.searchParams;
     if(p.has('ghtoken') && p.has('ghowner') && p.has('ghrepo')){
+      // Déconnexion volontaire : ce lien précis ne doit pas rétablir la connexion.
+      let disabledSig = null;
+      try{ disabledSig = localStorage.getItem(GH_DISABLED_KEY); }catch(e0){}
+      if(disabledSig && disabledSig === ghLinkSignature(p.get('ghowner'), p.get('ghrepo'), p.get('ghtoken'))) return false;
       setGithubConfig({
         owner: p.get('ghowner'),
         repo: p.get('ghrepo'),
@@ -4486,12 +4531,7 @@ function renderSettings(){
     }
   });
   document.getElementById('btnGhSyncNow').addEventListener('click', ()=>{ githubSyncNow(); });
-  document.getElementById('btnGhDisconnect').addEventListener('click', ()=>{
-    if(!confirm('Déconnecter la synchronisation GitHub ? Tes données restent en local.')) return;
-    clearGithubConfig();
-    setGithubStatus('');
-    render();
-  });
+  bindGithubDisconnect(document.getElementById('btnGhDisconnect'));
   document.getElementById('btnGhCopyLink').addEventListener('click', async ()=>{
     const msg = document.getElementById('ghCopyMsg');
     const box = document.getElementById('ghLinkBox');
