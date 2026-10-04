@@ -29,10 +29,7 @@
         "startDate": "2026-09-28"
       },
       "rest": {
-        "days": [
-          "SA",
-          "SU"
-        ],
+        "days": [],
         "periodWeeks": 1,
         "startDate": ""
       },
@@ -43,6 +40,17 @@
         ],
         "periodWeeks": 1,
         "startDate": "2026-09-28"
+      },
+      "study": {
+        "days": [
+          "MO",
+          "TU",
+          "WE",
+          "TH",
+          "FR"
+        ],
+        "periodWeeks": 1,
+        "startDate": "0002-09-28"
       }
     }
   },
@@ -6795,7 +6803,7 @@
   },
   "_meta": {
     "schemaVersion": 4,
-    "updatedAt": "2026-10-02T14:09:26.752Z"
+    "updatedAt": "2026-10-04T10:48:08.637Z"
   },
   "customTheme": {
     "enabled": false,
@@ -6997,6 +7005,12 @@
       "s": 1
     },
     "2026-10-01": {
+      "r": 0,
+      "l": 0,
+      "f": 0,
+      "s": 1
+    },
+    "2026-10-02": {
       "r": 0,
       "l": 0,
       "f": 0,
