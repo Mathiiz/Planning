@@ -2853,7 +2853,9 @@
       "custom_1790702989848_657": true,
       "custom_1790710865695_98": false
     },
-    "2026-10-06": {}
+    "2026-10-06": {
+      "custom_1791317044389_213": true
+    }
   },
   "reportedDays": {
     "2026-09-02": {
@@ -3433,6 +3435,10 @@
       {
         "id": "custom_1791317044389_213",
         "label": "Items 269, 356, 357, 354, 289, 50 Douleurs abdominopelviennes (pédiatrie)"
+      },
+      {
+        "id": "custom_1791321192270_677",
+        "label": "Items 274, 355 Vomissements (pédiatrie)"
       }
     ]
   },
@@ -6869,7 +6875,7 @@
   },
   "_meta": {
     "schemaVersion": 4,
-    "updatedAt": "2026-10-06T20:04:04.390Z"
+    "updatedAt": "2026-10-06T21:13:12.271Z"
   },
   "customTheme": {
     "enabled": false,
