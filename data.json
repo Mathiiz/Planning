@@ -26,12 +26,12 @@
           "SU"
         ],
         "periodWeeks": 1,
-        "startDate": "2026-09-28"
+        "startDate": "2026-08-24"
       },
       "rest": {
         "days": [],
         "periodWeeks": 1,
-        "startDate": ""
+        "startDate": "2026-08-24"
       },
       "free": {
         "count": 2,
@@ -39,7 +39,7 @@
           "SA"
         ],
         "periodWeeks": 1,
-        "startDate": "2026-09-28"
+        "startDate": "2026-08-24"
       },
       "study": {
         "days": [
@@ -50,7 +50,7 @@
           "FR"
         ],
         "periodWeeks": 1,
-        "startDate": "2026-09-28"
+        "startDate": "2026-08-24"
       }
     }
   },
@@ -6721,6 +6721,62 @@
         "originalItemNum": 124,
         "dayCap": 2
       }
+    ],
+    "2026-10-05": [
+      {
+        "id": "S1_i60_o1",
+        "kind": "item",
+        "itemNum": 60,
+        "mode": "revision",
+        "idx": 0,
+        "idxKnown": true,
+        "phase": "S1",
+        "iso": "2026-10-05",
+        "overridden": false,
+        "originalItemNum": 60,
+        "dayCap": 2
+      },
+      {
+        "id": "S1_i108_o1",
+        "kind": "item",
+        "itemNum": 108,
+        "mode": "revision",
+        "idx": 1,
+        "idxKnown": true,
+        "phase": "S1",
+        "iso": "2026-10-05",
+        "overridden": false,
+        "originalItemNum": 108,
+        "dayCap": 2
+      }
+    ],
+    "2026-10-06": [
+      {
+        "id": "S1_i185_o1",
+        "kind": "item",
+        "itemNum": 185,
+        "mode": "revision",
+        "idx": 2,
+        "idxKnown": true,
+        "phase": "S1",
+        "iso": "2026-10-06",
+        "overridden": false,
+        "originalItemNum": 185,
+        "dayCap": 2
+      },
+      {
+        "id": "S1_i47_o1",
+        "kind": "item",
+        "itemNum": 47,
+        "mode": "revision",
+        "idx": 3,
+        "idxKnown": true,
+        "phase": "S1",
+        "iso": "2026-10-06",
+        "overridden": false,
+        "originalItemNum": 47,
+        "dayCap": 2
+      }
     ]
   },
   "queueFreeze": {
@@ -6806,7 +6862,7 @@
   },
   "_meta": {
     "schemaVersion": 4,
-    "updatedAt": "2026-10-04T10:49:14.602Z"
+    "updatedAt": "2026-10-06T18:05:41.458Z"
   },
   "customTheme": {
     "enabled": false,
