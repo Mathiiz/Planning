@@ -2679,7 +2679,8 @@
     "S1_i67_o1": true,
     "M_138_mv2iltwfvbi8": true,
     "S1_i54_o1": true,
-    "M_285_mv2ktlh5nhen": true
+    "M_285_mv2ktlh5nhen": true,
+    "S1_i125_o1": true
   },
   "checks": {
     "2026-08-29": {
@@ -7049,7 +7050,7 @@
   },
   "_meta": {
     "schemaVersion": 4,
-    "updatedAt": "2026-10-10T15:57:35.599Z"
+    "updatedAt": "2026-10-10T17:59:32.249Z"
   },
   "customTheme": {
     "enabled": false,
@@ -7334,6 +7335,10 @@
       "planned": "2026-10-09"
     },
     "M_285_mv2ktlh5nhen": {
+      "on": "2026-10-10",
+      "planned": "2026-10-09"
+    },
+    "S1_i125_o1": {
       "on": "2026-10-10",
       "planned": "2026-10-09"
     }
