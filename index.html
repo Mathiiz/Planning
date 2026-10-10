@@ -865,7 +865,7 @@ window.addEventListener('pageshow', function(e){
     </div>
     <div id="obRestoreSection" class="hidden">
       <p class="lead">Tu utilises déjà cette app sur un autre appareil avec une synchronisation GitHub activée ? Connecte-toi ici pour récupérer directement ton planning et ta progression, plutôt que de repartir de zéro.</p>
-      <label>Utilisateur ou organisation GitHub<input type="text" id="obGhOwner" placeholder="ex: mathiiz"></label>
+      <label>Utilisateur ou organisation GitHub<input type="text" id="obGhOwner" placeholder="ex: pseudo"></label>
       <label>Nom du dépôt<input type="text" id="obGhRepo" placeholder="ex: edn-planning"></label>
       <label>Nom du fichier de données<input type="text" id="obGhPath" placeholder="data.json"></label>
       <label>Branche<input type="text" id="obGhBranch" placeholder="main"></label>
@@ -3352,8 +3352,8 @@ function itemTaskHTML(task, opts){
   const isRev = task.mode==='revision';
   const modeLabel = isRev ? 'Révision' : 'Entraînement';
   const hint = isRev
-    ? "Lecture — choisis ta source toi-même (Collège, fiche LISA, edn.fr…)"
-    : "Pratique — choisis Anki ou QCM edn.fr";
+    ? "Lecture — choisis ta source "
+    : "Pratique — entrainement";
   const key = task.id || task.key;
   const histCount = itemHistory(task.itemNum).filter(h=>h.done).length;
   const diff = (DATA.itemDifficulty && DATA.itemDifficulty[task.itemNum]) || null;
@@ -4369,7 +4369,7 @@ function renderSettings(){
     <button class="back-link" id="settingsBackBtn">← Retour</button>
     ${planWarningsHTML()}
     <div class="settings-card">
-      <h3>Affichage & Compteurs du bandeau</h3>
+      <h3>Compte à rebours</h3>
       <div class="settings-group">
         <label class="checkbox-label">
           <input type="checkbox" id="cfgShowEdn" ${cfg.showCountdownEdn!==false ? 'checked':''}>
@@ -4419,14 +4419,14 @@ function renderSettings(){
             <option value="5" ${String(cfg.studentYear)==='5'?'selected':''}>5ᵉ année (DFASM2)</option>
             <option value="6" ${String(cfg.studentYear)==='6'?'selected':''}>6ᵉ année (DFASM3 — EDN)</option>
           </select>
-          <span class="settings-hint">Détermine notamment si la LCA apparaît dans les révisions du week-end (activée à partir de la 5ᵉ année).</span>
+          <span class="settings-hint">Séléctionne ton année.</span>
         </label>
         <label>Début des révisions
           <input type="date" id="cfgStart" value="${cfg.start||''}">
         </label>
         <label>Fin de la période d'apprentissage / Passage en révision générale
           <input type="date" id="cfgS1End" value="${cfg.s1End||''}">
-          <span class="settings-hint">Avant cette date, seules les matières cochées ci-dessous tournent. Après cette date, tout le programme tourne de manière cumulative. (Pour une organisation par trimestres ou semestres sans révision globale immédiate, règle cette date proche de tes examens).</span>
+          <span class="settings-hint">Avant cette date, seules les matières cochées ci-dessous tournent.</span>
         </label>
         <div style="display:flex;gap:10px;flex-wrap:wrap;">
           <label style="flex:1;min-width:180px;">Items / jour (Apprentissage)
