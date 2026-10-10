@@ -179,6 +179,7 @@ window.addEventListener('pageshow', function(e){
   .cal-cell.today .cal-daynum{color:var(--accent);font-weight:700;}
   .cal-dots{display:flex;gap:3px;flex-wrap:wrap;}
   .cal-dot{width:8px;height:8px;border-radius:50%;display:inline-block;}
+  .cal-item-badge.manual{box-shadow:inset 0 0 0 1px rgba(255,255,255,.75);}
   .cal-item-badge{font-family:var(--mono);font-size:9px;font-weight:600;color:#fff;padding:1px 4px;border-radius:4px;line-height:1.4;white-space:nowrap;}
   .cal-tag{font-family:var(--sans);font-size:9.5px;font-weight:600;padding:2px 5px;border-radius:4px;color:#fff;align-self:flex-start;}
   @media (max-width:600px){
@@ -209,6 +210,11 @@ window.addEventListener('pageshow', function(e){
   .history-panel .hcat{font-family:var(--mono);font-size:10.5px;text-transform:uppercase;letter-spacing:.06em;color:#fff;display:inline-block;padding:2px 7px;border-radius:2px;margin-bottom:10px;}
   .hist-entry{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--rule-soft);font-size:12.5px;}
   .hist-entry:last-child{border-bottom:none;}
+  .hist-entry.hist-col{flex-direction:column;align-items:stretch;gap:4px;}
+  .hist-entry .hist-line{display:flex;justify-content:space-between;align-items:center;}
+  .hist-when{font-size:11.5px;color:var(--ink-soft);}
+  .hist-when.ahead{color:var(--accent);font-weight:600;}
+  .hist-when.late{color:var(--danger);font-weight:600;}
   .hist-entry .hdate{font-family:var(--mono);color:var(--ink-soft);}
   .hist-mode{font-family:var(--mono);font-size:9.5px;padding:1px 6px;border-radius:2px;color:#fff;}
   .hist-mode.revision{background:var(--accent);}
@@ -1764,6 +1770,7 @@ let currentTab = 'today';
 let selectedDayIso = null;
 let selectedItemNum = null;
 let progressSubview = null; // null | 'difficulty'
+let aheadNotice = null; // message affiché une fois après qu'un item ait été fait en avance
 let planningViewMonth = null; // Date (1er du mois affiché) dans la vue calendrier du Planning
 
 // ---------- calendrier : jours passés figés ----------
@@ -1866,6 +1873,13 @@ function buildCalendar(cfg, reportedDays){
     const raw = DATA.pinnedDayItems[m.iso];
     if(!Array.isArray(raw) || raw.length===0) return;
     let list = raw.map(p=>materializePinnedEntry(p, m.iso)).filter(e=>e.phase && ITEM_BY_NUM[e.itemNum]);
+    if(m.iso === todayIsoStr){
+      // Aujourd'hui : on ne garde que les items à faire ou cochés AUJOURD'HUI. Un item déjà fait
+      // avant (ancienne coche, fait en avance…) ne doit pas occuper une place du jour : il est
+      // remplacé plus bas par un item pas encore fait. Les jours passés restent, eux, figés.
+      const doneRec = DATA.itemDoneAt || {};
+      list = list.filter(e=> !isItemTaskDone(e.id) || (doneRec[e.id] && doneRec[e.id].on === todayIsoStr));
+    }
     if(list.length===0) return;
     const caps = list.map(e=>e.dayCap).filter(v=>typeof v==='number');
     let cap = (caps.length===list.length) ? Math.max(...caps) : itemsPerDayFor(m.phase);
@@ -1911,8 +1925,22 @@ function buildCalendar(cfg, reportedDays){
   const nextScan = {S1:0, S2:0};
   function allocEntry(phase, iso, isDayToday){
     const used = usedIdx[phase];
+    const skipDone = iso >= todayIsoStr;   // aujourd'hui et jours à venir
     let i = nextScan[phase];
-    while(used.has(i) || usedKeys.has(taskForIndex(phase, i).key)) i++;
+    while(true){
+      if(used.has(i)){ i++; continue; }
+      const k = taskForIndex(phase, i).key;
+      if(usedKeys.has(k)){ i++; continue; }
+      if(skipDone && isItemTaskDone(k)){
+        // Item déjà fait : il ne reprend pas de place aujourd'hui ni sur un jour à venir, c'est
+        // l'item suivant qui prend sa place (et la suite du planning avance d'un cran).
+        // Les jours passés restent figés et l'affichent comme fait (c'est leur historique).
+        used.add(i);
+        if(i > maxIdxAll[phase]) maxIdxAll[phase] = i;
+        i++; continue;
+      }
+      break;
+    }
     used.add(i); nextScan[phase] = i+1;
     const e = effectiveItemFor(phase, i);
     usedKeys.add(e.nativeKey);
@@ -1979,6 +2007,13 @@ function buildCalendar(cfg, reportedDays){
       for(let i=0;i<freeCount;i++){
         day.tasks.push({id: freeCount>1 ? 'free_'+i : 'free', kind:'generic', label: freeCount>1 ? `Révision libre ${i+1}/${freeCount} — item ou matière de ton choix` : "Révision libre — item ou matière de ton choix"});
       }
+    }
+    // Items ajoutés à la main sur ce jour (en plus du programme) : type à part, donc ils ne
+    // comptent ni dans le retard, ni dans le résumé de semaine, ni dans le calcul des places.
+    if(!reported && DATA.manualItems && Array.isArray(DATA.manualItems[iso])){
+      DATA.manualItems[iso].forEach(mi=>{
+        if(mi && ITEM_BY_NUM[mi.itemNum]) day.tasks.push({ id:mi.id, kind:'manualItem', itemNum:mi.itemNum, mode:mi.mode, iso, manual:true });
+      });
     }
     days.push(day);
   });
@@ -2128,6 +2163,120 @@ function removeCustomTask(iso, id){
   DATA.customTasks[iso] = DATA.customTasks[iso].filter(t=>t.id!==id);
   saveData();
 }
+// ---------- ajout manuel d'un item sur un jour du planning ----------
+function normSearch(str){ return String(str||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,''); }
+function searchCatalogItems(query, limit){
+  const q = normSearch(query).trim();
+  if(!q) return [];
+  const out = [];
+  if(/^\d+$/.test(q) && ITEM_BY_NUM[parseInt(q,10)]) out.push(parseInt(q,10));
+  const words = q.split(/\s+/).filter(Boolean);
+  CURRENT_ITEMS.forEach(([n,t])=>{
+    if(out.includes(n)) return;
+    const nt = normSearch(t);
+    if(words.every(w=>nt.includes(w))) out.push(n);
+  });
+  return out.slice(0, limit || 8);
+}
+// Mode d'un item ajouté à la main : « révision » (première lecture) s'il n'a encore jamais été
+// vu, sinon « entraînement ».
+function defaultManualMode(itemNum, statusCache){
+  const st = statusCache || computeItemStatus();
+  return (st[itemNum] && st[itemNum].revision) ? 'entrainement' : 'revision';
+}
+function addManualItem(iso, itemNum){
+  const day = findDay(iso);
+  if(!day || day.reported) return { ok:false, msg:'Ce jour est reporté : impossible d’y ajouter un item.' };
+  if(!ITEM_BY_NUM[itemNum]) return { ok:false, msg:'Item introuvable.' };
+  const already = (day.tasks||[]).some(t=>(t.kind==='item' || t.kind==='manualItem') && t.itemNum===itemNum && !isItemTaskSkipped(day.iso, t.id));
+  if(already) return { ok:false, msg:`L’item #${itemNum} est déjà sur ce jour.` };
+  const mode = defaultManualMode(itemNum);
+  if(!DATA.manualItems) DATA.manualItems = {};
+  if(!DATA.manualItems[iso]) DATA.manualItems[iso] = [];
+  DATA.manualItems[iso].push({ id:'M_'+itemNum+'_'+Date.now().toString(36)+Math.random().toString(36).slice(2,6), itemNum, mode });
+  CAL = buildCalendar(DATA.config, DATA.reportedDays);
+  saveData();
+  return { ok:true, mode };
+}
+function removeManualItem(iso, id){
+  if(!DATA.manualItems || !Array.isArray(DATA.manualItems[iso])) return;
+  DATA.manualItems[iso] = DATA.manualItems[iso].filter(mi=>mi.id!==id);
+  if(DATA.manualItems[iso].length===0) delete DATA.manualItems[iso];
+  delete DATA.itemChecks[id];
+  if(DATA.itemDoneAt) delete DATA.itemDoneAt[id];
+  CAL = buildCalendar(DATA.config, DATA.reportedDays);
+  saveData();
+}
+function manualResultsHTML(iso, query){
+  const nums = searchCatalogItems(query, 8);
+  if(!nums.length) return `<p class="hist-empty">Aucun item trouvé.</p>`;
+  const st = computeItemStatus();
+  const day = findDay(iso);
+  return nums.map(n=>{
+    const item = ITEM_BY_NUM[n];
+    const here = day && (day.tasks||[]).some(t=>(t.kind==='item' || t.kind==='manualItem') && t.itemNum===n && !isItemTaskSkipped(iso, t.id));
+    const mode = defaultManualMode(n, st) === 'revision' ? 'Révision (jamais vu)' : 'Entraînement (déjà vu)';
+    return `<div class="plan-row" style="cursor:default;gap:8px;">
+      <span class="pd" style="width:auto;min-width:34px;">#${n}</span>
+      <span class="pitems" style="flex-direction:column;align-items:flex-start;gap:2px;">
+        <span style="font-size:12.5px;">${esc(item.title)}</span>
+        <span style="font-size:10.5px;color:var(--ink-soft);">${here ? 'Déjà sur ce jour' : 'Sera ajouté en ' + mode}</span>
+      </span>
+      ${here ? '' : `<button type="button" class="btn-secondary" data-manualadd="${iso}|${n}" style="padding:5px 10px;font-size:11.5px;">Ajouter</button>`}
+    </div>`;
+  }).join('');
+}
+function manualItemAddHTML(iso){
+  return `<div class="manual-add" style="margin-top:12px;" onclick="event.stopPropagation()">
+    <button type="button" class="swap-toggle" data-manualtoggle="${iso}">➕ Ajouter un item à ce jour</button>
+    <div class="swap-panel" id="manualPanel-${iso}">
+      <div class="frow" style="display:flex;gap:6px;margin-top:8px;">
+        <input type="text" id="manualInput-${iso}" placeholder="N° ou mot-clé (ex: 226 ou asthme)">
+        <button type="button" class="btn-secondary" data-manualsearch="${iso}">Chercher</button>
+      </div>
+      <div id="manualResults-${iso}" style="margin-top:6px;"></div>
+    </div>
+  </div>`;
+}
+function bindManualItemHandlers(container, iso){
+  container.querySelectorAll('[data-manualtoggle]').forEach(btn=>{
+    btn.addEventListener('click', e=>{
+      e.stopPropagation();
+      const panel = document.getElementById('manualPanel-'+btn.getAttribute('data-manualtoggle'));
+      if(panel) panel.classList.toggle('open');
+    });
+  });
+  function runSearch(day){
+    const input = document.getElementById('manualInput-'+day);
+    const resultsEl = document.getElementById('manualResults-'+day);
+    const q = (input && input.value || '').trim();
+    if(!q){ resultsEl.innerHTML = `<p class="hist-empty">Indique un numéro ou un mot-clé.</p>`; return; }
+    resultsEl.innerHTML = manualResultsHTML(day, q);
+    resultsEl.querySelectorAll('[data-manualadd]').forEach(b=>{
+      b.addEventListener('click', ev=>{
+        ev.stopPropagation();
+        const [d2, n] = b.getAttribute('data-manualadd').split('|');
+        const res = addManualItem(d2, parseInt(n,10));
+        if(res.ok){ render(); }
+        else { resultsEl.innerHTML = `<p class="hist-empty">${esc(res.msg)}</p>`; }
+      });
+    });
+  }
+  container.querySelectorAll('[data-manualsearch]').forEach(btn=>{
+    btn.addEventListener('click', e=>{ e.stopPropagation(); runSearch(btn.getAttribute('data-manualsearch')); });
+  });
+  const inputEl = document.getElementById('manualInput-'+iso);
+  if(inputEl && inputEl.addEventListener) inputEl.addEventListener('keydown', e=>{ if(e.key==='Enter'){ e.preventDefault(); runSearch(iso); } });
+  container.querySelectorAll('[data-del-manual]').forEach(b=>{
+    b.addEventListener('click', e=>{
+      e.stopPropagation();
+      const [d2, id] = b.getAttribute('data-del-manual').split('|');
+      removeManualItem(d2, id);
+      render();
+    });
+  });
+}
+
 function customTasksHTML(iso){
   const list = (DATA.customTasks && DATA.customTasks[iso]) || [];
   let items = list.map(t=>{
@@ -2139,7 +2288,7 @@ function customTasksHTML(iso){
     </li>`;
   }).join('');
   const list_html = items ? `<ul class="generic-list custom-list" style="margin-top:8px;">${items}</ul>` : '';
-  return `${list_html}
+  return manualItemAddHTML(iso) + `${list_html}
     <div class="add-item-form" style="margin-top:10px;">
       <div class="frow">
         <input type="text" id="customLabelInput-${iso}" placeholder="Nom du chapitre (ex: Douleur thoracique — items 230/231/232)">
@@ -2148,6 +2297,7 @@ function customTasksHTML(iso){
     </div>`;
 }
 function bindCustomTaskHandlers(container, iso){
+  bindManualItemHandlers(container, iso);
   const btn = container.querySelector(`[data-addcustom="${iso}"]`);
   if(btn) btn.addEventListener('click', ()=>{
     const input = document.getElementById(`customLabelInput-${iso}`);
@@ -2622,7 +2772,9 @@ function mergeData(remote, local, snapshot){
     itemOverrides: mergeMap(remote.itemOverrides, local.itemOverrides, snapshot.itemOverrides),
     subjectDeadlines: mergeMap(remote.subjectDeadlines, local.subjectDeadlines, snapshot.subjectDeadlines),
     customTasks: mergeMap(remote.customTasks, local.customTasks, snapshot.customTasks),
+    manualItems: mergeMap(remote.manualItems, local.manualItems, snapshot.manualItems),
     itemDifficulty: mergeMap(remote.itemDifficulty, local.itemDifficulty, snapshot.itemDifficulty),
+    itemDoneAt: mergeMap(remote.itemDoneAt, local.itemDoneAt, snapshot.itemDoneAt),
     skippedItemTasks: mergeMap(remote.skippedItemTasks, local.skippedItemTasks, snapshot.skippedItemTasks),
     lcaEntries: mergeMap(remote.lcaEntries, local.lcaEntries, snapshot.lcaEntries),
     sddItems: mergeScalar(remote.sddItems, local.sddItems, snapshot.sddItems),
@@ -2696,7 +2848,9 @@ function connectMergeData(remote, local){
     itemOverrides: unionGenericMap(remote.itemOverrides, local.itemOverrides),
     subjectDeadlines: unionGenericMap(remote.subjectDeadlines, local.subjectDeadlines),
     customTasks: unionArrayMap(remote.customTasks, local.customTasks),
+    manualItems: unionArrayMap(remote.manualItems, local.manualItems),
     itemDifficulty: unionGenericMap(remote.itemDifficulty, local.itemDifficulty),
+    itemDoneAt: unionGenericMap(remote.itemDoneAt, local.itemDoneAt),
     skippedItemTasks: unionGenericMap(remote.skippedItemTasks, local.skippedItemTasks),
     lcaEntries: unionGenericMap(remote.lcaEntries, local.lcaEntries),
     sddItems: preferred.sddItems || fallback.sddItems,
@@ -2861,12 +3015,45 @@ function setItemTaskSkipped(iso, key, skipped){
   if(skipped){
     DATA.skippedItemTasks[sk] = true;
     delete DATA.itemChecks[key];
+    if(DATA.itemDoneAt) delete DATA.itemDoneAt[key];
   }else{
     delete DATA.skippedItemTasks[sk];
   }
   saveData();
 }
-function setItemTaskDone(key, val){ DATA.itemChecks[key] = val; saveData(); }
+// Historique : en cochant un item, on enregistre la date du jour (« fait le ») et le jour où il
+// était prévu à ce moment-là (pour savoir s'il a été fait en avance, à l'heure ou en retard).
+function plannedIsoForKey(key){
+  const d = CAL.find(x=>(x.tasks||[]).some(t=>(t.kind==='item' || t.kind==='manualItem') && t.id===key));
+  return d ? d.iso : null;
+}
+function setItemTaskDone(key, val){
+  DATA.itemChecks[key] = val;
+  if(!DATA.itemDoneAt) DATA.itemDoneAt = {};
+  if(val){
+    if(!DATA.itemDoneAt[key]) DATA.itemDoneAt[key] = { on: todayIso(), planned: plannedIsoForKey(key) };
+  }else{
+    delete DATA.itemDoneAt[key];
+  }
+  saveData();
+}
+// Texte d'historique d'une occurrence faite : « Fait le … · en avance de N j (prévu le …) ».
+function itemDoneWhen(h){
+  if(!h.done) return null;
+  const rec = h.doneAt;
+  if(!rec || !rec.on) return { text:'Fait — date non enregistrée', cls:'' };
+  const on = parseISO(rec.on);
+  let text = 'Fait le ' + fmtShort(on);
+  let cls = '';
+  const planned = rec.planned || h.iso;
+  if(planned){
+    const diff = daysBetween(on, parseISO(planned)); // jour prévu − jour fait
+    if(diff > 0){ text += ` · en avance de ${diff} j (prévu le ${fmtShort(parseISO(planned))})`; cls = 'ahead'; }
+    else if(diff < 0){ text += ` · en retard de ${-diff} j (prévu le ${fmtShort(parseISO(planned))})`; cls = 'late'; }
+    else { text += ' · le jour prévu'; }
+  }
+  return { text, cls };
+}
 function isGenericDone(iso, taskId){ return !!dayChecks(iso)[taskId]; }
 function setGenericDone(iso, taskId, val){ dayChecks(iso)[taskId] = val; saveData(); }
 
@@ -3031,6 +3218,15 @@ function computeItemStatus(){
       else status[n].entrainement = true;
     }
   });
+  // Items ajoutés à la main et cochés : comptés selon leur mode (révision / entraînement).
+  Object.keys(DATA.manualItems || {}).forEach(iso=>{
+    (DATA.manualItems[iso] || []).forEach(mi=>{
+      if(!mi || !ITEM_BY_NUM[mi.itemNum] || !isItemTaskDone(mi.id)) return;
+      if(!status[mi.itemNum]) status[mi.itemNum] = {revision:false, entrainement:false};
+      if(mi.mode==='revision') status[mi.itemNum].revision = true;
+      else status[mi.itemNum].entrainement = true;
+    });
+  });
   return status;
 }
 
@@ -3043,7 +3239,7 @@ function itemHistory(itemNum){
       const s = getSlot(phase, idx);
       if(s && s.itemNum === itemNum){
         if(isItemTaskSkipped(s.iso,s.nativeKey)) continue;
-        entries.push({ phase, idx, mode:s.mode, done:isItemTaskDone(s.nativeKey), iso: s.iso });
+        entries.push({ phase, idx, mode:s.mode, done:isItemTaskDone(s.nativeKey), iso: s.iso, key:s.nativeKey, doneAt:(DATA.itemDoneAt||{})[s.nativeKey]||null });
         covered.add(s.nativeKey);
       }
     }
@@ -3055,9 +3251,17 @@ function itemHistory(itemNum){
     const m = re.exec(key);
     if(!m || parseInt(m[2],10) !== itemNum) return;
     const mode = parseInt(m[3],10)===1 ? 'revision' : 'entrainement';
-    entries.push({ phase:m[1], idx:null, mode, done:true, iso:null });
+    entries.push({ phase:m[1], idx:null, mode, done:true, iso:null, key, doneAt:(DATA.itemDoneAt||{})[key]||null });
   });
-  entries.sort((a,b)=> (a.iso||'') < (b.iso||'') ? -1 : 1);
+  Object.keys(DATA.manualItems || {}).forEach(iso=>{
+    (DATA.manualItems[iso] || []).forEach(mi=>{
+      if(!mi || mi.itemNum !== itemNum) return;
+      entries.push({ phase:null, idx:null, mode:mi.mode, done:isItemTaskDone(mi.id), iso, key:mi.id, manual:true, doneAt:(DATA.itemDoneAt||{})[mi.id]||null });
+    });
+  });
+  // Tri chronologique : jour prévu, sinon jour où l'item a été fait ; sans date = tout en haut.
+  const when = h => h.iso || (h.doneAt && (h.doneAt.planned || h.doneAt.on)) || '';
+  entries.sort((a,b)=> when(a) < when(b) ? -1 : (when(a) > when(b) ? 1 : 0));
   return entries;
 }
 
@@ -3159,7 +3363,8 @@ function itemTaskHTML(task, opts){
       <button type="button" class="diff-btn ${isDiff?'active':''}" data-diffitem="${item.num}">${isDiff ? '🔴 Marqué difficile' : '🔴 Marquer difficile'}</button>
     </div>
   `;
-  const swapUI = `
+  const isManual = !!task.manual;
+  const swapUI = isManual ? '' : `
     <div class="swap-block" onclick="event.stopPropagation()">
       <button type="button" class="swap-toggle" data-key="${key}">🔄 Changer l'item de cette case</button>
       ${task.overridden ? `<button type="button" class="btn-secondary" data-unswap="${key}" style="padding:5px 10px;font-size:11px;">↺ Remettre l'item ${task.originalItemNum ? '#'+task.originalItemNum : "d'origine"}</button>` : ''}
@@ -3176,6 +3381,7 @@ function itemTaskHTML(task, opts){
     <div class="task-card ${task.mode} ${done?'done':''}" data-key="${key}" data-phase="${task.phase||''}" data-idx="${task.idx!=null?task.idx:''}">
       <div class="top-row">
         <span class="mode-badge ${task.mode}">${modeLabel}</span>
+        ${isManual ? '<span class="cat-pill" style="background:var(--ink-soft)">Ajout manuel</span>' : ''}
         ${catPillsHTML(item.cats)}
         <span class="item-num">Item ${item.num}</span>
         <span class="hist-count">${histCount}× fait</span>
@@ -3187,7 +3393,9 @@ function itemTaskHTML(task, opts){
           <input type="checkbox" data-itemkey="${key}" ${done?'checked':''}>
           <span>Fait</span>
         </label>
-        ${task.iso ? `<button type="button" class="task-remove-btn" data-remove-item-day="${task.iso}" data-remove-item-key="${esc(key)}">Retirer ce jour</button>` : ''}
+        ${isManual
+          ? `<button type="button" class="task-remove-btn" data-del-manual="${task.iso}|${esc(key)}">Retirer cet ajout</button>`
+          : (task.iso ? `<button type="button" class="task-remove-btn" data-remove-item-day="${task.iso}" data-remove-item-key="${esc(key)}">Retirer ce jour</button>` : '')}
       </div>
       <div onclick="event.stopPropagation()">${diffUI}</div>
       ${swapUI}
@@ -3212,6 +3420,32 @@ function sddTaskHTML(task){
       </label>
     </div>
   `;
+}
+
+// Contenu d'un jour (items, SDD, LCA / révision libre / autres tâches génériques) : source UNIQUE
+// pour l'onglet « Aujourd'hui » et pour le détail d'un jour du Planning. Chaque écran filtrait
+// auparavant les tâches à sa façon, et ils divergeaient (LCA visible dans l'un, pas dans l'autre).
+function dayTasksHTML(day, emptyText){
+  const tasks = day.tasks || [];
+  const manualTasks = tasks.filter(t=>t.kind==='manualItem');
+  const manualHtml = manualTasks.map(t=>itemTaskHTML(t)).join('');
+  if(day.phase==='ECOS'){
+    const sdd = tasks.filter(t=>t.kind==='sdd');
+    if(sdd.length || manualHtml.trim()) return sdd.map(t=>sddTaskHTML(t)).join('') + manualHtml;
+    return `<div class="empty-state"><p>Aucune SDD dans le catalogue — accède à l'onglet SDD pour importer ou ajouter des situations.</p></div>`;
+  }
+  const items = tasks.filter(t=>t.kind==='item' && !isItemTaskSkipped(day.iso, t.id));
+  const sdds = tasks.filter(t=>t.kind==='sdd');
+  const generics = tasks.filter(t=>t.kind==='generic');
+  let html = '';
+  if(items.length) html += items.map(t=>itemTaskHTML(t)).join('');
+  html += manualHtml;
+  if(sdds.length) html += sdds.map(t=>sddTaskHTML(t)).join('');
+  if(generics.length) html += genericListHTML(day.iso, generics);
+  if(!html.trim()){
+    html = `<div class="empty-state"><p>${esc(day.weekend ? 'Jour de repos — rien de prévu.' : emptyText)}</p></div>`;
+  }
+  return html;
 }
 
 function genericListHTML(iso, tasks){
@@ -3241,6 +3475,28 @@ function bindTaskHandlers(container){
   container.querySelectorAll('[data-itemkey]').forEach(cb=>{
     cb.addEventListener('change', e=>{
       const key = e.target.getAttribute('data-itemkey');
+      const todayStr = todayIso();
+      const onPastOrToday = String(key).startsWith('M_') || CAL.some(d=>d.iso<=todayStr && (d.tasks||[]).some(t=>t.id===key));
+      if(!onPastOrToday){
+        // Case d'un jour à venir cochée (fait en avance), ou case en avance décochée : le
+        // planning à venir doit se recalculer pour que la suite avance (ou recule) d'un cran.
+        const futureDay = CAL.find(d=>d.iso>todayStr && (d.tasks||[]).some(t=>t.id===key));
+        const task = futureDay && futureDay.tasks.find(t=>t.id===key);
+        const beforeIds = new Set(futureDay ? futureDay.tasks.map(t=>t.id) : []);
+        setItemTaskDone(key, e.target.checked);
+        CAL = buildCalendar(DATA.config, DATA.reportedDays);
+        if(e.target.checked && futureDay && task){
+          const after = findDay(futureDay.iso);
+          const newNums = after ? after.tasks.filter(t=>t.kind==='item' && !beforeIds.has(t.id)).map(t=>t.itemNum) : [];
+          aheadNotice = `Item #${task.itemNum} fait en avance : il est retiré du ${fmtShort(futureDay.date)}` +
+            (newNums.length ? `, remplacé par ${newNums.map(n=>'#'+n).join(', ')}` : '') +
+            ' — la suite du planning avance d’un cran.';
+        } else if(!e.target.checked){
+          aheadNotice = 'Item remis « à faire » : il retrouve sa place dans le planning à venir.';
+        }
+        render();
+        return;
+      }
       setItemTaskDone(key, e.target.checked);
       const card = e.target.closest('.task-card');
       if(card) card.classList.toggle('done', e.target.checked);
@@ -3343,17 +3599,8 @@ function renderToday(){
   let body = '';
   if(day.reported){
     body = `<p class="empty-state">${reportedDayLabel(day.reportedInfo)} — rien de prévu ce jour-là. ${(!day.weekend && day.phase!=='CONSOL') ? 'Les items prévus glissent automatiquement aux jours suivants.' : ''}</p>`;
-  } else if(day.phase==='ECOS'){
-    body = day.tasks && day.tasks.length ? day.tasks.map(t=>sddTaskHTML(t)).join('') : `<div class="empty-state"><p>Aucune SDD dans le catalogue — accède à l'onglet SDD pour importer ou ajouter des situations.</p></div>`;
-  } else if(day.weekend || day.phase==='CONSOL'){
-    body = genericListHTML(day.iso, day.tasks);
   } else {
-    const tasks = (day.tasks||[]).filter(t=>t.kind==='item' && !isItemTaskSkipped(day.iso, t.id));
-    if(tasks.length===0){
-      body = `<div class="empty-state"><p>Aucun item prévu pour aujourd'hui.</p></div>`;
-    } else {
-      body = tasks.map(t => itemTaskHTML(t)).join('');
-    }
+    body = dayTasksHTML(day, "Aucun item prévu pour aujourd'hui.");
   }
 
   const custom = day.reported ? '' : customTasksHTML(day.iso);
@@ -3439,13 +3686,11 @@ function renderPlanning(){
       ${day.reported ? `<p class="sub">${reportedDayLabel(day.reportedInfo)}</p>` : ''}
       ${reportControlHTML(day)}
     </div>`;
-    const visibleItemTasks = (day.tasks||[]).filter(t=>t.kind!=='item' || !isItemTaskSkipped(day.iso,t.id));
     let body = day.reported
       ? `<p class="empty-state">${reportedDayLabel(day.reportedInfo)} — rien de prévu ce jour-là.</p>`
-      : ((visibleItemTasks[0] && visibleItemTasks[0].kind==='item') ? visibleItemTasks.map(t=>itemTaskHTML(t)).join('')
-        : (day.tasks && day.tasks[0] && day.tasks[0].kind==='sdd') ? day.tasks.map(t=>sddTaskHTML(t)).join('')
-        : genericListHTML(day.iso, day.tasks||[]));
-    container.innerHTML = head + body + (day.reported ? '' : removedItemTasksHTML(day)) + (day.reported ? '' : customTasksHTML(day.iso));
+      : dayTasksHTML(day, 'Aucun item prévu ce jour-là.');
+    const noticeHtml = aheadNotice ? `<div class="plan-warning" style="border-left-color:var(--accent);background:rgba(0,113,227,.08);"><p class="pw-row" style="margin:0;">${esc(aheadNotice)}</p></div>` : '';
+    container.innerHTML = noticeHtml + head + body + (day.reported ? '' : removedItemTasksHTML(day)) + (day.reported ? '' : customTasksHTML(day.iso));
     document.getElementById('backBtn').addEventListener('click', ()=>{ selectedDayIso=null; renderPlanning(); });
     bindTaskHandlers(container);
     if(!day.reported) bindCustomTaskHandlers(container, day.iso);
@@ -3518,6 +3763,14 @@ function renderPlanning(){
         } else if(day.phase==='ECOS'){
           inner = `<span class="cal-tag" style="background:var(--rule);color:var(--ink-soft)">—</span>`;
         }
+        const manualTasks = (day.tasks||[]).filter(t=>t.kind==='manualItem');
+        if(manualTasks.length){
+          inner += `<div class="cal-dots">${manualTasks.slice(0,3).map(t=>{
+            const it = ITEM_BY_NUM[t.itemNum];
+            const c = it && it.cats && it.cats[0];
+            return `<span class="cal-item-badge manual" style="background:${CAT_COLORS[c]||CAT_COLORS.other}" title="Ajout manuel${it?' — '+esc(it.title):''}">+#${it?it.num:t.itemNum}</span>`;
+          }).join('')}</div>`;
+        }
       }
       gridHtml += `<div class="cal-cell ${isToday?'today':''}" data-iso="${iso}">
         <span class="cal-daynum">${date.getDate()}</span>
@@ -3566,11 +3819,16 @@ function renderItemHistory(itemNum){
   if(!item) return;
   const hist = itemHistory(itemNum);
   let rows = hist.length ? hist.map(h=>{
-    const d = h.iso ? parseISO(h.iso) : null;
+    const plannedIso = h.iso || (h.doneAt && h.doneAt.planned) || null;
+    const d = plannedIso ? parseISO(plannedIso) : null;
     const modeLabel = h.mode==='revision' ? 'Révision' : 'Entraînement';
-    return `<div class="hist-entry">
-      <span class="hdate">${d ? fmtShort(d) : '—'}</span>
-      <span class="hist-mode ${h.done ? h.mode : 'pending'}">${h.done ? modeLabel : (modeLabel+' — à faire')}</span>
+    const when = itemDoneWhen(h);
+    return `<div class="hist-entry hist-col">
+      <div class="hist-line">
+        <span class="hdate">${d ? (h.manual ? 'Ajouté au ' : 'Prévu le ') + fmtShort(d) : 'Date prévue inconnue'}</span>
+        <span class="hist-mode ${h.done ? h.mode : 'pending'}">${h.done ? modeLabel : (modeLabel+' — à faire')}</span>
+      </div>
+      ${when ? `<div class="hist-when ${when.cls}">${esc(when.text)}</div>` : ''}
     </div>`;
   }).join('') : `<p class="hist-empty">Pas encore d'historique pour cet item.</p>`;
   container.innerHTML = `
@@ -4716,6 +4974,7 @@ function render(){
     case 'settings': renderSettings(); break;
     default: renderToday();
   }
+  aheadNotice = null;
 }
 
 // ---------- initialisation ----------
