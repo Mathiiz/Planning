@@ -2676,7 +2676,9 @@
     "S1_i298_o1": true,
     "S1_i219_o1": true,
     "S1_i192_o1": true,
-    "S1_i67_o1": true
+    "S1_i67_o1": true,
+    "M_138_mv2iltwfvbi8": true,
+    "S1_i54_o1": true
   },
   "checks": {
     "2026-08-29": {
@@ -2862,7 +2864,7 @@
       "custom_1791321192270_677": true
     },
     "2026-10-08": {
-      "custom_1791476712897_951": true
+      "custom_1791476712897_951": false
     }
   },
   "reportedDays": {
@@ -3497,12 +3499,7 @@
         "label": "Items 274, 355 Vomissements (pédiatrie)"
       }
     ],
-    "2026-10-08": [
-      {
-        "id": "custom_1791476712897_951",
-        "label": "item 138 - Douleur chez la personne vulnérable"
-      }
-    ]
+    "2026-10-08": []
   },
   "itemDifficulty": {
     "2": "facile",
@@ -6907,6 +6904,14 @@
         "overridden": true,
         "originalItemNum": 192,
         "dayCap": 2
+      },
+      {
+        "id": "M_138_mv2iltwfvbi8",
+        "kind": "manualItem",
+        "itemNum": 138,
+        "mode": "revision",
+        "iso": "2026-10-08",
+        "manual": true
       }
     ],
     "2026-10-09": [
@@ -7023,7 +7028,7 @@
   },
   "_meta": {
     "schemaVersion": 4,
-    "updatedAt": "2026-10-10T11:12:07.740Z"
+    "updatedAt": "2026-10-10T14:54:23.745Z"
   },
   "customTheme": {
     "enabled": false,
@@ -7281,5 +7286,24 @@
   },
   "pinResetV1": true,
   "pinResetV2": true,
-  "difficultyBoosterCleanupV1": true
+  "difficultyBoosterCleanupV1": true,
+  "manualItems": {
+    "2026-10-08": [
+      {
+        "id": "M_138_mv2iltwfvbi8",
+        "itemNum": 138,
+        "mode": "revision"
+      }
+    ]
+  },
+  "itemDoneAt": {
+    "M_138_mv2iltwfvbi8": {
+      "on": "2026-10-10",
+      "planned": "2026-10-08"
+    },
+    "S1_i54_o1": {
+      "on": "2026-10-10",
+      "planned": "2026-10-09"
+    }
+  }
 }
