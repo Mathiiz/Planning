@@ -3532,7 +3532,8 @@
   "skippedItemTasks": {
     "2026-09-14::S1_i50_o1": true,
     "2026-09-22::S1_i122_o1": true,
-    "2026-09-29::S1_i51_o1": true
+    "2026-09-29::S1_i51_o1": true,
+    "2026-10-13::S1_i55_o1": true
   },
   "lcaEntries": {},
   "sddItems": [
@@ -6998,6 +6999,34 @@
         "originalItemNum": 220,
         "dayCap": 2
       }
+    ],
+    "2026-10-13": [
+      {
+        "id": "S1_i55_o1",
+        "kind": "item",
+        "itemNum": 49,
+        "mode": "revision",
+        "idx": 53,
+        "idxKnown": true,
+        "phase": "S1",
+        "iso": "2026-10-13",
+        "overridden": true,
+        "originalItemNum": 55,
+        "dayCap": 2
+      },
+      {
+        "id": "S1_i126_o1",
+        "kind": "item",
+        "itemNum": 126,
+        "mode": "revision",
+        "idx": 54,
+        "idxKnown": true,
+        "phase": "S1",
+        "iso": "2026-10-13",
+        "overridden": false,
+        "originalItemNum": 126,
+        "dayCap": 2
+      }
     ]
   },
   "queueFreeze": {
@@ -7081,13 +7110,15 @@
       202,
       297,
       130,
-      304
+      304,
+      319,
+      73
     ],
     "S2": []
   },
   "_meta": {
     "schemaVersion": 4,
-    "updatedAt": "2026-10-12T18:40:43.103Z"
+    "updatedAt": "2026-10-13T13:46:29.579Z"
   },
   "customTheme": {
     "enabled": false,
