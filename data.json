@@ -2875,6 +2875,10 @@
     },
     "2026-10-08": {
       "custom_1791476712897_951": false
+    },
+    "2026-10-13": {
+      "custom_1791899212428_342": true,
+      "custom_1791899235822_538": true
     }
   },
   "reportedDays": {
@@ -3519,6 +3523,16 @@
       {
         "id": "custom_1791321192270_677",
         "label": "Items 274, 355 Vomissements (pédiatrie)"
+      }
+    ],
+    "2026-10-13": [
+      {
+        "id": "custom_1791899212428_342",
+        "label": "item 283 -  Constipation (pédiatrie)"
+      },
+      {
+        "id": "custom_1791899235822_538",
+        "label": "Items 50, 289 - Pathologies courantes de la région inguino-scrotale et du pénis (pédiatrie)"
       }
     ]
   },
@@ -7118,7 +7132,7 @@
   },
   "_meta": {
     "schemaVersion": 4,
-    "updatedAt": "2026-10-13T13:46:29.579Z"
+    "updatedAt": "2026-10-13T14:07:28.842Z"
   },
   "customTheme": {
     "enabled": false,
@@ -7384,6 +7398,12 @@
       "l": 2,
       "f": 0,
       "s": 0
+    },
+    "2026-10-12": {
+      "r": 0,
+      "l": 0,
+      "f": 0,
+      "s": 1
     }
   },
   "pinResetV1": true,
