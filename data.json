@@ -7095,6 +7095,14 @@
         "overridden": true,
         "originalItemNum": 315,
         "dayCap": 2
+      },
+      {
+        "id": "M_218_mv884fjqlo8s",
+        "kind": "manualItem",
+        "itemNum": 218,
+        "mode": "entrainement",
+        "iso": "2026-10-14",
+        "manual": true
       }
     ]
   },
@@ -7189,7 +7197,7 @@
   },
   "_meta": {
     "schemaVersion": 4,
-    "updatedAt": "2026-10-14T14:34:40.737Z"
+    "updatedAt": "2026-10-14T14:47:15.646Z"
   },
   "customTheme": {
     "enabled": false,
@@ -7485,6 +7493,13 @@
         "id": "M_285_mv2ktlh5nhen",
         "itemNum": 285,
         "mode": "revision"
+      }
+    ],
+    "2026-10-14": [
+      {
+        "id": "M_218_mv884fjqlo8s",
+        "itemNum": 218,
+        "mode": "entrainement"
       }
     ]
   },
