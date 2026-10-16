@@ -2886,7 +2886,8 @@
     "2026-10-13": {
       "custom_1791899212428_342": true,
       "custom_1791899235822_538": true
-    }
+    },
+    "2026-10-16": {}
   },
   "reportedDays": {
     "2026-09-02": {
@@ -3576,6 +3577,12 @@
       {
         "id": "custom_1791899235822_538",
         "label": "Items 50, 289 - Pathologies courantes de la région inguino-scrotale et du pénis (pédiatrie)"
+      }
+    ],
+    "2026-10-16": [
+      {
+        "id": "custom_1792138234461_92",
+        "label": "Items 213, 212, 219,329 Anémie et pathologies du fer"
       }
     ]
   },
@@ -7156,6 +7163,34 @@
         "iso": "2026-10-15",
         "manual": true
       }
+    ],
+    "2026-10-16": [
+      {
+        "id": "S1_i56_o1",
+        "kind": "item",
+        "itemNum": 56,
+        "mode": "revision",
+        "idx": 59,
+        "idxKnown": true,
+        "phase": "S1",
+        "iso": "2026-10-16",
+        "overridden": false,
+        "originalItemNum": 56,
+        "dayCap": 2
+      },
+      {
+        "id": "S1_i127_o1",
+        "kind": "item",
+        "itemNum": 127,
+        "mode": "revision",
+        "idx": 60,
+        "idxKnown": true,
+        "phase": "S1",
+        "iso": "2026-10-16",
+        "overridden": false,
+        "originalItemNum": 127,
+        "dayCap": 2
+      }
     ]
   },
   "queueFreeze": {
@@ -7245,13 +7280,15 @@
       345,
       131,
       305,
-      320
+      320,
+      74,
+      346
     ],
     "S2": []
   },
   "_meta": {
     "schemaVersion": 4,
-    "updatedAt": "2026-10-15T16:21:50.257Z"
+    "updatedAt": "2026-10-16T08:10:34.462Z"
   },
   "customTheme": {
     "enabled": false,
