@@ -2889,9 +2889,12 @@
     },
     "2026-10-16": {
       "custom_1792138234461_92": true,
-      "custom_1792143646517_877": true
+      "custom_1792143646517_877": true,
+      "custom_1792158406650_305": true
     },
-    "2026-10-05": {}
+    "2026-10-05": {
+      "custom_1792155746501_546": false
+    }
   },
   "reportedDays": {
     "2026-09-02": {
@@ -3591,14 +3594,13 @@
       {
         "id": "custom_1792143646517_877",
         "label": "Items 215, 216,329 Purpura"
+      },
+      {
+        "id": "custom_1792158406650_305",
+        "label": "Item 108, 132, 343 : Diagnostiquer et raisonner devant un syndrome confusionnel (Gériatrie - chapitre 11)"
       }
     ],
-    "2026-10-05": [
-      {
-        "id": "custom_1792155703972_348",
-        "label": "Item 108, 343 : Diagnostiquer et raisonner devant un syndrome confusionnel"
-      }
-    ]
+    "2026-10-05": []
   },
   "itemDifficulty": {
     "2": "facile",
@@ -3612,7 +3614,8 @@
     "2026-09-22::S1_i122_o1": true,
     "2026-09-29::S1_i51_o1": true,
     "2026-10-13::S1_i55_o1": true,
-    "2026-10-16::S1_i56_o1": true
+    "2026-10-16::S1_i56_o1": true,
+    "2026-10-16::S1_i127_o1": true
   },
   "lcaEntries": {},
   "sddItems": [
@@ -7303,7 +7306,7 @@
   },
   "_meta": {
     "schemaVersion": 4,
-    "updatedAt": "2026-10-16T13:01:43.972Z"
+    "updatedAt": "2026-10-16T13:46:53.017Z"
   },
   "customTheme": {
     "enabled": false,
