@@ -2887,7 +2887,9 @@
       "custom_1791899212428_342": true,
       "custom_1791899235822_538": true
     },
-    "2026-10-16": {}
+    "2026-10-16": {
+      "custom_1792138234461_92": true
+    }
   },
   "reportedDays": {
     "2026-09-02": {
@@ -3583,6 +3585,10 @@
       {
         "id": "custom_1792138234461_92",
         "label": "Items 213, 212, 219,329 Anémie et pathologies du fer"
+      },
+      {
+        "id": "custom_1792143646517_877",
+        "label": "Items 215, 216,329 Purpura"
       }
     ]
   },
@@ -3597,7 +3603,8 @@
     "2026-09-14::S1_i50_o1": true,
     "2026-09-22::S1_i122_o1": true,
     "2026-09-29::S1_i51_o1": true,
-    "2026-10-13::S1_i55_o1": true
+    "2026-10-13::S1_i55_o1": true,
+    "2026-10-16::S1_i56_o1": true
   },
   "lcaEntries": {},
   "sddItems": [
@@ -7288,7 +7295,7 @@
   },
   "_meta": {
     "schemaVersion": 4,
-    "updatedAt": "2026-10-16T08:10:34.462Z"
+    "updatedAt": "2026-10-16T09:40:46.517Z"
   },
   "customTheme": {
     "enabled": false,
