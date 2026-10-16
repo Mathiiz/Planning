@@ -2890,7 +2890,8 @@
     "2026-10-16": {
       "custom_1792138234461_92": true,
       "custom_1792143646517_877": true
-    }
+    },
+    "2026-10-05": {}
   },
   "reportedDays": {
     "2026-09-02": {
@@ -3590,6 +3591,12 @@
       {
         "id": "custom_1792143646517_877",
         "label": "Items 215, 216,329 Purpura"
+      }
+    ],
+    "2026-10-05": [
+      {
+        "id": "custom_1792155703972_348",
+        "label": "Item 108, 343 : Diagnostiquer et raisonner devant un syndrome confusionnel"
       }
     ]
   },
@@ -7296,7 +7303,7 @@
   },
   "_meta": {
     "schemaVersion": 4,
-    "updatedAt": "2026-10-16T12:58:47.906Z"
+    "updatedAt": "2026-10-16T13:01:43.972Z"
   },
   "customTheme": {
     "enabled": false,
