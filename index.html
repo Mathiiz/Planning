@@ -865,7 +865,7 @@ window.addEventListener('pageshow', function(e){
     </div>
     <div id="obRestoreSection" class="hidden">
       <p class="lead">Tu utilises déjà cette app sur un autre appareil avec une synchronisation GitHub activée ? Connecte-toi ici pour récupérer directement ton planning et ta progression, plutôt que de repartir de zéro.</p>
-      <label>Utilisateur ou organisation GitHub<input type="text" id="obGhOwner" placeholder="ex: pseudo"></label>
+      <label>Utilisateur ou organisation GitHub<input type="text" id="obGhOwner" placeholder="ex: mathiiz"></label>
       <label>Nom du dépôt<input type="text" id="obGhRepo" placeholder="ex: edn-planning"></label>
       <label>Nom du fichier de données<input type="text" id="obGhPath" placeholder="data.json"></label>
       <label>Branche<input type="text" id="obGhBranch" placeholder="main"></label>
@@ -3206,10 +3206,12 @@ function computeItemStatus(){
   // La clé de progression est l'identifiant NATIF de la case. Après un swap,
   // cette clé ne correspond plus nécessairement à l'item affiché. On parcourt
   // donc les slots effectifs pour attribuer la case cochée au bon item.
+  const covered = new Set();
   ['S1','S2'].forEach(phase=>{
     const cap = PHASE_FINAL_QUOTA[phase] || 0;
     for(let idx=0; idx<cap; idx++){
       const s = getSlot(phase, idx);
+      if(s) covered.add(s.nativeKey);
       if(!s || !s.itemNum || !isItemTaskDone(s.nativeKey)) continue;
       const n = s.itemNum;
       if(!ITEM_BY_NUM[n]) continue;
@@ -3217,6 +3219,20 @@ function computeItemStatus(){
       if(s.mode==='revision') status[n].revision = true;
       else status[n].entrainement = true;
     }
+  });
+  // Cases cochées qui n'ont plus de place dans la file actuelle (ex. après un changement des
+  // matières de la période, des DL ou un réaménagement du planning) : elles ont pourtant bien
+  // été faites, donc elles doivent continuer à compter (comme dans l'historique d'un item).
+  const orphanRe = /^(S1|S2)_i(\d+)_o(\d+)$/;
+  Object.keys(DATA.itemChecks || {}).forEach(key=>{
+    if(!DATA.itemChecks[key] || covered.has(key)) return;
+    const m = orphanRe.exec(key);
+    if(!m) return;
+    const n = parseInt(m[2],10);
+    if(!ITEM_BY_NUM[n]) return;
+    if(!status[n]) status[n] = {revision:false, entrainement:false};
+    if(parseInt(m[3],10)===1) status[n].revision = true;
+    else status[n].entrainement = true;
   });
   // Items ajoutés à la main et cochés : comptés selon leur mode (révision / entraînement).
   Object.keys(DATA.manualItems || {}).forEach(iso=>{
@@ -3352,8 +3368,8 @@ function itemTaskHTML(task, opts){
   const isRev = task.mode==='revision';
   const modeLabel = isRev ? 'Révision' : 'Entraînement';
   const hint = isRev
-    ? "Lecture — choisis ta source "
-    : "Pratique — entrainement";
+    ? "Lecture — choisis ta source toi-même (Collège, fiche LISA, edn.fr…)"
+    : "Pratique — choisis Anki ou QCM edn.fr";
   const key = task.id || task.key;
   const histCount = itemHistory(task.itemNum).filter(h=>h.done).length;
   const diff = (DATA.itemDifficulty && DATA.itemDifficulty[task.itemNum]) || null;
@@ -4068,6 +4084,67 @@ function filterItemRows(){
   });
 }
 
+// Toutes les occurrences d'un item (faites, en retard, à venir), y compris celles des jours futurs.
+function itemSchedule(itemNum){
+  const out = [];
+  const covered = new Set();
+  const doneAt = DATA.itemDoneAt || {};
+  ['S1','S2'].forEach(phase=>{
+    const cap = PHASE_FINAL_QUOTA[phase] || 0;
+    for(let idx=0; idx<cap; idx++){
+      const s = getSlot(phase, idx);
+      if(!s || s.itemNum !== itemNum) continue;
+      if(s.iso && isItemTaskSkipped(s.iso, s.nativeKey)) continue;
+      covered.add(s.nativeKey);
+      out.push({ mode:s.mode, done:isItemTaskDone(s.nativeKey), iso:s.iso, doneAt:doneAt[s.nativeKey]||null });
+    }
+  });
+  const re = /^(S1|S2)_i(\d+)_o(\d+)$/;
+  Object.keys(DATA.itemChecks || {}).forEach(key=>{
+    if(!DATA.itemChecks[key] || covered.has(key)) return;
+    const m = re.exec(key);
+    if(!m || parseInt(m[2],10) !== itemNum) return;
+    out.push({ mode: parseInt(m[3],10)===1 ? 'revision' : 'entrainement', done:true, iso:null, doneAt:doneAt[key]||null });
+  });
+  Object.keys(DATA.manualItems || {}).forEach(iso=>{
+    (DATA.manualItems[iso] || []).forEach(mi=>{
+      if(!mi || mi.itemNum !== itemNum) return;
+      out.push({ mode:mi.mode, done:isItemTaskDone(mi.id), iso, manual:true, doneAt:doneAt[mi.id]||null });
+    });
+  });
+  const sortKey = e => (e.done && e.doneAt && e.doneAt.on) || e.iso || (e.doneAt && e.doneAt.planned) || '9999';
+  out.sort((a,b)=> sortKey(a) < sortKey(b) ? -1 : sortKey(a) > sortKey(b) ? 1 : 0);
+  return out;
+}
+function itemDatesHTML(itemNum){
+  const list = itemSchedule(itemNum);
+  if(!list.length) return `<p class="hist-empty">Cet item n'est pas (encore) planifié.</p>`;
+  const today = todayIso();
+  const doneCount = list.filter(e=>e.done).length;
+  const rows = list.map(e=>{
+    const plannedIso = e.iso || (e.doneAt && e.doneAt.planned) || null;
+    const modeLabel = e.mode==='revision' ? 'Révision' : 'Entraînement';
+    const left = plannedIso ? (e.manual ? 'Ajouté au ' : 'Prévu le ') + fmtLongDate(parseISO(plannedIso)) : 'Pas encore planifié';
+    let when = null;
+    if(e.done){
+      if(e.doneAt && e.doneAt.on) when = itemDoneWhen({ done:true, doneAt:e.doneAt, iso:e.iso });
+      else when = { text:'Fait — date réelle non enregistrée', cls:'' };
+    } else if(e.iso && e.iso < today){
+      when = { text:`En retard de ${daysBetween(parseISO(e.iso), parseISO(today))} j`, cls:'late' };
+    } else if(e.iso === today){
+      when = { text:"Prévu aujourd'hui", cls:'ahead' };
+    }
+    return `<div class="hist-entry hist-col">
+      <div class="hist-line">
+        <span class="hdate">${left}</span>
+        <span class="hist-mode ${e.done ? e.mode : 'pending'}">${e.done ? modeLabel : (modeLabel+' — à faire')}</span>
+      </div>
+      ${when ? `<div class="hist-when ${when.cls}">${esc(when.text)}</div>` : ''}
+    </div>`;
+  }).join('');
+  return `<p style="font-size:11.5px;color:var(--ink-soft);margin:0 0 4px;">${doneCount}/${list.length} occurrence${list.length>1?'s':''} faite${doneCount>1?'s':''}</p>${rows}`;
+}
+
 function renderItemsManager(){
   const container = document.getElementById('app');
   const cats = ALL_CATS;
@@ -4083,9 +4160,11 @@ function renderItemsManager(){
       </div>
       <div>${catPillsHTML(itemCats)}</div>
       <div class="imactions">
+        <button class="btn-secondary" data-dates="${n}">📅 Dates</button>
         <button class="btn-secondary" data-edit="${n}">Modifier</button>
         <button class="btn-danger" data-delete="${n}">Supprimer</button>
       </div>
+      <div class="item-dates" id="itemDates-${n}" style="display:none;margin-top:8px;"></div>
     </div>`;
   }).join('');
   if(!rows) rows = `<p class="hist-empty">Aucun item enregistré.</p>`;
@@ -4124,6 +4203,15 @@ function renderItemsManager(){
     if(selectedCats.length===0){ alert('Coche au moins un collège.'); return; }
     addItem(title, selectedCats);
     render();
+  });
+  container.querySelectorAll('[data-dates]').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const num = parseInt(btn.getAttribute('data-dates'),10);
+      const panel = document.getElementById('itemDates-'+num);
+      if(!panel) return;
+      if(panel.style.display === 'none'){ panel.innerHTML = itemDatesHTML(num); panel.style.display = 'block'; }
+      else { panel.style.display = 'none'; }
+    });
   });
   container.querySelectorAll('[data-delete]').forEach(btn=>{
     btn.addEventListener('click', ()=>{
@@ -4369,7 +4457,7 @@ function renderSettings(){
     <button class="back-link" id="settingsBackBtn">← Retour</button>
     ${planWarningsHTML()}
     <div class="settings-card">
-      <h3>Compte à rebours</h3>
+      <h3>Affichage & Compteurs du bandeau</h3>
       <div class="settings-group">
         <label class="checkbox-label">
           <input type="checkbox" id="cfgShowEdn" ${cfg.showCountdownEdn!==false ? 'checked':''}>
@@ -4419,14 +4507,14 @@ function renderSettings(){
             <option value="5" ${String(cfg.studentYear)==='5'?'selected':''}>5ᵉ année (DFASM2)</option>
             <option value="6" ${String(cfg.studentYear)==='6'?'selected':''}>6ᵉ année (DFASM3 — EDN)</option>
           </select>
-          <span class="settings-hint">Séléctionne ton année.</span>
+          <span class="settings-hint">Détermine notamment si la LCA apparaît dans les révisions du week-end (activée à partir de la 5ᵉ année).</span>
         </label>
         <label>Début des révisions
           <input type="date" id="cfgStart" value="${cfg.start||''}">
         </label>
         <label>Fin de la période d'apprentissage / Passage en révision générale
           <input type="date" id="cfgS1End" value="${cfg.s1End||''}">
-          <span class="settings-hint">Avant cette date, seules les matières cochées ci-dessous tournent.</span>
+          <span class="settings-hint">Avant cette date, seules les matières cochées ci-dessous tournent. Après cette date, tout le programme tourne de manière cumulative. (Pour une organisation par trimestres ou semestres sans révision globale immédiate, règle cette date proche de tes examens).</span>
         </label>
         <div style="display:flex;gap:10px;flex-wrap:wrap;">
           <label style="flex:1;min-width:180px;">Items / jour (Apprentissage)
