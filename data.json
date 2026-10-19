@@ -2814,7 +2814,10 @@
     "2026-10-24": {},
     "2026-10-25": {},
     "2026-10-17": {},
-    "2026-10-18": {},
+    "2026-10-18": {
+      "lca_0": true,
+      "lca_1": true
+    },
     "2026-10-10": {
       "free_0": true,
       "free_1": true
@@ -3599,8 +3602,7 @@
         "id": "custom_1792158406650_305",
         "label": "Item 108, 132, 343 : Diagnostiquer et raisonner devant un syndrome confusionnel (Gériatrie - chapitre 11)"
       }
-    ],
-    "2026-10-05": []
+    ]
   },
   "itemDifficulty": {
     "2": "facile",
@@ -7209,6 +7211,34 @@
         "originalItemNum": 127,
         "dayCap": 2
       }
+    ],
+    "2026-10-19": [
+      {
+        "id": "S1_i301_o1",
+        "kind": "item",
+        "itemNum": 301,
+        "mode": "revision",
+        "idx": 61,
+        "idxKnown": true,
+        "phase": "S1",
+        "iso": "2026-10-19",
+        "overridden": false,
+        "originalItemNum": 301,
+        "dayCap": 2
+      },
+      {
+        "id": "S1_i316_o1",
+        "kind": "item",
+        "itemNum": 214,
+        "mode": "revision",
+        "idx": 62,
+        "idxKnown": true,
+        "phase": "S1",
+        "iso": "2026-10-19",
+        "overridden": true,
+        "originalItemNum": 316,
+        "dayCap": 2
+      }
     ]
   },
   "queueFreeze": {
@@ -7300,13 +7330,15 @@
       305,
       320,
       74,
-      346
+      346,
+      132,
+      306
     ],
     "S2": []
   },
   "_meta": {
     "schemaVersion": 4,
-    "updatedAt": "2026-10-16T13:46:53.017Z"
+    "updatedAt": "2026-10-19T08:48:01.920Z"
   },
   "customTheme": {
     "enabled": false,
@@ -7596,6 +7628,18 @@
       "l": 0,
       "f": 0,
       "s": 1
+    },
+    "2026-10-16": {
+      "r": 0,
+      "l": 0,
+      "f": 0,
+      "s": 1
+    },
+    "2026-10-17": {
+      "r": 0,
+      "l": 0,
+      "f": 2,
+      "s": 0
     }
   },
   "pinResetV1": true,
