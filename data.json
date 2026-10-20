@@ -3163,16 +3163,10 @@
       "partnerKey": "S1_i193_o1",
       "previousItemNum": 72
     },
-    "S1_i68_o1": {
-      "itemNum": 70,
-      "swapId": "swap_1790787333113_787",
-      "partnerKey": "S1_i70_o1",
-      "previousItemNum": 68
-    },
     "S1_i70_o1": {
-      "itemNum": 68,
-      "swapId": "swap_1790787333113_787",
-      "partnerKey": "S1_i68_o1",
+      "itemNum": 65,
+      "swapId": "swap_1792501155367_917",
+      "partnerKey": "S1_i65_o2",
       "previousItemNum": 70
     },
     "S1_i122_o1": {
@@ -3318,6 +3312,12 @@
       "swapId": "swap_1792077931338_694",
       "partnerKey": "S1_i194_o1",
       "previousItemNum": 193
+    },
+    "S1_i65_o2": {
+      "itemNum": 68,
+      "swapId": "swap_1792501155367_917",
+      "partnerKey": "S1_i70_o1",
+      "previousItemNum": 65
     }
   },
   "subjectDeadlines": {
@@ -6822,13 +6822,13 @@
       {
         "id": "S1_i68_o1",
         "kind": "item",
-        "itemNum": 70,
+        "itemNum": 68,
         "mode": "revision",
         "idx": 51,
         "idxKnown": true,
         "phase": "S1",
         "iso": "2026-09-30",
-        "overridden": true,
+        "overridden": false,
         "originalItemNum": 68,
         "dayCap": 2
       },
@@ -7241,6 +7241,34 @@
         "originalItemNum": 316,
         "dayCap": 2
       }
+    ],
+    "2026-10-20": [
+      {
+        "id": "S1_i70_o1",
+        "kind": "item",
+        "itemNum": 65,
+        "mode": "revision",
+        "idx": 63,
+        "idxKnown": true,
+        "phase": "S1",
+        "iso": "2026-10-20",
+        "overridden": true,
+        "originalItemNum": 70,
+        "dayCap": 2
+      },
+      {
+        "id": "S1_i195_o1",
+        "kind": "item",
+        "itemNum": 195,
+        "mode": "revision",
+        "idx": 64,
+        "idxKnown": true,
+        "phase": "S1",
+        "iso": "2026-10-20",
+        "overridden": false,
+        "originalItemNum": 195,
+        "dayCap": 2
+      }
     ]
   },
   "queueFreeze": {
@@ -7334,13 +7362,15 @@
       74,
       346,
       132,
-      306
+      306,
+      329,
+      75
     ],
     "S2": []
   },
   "_meta": {
     "schemaVersion": 4,
-    "updatedAt": "2026-10-19T15:03:53.233Z"
+    "updatedAt": "2026-10-20T12:59:15.380Z"
   },
   "customTheme": {
     "enabled": false,
