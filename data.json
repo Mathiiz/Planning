@@ -52,7 +52,22 @@
         "periodWeeks": 1,
         "startDate": "2026-08-24"
       }
-    }
+    },
+    "blockOrder": [
+      "chir1",
+      "chir2",
+      "endogyn",
+      "transv",
+      "ped",
+      "hemonc",
+      "psyneuro",
+      "cardiopneu",
+      "inv1",
+      "inv2",
+      "mg",
+      "sp",
+      "aigu"
+    ]
   },
   "items": [
     [
@@ -7283,6 +7298,62 @@
         "originalItemNum": 195,
         "dayCap": 2
       }
+    ],
+    "2026-10-21": [
+      {
+        "id": "S1_i57_o1",
+        "kind": "item",
+        "itemNum": 57,
+        "mode": "revision",
+        "idx": 65,
+        "idxKnown": true,
+        "phase": "S1",
+        "iso": "2026-10-21",
+        "overridden": false,
+        "originalItemNum": 57,
+        "dayCap": 2
+      },
+      {
+        "id": "S1_i128_o1",
+        "kind": "item",
+        "itemNum": 118,
+        "mode": "revision",
+        "idx": 66,
+        "idxKnown": true,
+        "phase": "S1",
+        "iso": "2026-10-21",
+        "overridden": true,
+        "originalItemNum": 128,
+        "dayCap": 2
+      }
+    ],
+    "2026-10-22": [
+      {
+        "id": "S1_i302_o1",
+        "kind": "item",
+        "itemNum": 302,
+        "mode": "revision",
+        "idx": 67,
+        "idxKnown": true,
+        "phase": "S1",
+        "iso": "2026-10-22",
+        "overridden": false,
+        "originalItemNum": 302,
+        "dayCap": 2
+      },
+      {
+        "id": "S1_i317_o1",
+        "kind": "item",
+        "itemNum": 215,
+        "mode": "revision",
+        "idx": 68,
+        "idxKnown": true,
+        "phase": "S1",
+        "iso": "2026-10-22",
+        "overridden": true,
+        "originalItemNum": 317,
+        "dayCap": 2
+      }
     ]
   },
   "queueFreeze": {
@@ -7378,13 +7449,17 @@
       132,
       306,
       329,
-      75
+      75,
+      364,
+      133,
+      307,
+      76
     ],
     "S2": []
   },
   "_meta": {
     "schemaVersion": 4,
-    "updatedAt": "2026-10-20T15:19:59.231Z"
+    "updatedAt": "2026-10-22T12:30:12.668Z"
   },
   "customTheme": {
     "enabled": false,
@@ -7698,6 +7773,18 @@
       "l": 0,
       "f": 0,
       "s": 1
+    },
+    "2026-10-20": {
+      "r": 0,
+      "l": 0,
+      "f": 0,
+      "s": 1
+    },
+    "2026-10-21": {
+      "r": 0,
+      "l": 0,
+      "f": 0,
+      "s": 1
     }
   },
   "pinResetV1": true,
@@ -7802,5 +7889,6 @@
       "on": "2026-10-20",
       "planned": "2026-10-20"
     }
-  }
+  },
+  "itemsCatRefV": 1
 }
