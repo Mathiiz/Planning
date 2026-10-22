@@ -2708,7 +2708,8 @@
     "S1_i316_o1": true,
     "S1_i301_o1": true,
     "S1_i70_o1": true,
-    "S1_i195_o1": true
+    "S1_i195_o1": true,
+    "S1_i128_o1": true
   },
   "checks": {
     "2026-08-29": {
@@ -2947,12 +2948,6 @@
     "S1_i118_o1": {
       "itemNum": 123
     },
-    "S1_i123_o1": {
-      "itemNum": 128,
-      "swapId": "swap_1790416158161_712",
-      "partnerKey": "S1_i128_o1",
-      "previousItemNum": 118
-    },
     "S1_i48_o1": {
       "itemNum": 49
     },
@@ -3155,9 +3150,9 @@
       "previousItemNum": 320
     },
     "S1_i128_o1": {
-      "itemNum": 118,
-      "swapId": "swap_1790416158161_712",
-      "partnerKey": "S1_i123_o1",
+      "itemNum": 131,
+      "swapId": "swap_1792680852369_143",
+      "partnerKey": "S1_i131_o1",
       "previousItemNum": 128
     },
     "S1_i220_o1": {
@@ -3351,6 +3346,12 @@
       "swapId": "swap_1792506273436_80",
       "partnerKey": "S1_i195_o1",
       "previousItemNum": 194
+    },
+    "S1_i131_o1": {
+      "itemNum": 118,
+      "swapId": "swap_1792680852369_143",
+      "partnerKey": "S1_i128_o1",
+      "previousItemNum": 131
     }
   },
   "subjectDeadlines": {
@@ -5793,13 +5794,13 @@
       {
         "id": "S1_i123_o1",
         "kind": "item",
-        "itemNum": 128,
+        "itemNum": 123,
         "mode": "revision",
         "idx": 36,
         "idxKnown": true,
         "phase": "S1",
         "iso": "2026-09-17",
-        "overridden": true,
+        "overridden": false,
         "originalItemNum": 123,
         "dayCap": 5
       },
@@ -5888,13 +5889,13 @@
       {
         "id": "S1_i123_o1",
         "kind": "item",
-        "itemNum": 128,
+        "itemNum": 123,
         "mode": "revision",
         "idx": 36,
         "idxKnown": true,
         "phase": "S1",
         "iso": "2026-09-21",
-        "overridden": true,
+        "overridden": false,
         "originalItemNum": 123,
         "dayCap": 3
       },
@@ -6000,13 +6001,13 @@
       {
         "id": "S1_i123_o1",
         "kind": "item",
-        "itemNum": 128,
+        "itemNum": 123,
         "mode": "revision",
         "idx": 36,
         "idxKnown": true,
         "phase": "S1",
         "iso": "2026-09-25",
-        "overridden": true,
+        "overridden": false,
         "originalItemNum": 123,
         "dayCap": 2
       },
@@ -7327,7 +7328,7 @@
       {
         "id": "S1_i128_o1",
         "kind": "item",
-        "itemNum": 118,
+        "itemNum": 131,
         "mode": "revision",
         "idx": 66,
         "idxKnown": true,
@@ -7470,7 +7471,7 @@
   },
   "_meta": {
     "schemaVersion": 4,
-    "updatedAt": "2026-10-22T14:53:31.554Z"
+    "updatedAt": "2026-10-22T15:59:05.220Z"
   },
   "customTheme": {
     "enabled": false,
@@ -7899,6 +7900,11 @@
     "S1_i195_o1": {
       "on": "2026-10-20",
       "planned": "2026-10-20"
+    },
+    "S1_i128_o1": {
+      "on": "2026-10-22",
+      "planned": "2026-10-21",
+      "itemNum": 131
     }
   },
   "itemsCatRefV": 1
