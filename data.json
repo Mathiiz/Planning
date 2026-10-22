@@ -2709,7 +2709,8 @@
     "S1_i301_o1": true,
     "S1_i70_o1": true,
     "S1_i195_o1": true,
-    "S1_i128_o1": true
+    "S1_i128_o1": true,
+    "S1_i317_o1": true
   },
   "checks": {
     "2026-08-29": {
@@ -3035,16 +3036,10 @@
       "partnerKey": "S1_i188_o1",
       "previousItemNum": 3
     },
-    "S1_i215_o1": {
-      "itemNum": 317,
-      "swapId": "swap_1789652745628_534",
-      "partnerKey": "S1_i317_o1",
-      "previousItemNum": 215
-    },
     "S1_i317_o1": {
-      "itemNum": 215,
-      "swapId": "swap_1789652745628_534",
-      "partnerKey": "S1_i215_o1",
+      "itemNum": 202,
+      "swapId": "swap_1792697886289_307",
+      "partnerKey": "S1_i202_o1",
       "previousItemNum": 317
     },
     "S1_i121_o1": {
@@ -3352,6 +3347,12 @@
       "swapId": "swap_1792680852369_143",
       "partnerKey": "S1_i128_o1",
       "previousItemNum": 131
+    },
+    "S1_i202_o1": {
+      "itemNum": 215,
+      "swapId": "swap_1792697886289_307",
+      "partnerKey": "S1_i317_o1",
+      "previousItemNum": 202
     }
   },
   "subjectDeadlines": {
@@ -5459,13 +5460,13 @@
       {
         "id": "S1_i215_o1",
         "kind": "item",
-        "itemNum": 317,
+        "itemNum": 215,
         "mode": "revision",
         "idx": 23,
         "idxKnown": true,
         "phase": "S1",
         "iso": "2026-09-07",
-        "overridden": true,
+        "overridden": false,
         "originalItemNum": 215,
         "dayCap": 6
       }
@@ -5580,13 +5581,13 @@
       {
         "id": "S1_i215_o1",
         "kind": "item",
-        "itemNum": 317,
+        "itemNum": 215,
         "mode": "revision",
         "idx": 23,
         "idxKnown": true,
         "phase": "S1",
         "iso": "2026-09-11",
-        "overridden": true,
+        "overridden": false,
         "originalItemNum": 215,
         "dayCap": 6
       },
@@ -5701,13 +5702,13 @@
       {
         "id": "S1_i215_o1",
         "kind": "item",
-        "itemNum": 317,
+        "itemNum": 215,
         "mode": "revision",
         "idx": 23,
         "idxKnown": true,
         "phase": "S1",
         "iso": "2026-09-15",
-        "overridden": true,
+        "overridden": false,
         "originalItemNum": 215,
         "dayCap": 5
       },
@@ -7356,7 +7357,7 @@
       {
         "id": "S1_i317_o1",
         "kind": "item",
-        "itemNum": 215,
+        "itemNum": 202,
         "mode": "revision",
         "idx": 68,
         "idxKnown": true,
@@ -7471,7 +7472,7 @@
   },
   "_meta": {
     "schemaVersion": 4,
-    "updatedAt": "2026-10-22T15:59:05.220Z"
+    "updatedAt": "2026-10-22T19:38:09.341Z"
   },
   "customTheme": {
     "enabled": false,
@@ -7905,6 +7906,11 @@
       "on": "2026-10-22",
       "planned": "2026-10-21",
       "itemNum": 131
+    },
+    "S1_i317_o1": {
+      "on": "2026-10-22",
+      "planned": "2026-10-22",
+      "itemNum": 202
     }
   },
   "itemsCatRefV": 1
