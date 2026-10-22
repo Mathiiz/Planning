@@ -899,7 +899,7 @@ const ITEMS_RAW = [
 [1,'La relation médecin-malade',['legale']],
 [2,'Les valeurs professionnelles du médecin et des autres professions de santé',['legale']],
 [3,'Le raisonnement et la décision en médecine',['legale']],
-[4,'La sécurité du patient. La gestion des risques. Les événements indésirables associés aux soins',['legale']],
+[4,'La sécurité du patient. La gestion des risques. Les événements indésirables associés aux soins',['pharmaco']],
 [5,'La gestion des erreurs et des plaintes, l\'aléa thérapeutique',['legale']],
 [6,'L\'organisation de l\'exercice clinique et les méthodes qui permettent de sécuriser le parcours du patient',['legale']],
 [7,'Les droits individuels et collectifs du patient',['legale']],
@@ -910,7 +910,7 @@ const ITEMS_RAW = [
 [12,'Violences sexuelles',['legale']],
 [13,'Certificats médicaux. Décès et législation. Prélèvements d\'organes et législation',['legale']],
 [14,'La mort',['legale']],
-[15,'Soins psychiatriques sans consentement',['legale']],
+[15,'Soins psychiatriques sans consentement',['psy']],
 [16,'Organisation du système de soins. Sa régulation. Les indicateurs. Parcours de soins',['legale']],
 [17,'Télémédecine, télésanté et téléservices en santé',['legale']],
 [18,'Santé et numérique',['legale']],
@@ -927,7 +927,7 @@ const ITEMS_RAW = [
 [29,'Principaux risques professionnels pour la maternité, liés au travail de la mère',['gyneco']],
 [30,'Prématurité et retard de croissance intra-utérin : facteurs de risque et prévention',['gyneco']],
 [31,'Accouchement, délivrance et suites de couches normales',['gyneco']],
-[32,'Évaluation et soins du nouveau-né à terme',['gyneco']],
+[32,'Évaluation et soins du nouveau-né à terme',['ped']],
 [33,'Allaitement maternel',['gyneco']],
 [34,'Suites de couches pathologiques : pathologie maternelle dans les 40 jours',['gyneco']],
 [35,'Anomalies du cycle menstruel. Métrorragies',['gyneco']],
@@ -945,9 +945,9 @@ const ITEMS_RAW = [
 [47,'Suivi d\'un nourrisson, d\'un enfant et d\'un adolescent normal. Dépistages, examens obligatoires, médecine scolaire',['ped']],
 [48,'Alimentation et besoins nutritionnels du nourrisson et de l\'enfant',['ped']],
 [49,'Puberté normale et pathologique',['ped']],
-[50,'Pathologie génito-scrotale chez le garçon et chez l\'homme',['ped']],
+[50,'Pathologie génito-scrotale chez le garçon et chez l\'homme',['uro']],
 [51,'Troubles de la miction chez l\'enfant',['ped']],
-[52,'Strabisme et amblyopie de l\'enfant',['ped']],
+[52,'Strabisme et amblyopie de l\'enfant',['ophtalmo']],
 [53,'Retard de croissance staturo-pondérale',['ped']],
 [54,'Boiterie chez l\'enfant',['ped']],
 [55,'Développement psychomoteur du nourrisson et de l\'enfant',['ped']],
@@ -969,7 +969,7 @@ const ITEMS_RAW = [
 [71,'Troubles des conduites alimentaires chez l\'adolescent et l\'adulte',['psy']],
 [72,'Troubles à symptomatologie somatique et apparentés à tous les âges',['psy']],
 [73,'Différents types de techniques psychothérapeutiques',['psy']],
-[74,'Prescription et surveillance des psychotropes',['psy']],
+[74,'Prescription et surveillance des psychotropes',['pharmaco']],
 [75,'Addiction au tabac',['psy']],
 [76,'Addiction à l\'alcool',['psy']],
 [77,'Addiction aux médicaments psychotropes (benzodiazépines et apparentés)',['psy']],
@@ -990,20 +990,20 @@ const ITEMS_RAW = [
 [92,'Déficit moteur et/ou sensitif des membres',['neuro']],
 [93,'Compression médullaire non traumatique et syndrome de la queue de cheval',['neuro']],
 [94,'Rachialgie',['neuro']],
-[95,'Radiculalgie et syndrome canalaire',['neuro']],
+[95,'Radiculalgie et syndrome canalaire',['rhumato']],
 [96,'Neuropathies périphériques',['neuro']],
 [97,'Polyradiculonévrite aiguë inflammatoire (syndrome de Guillain-Barré)',['neuro']],
 [98,'Myasthénie',['neuro']],
 [99,'Migraine, névralgie du trijumeau et algies de la face',['neuro']],
 [100,'Céphalée inhabituelle aiguë et chronique chez l\'adulte et l\'enfant',['neuro']],
 [101,'Paralysie faciale',['neuro']],
-[102,'Diplopie',['neuro']],
-[103,'Vertige',['neuro']],
+[102,'Diplopie',['ophtalmo']],
+[103,'Vertige',['orl']],
 [104,'Sclérose en plaques',['neuro']],
 [105,'Épilepsie de l\'enfant et de l\'adulte',['neuro']],
 [106,'Maladie de Parkinson',['neuro']],
 [107,'Mouvements anormaux',['neuro']],
-[108,'Confusion, démences',['ger']],
+[108,'Confusion, démences',['neuro']],
 [109,'Troubles de la marche et de l\'équilibre',['neuro']],
 [110,'Troubles du sommeil de l\'enfant et de l\'adulte',['neuro']],
 [111,'Dermatoses faciales : acné, rosacée, dermatite séborrhéique',['dermato']],
@@ -1015,54 +1015,54 @@ const ITEMS_RAW = [
 [117,'Psoriasis',['dermato']],
 [118,'La personne handicapée : bases de l\'évaluation fonctionnelle et thérapeutique',['ger']],
 [119,'Soin et accompagnement dans la maladie chronique et le handicap',['ger']],
-[120,'Complications de l\'immobilité et du décubitus. Prévention et prise en charge',['ger']],
-[121,'Le handicap psychique',['ger']],
+[120,'Complications de l\'immobilité et du décubitus. Prévention et prise en charge',['urgences']],
+[121,'Le handicap psychique',['psy']],
 [122,'Principales techniques de rééducation et de réadaptation',['ger']],
 [123,'Vieillissement normal : aspects biologiques, fonctionnels et relationnels. Prévention du vieillissement pathologique',['ger']],
-[124,'Ménopause, insuffisance ovarienne prématurée, andropause, déficit androgénique lié à l\'âge',['ger']],
-[125,'Troubles de la miction et incontinence urinaire de l\'adulte et du sujet âgé',['ger']],
-[126,'Trouble de l\'érection',['ger']],
-[127,'Hypertrophie bénigne de la prostate',['ger']],
-[128,'Ostéopathies fragilisantes',['ger']],
-[129,'Arthrose',['ger']],
+[124,'Ménopause, insuffisance ovarienne prématurée, andropause, déficit androgénique lié à l\'âge',['gyneco']],
+[125,'Troubles de la miction et incontinence urinaire de l\'adulte et du sujet âgé',['uro']],
+[126,'Trouble de l\'érection',['uro']],
+[127,'Hypertrophie bénigne de la prostate',['uro']],
+[128,'Ostéopathies fragilisantes',['rhumato']],
+[129,'Arthrose',['rhumato']],
 [130,'La personne âgée malade : particularités sémiologiques, psychologiques et thérapeutiques',['ger']],
 [131,'Troubles de la marche et de l\'équilibre (sujet âgé)',['ger']],
 [132,'Troubles cognitifs du sujet âgé',['ger']],
 [133,'Autonomie et dépendance chez le sujet âgé',['ger']],
-[134,'Bases neurophysiologiques et mécanismes physiopathologiques d\'une douleur aiguë et d\'une douleur chronique',['douleur']],
-[135,'Thérapeutiques antalgiques, médicamenteuses et non médicamenteuses',['douleur']],
-[136,'Anesthésie locale, locorégionale et générale',['douleur']],
-[137,'Douleur chez l\'enfant : évaluation et traitements antalgiques',['douleur']],
+[134,'Bases neurophysiologiques et mécanismes physiopathologiques d\'une douleur aiguë et d\'une douleur chronique',['urgences']],
+[135,'Thérapeutiques antalgiques, médicamenteuses et non médicamenteuses',['urgences']],
+[136,'Anesthésie locale, locorégionale et générale',['urgences']],
+[137,'Douleur chez l\'enfant : évaluation et traitements antalgiques',['ped']],
 [138,'Douleur chez la personne vulnérable',['douleur']],
 [139,'Soins palliatifs pluridisciplinaires (1) : repères cliniques, organisation des équipes',['douleur']],
 [140,'Soins palliatifs pluridisciplinaires (2) : accompagnement du malade et de son entourage, repères éthiques',['douleur']],
 [141,'Soins palliatifs pluridisciplinaires (3) : sédation pour détresse en phase terminale, demande d\'euthanasie ou de suicide assisté',['douleur']],
 [142,'Aspects spécifiques des soins palliatifs en pédiatrie',['douleur']],
 [143,'Aspects spécifiques des soins palliatifs en réanimation',['douleur']],
-[144,'Deuil normal et pathologique',['douleur']],
+[144,'Deuil normal et pathologique',['psy']],
 [145,'Surveillance des maladies infectieuses transmissibles',['infectio']],
 [146,'Vaccinations',['infectio']],
 [147,'Fièvre aiguë chez l\'enfant et l\'adulte',['infectio']],
 [148,'Infections naso-sinusiennes de l\'adulte et de l\'enfant',['infectio']],
 [149,'Angines de l\'adulte et de l\'enfant, rhinopharyngites de l\'enfant',['infectio']],
-[150,'Otites infectieuses de l\'adulte et de l\'enfant',['infectio']],
+[150,'Otites infectieuses de l\'adulte et de l\'enfant',['orl']],
 [151,'Méningites, méningoencéphalites, abcès cérébral chez l\'adulte et l\'enfant',['infectio']],
 [152,'Endocardite infectieuse',['infectio']],
-[153,'Surveillance des porteurs de valve et prothèses vasculaires',['infectio']],
-[154,'Infections broncho-pulmonaires communautaires de l\'adulte et de l\'enfant',['infectio']],
-[155,'Infections cutanéo-muqueuses et des phanères, bactériennes et mycosiques de l\'adulte et de l\'enfant',['infectio']],
+[153,'Surveillance des porteurs de valve et prothèses vasculaires',['cardio']],
+[154,'Infections broncho-pulmonaires communautaires de l\'adulte et de l\'enfant',['pneumo']],
+[155,'Infections cutanéo-muqueuses et des phanères, bactériennes et mycosiques de l\'adulte et de l\'enfant',['dermato']],
 [156,'Infections ostéo-articulaires (IOA) de l\'enfant et de l\'adulte',['infectio']],
 [157,'Septicémie / bactériémie / fongémie de l\'adulte et de l\'enfant',['infectio']],
 [158,'Sepsis et choc septique de l\'enfant et de l\'adulte',['infectio']],
 [159,'Tuberculose de l\'adulte et de l\'enfant',['infectio']],
 [160,'Tétanos',['infectio']],
-[161,'Infections urinaires de l\'enfant et de l\'adulte',['infectio']],
-[162,'Infections sexuellement transmissibles (IST)',['infectio']],
+[161,'Infections urinaires de l\'enfant et de l\'adulte',['uro']],
+[162,'Infections sexuellement transmissibles (IST)',['dermato']],
 [163,'Coqueluche',['infectio']],
 [164,'Exanthèmes fébriles de l\'enfant',['ped']],
 [165,'Oreillons',['infectio']],
 [166,'Grippe',['infectio']],
-[167,'Hépatites virales',['infectio']],
+[167,'Hépatites virales',['gastro']],
 [168,'Infections à herpès virus du sujet immunocompétent',['infectio']],
 [169,'Infections à VIH',['infectio']],
 [170,'Paludisme',['infectio']],
@@ -1082,8 +1082,8 @@ const ITEMS_RAW = [
 [184,'Accidents du travail et maladies professionnelles : définitions et enjeux',['travail']],
 [185,'Réaction inflammatoire : aspects biologiques et cliniques. Conduite à tenir',['mi']],
 [186,'Hypersensibilités et allergies chez l\'enfant et l\'adulte : physiopathologie, épidémiologie, diagnostic, principes de traitement',['mi']],
-[187,'Hypersensibilités et allergies cutanéomuqueuses : urticaire, dermatites atopique et de contact, conjonctivite allergique',['mi']],
-[188,'Hypersensibilité et allergies respiratoires : asthme, rhinite',['mi']],
+[187,'Hypersensibilités et allergies cutanéomuqueuses : urticaire, dermatites atopique et de contact, conjonctivite allergique',['dermato']],
+[188,'Hypersensibilité et allergies respiratoires : asthme, rhinite',['pneumo']],
 [189,'Déficit immunitaire',['mi']],
 [190,'Fièvre prolongée',['mi']],
 [191,'Fièvre chez un patient immunodéprimé',['mi']],
@@ -1094,9 +1094,9 @@ const ITEMS_RAW = [
 [196,'Polyarthrite rhumatoïde',['rhumato']],
 [197,'Spondyloarthrite',['rhumato']],
 [198,'Arthropathie microcristalline',['rhumato']],
-[199,'Syndrome douloureux régional complexe (ex algodystrophie)',['rhumato']],
+[199,'Syndrome douloureux régional complexe (ex algodystrophie)',['douleur']],
 [200,'Douleur et épanchement articulaire. Arthrite d\'évolution récente',['rhumato']],
-[201,'Transplantation d\'organes : aspects épidémiologiques, immunologiques, complications, pronostic, éthiques et légaux',['mi']],
+[201,'Transplantation d\'organes : aspects épidémiologiques, immunologiques, complications, pronostic, éthiques et légaux',['nephro']],
 [202,'Biothérapies et thérapies ciblées',['mi']],
 [203,'Dyspnée aiguë et chronique',['pneumo']],
 [204,'Toux chez l\'enfant et chez l\'adulte (avec le traitement)',['pneumo']],
@@ -1106,25 +1106,25 @@ const ITEMS_RAW = [
 [208,'Insuffisance respiratoire chronique',['pneumo']],
 [209,'Bronchopneumopathie chronique obstructive chez l\'adulte',['pneumo']],
 [210,'Pneumopathie interstitielle diffuse',['pneumo']],
-[211,'Sarcoïdose',['pneumo']],
+[211,'Sarcoïdose',['mi']],
 [212,'Hémogramme chez l\'adulte et l\'enfant : indications et interprétation',['hemato']],
-[213,'Anémie chez l\'adulte et l\'enfant',['hemato']],
-[214,'Thrombopénie chez l\'adulte et l\'enfant',['hemato']],
-[215,'Purpuras chez l\'adulte et l\'enfant',['hemato']],
+[213,'Anémie chez l\'adulte et l\'enfant',['mi']],
+[214,'Thrombopénie chez l\'adulte et l\'enfant',['mi']],
+[215,'Purpuras chez l\'adulte et l\'enfant',['mi']],
 [216,'Syndrome hémorragique d\'origine hématologique',['hemato']],
-[217,'Syndrome mononucléosique',['hemato']],
-[218,'Éosinophilie',['hemato']],
+[217,'Syndrome mononucléosique',['mi']],
+[218,'Éosinophilie',['mi']],
 [219,'Pathologie du fer chez l\'adulte et l\'enfant',['hemato']],
 [220,'Adénopathie superficielle de l\'adulte et de l\'enfant',['hemato']],
 [221,'Athérome : épidémiologie et physiopathologie. Le malade poly-athéromateux',['cardio']],
 [222,'Facteurs de risque cardio-vasculaire et prévention',['cardio']],
-[223,'Dyslipidémies',['cardio']],
+[223,'Dyslipidémies',['endocrino']],
 [224,'Hypertension artérielle de l\'adulte',['cardio']],
 [225,'Artériopathie oblitérante de l\'aorte, des artères viscérales et des membres inférieurs, anévrismes',['cardio']],
 [226,'Thrombose veineuse profonde et embolie pulmonaire',['cardio']],
 [227,'Insuffisance veineuse chronique. Varices',['cardio']],
 [228,'Ulcère de jambe',['cardio']],
-[229,'Surveillance et complications des abords veineux',['cardio']],
+[229,'Surveillance et complications des abords veineux',['urgences']],
 [230,'Douleur thoracique aiguë et chronique',['cardio']],
 [231,'Électrocardiogramme : indications et interprétations',['cardio']],
 [232,'Fibrillation atriale',['cardio']],
@@ -1143,11 +1143,11 @@ const ITEMS_RAW = [
 [245,'Insuffisance surrénale chez l\'adulte et l\'enfant',['endocrino']],
 [246,'Gynécomastie',['endocrino']],
 [247,'Diabète sucré de types 1 et 2 de l\'enfant et de l\'adulte. Complications',['endocrino']],
-[248,'Prévention primaire par la nutrition chez l\'adulte et chez l\'enfant',['endocrino']],
+[248,'Prévention primaire par la nutrition chez l\'adulte et chez l\'enfant',['cardio']],
 [249,'Modifications thérapeutiques du mode de vie (alimentation et activité physique)',['endocrino']],
 [250,'Dénutrition chez l\'adulte et l\'enfant',['endocrino']],
 [251,'Amaigrissement à tous les âges',['endocrino']],
-[252,'Troubles nutritionnels chez le sujet âgé',['endocrino']],
+[252,'Troubles nutritionnels chez le sujet âgé',['ger']],
 [253,'Obésité de l\'enfant et de l\'adulte',['endocrino']],
 [254,'Besoins nutritionnels et grossesse',['endocrino']],
 [255,'Diabète gestationnel',['endocrino']],
@@ -1155,7 +1155,7 @@ const ITEMS_RAW = [
 [257,'Œdèmes des membres inférieurs localisés ou généralisés',['nephro']],
 [258,'Élévation de la créatininémie',['nephro']],
 [259,'Protéinurie et syndrome néphrotique chez l\'adulte et l\'enfant',['nephro']],
-[260,'Hématurie',['nephro']],
+[260,'Hématurie',['uro']],
 [261,'Néphropathie glomérulaire',['nephro']],
 [262,'Néphropathies interstitielles',['nephro']],
 [263,'Néphropathies vasculaires',['nephro']],
@@ -1163,14 +1163,14 @@ const ITEMS_RAW = [
 [265,'Lithiase urinaire',['uro']],
 [266,'Polykystose rénale',['nephro']],
 [267,'Troubles de l\'équilibre acido-basique et désordres hydro-électrolytiques',['nephro']],
-[268,'Hypercalcémie',['nephro']],
-[269,'Douleurs abdominales aiguës chez l\'enfant et chez l\'adulte',['gastro']],
+[268,'Hypercalcémie',['rhumato']],
+[269,'Douleurs abdominales aiguës chez l\'enfant et chez l\'adulte',['chirvisc']],
 [270,'Douleurs lombaires aiguës chez l\'enfant et chez l\'adulte',['rhumato']],
 [271,'Reflux gastro-œsophagien du nourrisson à l\'adulte. Hernie hiatale',['gastro']],
 [272,'Ulcère gastrique et duodénal. Gastrite',['gastro']],
 [273,'Dysphagie',['gastro']],
 [274,'Vomissements du nourrisson, de l\'enfant et de l\'adulte',['gastro']],
-[275,'Splénomégalie',['gastro']],
+[275,'Splénomégalie',['mi']],
 [276,'Hépatomégalie et masse abdominale',['gastro']],
 [277,'Lithiase biliaire et complications',['gastro']],
 [278,'Ictère',['gastro']],
@@ -1181,35 +1181,35 @@ const ITEMS_RAW = [
 [283,'Constipation chez l\'enfant et l\'adulte (avec le traitement)',['gastro']],
 [284,'Colopathie fonctionnelle',['gastro']],
 [285,'Diarrhée chronique chez l\'adulte et l\'enfant',['gastro']],
-[286,'Diarrhée aiguë et déshydratation du nourrisson à l\'adulte',['gastro']],
-[287,'Diverticulose colique et diverticulite aiguë du sigmoïde',['gastro']],
-[288,'Pathologie hémorroïdaire',['gastro']],
-[289,'Hernie pariétale chez l\'enfant et l\'adulte',['gastro']],
+[286,'Diarrhée aiguë et déshydratation du nourrisson à l\'adulte',['ped']],
+[287,'Diverticulose colique et diverticulite aiguë du sigmoïde',['chirvisc']],
+[288,'Pathologie hémorroïdaire',['chirvisc']],
+[289,'Hernie pariétale chez l\'enfant et l\'adulte',['chirvisc']],
 [290,'Épidémiologie, facteurs de risque, prévention et dépistage des cancers',['onco']],
 [291,'Cancer : cancérogénèse, oncogénétique',['onco']],
 [292,'Diagnostic des cancers : signes d\'appel, investigations, caractérisation, pronostic',['onco']],
 [293,'Le médecin préleveur pour l\'Anatomie et Cytologie Pathologiques',['onco']],
 [294,'Traitement des cancers : modalités, classes thérapeutiques, complications, décision pluridisciplinaire',['onco']],
 [295,'Prise en charge et accompagnement d\'un malade atteint de cancer à tous les stades',['onco']],
-[296,'Agranulocytose médicamenteuse : conduite à tenir',['onco']],
+[296,'Agranulocytose médicamenteuse : conduite à tenir',['hemato']],
 [297,'Cancer de l\'enfant : particularités épidémiologiques, diagnostiques et thérapeutiques',['ped']],
-[298,'Tumeurs de la cavité buccale, naso-sinusiennes, du cavum et des VADS',['onco']],
-[299,'Tumeurs intracrâniennes',['onco']],
-[300,'Tumeurs du col utérin, tumeur du corps utérin',['onco']],
-[301,'Tumeurs du côlon et du rectum',['onco']],
-[302,'Tumeurs cutanées, épithéliales et mélaniques',['onco']],
-[303,'Tumeurs de l\'estomac',['onco']],
-[304,'Tumeurs du foie, primitives et secondaires',['onco']],
-[305,'Tumeurs de l\'œsophage',['onco']],
-[306,'Tumeurs de l\'ovaire',['onco']],
-[307,'Tumeurs des os, primitives et secondaires',['onco']],
-[308,'Tumeurs du pancréas',['onco']],
-[309,'Tumeurs du poumon, primitives et secondaires',['onco']],
-[310,'Tumeurs de la prostate',['onco']],
-[311,'Tumeurs du rein de l\'adulte',['onco']],
-[312,'Tumeurs du sein',['onco']],
-[313,'Tumeurs du testicule',['onco']],
-[314,'Tumeurs vésicales',['onco']],
+[298,'Tumeurs de la cavité buccale, naso-sinusiennes, du cavum et des VADS',['orl']],
+[299,'Tumeurs intracrâniennes',['neuro']],
+[300,'Tumeurs du col utérin, tumeur du corps utérin',['gyneco']],
+[301,'Tumeurs du côlon et du rectum',['gastro']],
+[302,'Tumeurs cutanées, épithéliales et mélaniques',['dermato']],
+[303,'Tumeurs de l\'estomac',['gastro']],
+[304,'Tumeurs du foie, primitives et secondaires',['gastro']],
+[305,'Tumeurs de l\'œsophage',['gastro']],
+[306,'Tumeurs de l\'ovaire',['gyneco']],
+[307,'Tumeurs des os, primitives et secondaires',['rhumato']],
+[308,'Tumeurs du pancréas',['gastro']],
+[309,'Tumeurs du poumon, primitives et secondaires',['pneumo']],
+[310,'Tumeurs de la prostate',['uro']],
+[311,'Tumeurs du rein de l\'adulte',['uro']],
+[312,'Tumeurs du sein',['gyneco']],
+[313,'Tumeurs du testicule',['uro']],
+[314,'Tumeurs vésicales',['uro']],
 [315,'Leucémies aiguës',['hemato']],
 [316,'Syndromes myélodysplasiques',['hemato']],
 [317,'Syndromes myéloprolifératifs',['hemato']],
@@ -1224,7 +1224,7 @@ const ITEMS_RAW = [
 [326,'Cadre réglementaire de la prescription thérapeutique et recommandations pour le bon usage',['pharmaco']],
 [327,'Principes de la médecine intégrative, utilité et risques des interventions non médicamenteuses et thérapies complémentaires',['pharmaco']],
 [328,'Thérapeutiques non médicamenteuses et dispositifs médicaux',['pharmaco']],
-[329,'Transfusion sanguine et produits dérivés du sang : indications, complications, hémovigilance',['hemato']],
+[329,'Transfusion sanguine et produits dérivés du sang : indications, complications, hémovigilance',['urgences']],
 [330,'Prescription et surveillance des classes de médicaments les plus courantes, hors anti-infectieux',['pharmaco']],
 [331,'Arrêt cardio-circulatoire',['urgences']],
 [332,'État de choc. Principales étiologies : hypovolémique, septique, cardiogénique, anaphylactique',['urgences']],
@@ -1235,27 +1235,27 @@ const ITEMS_RAW = [
 [337,'Principales intoxications aiguës',['urgences']],
 [338,'Œdème de Quincke et anaphylaxie',['urgences']],
 [339,'Syndromes coronariens aigus',['cardio']],
-[340,'Accidents vasculaires cérébraux',['neuro']],
-[341,'Hémorragie méningée',['neuro']],
+[340,'Accidents vasculaires cérébraux',['urgences']],
+[341,'Hémorragie méningée',['urgences']],
 [342,'Malaise, perte de connaissance, crise convulsive chez l\'adulte',['urgences']],
-[343,'État confusionnel et trouble de conscience chez l\'adulte et chez l\'enfant',['urgences']],
-[344,'Prise en charge d\'une patiente atteinte de pré-éclampsie',['gyneco']],
+[343,'État confusionnel et trouble de conscience chez l\'adulte et chez l\'enfant',['neuro']],
+[344,'Prise en charge d\'une patiente atteinte de pré-éclampsie',['urgences']],
 [345,'Malaise grave du nourrisson et mort inattendue du nourrisson',['ped']],
 [346,'Convulsions chez le nourrisson et chez l\'enfant',['ped']],
 [347,'Rétention aiguë d\'urine',['uro']],
-[348,'Insuffisance rénale aiguë - Anurie',['nephro']],
-[349,'Infection aiguë des parties molles (abcès, panaris, phlegmon des gaines)',['infectio']],
+[348,'Insuffisance rénale aiguë - Anurie',['urgences']],
+[349,'Infection aiguë des parties molles (abcès, panaris, phlegmon des gaines)',['urgences']],
 [350,'Grosse jambe rouge aiguë',['infectio']],
 [351,'Agitation et délire aiguë',['psy']],
 [352,'Crise d\'angoisse aiguë et attaque de panique',['psy']],
 [353,'Risque et conduite suicidaires chez l\'enfant, l\'adolescent et l\'adulte',['psy']],
 [354,'Syndrome occlusif de l\'enfant et de l\'adulte',['chirvisc']],
-[355,'Hémorragie digestive',['gastro']],
+[355,'Hémorragie digestive',['urgences']],
 [356,'Appendicite de l\'enfant et de l\'adulte',['chirvisc']],
-[357,'Péritonite aiguë chez l\'enfant et chez l\'adulte',['chirvisc']],
-[358,'Pancréatite aiguë',['gastro']],
+[357,'Péritonite aiguë chez l\'enfant et chez l\'adulte',['urgences']],
+[358,'Pancréatite aiguë',['urgences']],
 [359,'Détresse et insuffisance respiratoire aiguë du nourrisson, de l\'enfant et de l\'adulte',['urgences']],
-[360,'Pneumothorax',['pneumo']],
+[360,'Pneumothorax',['urgences']],
 [361,'Lésions péri-articulaires et ligamentaires du genou, de la cheville et de l\'épaule',['ortho']],
 [362,'Prothèses et ostéosynthèses',['ortho']],
 [363,'Fractures fréquentes de l\'adulte et du sujet âgé',['ortho']],
@@ -1386,6 +1386,65 @@ const CAT_COLORS = {
   chirvisc:'#92400E', ortho:'#475569', other:'var(--c-other)'
 };
 
+// ---------- Groupements de spécialité (révision générale par blocs) ----------
+const SPEC_BLOCKS = [
+  { id:'chir1', label:'Chirurgie 1 : tête et cou', cats:['ophtalmo','orl'], sub:'Ophtalmologie, ORL, Chirurgie maxillo-faciale, Chirurgie plastique, Neurochirurgie' },
+  { id:'chir2', label:'Chirurgie 2 : hors tête et cou', cats:['chirvisc','uro','ortho','gyneco'], sub:'Chirurgie thoracique et cardio-vasculaire, Chirurgie vasculaire, Chirurgie viscérale et digestive, Chirurgie pédiatrique, Gynécologie obstétrique, Urologie, Chirurgie orthopédique' },
+  { id:'endogyn', label:'Endocrinologie – gynécologie médicale', cats:['endocrino'], sub:'Endocrinologie – Diabétologie – Nutrition, Gynécologie médicale' },
+  { id:'transv', label:'Spécialités médicales transverses', cats:['ger','mi','infectio','dermato','rhumato','pharmaco'], sub:'Gériatrie, Médecine interne et immunologie clinique, Maladies infectieuses et tropicales, Allergologie, Dermatologie et vénérologie, Rhumatologie' },
+  { id:'ped', label:'Pédiatrie', cats:['ped'], sub:'Pédiatrie' },
+  { id:'hemonc', label:'Hématologie – Oncologie – HGE', cats:['hemato','onco','gastro'], sub:'Hématologie, Oncologie, Hépato-gastroentérologie' },
+  { id:'psyneuro', label:'Psychiatrie – Neurologie – MPR', cats:['psy','neuro'], sub:'Psychiatrie, Neurologie, Médecine physique et réadaptation' },
+  { id:'cardiopneu', label:'Cardiologie – Médecine vasculaire – Pneumologie – Néphrologie', cats:['cardio','pneumo','nephro'], sub:'Cardiologie, Médecine vasculaire, Pneumologie, Néphrologie' },
+  { id:'inv1', label:'Médecine d’investigation 1', cats:[], sub:'Radiologie et imagerie médicale, Médecine nucléaire, Anatomie et cytologie pathologique' },
+  { id:'inv2', label:'Médecine d’investigation 2', cats:['genetique'], sub:'Biologie médicale, Génétique médicale' },
+  { id:'mg', label:'Médecine générale', cats:[], sub:'Médecine générale' },
+  { id:'sp', label:'Santé publique – Santé du travail – Médecine légale', cats:['legale','travail'], sub:'Santé publique, Médecine et santé du travail, Médecine légale et expertises médicales' },
+  { id:'aigu', label:'Médecine de l’aigu', cats:['urgences','douleur'], sub:'Anesthésie réanimation, Médecine intensive réanimation, Médecine d’urgence' }
+];
+// Une matière appartient à un groupement ; quelques items du programme sont rattachés à un autre
+// groupement d'après leur collège d'écriture (Médecine générale, MPR, biologie, gynécologie
+// médicale, chirurgie pédiatrique, neurochirurgie, imagerie, anatomopathologie).
+const BLOCK_ITEM_EXC = {1:'mg',23:'mg',35:'endogyn',36:'endogyn',40:'endogyn',41:'endogyn',42:'endogyn',51:'chir2',58:'endogyn',59:'mg',72:'mg',94:'psyneuro',110:'mg',118:'psyneuro',119:'psyneuro',122:'psyneuro',124:'endogyn',133:'mg',148:'mg',149:'mg',166:'mg',168:'mg',207:'inv1',219:'inv2',249:'mg',290:'mg',291:'inv2',293:'inv1',299:'chir1',328:'psyneuro',350:'mg',364:'chir2',367:'inv2'};
+const CAT_TO_BLOCK = {};
+SPEC_BLOCKS.forEach(b=>b.cats.forEach(c=>{ CAT_TO_BLOCK[c] = b.id; }));
+function blockOfItem(n){
+  if(BLOCK_ITEM_EXC[n]) return BLOCK_ITEM_EXC[n];
+  const it = ITEM_BY_NUM[n];
+  const cat = it && it.cats && it.cats[0];
+  return CAT_TO_BLOCK[cat] || null;
+}
+// Ordre choisi pour les groupements (ids inconnus ignorés, groupements manquants ajoutés à la fin).
+function currentBlockOrder(){
+  const saved = (DATA && DATA.config && Array.isArray(DATA.config.blockOrder)) ? DATA.config.blockOrder : [];
+  const valid = new Set(SPEC_BLOCKS.map(b=>b.id));
+  const out = [];
+  saved.forEach(id=>{ if(valid.has(id) && !out.includes(id)) out.push(id); });
+  SPEC_BLOCKS.forEach(b=>{ if(!out.includes(b.id)) out.push(b.id); });
+  return out;
+}
+// Items d'un groupement : matière par matière (dans l'ordre du groupement), puis numéro d'item.
+function itemsOfBlock(blockId){
+  const b = SPEC_BLOCKS.find(x=>x.id===blockId);
+  if(!b) return [];
+  const catIdx = n => {
+    const it = ITEM_BY_NUM[n];
+    const i = b.cats.indexOf(it && it.cats && it.cats[0]);
+    return i < 0 ? 999 : i;
+  };
+  return CURRENT_ITEMS.map(([n])=>n)
+    .filter(n=>blockOfItem(n)===blockId)
+    .map((n,pos)=>({n,pos}))
+    .sort((a,b2)=> catIdx(a.n)-catIdx(b2.n) || a.pos-b2.pos)
+    .map(x=>x.n);
+}
+function buildBlockQueue(){
+  const out = [];
+  currentBlockOrder().forEach(id=>{ itemsOfBlock(id).forEach(n=>out.push(n)); });
+  CURRENT_ITEMS.forEach(([n])=>{ if(!blockOfItem(n)) out.push(n); }); // items sans groupement : à la fin
+  return out;
+}
+
 function esc(s){
   if(s==null) return '';
   return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
@@ -1462,6 +1521,7 @@ function getDefaultConfig(){
     dailyItemsPhase2: 3,
     studyModeP1: 'alterne',
     studyModeP2: 'alterne',
+    blockOrder: SPEC_BLOCKS.map(b=>b.id),
     showCountdownEdn: true,
     showCountdownEcos: true,
     // Organisation hebdomadaire : mêmes options (jours de la semaine + période en
@@ -1534,6 +1594,7 @@ function buildS1QueueIgnoringDeadlines(){
 
 function buildS2QueueIgnoringDeadlines(){
   const mode = (DATA && DATA.config && DATA.config.studyModeP2) || 'alterne';
+  if(mode === 'groupement') return buildBlockQueue();
   if(mode === 'bloc'){
     const out = [];
     ALL_CATS.forEach(c=>{ itemsOfCat(c).forEach(n=>{ if(!out.includes(n)) out.push(n); }); });
@@ -1579,7 +1640,19 @@ function stabilizeQueue(phase, idealQueue, baselineQueueForSeed){
   return frozen.concat(remainder);
 }
 
+// Associations item -> matière alignées sur le collège de référence « en écriture » (v1).
+// Appliquée une seule fois aux données déjà enregistrées (les items ajoutés à la main, numéros
+// hors de la liste d'origine, ne sont pas touchés). Les modifications faites ensuite restent.
+function applyReferenceItemCategories(){
+  if(!DATA || !Array.isArray(DATA.items) || DATA.itemsCatRefV >= 1) return;
+  const ref = {};
+  ITEMS_RAW.forEach(([n,t,c])=>{ ref[n] = normalizeCats(c); });
+  DATA.items = DATA.items.map(([n,t,c])=> ref[n] ? [n,t,ref[n].slice()] : [n,t,c]);
+  DATA.itemsCatRefV = 1;
+}
+
 function rebuildAll(){
+  applyReferenceItemCategories();
   DATA.items = DATA.items.map(([n,t,c])=>[n,t,normalizeCats(c)]);
   CURRENT_ITEMS = DATA.items;
   ITEM_BY_NUM = {};
@@ -1650,6 +1723,7 @@ function buildS1Queue(){
 
 function buildS2Queue(){
   const mode = (DATA && DATA.config && DATA.config.studyModeP2) || 'alterne';
+  if(mode === 'groupement') return buildBlockQueue();
   const {withDL} = categoriesByDeadlinePriority(ALL_CATS);
   const seen = new Set();
   let urgent = [];
@@ -2101,7 +2175,7 @@ function findSwapCandidates(itemNum){
     for(let idx=0; idx<cap; idx++){
       const s = getSlot(phase, idx);
       // Pas de swaps en chaîne : une case déjà permutée doit être remise d'abord à l'original.
-      if(s.itemNum === itemNum && !s.overridden) out.push(s);
+      if(s.itemNum === itemNum && !s.overridden && !isItemTaskDone(s.nativeKey)) out.push(s);
     }
   });
   out.sort((a,b)=> (a.iso||'') < (b.iso||'') ? -1 : 1);
@@ -2111,6 +2185,10 @@ function performSwap(phaseA, idxA, nativeKeyA, itemA, slotB, itemB){
   DATA.itemOverrides = DATA.itemOverrides || {};
   if(DATA.itemOverrides[slotB.nativeKey]){
     alert('La case choisie est déjà permutée. Remets-la d’abord à son état d’origine.');
+    return;
+  }
+  if(isItemTaskDone(nativeKeyA) || isItemTaskDone(slotB.nativeKey)){
+    alert('Une case déjà cochée ne peut pas être échangée (l’item travaillé ne correspondrait plus à celui affiché). Décoche-la d’abord.');
     return;
   }
   const swapId = 'swap_' + Date.now() + '_' + Math.floor(Math.random()*1000);
@@ -3027,11 +3105,35 @@ function plannedIsoForKey(key){
   const d = CAL.find(x=>(x.tasks||[]).some(t=>(t.kind==='item' || t.kind==='manualItem') && t.id===key));
   return d ? d.iso : null;
 }
+// Item affiché pour une case (par son identifiant), tel qu'il apparaît dans le planning.
+function displayedItemNumForKey(key){
+  for(const d of CAL){
+    const t = (d.tasks||[]).find(x=>(x.kind==='item' || x.kind==='manualItem') && x.id===key);
+    if(t) return t.itemNum || null;
+  }
+  return null;
+}
+// Item réellement travaillé quand une case a été cochée. Il peut différer de l'item affiché
+// aujourd'hui si un échange a eu lieu APRÈS que la case a été cochée : sans cela, un item jamais
+// fait apparaîtrait comme fait (et l'item vraiment travaillé ne serait plus compté).
+function studiedItemNum(key, displayedNum){
+  if(!isItemTaskDone(key)) return displayedNum;
+  const rec = (DATA.itemDoneAt || {})[key];
+  if(rec && rec.itemNum) return rec.itemNum;
+  // Anciennes cases cochées (item non mémorisé) : cochée un jour STRICTEMENT avant l'échange
+  // => c'est l'item d'origine de la case qui a été travaillé.
+  const ov = (DATA.itemOverrides || {})[key];
+  if(ov && ov.previousItemNum && rec && rec.on){
+    const m = /^swap_(\d+)_/.exec(ov.swapId || '');
+    if(m && rec.on < toISO(new Date(parseInt(m[1],10)))) return ov.previousItemNum;
+  }
+  return displayedNum;
+}
 function setItemTaskDone(key, val){
   DATA.itemChecks[key] = val;
   if(!DATA.itemDoneAt) DATA.itemDoneAt = {};
   if(val){
-    if(!DATA.itemDoneAt[key]) DATA.itemDoneAt[key] = { on: todayIso(), planned: plannedIsoForKey(key) };
+    if(!DATA.itemDoneAt[key]) DATA.itemDoneAt[key] = { on: todayIso(), planned: plannedIsoForKey(key), itemNum: displayedItemNumForKey(key) };
   }else{
     delete DATA.itemDoneAt[key];
   }
@@ -3213,7 +3315,7 @@ function computeItemStatus(){
       const s = getSlot(phase, idx);
       if(s) covered.add(s.nativeKey);
       if(!s || !s.itemNum || !isItemTaskDone(s.nativeKey)) continue;
-      const n = s.itemNum;
+      const n = studiedItemNum(s.nativeKey, s.itemNum);
       if(!ITEM_BY_NUM[n]) continue;
       if(!status[n]) status[n] = {revision:false, entrainement:false};
       if(s.mode==='revision') status[n].revision = true;
@@ -3253,7 +3355,7 @@ function itemHistory(itemNum){
     const cap = quotaThroughToday(phase);
     for(let idx=0; idx<cap; idx++){
       const s = getSlot(phase, idx);
-      if(s && s.itemNum === itemNum){
+      if(s && studiedItemNum(s.nativeKey, s.itemNum) === itemNum){
         if(isItemTaskSkipped(s.iso,s.nativeKey)) continue;
         entries.push({ phase, idx, mode:s.mode, done:isItemTaskDone(s.nativeKey), iso: s.iso, key:s.nativeKey, doneAt:(DATA.itemDoneAt||{})[s.nativeKey]||null });
         covered.add(s.nativeKey);
@@ -3380,7 +3482,7 @@ function itemTaskHTML(task, opts){
     </div>
   `;
   const isManual = !!task.manual;
-  const swapUI = isManual ? '' : `
+  const swapUI = isManual ? '' : isItemTaskDone(key) ? (task.overridden ? `<div class="swap-block" onclick="event.stopPropagation()"><button type="button" class="btn-secondary" data-unswap="${key}" style="padding:5px 10px;font-size:11px;">↺ Remettre l'item ${task.originalItemNum ? '#'+task.originalItemNum : "d'origine"}</button></div>` : '') : `
     <div class="swap-block" onclick="event.stopPropagation()">
       <button type="button" class="swap-toggle" data-key="${key}">🔄 Changer l'item de cette case</button>
       ${task.overridden ? `<button type="button" class="btn-secondary" data-unswap="${key}" style="padding:5px 10px;font-size:11px;">↺ Remettre l'item ${task.originalItemNum ? '#'+task.originalItemNum : "d'origine"}</button>` : ''}
@@ -4093,7 +4195,7 @@ function itemSchedule(itemNum){
     const cap = PHASE_FINAL_QUOTA[phase] || 0;
     for(let idx=0; idx<cap; idx++){
       const s = getSlot(phase, idx);
-      if(!s || s.itemNum !== itemNum) continue;
+      if(!s || studiedItemNum(s.nativeKey, s.itemNum) !== itemNum) continue;
       if(s.iso && isItemTaskSkipped(s.iso, s.nativeKey)) continue;
       covered.add(s.nativeKey);
       out.push({ mode:s.mode, done:isItemTaskDone(s.nativeKey), iso:s.iso, doneAt:doneAt[s.nativeKey]||null });
@@ -4400,6 +4502,30 @@ function renderSddManager(){
 }
 
 // ---------- PAGE DÉDIÉE PARAMÈTRES ----------
+function blockOrderHTML(){
+  const order = currentBlockOrder();
+  const count = id => itemsOfBlock(id).length;
+  const rows = order.map((id,i)=>{
+    const b = SPEC_BLOCKS.find(x=>x.id===id);
+    const n = count(id);
+    return `<div class="block-order-row" style="display:flex;align-items:center;gap:8px;padding:8px 0;border-top:1px solid var(--line, rgba(128,128,128,.25));">
+      <span style="min-width:22px;font-weight:600;color:var(--ink-soft);">${i+1}</span>
+      <div style="flex:1;min-width:0;">
+        <div style="font-weight:600;font-size:13.5px;">${esc(b.label)} <span style="font-weight:400;color:var(--ink-soft);font-size:12px;">· ${n} item${n>1?'s':''}</span></div>
+        <div style="font-size:11px;color:var(--ink-soft);">${esc(b.sub)}${n===0?' — aucun item rattaché, ce groupement est ignoré':''}</div>
+      </div>
+      <button type="button" class="btn-secondary" data-blockmove="up" data-blockid="${id}" ${i===0?'disabled':''} style="padding:4px 9px;">↑</button>
+      <button type="button" class="btn-secondary" data-blockmove="down" data-blockid="${id}" ${i===order.length-1?'disabled':''} style="padding:4px 9px;">↓</button>
+    </div>`;
+  }).join('');
+  return `<div class="block-order" style="margin:6px 0 12px;">
+    <div style="font-weight:600;margin-bottom:2px;">Ordre des groupements — Révision générale</div>
+    <span class="settings-hint" style="display:block;margin-bottom:6px;">Les items sont révisés un groupement après l'autre, dans cet ordre (matière par matière à l'intérieur du groupement). Les échéances par matière n'interviennent pas dans ce mode. Un changement s'applique à partir d'aujourd'hui : les jours déjà passés ne bougent pas.</span>
+    ${rows}
+    <button type="button" class="btn-secondary" id="blockOrderReset" style="margin-top:8px;">Remettre l'ordre par défaut</button>
+  </div>`;
+}
+
 function weeklyScheduleBlockHTML(kind, label, showCount){
   const sched = getWeeklySchedule(kind);
   const days = sched.days || [];
@@ -4537,9 +4663,11 @@ function renderSettings(){
             <select id="cfgStudyModeP2">
               <option value="alterne" ${cfg.studyModeP2!=='bloc'?'selected':''}>Alterné (recommandé pour la réactivation)</option>
               <option value="bloc" ${cfg.studyModeP2==='bloc'?'selected':''}>En bloc (une matière après l'autre)</option>
+              <option value="groupement" ${cfg.studyModeP2==='groupement'?'selected':''}>Par groupement de spécialité (13 blocs, ordre au choix)</option>
             </select>
           </label>
         </div>
+        ${cfg.studyModeP2==='groupement' ? blockOrderHTML() : ''}
         <label>Date des examens finaux / EDN (estimation)
           <input type="date" id="cfgExam" value="${cfg.exam||''}">
         </label>
@@ -4728,6 +4856,25 @@ function renderSettings(){
     saveData();
     render();
   });
+  const applyBlockOrder = (order)=>{
+    DATA.config.blockOrder = order;
+    rebuildAll();
+    CAL = buildCalendar(DATA.config, DATA.reportedDays);
+    saveData();
+    render();
+  };
+  document.querySelectorAll('[data-blockmove]').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const order = currentBlockOrder();
+      const i = order.indexOf(btn.getAttribute('data-blockid'));
+      const j = btn.getAttribute('data-blockmove')==='up' ? i-1 : i+1;
+      if(i<0 || j<0 || j>=order.length) return;
+      [order[i], order[j]] = [order[j], order[i]];
+      applyBlockOrder(order);
+    });
+  });
+  const blockReset = document.getElementById('blockOrderReset');
+  if(blockReset) blockReset.addEventListener('click', ()=> applyBlockOrder(SPEC_BLOCKS.map(b=>b.id)));
   document.getElementById('cfgExam').addEventListener('change', e=>{
     const candidate = e.target.value;
     const err = validatePlanningDates(DATA.config.start, DATA.config.s1End, candidate, DATA.config.ecosDate);
