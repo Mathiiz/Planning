@@ -2916,7 +2916,8 @@
     },
     "2026-10-05": {
       "custom_1792155746501_546": false
-    }
+    },
+    "2026-10-21": {}
   },
   "reportedDays": {
     "2026-09-02": {
@@ -3633,6 +3634,12 @@
         "id": "custom_1792158406650_305",
         "label": "Item 108, 132, 343 : Diagnostiquer et raisonner devant un syndrome confusionnel (Gériatrie - chapitre 11)"
       }
+    ],
+    "2026-10-21": [
+      {
+        "id": "custom_1792676975072_567",
+        "label": "Item 220 - Adénopathies superficielles (pédiatrie)"
+      }
     ]
   },
   "itemDifficulty": {
@@ -3648,7 +3655,8 @@
     "2026-09-29::S1_i51_o1": true,
     "2026-10-13::S1_i55_o1": true,
     "2026-10-16::S1_i56_o1": true,
-    "2026-10-16::S1_i127_o1": true
+    "2026-10-16::S1_i127_o1": true,
+    "2026-10-21::S1_i57_o1": true
   },
   "lcaEntries": {},
   "sddItems": [
@@ -7459,7 +7467,7 @@
   },
   "_meta": {
     "schemaVersion": 4,
-    "updatedAt": "2026-10-22T12:30:12.668Z"
+    "updatedAt": "2026-10-22T13:49:35.073Z"
   },
   "customTheme": {
     "enabled": false,
