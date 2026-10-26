@@ -2836,7 +2836,10 @@
     },
     "2026-11-01": {},
     "2026-10-24": {},
-    "2026-10-25": {},
+    "2026-10-25": {
+      "lca_0": true,
+      "lca_1": true
+    },
     "2026-10-17": {},
     "2026-10-18": {
       "lca_0": true,
@@ -7431,6 +7434,34 @@
         "originalItemNum": 201,
         "dayCap": 2
       }
+    ],
+    "2026-10-26": [
+      {
+        "id": "S1_i164_o1",
+        "kind": "item",
+        "itemNum": 164,
+        "mode": "revision",
+        "idx": 71,
+        "idxKnown": true,
+        "phase": "S1",
+        "iso": "2026-10-26",
+        "overridden": false,
+        "originalItemNum": 164,
+        "dayCap": 2
+      },
+      {
+        "id": "S1_i129_o1",
+        "kind": "item",
+        "itemNum": 122,
+        "mode": "revision",
+        "idx": 72,
+        "idxKnown": true,
+        "phase": "S1",
+        "iso": "2026-10-26",
+        "overridden": true,
+        "originalItemNum": 129,
+        "dayCap": 2
+      }
     ]
   },
   "queueFreeze": {
@@ -7532,13 +7563,15 @@
       307,
       76,
       308,
-      77
+      77,
+      309,
+      78
     ],
     "S2": []
   },
   "_meta": {
     "schemaVersion": 4,
-    "updatedAt": "2026-10-23T15:57:36.002Z"
+    "updatedAt": "2026-10-26T10:22:00.607Z"
   },
   "customTheme": {
     "enabled": false,
