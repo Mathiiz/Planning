@@ -3104,16 +3104,10 @@
       "partnerKey": "S1_i189_o1",
       "previousItemNum": 22
     },
-    "S1_i217_o1": {
-      "itemNum": 318,
-      "swapId": "swap_1790179181745_899",
-      "partnerKey": "S1_i318_o1",
-      "previousItemNum": 217
-    },
     "S1_i318_o1": {
-      "itemNum": 217,
-      "swapId": "swap_1790179181745_899",
-      "partnerKey": "S1_i217_o1",
+      "itemNum": 216,
+      "swapId": "swap_1793101871427_782",
+      "partnerKey": "S1_i216_o2",
       "previousItemNum": 318
     },
     "S1_i65_o1": {
@@ -3391,6 +3385,12 @@
       "swapId": "swap_1792763909607_319",
       "partnerKey": "S1_i201_o1",
       "previousItemNum": 195
+    },
+    "S1_i216_o2": {
+      "itemNum": 217,
+      "swapId": "swap_1793101871427_782",
+      "partnerKey": "S1_i318_o1",
+      "previousItemNum": 216
     }
   },
   "subjectDeadlines": {
@@ -5716,13 +5716,13 @@
       {
         "id": "S1_i217_o1",
         "kind": "item",
-        "itemNum": 318,
+        "itemNum": 217,
         "mode": "revision",
         "idx": 32,
         "idxKnown": true,
         "phase": "S1",
         "iso": "2026-09-14",
-        "overridden": true,
+        "overridden": false,
         "originalItemNum": 217,
         "dayCap": 5
       },
@@ -5904,13 +5904,13 @@
       {
         "id": "S1_i217_o1",
         "kind": "item",
-        "itemNum": 318,
+        "itemNum": 217,
         "mode": "revision",
         "idx": 32,
         "idxKnown": true,
         "phase": "S1",
         "iso": "2026-09-18",
-        "overridden": true,
+        "overridden": false,
         "originalItemNum": 217,
         "dayCap": 4
       },
@@ -6001,13 +6001,13 @@
       {
         "id": "S1_i217_o1",
         "kind": "item",
-        "itemNum": 318,
+        "itemNum": 217,
         "mode": "revision",
         "idx": 32,
         "idxKnown": true,
         "phase": "S1",
         "iso": "2026-09-23",
-        "overridden": true,
+        "overridden": false,
         "originalItemNum": 217,
         "dayCap": 2
       },
@@ -7478,6 +7478,32 @@
         "originalItemNum": 129,
         "dayCap": 2
       }
+    ],
+    "2026-10-27": [
+      {
+        "id": "S1_i303_o1",
+        "kind": "item",
+        "itemNum": 303,
+        "mode": "revision",
+        "idx": 73,
+        "phase": "S1",
+        "iso": "2026-10-27",
+        "overridden": false,
+        "originalItemNum": 303,
+        "dayCap": 2
+      },
+      {
+        "id": "S1_i318_o1",
+        "kind": "item",
+        "itemNum": 216,
+        "mode": "revision",
+        "idx": 74,
+        "phase": "S1",
+        "iso": "2026-10-27",
+        "overridden": true,
+        "originalItemNum": 318,
+        "dayCap": 2
+      }
     ]
   },
   "queueFreeze": {
@@ -7587,7 +7613,7 @@
   },
   "_meta": {
     "schemaVersion": 4,
-    "updatedAt": "2026-10-26T17:27:13.336Z"
+    "updatedAt": "2026-10-27T11:51:11.434Z"
   },
   "customTheme": {
     "enabled": false,
@@ -7937,6 +7963,12 @@
       "l": 2,
       "f": 0,
       "s": 0
+    },
+    "2026-10-26": {
+      "r": 0,
+      "l": 0,
+      "f": 0,
+      "s": 1
     }
   },
   "pinResetV1": true,
