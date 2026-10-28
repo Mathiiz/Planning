@@ -2716,7 +2716,8 @@
     "S1_i201_o1": true,
     "S1_i129_o1": true,
     "S1_i318_o1": true,
-    "S1_i303_o1": true
+    "S1_i303_o1": true,
+    "S1_i72_o1": true
   },
   "checks": {
     "2026-08-29": {
@@ -3172,16 +3173,10 @@
       "partnerKey": "S1_i63_o2",
       "previousItemNum": 69
     },
-    "S1_i193_o1": {
-      "itemNum": 72,
-      "swapId": "swap_1790776949419_689",
-      "partnerKey": "S1_i72_o1",
-      "previousItemNum": 193
-    },
     "S1_i72_o1": {
-      "itemNum": 193,
-      "swapId": "swap_1790776949419_689",
-      "partnerKey": "S1_i193_o1",
+      "itemNum": 210,
+      "swapId": "swap_1793201547395_765",
+      "partnerKey": "S2_i210_o1",
       "previousItemNum": 72
     },
     "S1_i70_o1": {
@@ -3393,6 +3388,12 @@
       "swapId": "swap_1793101871427_782",
       "partnerKey": "S1_i318_o1",
       "previousItemNum": 216
+    },
+    "S2_i210_o1": {
+      "itemNum": 193,
+      "swapId": "swap_1793201547395_765",
+      "partnerKey": "S1_i72_o1",
+      "previousItemNum": 210
     }
   },
   "subjectDeadlines": {
@@ -6934,13 +6935,13 @@
       {
         "id": "S1_i193_o1",
         "kind": "item",
-        "itemNum": 72,
+        "itemNum": 193,
         "mode": "revision",
         "idx": 52,
         "idxKnown": true,
         "phase": "S1",
         "iso": "2026-09-30",
-        "overridden": true,
+        "overridden": false,
         "originalItemNum": 193,
         "dayCap": 2
       }
@@ -7508,6 +7509,34 @@
         "originalItemNum": 318,
         "dayCap": 2
       }
+    ],
+    "2026-10-28": [
+      {
+        "id": "S1_i72_o1",
+        "kind": "item",
+        "itemNum": 210,
+        "mode": "revision",
+        "idx": 75,
+        "idxKnown": true,
+        "phase": "S1",
+        "iso": "2026-10-28",
+        "overridden": true,
+        "originalItemNum": 72,
+        "dayCap": 2
+      },
+      {
+        "id": "S1_i202_o1",
+        "kind": "item",
+        "itemNum": 215,
+        "mode": "revision",
+        "idx": 76,
+        "idxKnown": true,
+        "phase": "S1",
+        "iso": "2026-10-28",
+        "overridden": true,
+        "originalItemNum": 202,
+        "dayCap": 2
+      }
     ]
   },
   "queueFreeze": {
@@ -7613,13 +7642,15 @@
       309,
       78,
       310,
-      79
+      79,
+      311,
+      80
     ],
     "S2": []
   },
   "_meta": {
     "schemaVersion": 4,
-    "updatedAt": "2026-10-27T19:02:13.074Z"
+    "updatedAt": "2026-10-28T15:32:29.862Z"
   },
   "customTheme": {
     "enabled": false,
@@ -8118,6 +8149,11 @@
       "on": "2026-10-27",
       "planned": "2026-10-27",
       "itemNum": 216
+    },
+    "S1_i72_o1": {
+      "on": "2026-10-28",
+      "planned": "2026-10-28",
+      "itemNum": 210
     }
   },
   "itemsCatRefV": 1
