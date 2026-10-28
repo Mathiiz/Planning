@@ -2717,7 +2717,8 @@
     "S1_i129_o1": true,
     "S1_i318_o1": true,
     "S1_i303_o1": true,
-    "S1_i72_o1": true
+    "S1_i72_o1": true,
+    "S1_i202_o1": true
   },
   "checks": {
     "2026-08-29": {
@@ -3053,12 +3054,6 @@
       "partnerKey": "S1_i188_o1",
       "previousItemNum": 3
     },
-    "S1_i317_o1": {
-      "itemNum": 202,
-      "swapId": "swap_1792697886289_307",
-      "partnerKey": "S1_i202_o1",
-      "previousItemNum": 317
-    },
     "S1_i121_o1": {
       "itemNum": 9,
       "swapId": "swap_1789728734531_390",
@@ -3354,9 +3349,9 @@
       "previousItemNum": 131
     },
     "S1_i202_o1": {
-      "itemNum": 215,
-      "swapId": "swap_1792697886289_307",
-      "partnerKey": "S1_i317_o1",
+      "itemNum": 211,
+      "swapId": "swap_1793201567111_695",
+      "partnerKey": "S2_i211_o1",
       "previousItemNum": 202
     },
     "S1_i71_o1": {
@@ -3394,6 +3389,12 @@
       "swapId": "swap_1793201547395_765",
       "partnerKey": "S1_i72_o1",
       "previousItemNum": 210
+    },
+    "S2_i211_o1": {
+      "itemNum": 215,
+      "swapId": "swap_1793201567111_695",
+      "partnerKey": "S1_i202_o1",
+      "previousItemNum": 211
     }
   },
   "subjectDeadlines": {
@@ -7415,13 +7416,13 @@
       {
         "id": "S1_i317_o1",
         "kind": "item",
-        "itemNum": 202,
+        "itemNum": 317,
         "mode": "revision",
         "idx": 68,
         "idxKnown": true,
         "phase": "S1",
         "iso": "2026-10-22",
-        "overridden": true,
+        "overridden": false,
         "originalItemNum": 317,
         "dayCap": 2
       }
@@ -7527,7 +7528,7 @@
       {
         "id": "S1_i202_o1",
         "kind": "item",
-        "itemNum": 215,
+        "itemNum": 211,
         "mode": "revision",
         "idx": 76,
         "idxKnown": true,
@@ -7650,7 +7651,7 @@
   },
   "_meta": {
     "schemaVersion": 4,
-    "updatedAt": "2026-10-28T15:32:29.862Z"
+    "updatedAt": "2026-10-28T16:06:37.461Z"
   },
   "customTheme": {
     "enabled": false,
@@ -8006,6 +8007,12 @@
       "l": 0,
       "f": 0,
       "s": 1
+    },
+    "2026-10-27": {
+      "r": 0,
+      "l": 0,
+      "f": 0,
+      "s": 1
     }
   },
   "pinResetV1": true,
@@ -8154,6 +8161,11 @@
       "on": "2026-10-28",
       "planned": "2026-10-28",
       "itemNum": 210
+    },
+    "S1_i202_o1": {
+      "on": "2026-10-28",
+      "planned": "2026-10-28",
+      "itemNum": 211
     }
   },
   "itemsCatRefV": 1
