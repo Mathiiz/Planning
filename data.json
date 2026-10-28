@@ -2718,7 +2718,8 @@
     "S1_i318_o1": true,
     "S1_i303_o1": true,
     "S1_i72_o1": true,
-    "S1_i202_o1": true
+    "S1_i202_o1": true,
+    "M_213_mvsb4v5buwng": true
   },
   "checks": {
     "2026-08-29": {
@@ -2940,7 +2941,8 @@
     "2026-10-26": {
       "custom_1793010303307_350": true,
       "custom_1793024439320_602": true
-    }
+    },
+    "2026-10-28": {}
   },
   "reportedDays": {
     "2026-09-02": {
@@ -3703,7 +3705,8 @@
         "id": "custom_1793024439320_602",
         "label": "Item 177 - Spécificités infectiologiques pédiatriques"
       }
-    ]
+    ],
+    "2026-10-28": []
   },
   "itemDifficulty": {
     "2": "facile",
@@ -7537,6 +7540,14 @@
         "overridden": true,
         "originalItemNum": 202,
         "dayCap": 2
+      },
+      {
+        "id": "M_213_mvsb4v5buwng",
+        "kind": "manualItem",
+        "itemNum": 213,
+        "mode": "entrainement",
+        "iso": "2026-10-28",
+        "manual": true
       }
     ]
   },
@@ -7651,7 +7662,7 @@
   },
   "_meta": {
     "schemaVersion": 4,
-    "updatedAt": "2026-10-28T16:06:37.461Z"
+    "updatedAt": "2026-10-28T16:30:23.987Z"
   },
   "customTheme": {
     "enabled": false,
@@ -8046,6 +8057,13 @@
         "itemNum": 144,
         "mode": "revision"
       }
+    ],
+    "2026-10-28": [
+      {
+        "id": "M_213_mvsb4v5buwng",
+        "itemNum": 213,
+        "mode": "entrainement"
+      }
     ]
   },
   "itemDoneAt": {
@@ -8166,6 +8184,11 @@
       "on": "2026-10-28",
       "planned": "2026-10-28",
       "itemNum": 211
+    },
+    "M_213_mvsb4v5buwng": {
+      "on": "2026-10-28",
+      "planned": "2026-10-28",
+      "itemNum": 213
     }
   },
   "itemsCatRefV": 1
