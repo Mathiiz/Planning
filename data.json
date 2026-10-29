@@ -2945,7 +2945,8 @@
     "2026-10-28": {},
     "2026-10-29": {
       "custom_1793284099734_427": true,
-      "custom_1793284144283_822": true
+      "custom_1793284144283_822": true,
+      "custom_1793287538799_819": true
     }
   },
   "reportedDays": {
@@ -3718,6 +3719,10 @@
       {
         "id": "custom_1793284144283_822",
         "label": "Item 148 - Rhinopharyngite aiguë (pédiatrie)"
+      },
+      {
+        "id": "custom_1793287538799_819",
+        "label": "Item 149 - Angines (pédiatrie)"
       }
     ]
   },
@@ -7706,7 +7711,7 @@
   },
   "_meta": {
     "schemaVersion": 4,
-    "updatedAt": "2026-10-29T15:25:10.637Z"
+    "updatedAt": "2026-10-29T18:21:52.817Z"
   },
   "customTheme": {
     "enabled": false,
