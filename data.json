@@ -2719,7 +2719,8 @@
     "S1_i303_o1": true,
     "S1_i72_o1": true,
     "S1_i202_o1": true,
-    "M_213_mvsb4v5buwng": true
+    "M_213_mvsb4v5buwng": true,
+    "S1_i130_o1": true
   },
   "checks": {
     "2026-08-29": {
@@ -7711,7 +7712,7 @@
   },
   "_meta": {
     "schemaVersion": 4,
-    "updatedAt": "2026-10-29T18:21:52.817Z"
+    "updatedAt": "2026-10-29T20:32:41.026Z"
   },
   "customTheme": {
     "enabled": false,
@@ -8244,6 +8245,11 @@
       "on": "2026-10-28",
       "planned": "2026-10-28",
       "itemNum": 213
+    },
+    "S1_i130_o1": {
+      "on": "2026-10-29",
+      "planned": "2026-10-29",
+      "itemNum": 252
     }
   },
   "itemsCatRefV": 1
