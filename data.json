@@ -2942,7 +2942,10 @@
       "custom_1793010303307_350": true,
       "custom_1793024439320_602": true
     },
-    "2026-10-28": {}
+    "2026-10-28": {},
+    "2026-10-29": {
+      "custom_1793284099734_427": true
+    }
   },
   "reportedDays": {
     "2026-09-02": {
@@ -3706,7 +3709,12 @@
         "label": "Item 177 - Spécificités infectiologiques pédiatriques"
       }
     ],
-    "2026-10-28": []
+    "2026-10-29": [
+      {
+        "id": "custom_1793284099734_427",
+        "label": "Item 147 - Fièvre aiguë (pédiatrie)"
+      }
+    ]
   },
   "itemDifficulty": {
     "2": "facile",
@@ -3723,7 +3731,8 @@
     "2026-10-16::S1_i56_o1": true,
     "2026-10-16::S1_i127_o1": true,
     "2026-10-21::S1_i57_o1": true,
-    "2026-10-26::S1_i164_o1": true
+    "2026-10-26::S1_i164_o1": true,
+    "2026-10-29::S1_i297_o1": true
   },
   "lcaEntries": {},
   "sddItems": [
@@ -7549,6 +7558,34 @@
         "iso": "2026-10-28",
         "manual": true
       }
+    ],
+    "2026-10-29": [
+      {
+        "id": "S1_i297_o1",
+        "kind": "item",
+        "itemNum": 297,
+        "mode": "revision",
+        "idx": 77,
+        "idxKnown": true,
+        "phase": "S1",
+        "iso": "2026-10-29",
+        "overridden": false,
+        "originalItemNum": 297,
+        "dayCap": 2
+      },
+      {
+        "id": "S1_i130_o1",
+        "kind": "item",
+        "itemNum": 119,
+        "mode": "revision",
+        "idx": 78,
+        "idxKnown": true,
+        "phase": "S1",
+        "iso": "2026-10-29",
+        "overridden": true,
+        "originalItemNum": 130,
+        "dayCap": 2
+      }
     ]
   },
   "queueFreeze": {
@@ -7656,13 +7693,15 @@
       310,
       79,
       311,
-      80
+      80,
+      312,
+      351
     ],
     "S2": []
   },
   "_meta": {
     "schemaVersion": 4,
-    "updatedAt": "2026-10-28T16:30:23.987Z"
+    "updatedAt": "2026-10-29T14:28:22.518Z"
   },
   "customTheme": {
     "enabled": false,
