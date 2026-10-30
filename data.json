@@ -2721,7 +2721,8 @@
     "S1_i202_o1": true,
     "M_213_mvsb4v5buwng": true,
     "S1_i130_o1": true,
-    "S1_i319_o1": false
+    "S1_i319_o1": true,
+    "S1_i304_o1": true
   },
   "checks": {
     "2026-08-29": {
@@ -7755,7 +7756,7 @@
   },
   "_meta": {
     "schemaVersion": 4,
-    "updatedAt": "2026-10-30T10:52:20.464Z"
+    "updatedAt": "2026-10-30T16:03:47.780Z"
   },
   "customTheme": {
     "enabled": false,
@@ -8123,6 +8124,12 @@
       "l": 0,
       "f": 0,
       "s": 1
+    },
+    "2026-10-29": {
+      "r": 0,
+      "l": 0,
+      "f": 0,
+      "s": 1
     }
   },
   "pinResetV1": true,
@@ -8293,6 +8300,16 @@
       "on": "2026-10-29",
       "planned": "2026-10-29",
       "itemNum": 252
+    },
+    "S1_i319_o1": {
+      "on": "2026-10-30",
+      "planned": "2026-10-30",
+      "itemNum": 216
+    },
+    "S1_i304_o1": {
+      "on": "2026-10-30",
+      "planned": "2026-10-30",
+      "itemNum": 304
     }
   },
   "itemsCatRefV": 1
