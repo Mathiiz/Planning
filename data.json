@@ -2720,7 +2720,8 @@
     "S1_i72_o1": true,
     "S1_i202_o1": true,
     "M_213_mvsb4v5buwng": true,
-    "S1_i130_o1": true
+    "S1_i130_o1": true,
+    "S1_i319_o1": false
   },
   "checks": {
     "2026-08-29": {
@@ -3403,6 +3404,18 @@
       "swapId": "swap_1793201567111_695",
       "partnerKey": "S1_i202_o1",
       "previousItemNum": 211
+    },
+    "S1_i319_o1": {
+      "itemNum": 216,
+      "swapId": "swap_1793357528382_602",
+      "partnerKey": "S2_i216_o1",
+      "previousItemNum": 319
+    },
+    "S2_i216_o1": {
+      "itemNum": 319,
+      "swapId": "swap_1793357528382_602",
+      "partnerKey": "S1_i319_o1",
+      "previousItemNum": 216
     }
   },
   "subjectDeadlines": {
@@ -7597,6 +7610,34 @@
         "originalItemNum": 130,
         "dayCap": 2
       }
+    ],
+    "2026-10-30": [
+      {
+        "id": "S1_i304_o1",
+        "kind": "item",
+        "itemNum": 304,
+        "mode": "revision",
+        "idx": 79,
+        "idxKnown": true,
+        "phase": "S1",
+        "iso": "2026-10-30",
+        "overridden": false,
+        "originalItemNum": 304,
+        "dayCap": 2
+      },
+      {
+        "id": "S1_i319_o1",
+        "kind": "item",
+        "itemNum": 216,
+        "mode": "revision",
+        "idx": 80,
+        "idxKnown": true,
+        "phase": "S1",
+        "iso": "2026-10-30",
+        "overridden": true,
+        "originalItemNum": 319,
+        "dayCap": 2
+      }
     ]
   },
   "queueFreeze": {
@@ -7706,13 +7747,15 @@
       311,
       80,
       312,
-      351
+      351,
+      313,
+      352
     ],
     "S2": []
   },
   "_meta": {
     "schemaVersion": 4,
-    "updatedAt": "2026-10-29T20:32:41.026Z"
+    "updatedAt": "2026-10-30T10:52:20.464Z"
   },
   "customTheme": {
     "enabled": false,
