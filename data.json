@@ -2953,7 +2953,11 @@
       "custom_1793287538799_819": true
     },
     "2026-11-02": {
-      "custom_1793654093272_461": true
+      "custom_1793654093272_461": true,
+      "custom_1793661140948_482": true
+    },
+    "2026-11-03": {
+      "custom_1793661121049_28": false
     }
   },
   "reportedDays": {
@@ -3760,8 +3764,13 @@
       {
         "id": "custom_1793654093272_461",
         "label": "Item 66c - Trouble panique"
+      },
+      {
+        "id": "custom_1793661140948_482",
+        "label": "Item 66c - Trouble panique"
       }
-    ]
+    ],
+    "2026-11-03": []
   },
   "itemDifficulty": {
     "2": "facile",
@@ -7690,6 +7699,32 @@
         "originalItemNum": 345,
         "dayCap": 2
       }
+    ],
+    "2026-11-03": [
+      {
+        "id": "S1_i131_o1",
+        "kind": "item",
+        "itemNum": 118,
+        "mode": "revision",
+        "idx": 83,
+        "phase": "S1",
+        "iso": "2026-11-03",
+        "overridden": true,
+        "originalItemNum": 131,
+        "dayCap": 2
+      },
+      {
+        "id": "S1_i305_o1",
+        "kind": "item",
+        "itemNum": 305,
+        "mode": "revision",
+        "idx": 84,
+        "phase": "S1",
+        "iso": "2026-11-03",
+        "overridden": false,
+        "originalItemNum": 305,
+        "dayCap": 2
+      }
     ]
   },
   "queueFreeze": {
@@ -7809,7 +7844,7 @@
   },
   "_meta": {
     "schemaVersion": 4,
-    "updatedAt": "2026-11-02T23:11:19.350Z"
+    "updatedAt": "2026-11-02T23:12:22.815Z"
   },
   "customTheme": {
     "enabled": false,
@@ -8201,6 +8236,12 @@
       "l": 2,
       "f": 0,
       "s": 0
+    },
+    "2026-11-02": {
+      "r": 0,
+      "l": 0,
+      "f": 0,
+      "s": 1
     }
   },
   "pinResetV1": true,
