@@ -2951,7 +2951,8 @@
       "custom_1793284099734_427": true,
       "custom_1793284144283_822": true,
       "custom_1793287538799_819": true
-    }
+    },
+    "2026-11-02": {}
   },
   "reportedDays": {
     "2026-09-02": {
@@ -3751,6 +3752,12 @@
       {
         "id": "custom_1793287538799_819",
         "label": "Item 149 - Angines (pédiatrie)"
+      }
+    ],
+    "2026-11-02": [
+      {
+        "id": "custom_1793654093272_461",
+        "label": "Item 66c - Trouble panique"
       }
     ]
   },
@@ -7800,7 +7807,7 @@
   },
   "_meta": {
     "schemaVersion": 4,
-    "updatedAt": "2026-11-02T21:13:40.667Z"
+    "updatedAt": "2026-11-02T21:14:53.272Z"
   },
   "customTheme": {
     "enabled": false,
