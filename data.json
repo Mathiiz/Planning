@@ -2722,7 +2722,8 @@
     "M_213_mvsb4v5buwng": true,
     "S1_i130_o1": true,
     "S1_i319_o1": true,
-    "S1_i304_o1": true
+    "S1_i304_o1": true,
+    "S1_i345_o1": true
   },
   "checks": {
     "2026-08-29": {
@@ -3142,16 +3143,10 @@
       "partnerKey": "S1_i190_o1",
       "previousItemNum": 59
     },
-    "S1_i52_o1": {
-      "itemNum": 345,
-      "swapId": "swap_1790261702608_707",
-      "partnerKey": "S1_i345_o1",
-      "previousItemNum": 52
-    },
     "S1_i345_o1": {
-      "itemNum": 52,
-      "swapId": "swap_1790261702608_707",
-      "partnerKey": "S1_i52_o1",
+      "itemNum": 150,
+      "swapId": "swap_1793654017865_268",
+      "partnerKey": "S2_i150_o1",
       "previousItemNum": 345
     },
     "S1_i320_o1": {
@@ -3429,6 +3424,12 @@
       "swapId": "swap_1793626411753_714",
       "partnerKey": "S1_i73_o1",
       "previousItemNum": 66
+    },
+    "S2_i150_o1": {
+      "itemNum": 52,
+      "swapId": "swap_1793654017865_268",
+      "partnerKey": "S1_i345_o1",
+      "previousItemNum": 150
     }
   },
   "subjectDeadlines": {
@@ -5850,13 +5851,13 @@
       {
         "id": "S1_i52_o1",
         "kind": "item",
-        "itemNum": 345,
+        "itemNum": 52,
         "mode": "revision",
         "idx": 35,
         "idxKnown": true,
         "phase": "S1",
         "iso": "2026-09-15",
-        "overridden": true,
+        "overridden": false,
         "originalItemNum": 52,
         "dayCap": 5
       }
@@ -6096,13 +6097,13 @@
       {
         "id": "S1_i52_o1",
         "kind": "item",
-        "itemNum": 345,
+        "itemNum": 52,
         "mode": "revision",
         "idx": 35,
         "idxKnown": true,
         "phase": "S1",
         "iso": "2026-09-24",
-        "overridden": true,
+        "overridden": false,
         "originalItemNum": 52,
         "dayCap": 2
       }
@@ -7670,7 +7671,7 @@
       {
         "id": "S1_i345_o1",
         "kind": "item",
-        "itemNum": 52,
+        "itemNum": 150,
         "mode": "revision",
         "idx": 82,
         "idxKnown": true,
@@ -7799,7 +7800,7 @@
   },
   "_meta": {
     "schemaVersion": 4,
-    "updatedAt": "2026-11-02T17:11:20.211Z"
+    "updatedAt": "2026-11-02T21:13:40.667Z"
   },
   "customTheme": {
     "enabled": false,
@@ -8371,6 +8372,11 @@
       "on": "2026-10-30",
       "planned": "2026-10-30",
       "itemNum": 304
+    },
+    "S1_i345_o1": {
+      "on": "2026-11-02",
+      "planned": "2026-11-02",
+      "itemNum": 150
     }
   },
   "itemsCatRefV": 1
