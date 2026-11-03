@@ -3776,6 +3776,10 @@
       {
         "id": "custom_1793715077702_474",
         "label": "Focus trouble vésico sphinctériens (Gériatrie)"
+      },
+      {
+        "id": "custom_1793731636443_568",
+        "label": "Item 148 - Sinusites (pédiatrie)"
       }
     ]
   },
@@ -7854,7 +7858,7 @@
   },
   "_meta": {
     "schemaVersion": 4,
-    "updatedAt": "2026-11-03T18:43:11.263Z"
+    "updatedAt": "2026-11-03T18:47:16.443Z"
   },
   "customTheme": {
     "enabled": false,
