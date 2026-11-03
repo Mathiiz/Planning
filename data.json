@@ -2723,7 +2723,8 @@
     "S1_i130_o1": true,
     "S1_i319_o1": true,
     "S1_i304_o1": true,
-    "S1_i345_o1": true
+    "S1_i345_o1": true,
+    "S1_i305_o1": true
   },
   "checks": {
     "2026-08-29": {
@@ -2957,7 +2958,8 @@
       "custom_1793661140948_482": true
     },
     "2026-11-03": {
-      "custom_1793661121049_28": false
+      "custom_1793661121049_28": false,
+      "custom_1793715077702_474": true
     }
   },
   "reportedDays": {
@@ -3770,7 +3772,12 @@
         "label": "Item 66c - Trouble panique"
       }
     ],
-    "2026-11-03": []
+    "2026-11-03": [
+      {
+        "id": "custom_1793715077702_474",
+        "label": "Focus trouble vésico sphinctériens (Gériatrie)"
+      }
+    ]
   },
   "itemDifficulty": {
     "2": "facile",
@@ -7847,7 +7854,7 @@
   },
   "_meta": {
     "schemaVersion": 4,
-    "updatedAt": "2026-11-03T14:10:50.353Z"
+    "updatedAt": "2026-11-03T18:43:11.263Z"
   },
   "customTheme": {
     "enabled": false,
@@ -8430,6 +8437,11 @@
       "on": "2026-11-02",
       "planned": "2026-11-02",
       "itemNum": 150
+    },
+    "S1_i305_o1": {
+      "on": "2026-11-03",
+      "planned": "2026-11-03",
+      "itemNum": 305
     }
   },
   "itemsCatRefV": 1
