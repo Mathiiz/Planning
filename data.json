@@ -2965,7 +2965,8 @@
     },
     "2026-11-04": {
       "custom_1793886801361_622": true,
-      "custom_1793887809095_529": true
+      "custom_1793887809095_529": true,
+      "custom_1793902928439_464": true
     }
   },
   "reportedDays": {
@@ -3796,6 +3797,10 @@
       {
         "id": "custom_1793887809095_529",
         "label": "Item 66e - Trouble obsessionnel compulsif"
+      },
+      {
+        "id": "custom_1793902928439_464",
+        "label": "Item 66f - Trouble stress post-traumatique"
       }
     ]
   },
@@ -7931,7 +7936,7 @@
   },
   "_meta": {
     "schemaVersion": 4,
-    "updatedAt": "2026-11-05T18:19:29.697Z"
+    "updatedAt": "2026-11-05T18:22:09.603Z"
   },
   "customTheme": {
     "enabled": false,
