@@ -3824,7 +3824,8 @@
     "2026-10-29::S1_i297_o1": true,
     "2026-11-02::S1_i73_o1": true,
     "2026-11-03::S1_i131_o1": true,
-    "2026-11-04::S1_i74_o1": true
+    "2026-11-04::S1_i74_o1": true,
+    "2026-11-05::S1_i346_o1": true
   },
   "lcaEntries": {},
   "sddItems": [
@@ -7818,6 +7819,34 @@
         "originalItemNum": 132,
         "dayCap": 2
       }
+    ],
+    "2026-11-06": [
+      {
+        "id": "S1_i306_o1",
+        "kind": "item",
+        "itemNum": 306,
+        "mode": "revision",
+        "idx": 89,
+        "idxKnown": true,
+        "phase": "S1",
+        "iso": "2026-11-06",
+        "overridden": false,
+        "originalItemNum": 306,
+        "dayCap": 2
+      },
+      {
+        "id": "S1_i329_o1",
+        "kind": "item",
+        "itemNum": 329,
+        "mode": "revision",
+        "idx": 90,
+        "idxKnown": true,
+        "phase": "S1",
+        "iso": "2026-11-06",
+        "overridden": false,
+        "originalItemNum": 329,
+        "dayCap": 2
+      }
     ]
   },
   "queueFreeze": {
@@ -7937,7 +7966,7 @@
   },
   "_meta": {
     "schemaVersion": 4,
-    "updatedAt": "2026-11-05T22:24:44.081Z"
+    "updatedAt": "2026-11-06T21:29:15.844Z"
   },
   "customTheme": {
     "enabled": false,
