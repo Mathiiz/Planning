@@ -2969,6 +2969,9 @@
       "custom_1793886801361_622": true,
       "custom_1793887809095_529": true,
       "custom_1793902928439_464": true
+    },
+    "2026-11-06": {
+      "custom_1794056699088_850": true
     }
   },
   "reportedDays": {
@@ -3803,6 +3806,12 @@
       {
         "id": "custom_1793902928439_464",
         "label": "Item 66f - Trouble stress post-traumatique"
+      }
+    ],
+    "2026-11-06": [
+      {
+        "id": "custom_1794056699088_850",
+        "label": "Item 330 - Prescription et surveillance d'un traitement antithrombotique"
       }
     ]
   },
@@ -7968,7 +7977,7 @@
   },
   "_meta": {
     "schemaVersion": 4,
-    "updatedAt": "2026-11-07T11:34:07.419Z"
+    "updatedAt": "2026-11-07T13:05:01.603Z"
   },
   "customTheme": {
     "enabled": false,
