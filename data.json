@@ -2842,7 +2842,9 @@
     "2026-11-22": {},
     "2026-11-14": {},
     "2026-11-15": {},
-    "2026-11-07": {},
+    "2026-11-07": {
+      "custom_1794090081843_698": true
+    },
     "2026-11-08": {},
     "2026-10-31": {
       "free_0": true,
@@ -3812,6 +3814,12 @@
       {
         "id": "custom_1794056699088_850",
         "label": "Item 330 - Prescription et surveillance d'un traitement antithrombotique"
+      }
+    ],
+    "2026-11-07": [
+      {
+        "id": "custom_1794090081843_698",
+        "label": "Item 151 - Méningites et méningo-encéphalites (pédiatrie)"
       }
     ]
   },
@@ -7977,7 +7985,7 @@
   },
   "_meta": {
     "schemaVersion": 4,
-    "updatedAt": "2026-11-07T13:05:01.603Z"
+    "updatedAt": "2026-11-07T22:21:22.611Z"
   },
   "customTheme": {
     "enabled": false,
