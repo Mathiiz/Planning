@@ -2270,6 +2270,8 @@ function renderVitals(){
   }
 }
 
+// Libellé lisible d'une matière (utilisé par la recherche d'items du mix).
+function catLabel(c){ return CAT_LABELS[c] || c || 'Autre'; }
 function catPillsHTML(cats){
   return cats.map(c=>`<span class="cat-pill" style="background:${CAT_COLORS[c]||CAT_COLORS.other}">${CAT_LABELS[c]||c}</span>`).join('');
 }
