@@ -7989,7 +7989,7 @@
   },
   "_meta": {
     "schemaVersion": 4,
-    "updatedAt": "2026-11-08T15:10:06.528Z"
+    "updatedAt": "2026-11-08T15:21:23.499Z"
   },
   "customTheme": {
     "enabled": false,
@@ -8628,6 +8628,29 @@
   "taskModeOverrides": {
     "S1_i75_o1": "revision"
   },
-  "dayMixes": {},
-  "mixTemplates": {}
+  "dayMixes": {
+    "2026-11-08": [
+      {
+        "id": "MIX_mw7zcmcl_tlbyb",
+        "title": "Éruptions fébriles",
+        "cat": "ped",
+        "itemNums": [
+          164
+        ],
+        "mode": "revision",
+        "templateId": null
+      }
+    ]
+  },
+  "mixTemplates": {
+    "TPL_mw7zcmcl_tknv": {
+      "id": "TPL_mw7zcmcl_tknv",
+      "title": "Éruptions fébriles",
+      "cat": "ped",
+      "itemNums": [
+        164
+      ],
+      "createdAt": "2026-11-08T15:21:23.493Z"
+    }
+  }
 }
