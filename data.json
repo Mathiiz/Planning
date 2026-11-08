@@ -7989,7 +7989,7 @@
   },
   "_meta": {
     "schemaVersion": 4,
-    "updatedAt": "2026-11-08T15:21:23.499Z"
+    "updatedAt": "2026-11-08T15:23:03.217Z"
   },
   "customTheme": {
     "enabled": false,
@@ -8636,6 +8636,17 @@
         "cat": "ped",
         "itemNums": [
           164
+        ],
+        "mode": "revision",
+        "templateId": null
+      },
+      {
+        "id": "MIX_mw7zerah_gpiyi",
+        "title": "Éruptions fébriles",
+        "cat": "ped",
+        "itemNums": [
+          164,
+          168
         ],
         "mode": "revision",
         "templateId": null
