@@ -3820,6 +3820,10 @@
       {
         "id": "custom_1794090081843_698",
         "label": "Item 151 - Méningites et méningo-encéphalites (pédiatrie)"
+      },
+      {
+        "id": "custom_1794134765853_412",
+        "label": "Items 164, 168 - Éruptions fébriles (pédiatrie)"
       }
     ]
   },
@@ -7985,7 +7989,7 @@
   },
   "_meta": {
     "schemaVersion": 4,
-    "updatedAt": "2026-11-07T22:21:22.611Z"
+    "updatedAt": "2026-11-08T10:46:05.854Z"
   },
   "customTheme": {
     "enabled": false,
