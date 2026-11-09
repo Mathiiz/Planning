@@ -2728,7 +2728,8 @@
     "S1_i320_o1": true,
     "S1_i132_o1": true,
     "S1_i306_o1": true,
-    "MIX_mw7zerah_gpiyi": true
+    "MIX_mw7zerah_gpiyi": true,
+    "MIX_mw9b64u1_nrkl4": true
   },
   "checks": {
     "2026-08-29": {
@@ -7911,6 +7912,18 @@
         "mode": "revision",
         "iso": "2026-11-09",
         "mix": true
+      },
+      {
+        "id": "MIX_mw9biq4z_0tcyr",
+        "kind": "mix",
+        "title": "66h - Trouble de personnalité",
+        "cat": "psy",
+        "itemNums": [
+          66
+        ],
+        "mode": "revision",
+        "iso": "2026-11-09",
+        "mix": true
       }
     ]
   },
@@ -8031,7 +8044,7 @@
   },
   "_meta": {
     "schemaVersion": 4,
-    "updatedAt": "2026-11-09T13:40:02.434Z"
+    "updatedAt": "2026-11-09T13:49:52.428Z"
   },
   "customTheme": {
     "enabled": false,
@@ -8676,6 +8689,12 @@
       "planned": null,
       "itemNum": null,
       "mode": "revision"
+    },
+    "MIX_mw9b64u1_nrkl4": {
+      "on": "2026-11-09",
+      "planned": null,
+      "itemNum": null,
+      "mode": "revision"
     }
   },
   "itemsCatRefV": 1,
@@ -8710,6 +8729,16 @@
       {
         "id": "MIX_mw9b64u1_nrkl4",
         "title": "66g - Trouble de l’adaptation",
+        "cat": "psy",
+        "itemNums": [
+          66
+        ],
+        "mode": "revision",
+        "templateId": null
+      },
+      {
+        "id": "MIX_mw9biq4z_0tcyr",
+        "title": "66h - Trouble de personnalité",
         "cat": "psy",
         "itemNums": [
           66
