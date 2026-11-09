@@ -2730,7 +2730,8 @@
     "S1_i306_o1": true,
     "MIX_mw7zerah_gpiyi": true,
     "MIX_mw9b64u1_nrkl4": true,
-    "MIX_mw9biq4z_0tcyr": true
+    "MIX_mw9biq4z_0tcyr": true,
+    "M_72_mw9cyfc8sh92": true
   },
   "checks": {
     "2026-08-29": {
@@ -7903,6 +7904,14 @@
         "dayCap": 2
       },
       {
+        "id": "M_72_mw9cyfc8sh92",
+        "kind": "manualItem",
+        "itemNum": 72,
+        "mode": "revision",
+        "iso": "2026-11-09",
+        "manual": true
+      },
+      {
         "id": "MIX_mw9b64u1_nrkl4",
         "kind": "mix",
         "title": "66g - Trouble de l’adaptation",
@@ -8045,7 +8054,7 @@
   },
   "_meta": {
     "schemaVersion": 4,
-    "updatedAt": "2026-11-09T14:29:33.938Z"
+    "updatedAt": "2026-11-09T16:38:07.341Z"
   },
   "customTheme": {
     "enabled": false,
@@ -8519,6 +8528,13 @@
         "itemNum": 213,
         "mode": "entrainement"
       }
+    ],
+    "2026-11-09": [
+      {
+        "id": "M_72_mw9cyfc8sh92",
+        "itemNum": 72,
+        "mode": "revision"
+      }
     ]
   },
   "itemDoneAt": {
@@ -8701,6 +8717,12 @@
       "on": "2026-11-09",
       "planned": null,
       "itemNum": null,
+      "mode": "revision"
+    },
+    "M_72_mw9cyfc8sh92": {
+      "on": "2026-11-09",
+      "planned": "2026-11-09",
+      "itemNum": 72,
       "mode": "revision"
     }
   },
