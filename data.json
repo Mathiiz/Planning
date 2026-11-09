@@ -7899,6 +7899,18 @@
         "overridden": false,
         "originalItemNum": 364,
         "dayCap": 2
+      },
+      {
+        "id": "MIX_mw9b64u1_nrkl4",
+        "kind": "mix",
+        "title": "66g - Trouble de l’adaptation",
+        "cat": "psy",
+        "itemNums": [
+          66
+        ],
+        "mode": "revision",
+        "iso": "2026-11-09",
+        "mix": true
       }
     ]
   },
@@ -8019,7 +8031,7 @@
   },
   "_meta": {
     "schemaVersion": 4,
-    "updatedAt": "2026-11-09T13:38:58.140Z"
+    "updatedAt": "2026-11-09T13:40:02.434Z"
   },
   "customTheme": {
     "enabled": false,
@@ -8447,6 +8459,12 @@
       "l": 0,
       "f": 2,
       "s": 0
+    },
+    "2026-11-08": {
+      "r": 0,
+      "l": 2,
+      "f": 0,
+      "s": 0
     }
   },
   "pinResetV1": true,
@@ -8683,6 +8701,18 @@
         "itemNums": [
           164,
           168
+        ],
+        "mode": "revision",
+        "templateId": null
+      }
+    ],
+    "2026-11-09": [
+      {
+        "id": "MIX_mw9b64u1_nrkl4",
+        "title": "66g - Trouble de l’adaptation",
+        "cat": "psy",
+        "itemNums": [
+          66
         ],
         "mode": "revision",
         "templateId": null
