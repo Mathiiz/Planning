@@ -7936,6 +7936,18 @@
         "mode": "revision",
         "iso": "2026-11-09",
         "mix": true
+      },
+      {
+        "id": "MIX_mw9i6hnf_zttp5",
+        "kind": "mix",
+        "title": "Item 155 - Infections cutanées bactériennes",
+        "cat": "ped",
+        "itemNums": [
+          155
+        ],
+        "mode": "revision",
+        "iso": "2026-11-09",
+        "mix": true
       }
     ],
     "2026-11-10": [
@@ -7964,6 +7976,19 @@
         "overridden": false,
         "originalItemNum": 307,
         "dayCap": 2
+      },
+      {
+        "id": "MIX_mwal4mnp_criez",
+        "kind": "mix",
+        "title": "Apprendre à prescrire chez le patient âgé",
+        "cat": "ger",
+        "itemNums": [
+          322,
+          325
+        ],
+        "mode": "revision",
+        "iso": "2026-11-10",
+        "mix": true
       }
     ]
   },
@@ -8084,7 +8109,7 @@
   },
   "_meta": {
     "schemaVersion": 4,
-    "updatedAt": "2026-11-10T11:05:05.367Z"
+    "updatedAt": "2026-11-10T11:06:34.554Z"
   },
   "customTheme": {
     "enabled": false,
@@ -8518,6 +8543,12 @@
       "l": 2,
       "f": 0,
       "s": 0
+    },
+    "2026-11-09": {
+      "r": 0,
+      "l": 0,
+      "f": 0,
+      "s": 1
     }
   },
   "pinResetV1": true,
@@ -8811,6 +8842,19 @@
         "cat": "ped",
         "itemNums": [
           155
+        ],
+        "mode": "revision",
+        "templateId": null
+      }
+    ],
+    "2026-11-10": [
+      {
+        "id": "MIX_mwal4mnp_criez",
+        "title": "Apprendre à prescrire chez le patient âgé",
+        "cat": "ger",
+        "itemNums": [
+          322,
+          325
         ],
         "mode": "revision",
         "templateId": null
