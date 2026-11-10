@@ -3854,7 +3854,8 @@
     "2026-11-05::S1_i346_o1": true,
     "2026-11-06::S1_i329_o1": true,
     "2026-11-09::S1_i75_o1": true,
-    "2026-11-09::S1_i364_o1": true
+    "2026-11-09::S1_i364_o1": true,
+    "2026-11-10::S1_i133_o1": true
   },
   "lcaEntries": {},
   "sddItems": [
@@ -7936,6 +7937,34 @@
         "iso": "2026-11-09",
         "mix": true
       }
+    ],
+    "2026-11-10": [
+      {
+        "id": "S1_i133_o1",
+        "kind": "item",
+        "itemNum": 120,
+        "mode": "revision",
+        "idx": 93,
+        "idxKnown": true,
+        "phase": "S1",
+        "iso": "2026-11-10",
+        "overridden": true,
+        "originalItemNum": 133,
+        "dayCap": 2
+      },
+      {
+        "id": "S1_i307_o1",
+        "kind": "item",
+        "itemNum": 307,
+        "mode": "revision",
+        "idx": 94,
+        "idxKnown": true,
+        "phase": "S1",
+        "iso": "2026-11-10",
+        "overridden": false,
+        "originalItemNum": 307,
+        "dayCap": 2
+      }
     ]
   },
   "queueFreeze": {
@@ -8055,7 +8084,7 @@
   },
   "_meta": {
     "schemaVersion": 4,
-    "updatedAt": "2026-11-09T16:55:49.616Z"
+    "updatedAt": "2026-11-10T11:05:05.367Z"
   },
   "customTheme": {
     "enabled": false,
@@ -8772,6 +8801,16 @@
         "cat": "psy",
         "itemNums": [
           66
+        ],
+        "mode": "revision",
+        "templateId": null
+      },
+      {
+        "id": "MIX_mw9i6hnf_zttp5",
+        "title": "Item 155 - Infections cutanées bactériennes",
+        "cat": "ped",
+        "itemNums": [
+          155
         ],
         "mode": "revision",
         "templateId": null
