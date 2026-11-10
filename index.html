@@ -710,6 +710,8 @@ function getDefaultConfig(){
     blockOrder: SPEC_BLOCKS.map(b=>b.id),
     showCountdownEdn: true,
     showCountdownEcos: true,
+    showItemsVus: true,
+    showItemsEntraines: true,
     weeklySchedule: {
       study:{ days:['MO','TU','WE','TH','FR','SA','SU'], periodWeeks:1 },
       lca:  { count:2, days:['SA','SU'], periodWeeks:1 },
@@ -1632,6 +1634,51 @@ function setGithubConfig(cfg){
   try{ localStorage.setItem(GH_CONFIG_KEY, JSON.stringify(cfg)); }catch(e){}
   ghSha = null;
 }
+function applyGithubConfigFromUrlIfPresent(){
+  // Sur certaines webviews mobiles (ex : Notion pour iPhone), le stockage local est effacé
+  // régulièrement par le système : la connexion GitHub enregistrée ne survit pas d'une ouverture à
+  // l'autre. En passant les identifiants dans l'URL de l'embed Notion (mémorisée durablement par
+  // Notion), la connexion se rétablit automatiquement à chaque chargement.
+  try{
+    const p = new URL(window.location.href).searchParams;
+    if(p.has('ghtoken') && p.has('ghowner') && p.has('ghrepo')){
+      setGithubConfig({
+        owner: p.get('ghowner'),
+        repo: p.get('ghrepo'),
+        path: p.get('ghpath') || 'data.json',
+        branch: p.get('ghbranch') || 'main',
+        token: p.get('ghtoken')
+      });
+      // L'URL reste intacte : la connexion doit pouvoir être relue à chaque rechargement.
+      return true;
+    }
+  }catch(e){ /* URL non standard : on ignore */ }
+  return false;
+}
+function copyTextRobust(text){
+  try{
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    ta.setAttribute('readonly','');
+    ta.style.position = 'fixed'; ta.style.top = '0'; ta.style.left = '-9999px'; ta.style.opacity = '0';
+    document.body.appendChild(ta);
+    let ok = false;
+    try{
+      ta.focus(); ta.select();
+      try{ ta.setSelectionRange(0, text.length); }catch(e0){}
+      ok = !!(document.execCommand && document.execCommand('copy'));
+    }finally{
+      document.body.removeChild(ta);
+    }
+    if(ok) return Promise.resolve(true);
+  }catch(e1){}
+  try{
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      return navigator.clipboard.writeText(text).then(()=>true, ()=>false);
+    }
+  }catch(e2){}
+  return Promise.resolve(false);
+}
 function clearGithubConfig(){
   ghConfigMemory = null;
   try{
@@ -2243,10 +2290,12 @@ function renderVitals(){
     const sddPct = Math.round((sddDone / sddTotal) * 100);
     vitalsHtml += `<div class="vital"><div class="num">${sddDone} / ${sddTotal}</div><div class="lbl">SDD validées (${sddPct}%)</div></div>`;
   } else {
-    vitalsHtml += `
-      <div class="vital"><div class="num">${vusCount} / ${totalItemsCount}</div><div class="lbl">Items vus (${vusPct}%)</div></div>
-      <div class="vital"><div class="num">${entrainesCount} / ${totalItemsCount}</div><div class="lbl">Items entraînés (${entPct}%)</div></div>
-    `;
+    if(DATA.config.showItemsVus !== false){
+      vitalsHtml += `<div class="vital"><div class="num">${vusCount} / ${totalItemsCount}</div><div class="lbl">Items vus (${vusPct}%)</div></div>`;
+    }
+    if(DATA.config.showItemsEntraines !== false){
+      vitalsHtml += `<div class="vital"><div class="num">${entrainesCount} / ${totalItemsCount}</div><div class="lbl">Items entraînés (${entPct}%)</div></div>`;
+    }
   }
 
   if(day && day.tasks && day.tasks.length > 0){
@@ -2805,8 +2854,8 @@ function customTasksHTML(iso){
   return `
     <div class="manual-add" style="margin-top:12px;" onclick="event.stopPropagation()">
       <div style="display:flex;gap:8px;flex-wrap:wrap;">
-        <button type="button" class="swap-toggle" data-manualtoggle="${iso}">➕ Ajouter un item seul</button>
-        <button type="button" class="swap-toggle" data-mixtoggle="${iso}" style="background:rgba(124,58,237,0.08);border-color:rgba(124,58,237,0.25);color:#7C3AED;font-weight:700;">✨ Ajouter un Mix d'items (Chapitre composite)</button>
+        <button type="button" class="swap-toggle" data-manualtoggle="${iso}">➕ Ajouter un item </button>
+        <button type="button" class="swap-toggle" data-mixtoggle="${iso}" title="Mix d'items (chapitre composite) : regrouper plusieurs items ou changer le collège de révision"> ➕ Ajouter un chapitre </button>
       </div>
 
       <div class="swap-panel" id="manualPanel-${iso}">
@@ -3329,7 +3378,8 @@ function renderPlanning(){
       if(day.reported){
         inner = `<span class="cal-tag" style="background:rgba(0,0,0,.08);color:var(--ink-soft);">${esc(reportedDayLabel(day.reportedInfo))}</span>`;
       } else {
-        const itemTasks = (day.tasks||[]).filter(t=>t.kind==='item' && !isItemTaskSkipped(day.iso,t.id));
+        // Items du planning + items ajoutés à la main + mix d'items : tous apparaissent dans la case.
+        const itemTasks = (day.tasks||[]).filter(t=>(t.kind==='item' || t.kind==='manualItem' || t.kind==='mix') && !isItemTaskSkipped(day.iso,t.id));
         const hasLcaTask = day.tasks && day.tasks.some(t=>t.kind==='generic' && String(t.id).startsWith('lca'));
         const hasFreeTask = day.tasks && day.tasks.some(t=>t.kind==='generic' && String(t.id).startsWith('free'));
         const lcaFreeLabel = hasLcaTask && hasFreeTask ? 'LCA+libre' : hasLcaTask ? 'LCA' : hasFreeTask ? 'Libre' : '';
@@ -3337,9 +3387,15 @@ function renderPlanning(){
           const shown = itemTasks.slice(0,4);
           const extra = itemTasks.length - shown.length;
           inner = `<div class="cal-dots">${shown.map(t=>{
+            if(t.kind==='mix'){
+              const nums = Array.isArray(t.itemNums) ? t.itemNums : [];
+              const label = nums.length ? '✨#'+nums[0]+(nums.length>1 ? '+'+(nums.length-1) : '') : '✨Mix';
+              return `<span class="cal-item-badge" style="background:${CAT_COLORS[t.cat]||CAT_COLORS.other};outline:1.5px dashed var(--ink-soft);outline-offset:1px;" title="${esc(t.title||'Mix d\'items')}">${label}</span>`;
+            }
             const it = ITEM_BY_NUM[t.itemNum];
             const c = it && it.cats && it.cats[0];
-            return `<span class="cal-item-badge" style="background:${CAT_COLORS[c]||CAT_COLORS.other}">#${it?it.num:t.itemNum}</span>`;
+            const added = t.kind==='manualItem' ? 'outline:1.5px dashed var(--ink-soft);outline-offset:1px;' : '';
+            return `<span class="cal-item-badge" style="background:${CAT_COLORS[c]||CAT_COLORS.other};${added}"${it?` title="${esc(it.title)}"`:''}>#${it?it.num:t.itemNum}</span>`;
           }).join('')}${extra>0?`<span style="font-size:9px;color:var(--ink-soft);">+${extra}</span>`:''}</div>${lcaFreeLabel?`<span class="cal-tag" style="background:${phaseColor(day.phase)}">${lcaFreeLabel}</span>`:''}`;
         } else if(day.tasks && day.tasks.some(t=>t.kind==='sdd')){
           inner = `<span class="cal-tag" style="background:${phaseColor('ECOS')}">SDD</span>`;
@@ -4134,6 +4190,14 @@ function renderSettings(){
           <input type="checkbox" id="cfgShowEcos" ${cfg.showCountdownEcos!==false ? 'checked':''}>
           <span>Compte à rebours ECOS</span>
         </label>
+        <label class="checkbox-label">
+          <input type="checkbox" id="cfgShowVus" ${cfg.showItemsVus!==false ? 'checked':''}>
+          <span>Nombre d'items vus</span>
+        </label>
+        <label class="checkbox-label">
+          <input type="checkbox" id="cfgShowEntraines" ${cfg.showItemsEntraines!==false ? 'checked':''}>
+          <span>Nombre d'items entraînés</span>
+        </label>
       </div>
     </div>
 
@@ -4181,6 +4245,12 @@ function renderSettings(){
         <button type="button" id="btnGhSave" class="btn-primary">Enregistrer</button>
         <button type="button" id="btnGhSyncNow" class="btn-secondary">Synchroniser maintenant</button>
       </div>
+      <div style="margin-top:10px;">
+        <button type="button" id="btnGhCopyLink" class="btn-secondary">📋 Copier le lien avec connexion intégrée (pour Notion iPhone)</button>
+        <span id="ghCopyMsg" class="settings-hint" style="display:block;margin-top:6px;"></span>
+        <div id="ghLinkBox" style="display:none;margin-top:6px;"><input type="text" id="ghLinkField" readonly style="width:100%;font-size:11px;"></div>
+        <span class="settings-hint">Si la connexion GitHub se réinitialise à chaque ouverture sur mobile (webview au stockage effacé régulièrement, ex : Notion iPhone), utilise ce lien comme URL de l'embed à la place du lien habituel : la connexion est alors mémorisée par Notion lui-même et se rétablit automatiquement, même quand le stockage local est vidé entre-temps. Utilise de préférence un token Fine-grained limité à ce seul dépôt, cette URL contenant le token en clair.</span>
+      </div>
       <span id="ghStatus" style="font-size:12px;color:var(--ink-soft);display:block;margin-top:8px;">${esc(currentGhStatus||'')}</span>
     </div>
 
@@ -4196,6 +4266,8 @@ function renderSettings(){
 
   document.getElementById('cfgShowEdn').addEventListener('change', e=>{ DATA.config.showCountdownEdn = e.target.checked; saveDataQuiet(); renderVitals(); });
   document.getElementById('cfgShowEcos').addEventListener('change', e=>{ DATA.config.showCountdownEcos = e.target.checked; saveDataQuiet(); renderVitals(); });
+  document.getElementById('cfgShowVus').addEventListener('change', e=>{ DATA.config.showItemsVus = e.target.checked; saveDataQuiet(); renderVitals(); });
+  document.getElementById('cfgShowEntraines').addEventListener('change', e=>{ DATA.config.showItemsEntraines = e.target.checked; saveDataQuiet(); renderVitals(); });
   document.getElementById('cfgStudentYear').addEventListener('change', e=>{ DATA.config.studentYear = parseInt(e.target.value,10); CAL = buildCalendar(DATA.config, DATA.reportedDays); saveDataQuiet(); render(); });
   document.getElementById('cfgStart').addEventListener('change', e=>{ DATA.config.start = e.target.value; CAL = buildCalendar(DATA.config, DATA.reportedDays); saveDataQuiet(); render(); });
   document.getElementById('cfgS1End').addEventListener('change', e=>{ DATA.config.s1End = e.target.value; CAL = buildCalendar(DATA.config, DATA.reportedDays); saveDataQuiet(); render(); });
@@ -4272,6 +4344,37 @@ function renderSettings(){
     }
   });
   document.getElementById('btnGhSyncNow').addEventListener('click', ()=> githubSyncNow());
+  document.getElementById('btnGhCopyLink').addEventListener('click', async ()=>{
+    const msg = document.getElementById('ghCopyMsg');
+    const box = document.getElementById('ghLinkBox');
+    const field = document.getElementById('ghLinkField');
+    function say(text, isError){ msg.textContent = text; msg.style.color = isError ? 'var(--danger)' : 'var(--ink-soft)'; }
+    const savedCfg = getGithubConfig();
+    if(!savedCfg || !savedCfg.token || !savedCfg.owner || !savedCfg.repo){
+      box.style.display = 'none';
+      say('Enregistre d’abord une connexion GitHub valide (avec le token) ci-dessus.', true);
+      return;
+    }
+    const url = new URL(window.location.href);
+    ['v','ghtoken','ghowner','ghrepo','ghpath','ghbranch'].forEach(k=>url.searchParams.delete(k));
+    url.searchParams.set('ghowner', savedCfg.owner);
+    url.searchParams.set('ghrepo', savedCfg.repo);
+    url.searchParams.set('ghpath', savedCfg.path || 'data.json');
+    url.searchParams.set('ghbranch', savedCfg.branch || 'main');
+    url.searchParams.set('ghtoken', savedCfg.token);
+    const link = url.toString();
+    field.value = link;
+    const ok = await copyTextRobust(link);
+    if(ok){
+      box.style.display = 'none';
+      say('Lien copié ✓ — colle-le comme URL de l’embed Notion sur iPhone.', false);
+    }else{
+      // Copie automatique refusée par la page hôte : on affiche le lien, déjà sélectionné.
+      box.style.display = 'block';
+      field.focus(); field.select();
+      say('La copie automatique est bloquée ici : le lien est sélectionné ci-dessous, fais Cmd+C (ou Ctrl+C).', true);
+    }
+  });
   document.getElementById('btnExport').addEventListener('click', exportBackup);
   document.getElementById('btnImportTrigger').addEventListener('click', ()=> document.getElementById('fileImport').click());
   document.getElementById('fileImport').addEventListener('change', e=>{
@@ -4442,6 +4545,8 @@ function renderObSubjectList(){
 }
 
 async function init(){
+  // Si l'URL de l'embed transporte les identifiants GitHub, on les applique avant toute chose.
+  applyGithubConfigFromUrlIfPresent();
   DATA = await loadData();
   ensureDataMeta(DATA);
   try{
@@ -4453,11 +4558,19 @@ async function init(){
 
   bindStaticHandlers();
 
-  if(!DATA.onboarded){
+  function showOnboardingOverlay(){
     renderObSubjectList();
     document.getElementById('obStart').value = DATA.config.start || toISO(todayDate());
     document.getElementById('obExam').value = DATA.config.exam || '';
     document.getElementById('onboardOverlay').classList.remove('hidden');
+  }
+  // Connexion GitHub disponible (lien ou stockage) : on tente d'abord de récupérer la sauvegarde
+  // avant d'afficher l'écran de bienvenue (sur iPhone/Notion le stockage local repart vide à chaque
+  // ouverture, l'app croirait sinon démarrer à neuf alors que la sauvegarde existe).
+  const ghAtStart = getGithubConfig();
+  const hasGhConnection = !!(ghAtStart && ghAtStart.token && ghAtStart.owner && ghAtStart.repo);
+  if(!DATA.onboarded && !hasGhConnection){
+    showOnboardingOverlay();
   }
   render();
 
@@ -4477,6 +4590,11 @@ async function init(){
         render();
       }
     }
+  }catch(e){}
+  // Sauvegarde retrouvée : on ferme l'écran de bienvenue ; rien de retrouvé : on l'affiche.
+  try{
+    if(DATA.onboarded) document.getElementById('onboardOverlay').classList.add('hidden');
+    else showOnboardingOverlay();
   }catch(e){}
 }
 
