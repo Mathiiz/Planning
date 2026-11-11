@@ -8049,6 +8049,18 @@
         "mode": "revision",
         "iso": "2026-11-11",
         "mix": true
+      },
+      {
+        "id": "MIX_mwcacyqr_jvzuv",
+        "kind": "mix",
+        "title": "Sexualité normale et ses troubles",
+        "cat": "psy",
+        "itemNums": [
+          58
+        ],
+        "mode": "revision",
+        "iso": "2026-11-11",
+        "mix": true
       }
     ]
   },
@@ -8169,7 +8181,7 @@
   },
   "_meta": {
     "schemaVersion": 4,
-    "updatedAt": "2026-11-11T15:40:12.401Z"
+    "updatedAt": "2026-11-11T17:52:07.959Z"
   },
   "customTheme": {
     "enabled": false,
@@ -8988,6 +9000,15 @@
         "cat": "mi",
         "itemNums": [
           218
+        ],
+        "mode": "revision"
+      },
+      {
+        "id": "MIX_mwcacyqr_jvzuv",
+        "title": "Sexualité normale et ses troubles",
+        "cat": "psy",
+        "itemNums": [
+          58
         ],
         "mode": "revision"
       }
