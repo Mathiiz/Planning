@@ -2824,8 +2824,8 @@ function customTasksHTML(iso){
   return `
     <div class="manual-add" style="margin-top:12px;" onclick="event.stopPropagation()">
       <div style="display:flex;gap:8px;flex-wrap:wrap;">
-        <button type="button" class="swap-toggle" data-manualtoggle="${iso}">➕ Ajouter un item seul</button>
-        <button type="button" class="swap-toggle" data-mixtoggle="${iso}" title="Mix d'items (chapitre composite) : regrouper plusieurs items ou changer le collège de révision">✨ Ajouter un mix d'items</button>
+        <button type="button" class="swap-toggle" data-manualtoggle="${iso}">➕ Ajouter un item</button>
+        <button type="button" class="swap-toggle" data-mixtoggle="${iso}" title="Mix d'items (chapitre composite) : regrouper plusieurs items ou changer le collège de révision">➕ Ajouter un chapitre</button>
       </div>
 
       <div class="swap-panel" id="manualPanel-${iso}">
@@ -2839,7 +2839,7 @@ function customTasksHTML(iso){
       <div class="swap-panel" id="mixPanel-${iso}">
         <div style="padding:14px;background:var(--paper-raised);border-radius:14px;border:1px solid rgba(0,0,0,0.08);margin-top:10px;">
           <h4 style="margin:0 0 10px;font-size:13px;font-weight:700;color:var(--ink);display:flex;align-items:center;gap:6px;">
-            <span style="color:#7C3AED;">✨ Nouveau Mix d'items</span>
+            <span style="color:#7C3AED;"> 📚 Nouveau chapitre personalisé</span>
             <span style="font-size:11px;font-weight:normal;color:var(--ink-soft);">(Regrouper plusieurs items ou changer le collège de révision)</span>
           </h4>
 
