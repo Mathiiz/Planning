@@ -953,17 +953,9 @@ function addDayMix(iso, mixData){
     title: (mixData.title || '').trim() || ('Mix ' + (mixData.itemNums||[]).map(n=>'#'+n).join(' + ')),
     cat: mixData.cat || 'other',
     itemNums: Array.isArray(mixData.itemNums) ? mixData.itemNums.slice() : [],
-    mode: mixData.mode || 'revision',
-    templateId: mixData.templateId || null
+    mode: mixData.mode || 'revision'
   };
   DATA.dayMixes[iso].push(mix);
-  if(mixData.saveAsTemplate){
-    saveMixTemplate({
-      title: mix.title,
-      cat: mix.cat,
-      itemNums: mix.itemNums
-    });
-  }
   CAL = buildCalendar(DATA.config, DATA.reportedDays);
   saveData();
   return { ok:true, mix };
@@ -977,31 +969,6 @@ function removeDayMix(iso, mixId){
   if(DATA.itemDoneAt) delete DATA.itemDoneAt[mixId];
   if(DATA.taskModeOverrides) delete DATA.taskModeOverrides[mixId];
   saveData();
-}
-
-function saveMixTemplate(tplData){
-  if(!DATA.mixTemplates) DATA.mixTemplates = {};
-  const id = 'TPL_' + Date.now().toString(36) + '_' + Math.random().toString(36).slice(2,6);
-  DATA.mixTemplates[id] = {
-    id,
-    title: (tplData.title || '').trim() || ('Mix ' + (tplData.itemNums||[]).map(n=>'#'+n).join(' + ')),
-    cat: tplData.cat || 'other',
-    itemNums: Array.isArray(tplData.itemNums) ? tplData.itemNums.slice() : [],
-    createdAt: new Date().toISOString()
-  };
-  saveData();
-  return DATA.mixTemplates[id];
-}
-
-function deleteMixTemplate(tplId){
-  if(!DATA.mixTemplates) return;
-  delete DATA.mixTemplates[tplId];
-  saveData();
-}
-
-function allMixTemplates(){
-  if(!DATA.mixTemplates) return [];
-  return Object.values(DATA.mixTemplates);
 }
 
 function updateItem(num, title, cats){
@@ -2383,7 +2350,7 @@ function itemTaskHTML(task, opts){
   `;
 
   return `
-    <div class="task-card ${effectiveMode} ${done?'done':''}" data-key="${key}" data-itemnum="${item.num}" data-phase="${task.phase||''}" data-idx="${task.idx!=null?task.idx:''}">
+    <div class="task-card ${effectiveMode} ${done?'done':''}" data-key="${key}" data-itemnum="${item.num}" data-phase="${task.phase||''}" data-idx="${task.idx!=null?task.idx:''}" style="border-left-color:${CAT_COLORS[item.cats && item.cats[0]] || CAT_COLORS.other} !important;">
       <div class="top-row">
         <div class="mode-toggle-group" onclick="event.stopPropagation()">
           <button type="button" class="mode-toggle-btn ${isRev?'active revision':''}" data-setmode="revision" data-taskid="${key}">Révision</button>
@@ -2854,8 +2821,8 @@ function customTasksHTML(iso){
   return `
     <div class="manual-add" style="margin-top:12px;" onclick="event.stopPropagation()">
       <div style="display:flex;gap:8px;flex-wrap:wrap;">
-        <button type="button" class="swap-toggle" data-manualtoggle="${iso}">➕ Ajouter un item </button>
-        <button type="button" class="swap-toggle" data-mixtoggle="${iso}" title="Mix d'items (chapitre composite) : regrouper plusieurs items ou changer le collège de révision"> ➕ Ajouter un chapitre </button>
+        <button type="button" class="swap-toggle" data-manualtoggle="${iso}">➕ Ajouter un item seul</button>
+        <button type="button" class="swap-toggle" data-mixtoggle="${iso}" title="Mix d'items (chapitre composite) : regrouper plusieurs items ou changer le collège de révision">✨ Ajouter un mix d'items</button>
       </div>
 
       <div class="swap-panel" id="manualPanel-${iso}">
@@ -2872,8 +2839,6 @@ function customTasksHTML(iso){
             <span style="color:#7C3AED;">✨ Nouveau Mix d'items</span>
             <span style="font-size:11px;font-weight:normal;color:var(--ink-soft);">(Regrouper plusieurs items ou changer le collège de révision)</span>
           </h4>
-
-          <div id="mixTplPicker-${iso}" style="margin-bottom:12px;"></div>
 
           <div style="display:flex;flex-direction:column;gap:10px;">
             <div>
@@ -2909,10 +2874,6 @@ function customTasksHTML(iso){
                   <option value="entrainement">Entraînement</option>
                 </select>
               </div>
-              <label style="font-size:11px;color:var(--ink-soft);display:flex;align-items:center;gap:6px;cursor:pointer;">
-                <input type="checkbox" id="mixSaveTpl-${iso}" checked style="width:14px;height:14px;">
-                <span>Enregistrer dans mes modèles favoris</span>
-              </label>
             </div>
 
             <div style="display:flex;justify-content:flex-end;gap:8px;margin-top:6px;">
@@ -2963,35 +2924,10 @@ function bindCustomTaskHandlers(container, iso){
     const titleInput = document.getElementById('mixTitle-' + iso);
     const catSelect = document.getElementById('mixCat-' + iso);
     const modeSelect = document.getElementById('mixMode-' + iso);
-    const saveTplCheck = document.getElementById('mixSaveTpl-' + iso);
     const submitBtn = document.getElementById('mixAddSubmitBtn-' + iso);
-    const tplPicker = document.getElementById('mixTplPicker-' + iso);
     if(!chipsContainer || !submitBtn) return;
 
     let selectedNums = [];
-
-    // Afficher les modeles favoris s'il y en a
-    const tpls = allMixTemplates();
-    if(tplPicker && tpls.length > 0){
-      tplPicker.innerHTML = `
-        <div style="font-size:11px;font-weight:700;color:var(--ink-soft);margin-bottom:6px;">⚡ Utiliser un modèle enregistré :</div>
-        <div style="display:flex;gap:6px;flex-wrap:wrap;">
-          ${tpls.map(t=>`<button type="button" class="btn-secondary" data-loadtpl="${t.id}" style="font-size:11px;padding:3px 8px;border-radius:8px;">${esc(t.title)} (${CAT_LABELS[t.cat]||t.cat})</button>`).join('')}
-        </div>
-      `;
-      tplPicker.querySelectorAll('[data-loadtpl]').forEach(b=>{
-        b.addEventListener('click', e=>{
-          e.stopPropagation();
-          const tId = b.getAttribute('data-loadtpl');
-          const t = tpls.find(x=>x.id===tId);
-          if(!t) return;
-          if(catSelect) catSelect.value = t.cat;
-          if(titleInput) titleInput.value = t.title;
-          selectedNums = Array.isArray(t.itemNums) ? t.itemNums.slice() : [];
-          renderChips();
-        });
-      });
-    }
 
     function renderChips(){
       if(selectedNums.length === 0){
@@ -3073,13 +3009,11 @@ function bindCustomTaskHandlers(container, iso){
       const title = (titleInput && titleInput.value.trim()) || ('Mix items ' + selectedNums.join(' & '));
       const cat = (catSelect && catSelect.value) || 'ped';
       const mode = (modeSelect && modeSelect.value) || 'revision';
-      const saveTpl = !!(saveTplCheck && saveTplCheck.checked);
       addDayMix(iso, {
         title,
         cat,
         itemNums: selectedNums,
-        mode,
-        saveAsTemplate: saveTpl
+        mode
       });
       render();
     });
@@ -3817,264 +3751,9 @@ function renderSddManager(){
 
 // Module Items Manager
 let itemsFilterCat = 'all';
-let itemsSubTab = 'all'; // 'all' | 'mixes'
 
 function renderItemsManager(){
   const container = document.getElementById('app');
-  const tpls = allMixTemplates();
-  let totalScheduledMixes = 0;
-  Object.values(DATA.dayMixes || {}).forEach(arr => { totalScheduledMixes += (arr || []).length; });
-
-  const topNav = `
-    <div style="display:flex;gap:6px;background:rgba(0,0,0,0.06);padding:3px;border-radius:12px;margin-bottom:14px;">
-      <button type="button" class="btn-secondary ${itemsSubTab==='all'?'active':''}" id="btnSubTabAll" style="flex:1;padding:7px 12px;font-weight:700;font-size:12px;border:none;background:${itemsSubTab==='all'?'var(--white)':'transparent'};border-radius:9px;color:var(--ink);">Catalogue officiel EDN (367 items)</button>
-      <button type="button" class="btn-secondary ${itemsSubTab==='mixes'?'active':''}" id="btnSubTabMixes" style="flex:1;padding:7px 12px;font-weight:700;font-size:12px;border:none;background:${itemsSubTab==='mixes'?'var(--white)':'transparent'};border-radius:9px;color:var(--ink);">✨ Mes Mix & Chapitres composites (${tpls.length})</button>
-    </div>
-  `;
-
-  if(itemsSubTab === 'mixes'){
-    let mixesHtml = '';
-    if(tpls.length === 0){
-      mixesHtml = `<div class="empty-state" style="padding:40px;text-align:center;color:var(--ink-soft);background:var(--white);border-radius:16px;">
-        <h3 style="margin:0 0 8px;font-size:16px;color:var(--ink);">Aucun Mix d'items pour le moment</h3>
-        <p style="margin:0 0 14px;font-size:13px;">Les Mix vous permettent de regrouper plusieurs items pour réviser un chapitre commun (ex: items 164 & 168 en Pédiatrie) ou d'étudier un item sous un collège différent de sa référence.</p>
-        <button type="button" class="btn-primary" id="btnToggleNewMix" style="background:#7C3AED;color:#fff;">➕ Créer mon premier Mix d'items</button>
-      </div>`;
-    } else {
-      mixesHtml = tpls.map(tpl=>{
-        const catColor = CAT_COLORS[tpl.cat] || '#7C3AED';
-        const catName = CAT_LABELS[tpl.cat] || tpl.cat;
-        const chips = (tpl.itemNums||[]).map(n=>{
-          const it = ITEM_BY_NUM[n] || {num:n, title:'Item #'+n};
-          return `<button type="button" class="mix-item-chip" data-openitem="${n}" style="cursor:pointer;" title="Voir la fiche item">
-            <strong>#${n}</strong> <span>${esc(it.title)}</span>
-          </button>`;
-        }).join('');
-
-        // Chercher si ce mix est programme a des dates
-        const scheduledDates = [];
-        Object.keys(DATA.dayMixes || {}).forEach(iso=>{
-          (DATA.dayMixes[iso] || []).forEach(m=>{
-            if(m.title === tpl.title || (Array.isArray(m.itemNums) && m.itemNums.join(',') === tpl.itemNums.join(','))){
-              scheduledDates.push(iso);
-            }
-          });
-        });
-
-        const datesBadge = scheduledDates.length
-          ? scheduledDates.map(d=>`<span class="cat-pill" style="background:var(--accent);font-size:10px;">Prévu le ${fmtShort(parseISO(d))}</span>`).join(' ')
-          : '<span style="font-size:11px;color:var(--ink-soft);">Modèle non encore planifié</span>';
-
-        return `<div class="mix-card-row" style="border-left-color:${catColor} !important;">
-          <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:8px;flex-wrap:wrap;">
-            <div>
-              <div style="display:flex;gap:6px;align-items:center;margin-bottom:4px;">
-                <span class="cat-pill" style="background:${catColor};color:#fff;">${esc(catName)}</span>
-                <span class="cat-pill" style="background:linear-gradient(135deg, #7C3AED, #9333EA);color:#fff;">${(tpl.itemNums||[]).length} items</span>
-              </div>
-              <h3 style="margin:0;font-size:16px;font-weight:800;color:var(--ink);">${esc(tpl.title)}</h3>
-            </div>
-            <div style="display:flex;gap:6px;">
-              <button type="button" class="btn-secondary" data-schedulemix="${tpl.id}" style="font-size:11.5px;padding:5px 10px;">📅 Programmer</button>
-              <button type="button" class="btn-danger" data-deletetpl="${tpl.id}" style="font-size:11.5px;padding:5px 10px;">Supprimer</button>
-            </div>
-          </div>
-          <div style="display:flex;flex-wrap:wrap;gap:6px;margin:8px 0 10px 0;">
-            ${chips}
-          </div>
-          <div style="display:flex;align-items:center;gap:8px;font-size:12px;padding-top:8px;border-top:1px solid rgba(0,0,0,0.05);">
-            <span style="font-size:11px;font-weight:700;color:var(--ink-soft);">Planning :</span>
-            ${datesBadge}
-          </div>
-        </div>`;
-      }).join('');
-    }
-
-    container.innerHTML = topNav + `
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
-        <h2 style="font-size:20px;font-weight:800;margin:0;">Mes Mix & Chapitres composites</h2>
-        <button type="button" class="btn-primary" id="btnToggleNewMix" style="background:#7C3AED;color:#fff;padding:8px 14px;border-radius:10px;font-size:12.5px;font-weight:700;">➕ Nouveau Mix d'items</button>
-      </div>
-
-      <div id="newMixManagerPanel" style="display:none;padding:16px;background:var(--white);border-radius:16px;border:1px solid rgba(0,0,0,0.08);margin-bottom:16px;">
-        <h3 style="margin:0 0 12px;font-size:15px;font-weight:800;color:#7C3AED;">Créer un Mix d'items</h3>
-        <div style="display:flex;flex-direction:column;gap:10px;">
-          <div>
-            <label style="display:block;font-size:11px;font-weight:700;color:var(--ink-soft);margin-bottom:4px;">Collège / Discipline d'étude</label>
-            <select id="mgrMixCat" style="width:100%;padding:8px 10px;border-radius:10px;border:1px solid rgba(0,0,0,0.15);background:var(--paper);color:var(--ink);font-weight:600;">
-              ${ALL_CATS.map(c=>`<option value="${c}" ${c==='ped'?'selected':''}>${CAT_LABELS[c]}</option>`).join('')}
-            </select>
-          </div>
-          <div>
-            <label style="display:block;font-size:11px;font-weight:700;color:var(--ink-soft);margin-bottom:4px;">Titre personnalisé du chapitre</label>
-            <input type="text" id="mgrMixTitle" placeholder="Ex: Infections broncho-pulmonaires de l'enfant (Item 164 + 168)" style="width:100%;padding:8px 10px;border-radius:10px;border:1px solid rgba(0,0,0,0.15);background:var(--paper);color:var(--ink);">
-          </div>
-          <div>
-            <label style="display:block;font-size:11px;font-weight:700;color:var(--ink-soft);margin-bottom:4px;">Items inclus dans ce mix</label>
-            <div id="mgrMixChips" style="display:flex;flex-wrap:wrap;gap:6px;min-height:36px;padding:6px;background:var(--paper);border-radius:10px;border:1px dashed rgba(0,0,0,0.15);margin-bottom:6px;align-items:center;">
-              <span id="mgrMixEmptyHint" style="font-size:11.5px;color:var(--ink-soft);padding-left:4px;">Aucun item sélectionné (recherche ci-dessous)</span>
-            </div>
-            <div style="display:flex;gap:6px;">
-              <input type="text" id="mgrMixSearch" placeholder="Chercher un item par N° ou mot-clé (ex: 164 ou pédiatrie)" style="flex:1;">
-              <button type="button" class="btn-secondary" id="mgrMixSearchBtn">Chercher</button>
-            </div>
-            <div id="mgrMixSearchResults" style="max-height:160px;overflow-y:auto;margin-top:6px;"></div>
-          </div>
-          <div style="display:flex;gap:10px;align-items:center;margin-top:4px;">
-            <div style="flex:1;">
-              <label style="display:block;font-size:11px;font-weight:700;color:var(--ink-soft);margin-bottom:4px;">Programmer sur une date (optionnel)</label>
-              <input type="date" id="mgrMixDate" style="width:100%;padding:7px 10px;border-radius:10px;border:1px solid rgba(0,0,0,0.15);background:var(--paper);color:var(--ink);">
-            </div>
-            <div style="width:140px;">
-              <label style="display:block;font-size:11px;font-weight:700;color:var(--ink-soft);margin-bottom:4px;">Mode</label>
-              <select id="mgrMixMode" style="width:100%;padding:7px 10px;border-radius:10px;border:1px solid rgba(0,0,0,0.15);background:var(--paper);color:var(--ink);">
-                <option value="revision">Révision</option>
-                <option value="entrainement">Entraînement</option>
-              </select>
-            </div>
-          </div>
-          <div style="display:flex;justify-content:flex-end;gap:8px;margin-top:8px;">
-            <button type="button" class="btn-secondary" id="mgrMixCancelBtn">Annuler</button>
-            <button type="button" class="btn-primary" id="mgrMixSaveBtn" style="background:#7C3AED;color:#fff;">Enregistrer le Mix</button>
-          </div>
-        </div>
-      </div>
-
-      <div id="mixesContainer">${mixesHtml}</div>
-    `;
-
-    document.getElementById('btnSubTabAll').addEventListener('click', ()=>{ itemsSubTab='all'; renderItemsManager(); });
-    document.getElementById('btnSubTabMixes').addEventListener('click', ()=>{ itemsSubTab='mixes'; renderItemsManager(); });
-
-    const toggleBtn = document.getElementById('btnToggleNewMix');
-    const panel = document.getElementById('newMixManagerPanel');
-    if(toggleBtn && panel){
-      toggleBtn.addEventListener('click', ()=>{ panel.style.display = panel.style.display==='none' ? 'block' : 'none'; });
-      const cancelBtn = document.getElementById('mgrMixCancelBtn');
-      if(cancelBtn) cancelBtn.addEventListener('click', ()=>{ panel.style.display='none'; });
-    }
-
-    let mgrSelected = [];
-    function renderMgrChips(){
-      const cont = document.getElementById('mgrMixChips');
-      if(!cont) return;
-      if(mgrSelected.length===0){
-        cont.innerHTML = `<span style="font-size:11.5px;color:var(--ink-soft);padding-left:4px;">Aucun item sélectionné (recherche ci-dessous)</span>`;
-        return;
-      }
-      cont.innerHTML = mgrSelected.map(n=>{
-        const it = ITEM_BY_NUM[n] || {num:n, title:'Item #'+n};
-        return `<span class="mix-item-chip" data-mgrdel="${n}">
-          <strong>#${n}</strong> <span>${esc(it.title)}</span>
-          <button type="button" style="border:none;background:transparent;cursor:pointer;color:inherit;font-weight:bold;margin-left:4px;">×</button>
-        </span>`;
-      }).join('');
-      cont.querySelectorAll('[data-mgrdel]').forEach(b=>{
-        b.addEventListener('click', ev=>{
-          ev.stopPropagation();
-          const n = parseInt(b.getAttribute('data-mgrdel'), 10);
-          mgrSelected = mgrSelected.filter(x=>x!==n);
-          renderMgrChips();
-        });
-      });
-    }
-
-    function doMgrSearch(){
-      const q = (document.getElementById('mgrMixSearch').value||'').trim();
-      const resEl = document.getElementById('mgrMixSearchResults');
-      if(!q){ resEl.innerHTML = `<p style="font-size:11.5px;color:var(--ink-soft);padding:4px;">Tape un numéro ou mot-clé.</p>`; return; }
-      const nums = searchCatalogItems(q, 8);
-      if(!nums.length){ resEl.innerHTML = `<p style="font-size:11.5px;color:var(--ink-soft);padding:4px;">Aucun item trouvé.</p>`; return; }
-      resEl.innerHTML = nums.map(n=>{
-        const it = ITEM_BY_NUM[n];
-        const isAdded = mgrSelected.includes(n);
-        return `<div style="display:flex;align-items:center;justify-content:space-between;padding:6px 8px;background:var(--paper);border-radius:8px;margin-top:4px;font-size:12px;">
-          <span><strong>#${n}</strong> ${esc(it.title)}</span>
-          <button type="button" class="btn-secondary" data-mgradd="${n}" style="padding:2px 8px;font-size:11px;" ${isAdded?'disabled':''}>${isAdded?'Ajouté':'Ajouter'}</button>
-        </div>`;
-      }).join('');
-      resEl.querySelectorAll('[data-mgradd]').forEach(b=>{
-        b.addEventListener('click', ev=>{
-          ev.stopPropagation();
-          const n = parseInt(b.getAttribute('data-mgradd'), 10);
-          if(!mgrSelected.includes(n)){
-            mgrSelected.push(n);
-            renderMgrChips();
-            b.setAttribute('disabled','true');
-            b.textContent = 'Ajouté';
-            const titleInp = document.getElementById('mgrMixTitle');
-            if(titleInp && !titleInp.value.trim()){
-              if(mgrSelected.length===1 && ITEM_BY_NUM[n]) titleInp.value = ITEM_BY_NUM[n].title;
-              else titleInp.value = 'Chapitre : Items ' + mgrSelected.join(' & ');
-            }
-          }
-        });
-      });
-    }
-
-    const mgrSearchBtn = document.getElementById('mgrMixSearchBtn');
-    const mgrSearchInp = document.getElementById('mgrMixSearch');
-    if(mgrSearchBtn) mgrSearchBtn.addEventListener('click', doMgrSearch);
-    if(mgrSearchInp) mgrSearchInp.addEventListener('keydown', e=>{ if(e.key==='Enter'){ e.preventDefault(); doMgrSearch(); } });
-
-    const mgrSaveBtn = document.getElementById('mgrMixSaveBtn');
-    if(mgrSaveBtn){
-      mgrSaveBtn.addEventListener('click', ()=>{
-        if(mgrSelected.length===0){ alert("Sélectionne au moins un item pour ce mix."); return; }
-        const title = (document.getElementById('mgrMixTitle').value.trim()) || ('Mix items ' + mgrSelected.join(' & '));
-        const cat = document.getElementById('mgrMixCat').value;
-        const targetDate = document.getElementById('mgrMixDate').value;
-        const mode = document.getElementById('mgrMixMode').value;
-        const tpl = saveMixTemplate({ title, cat, itemNums: mgrSelected });
-        if(targetDate){
-          addDayMix(targetDate, { title, cat, itemNums: mgrSelected, mode, templateId: tpl.id });
-        }
-        renderItemsManager();
-      });
-    }
-
-    container.querySelectorAll('[data-schedulemix]').forEach(b=>{
-      b.addEventListener('click', ()=>{
-        const tId = b.getAttribute('data-schedulemix');
-        const t = tpls.find(x=>x.id===tId);
-        if(!t) return;
-        const targetDate = prompt("Entrez la date souhaitée (format AAAA-MM-JJ, ex: " + todayIso() + ") :", todayIso());
-        if(!targetDate) return;
-        if(!/^\d{4}-\d{2}-\d{2}$/.test(targetDate)){ alert("Format de date invalide (attendu: AAAA-MM-JJ)."); return; }
-        addDayMix(targetDate, { title: t.title, cat: t.cat, itemNums: t.itemNums, mode: 'revision', templateId: t.id });
-        alert(`Mix "${t.title}" programmé avec succès pour le ${targetDate} !`);
-        renderItemsManager();
-      });
-    });
-
-    container.querySelectorAll('[data-deletetpl]').forEach(b=>{
-      b.addEventListener('click', ()=>{
-        const tId = b.getAttribute('data-deletetpl');
-        const t = tpls.find(x=>x.id===tId);
-        if(!t) return;
-        if(confirm(`Supprimer le modèle "${t.title}" ?`)){
-          deleteMixTemplate(tId);
-          renderItemsManager();
-        }
-      });
-    });
-
-    container.querySelectorAll('[data-openitem]').forEach(b=>{
-      b.addEventListener('click', e=>{
-        e.stopPropagation();
-        const n = parseInt(b.getAttribute('data-openitem'), 10);
-        if(n){
-          selectedItemNum = n;
-          currentTab = 'progress';
-          document.querySelectorAll('#tabbar button').forEach(x=>x.classList.toggle('active', x.getAttribute('data-tab')==='progress'));
-          render();
-        }
-      });
-    });
-
-    return;
-  }
-
   const list = CURRENT_ITEMS.slice().sort((a,b)=>a[0]-b[0]);
 
   let rows = list.map(([n,t,c])=>{
@@ -4094,7 +3773,7 @@ function renderItemsManager(){
     </div>`;
   }).join('');
 
-  container.innerHTML = topNav + `
+  container.innerHTML = `
     <div style="display:flex;gap:8px;margin-bottom:14px;align-items:center;">
       <input type="text" id="itemsSearchInput" placeholder="Rechercher un item (numéro ou mot-clé)…" style="flex:1;">
       <select id="filterCatSelect" style="max-width:200px;">
@@ -4104,9 +3783,6 @@ function renderItemsManager(){
     </div>
     <div id="itemsContainer">${rows}</div>
   `;
-
-  document.getElementById('btnSubTabAll').addEventListener('click', ()=>{ itemsSubTab='all'; renderItemsManager(); });
-  document.getElementById('btnSubTabMixes').addEventListener('click', ()=>{ itemsSubTab='mixes'; renderItemsManager(); });
 
   // Filtrage instantane sans destruction DOM
   document.getElementById('itemsSearchInput').addEventListener('input', e=>{
