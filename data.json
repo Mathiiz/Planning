@@ -2736,7 +2736,8 @@
     "S1_i307_o1": true,
     "MIX_mw7zcmcl_tlbyb": true,
     "MIX_mw9i6hnf_zttp5": true,
-    "MIX_mwc7yfxf_petnw": true
+    "MIX_mwc7yfxf_petnw": true,
+    "MIX_mwca7tat_gf3mh": true
   },
   "checks": {
     "2026-08-29": {
@@ -3861,7 +3862,8 @@
     "2026-11-09::S1_i75_o1": true,
     "2026-11-09::S1_i364_o1": true,
     "2026-11-10::S1_i133_o1": true,
-    "2026-11-11::S1_i308_o1": true
+    "2026-11-11::S1_i308_o1": true,
+    "2026-11-11::S1_i76_o1": true
   },
   "lcaEntries": {},
   "sddItems": [
@@ -8037,10 +8039,10 @@
         "mix": true
       },
       {
-        "id": "MIX_mwca7b2z_j1zwt",
+        "id": "MIX_mwca7tat_gf3mh",
         "kind": "mix",
         "title": "Eosinophilie",
-        "cat": "ped",
+        "cat": "mi",
         "itemNums": [
           218
         ],
@@ -8167,7 +8169,7 @@
   },
   "_meta": {
     "schemaVersion": 4,
-    "updatedAt": "2026-11-11T15:36:16.114Z"
+    "updatedAt": "2026-11-11T15:40:12.401Z"
   },
   "customTheme": {
     "enabled": false,
@@ -8879,6 +8881,12 @@
       "planned": null,
       "itemNum": null,
       "mode": "revision"
+    },
+    "MIX_mwca7tat_gf3mh": {
+      "on": "2026-11-11",
+      "planned": null,
+      "itemNum": null,
+      "mode": "revision"
     }
   },
   "itemsCatRefV": 1,
@@ -8969,6 +8977,15 @@
         "id": "MIX_mwca7b2z_j1zwt",
         "title": "Eosinophilie",
         "cat": "ped",
+        "itemNums": [
+          218
+        ],
+        "mode": "revision"
+      },
+      {
+        "id": "MIX_mwca7tat_gf3mh",
+        "title": "Eosinophilie",
+        "cat": "mi",
         "itemNums": [
           218
         ],
