@@ -2735,7 +2735,8 @@
     "MIX_mwal4mnp_criez": true,
     "S1_i307_o1": true,
     "MIX_mw7zcmcl_tlbyb": true,
-    "MIX_mw9i6hnf_zttp5": true
+    "MIX_mw9i6hnf_zttp5": true,
+    "MIX_mwc7yfxf_petnw": true
   },
   "checks": {
     "2026-08-29": {
@@ -8022,6 +8023,30 @@
         "overridden": false,
         "originalItemNum": 308,
         "dayCap": 2
+      },
+      {
+        "id": "MIX_mwc7yfxf_petnw",
+        "kind": "mix",
+        "title": "Syndrome mononucléosique",
+        "cat": "mi",
+        "itemNums": [
+          217
+        ],
+        "mode": "revision",
+        "iso": "2026-11-11",
+        "mix": true
+      },
+      {
+        "id": "MIX_mwca7b2z_j1zwt",
+        "kind": "mix",
+        "title": "Eosinophilie",
+        "cat": "ped",
+        "itemNums": [
+          218
+        ],
+        "mode": "revision",
+        "iso": "2026-11-11",
+        "mix": true
       }
     ]
   },
@@ -8142,7 +8167,7 @@
   },
   "_meta": {
     "schemaVersion": 4,
-    "updatedAt": "2026-11-11T14:32:57.951Z"
+    "updatedAt": "2026-11-11T15:36:16.114Z"
   },
   "customTheme": {
     "enabled": false,
@@ -8582,6 +8607,12 @@
       "l": 0,
       "f": 0,
       "s": 1
+    },
+    "2026-11-10": {
+      "r": 0,
+      "l": 0,
+      "f": 0,
+      "s": 1
     }
   },
   "pinResetV1": true,
@@ -8842,6 +8873,12 @@
       "planned": null,
       "itemNum": null,
       "mode": "revision"
+    },
+    "MIX_mwc7yfxf_petnw": {
+      "on": "2026-11-11",
+      "planned": null,
+      "itemNum": null,
+      "mode": "revision"
     }
   },
   "itemsCatRefV": 1,
@@ -8916,6 +8953,26 @@
         ],
         "mode": "revision",
         "templateId": null
+      }
+    ],
+    "2026-11-11": [
+      {
+        "id": "MIX_mwc7yfxf_petnw",
+        "title": "Syndrome mononucléosique",
+        "cat": "mi",
+        "itemNums": [
+          217
+        ],
+        "mode": "revision"
+      },
+      {
+        "id": "MIX_mwca7b2z_j1zwt",
+        "title": "Eosinophilie",
+        "cat": "ped",
+        "itemNums": [
+          218
+        ],
+        "mode": "revision"
       }
     ]
   },
