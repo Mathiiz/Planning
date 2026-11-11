@@ -7992,6 +7992,34 @@
         "iso": "2026-11-10",
         "mix": true
       }
+    ],
+    "2026-11-11": [
+      {
+        "id": "S1_i76_o1",
+        "kind": "item",
+        "itemNum": 76,
+        "mode": "revision",
+        "idx": 95,
+        "idxKnown": true,
+        "phase": "S1",
+        "iso": "2026-11-11",
+        "overridden": false,
+        "originalItemNum": 76,
+        "dayCap": 2
+      },
+      {
+        "id": "S1_i308_o1",
+        "kind": "item",
+        "itemNum": 308,
+        "mode": "revision",
+        "idx": 96,
+        "idxKnown": true,
+        "phase": "S1",
+        "iso": "2026-11-11",
+        "overridden": false,
+        "originalItemNum": 308,
+        "dayCap": 2
+      }
     ]
   },
   "queueFreeze": {
@@ -8111,7 +8139,7 @@
   },
   "_meta": {
     "schemaVersion": 4,
-    "updatedAt": "2026-11-10T18:35:25.561Z"
+    "updatedAt": "2026-11-11T09:18:59.928Z"
   },
   "customTheme": {
     "enabled": false,
@@ -8803,7 +8831,8 @@
   },
   "itemsCatRefV": 1,
   "taskModeOverrides": {
-    "S1_i75_o1": "revision"
+    "S1_i75_o1": "revision",
+    "S1_i76_o1": "revision"
   },
   "dayMixes": {
     "2026-11-08": [
