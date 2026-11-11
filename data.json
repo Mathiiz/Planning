@@ -2739,7 +2739,7 @@
     "MIX_mwc7yfxf_petnw": true,
     "MIX_mwca7tat_gf3mh": true,
     "MIX_mwcacyqr_jvzuv": true,
-    "MIX_mwcfu6cx_gr1fy": true
+    "MIX_mwcodja3_jsa04": true
   },
   "checks": {
     "2026-08-29": {
@@ -8065,10 +8065,10 @@
         "mix": true
       },
       {
-        "id": "MIX_mwcfu6cx_gr1fy",
+        "id": "MIX_mwcodja3_jsa04",
         "kind": "mix",
         "title": "Troubles du sommeil de l’enfant et de l’adulte",
-        "cat": "ped",
+        "cat": "psy",
         "itemNums": [
           110
         ],
@@ -8195,7 +8195,7 @@
   },
   "_meta": {
     "schemaVersion": 4,
-    "updatedAt": "2026-11-11T22:12:18.394Z"
+    "updatedAt": "2026-11-11T22:13:44.274Z"
   },
   "customTheme": {
     "enabled": false,
@@ -8920,7 +8920,7 @@
       "itemNum": null,
       "mode": "revision"
     },
-    "MIX_mwcfu6cx_gr1fy": {
+    "MIX_mwcodja3_jsa04": {
       "on": "2026-11-11",
       "planned": null,
       "itemNum": null,
@@ -9042,6 +9042,15 @@
         "id": "MIX_mwcfu6cx_gr1fy",
         "title": "Troubles du sommeil de l’enfant et de l’adulte",
         "cat": "ped",
+        "itemNums": [
+          110
+        ],
+        "mode": "revision"
+      },
+      {
+        "id": "MIX_mwcodja3_jsa04",
+        "title": "Troubles du sommeil de l’enfant et de l’adulte",
+        "cat": "psy",
         "itemNums": [
           110
         ],
