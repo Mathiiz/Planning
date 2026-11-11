@@ -167,6 +167,9 @@ window.addEventListener('pageshow', function(e){
     background:#1C1C1E !important; color:#fff; box-shadow:none;
   }
 
+  /* La ligne « Ajouter une tâche libre » n'est pas une carte : pas de cadre ni d'ombre rectangulaire autour du champ. */
+  .add-item-form, body.dark .add-item-form{background:transparent !important; box-shadow:none !important;}
+
   .week-summary{background:var(--white);border-radius:24px;padding:20px 24px;margin-bottom:20px;}
   .week-summary .wtitle{font-size:20px;line-height:1.1;font-weight:800;letter-spacing:-.03em;margin:0 0 12px;}
   .week-summary .wrow{display:flex;justify-content:space-between;font-size:14px;padding:8px 0;}
