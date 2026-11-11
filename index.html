@@ -2443,7 +2443,7 @@ function mixTaskHTML(task){
       </div>
       <label class="task-check" onclick="event.stopPropagation()">
         <input type="checkbox" data-mixcheck="${key}" ${done?'checked':''}>
-        <span>${done ? 'Validé ✓' : 'Valider ce chapitre composite (' + (task.itemNums||[]).length + ' items)'}</span>
+        <span>${done ? 'Validé ✓' : 'Valider ce chapitre (' + (task.itemNums||[]).length + ' items)'}</span>
       </label>
     </div>
   `;
