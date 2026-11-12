@@ -2741,7 +2741,8 @@
     "MIX_mwcacyqr_jvzuv": true,
     "MIX_mwcodja3_jsa04": true,
     "MIX_mwdki7fq_4b2zd": true,
-    "MIX_mwdo9j3r_6u1dh": true
+    "MIX_mwdo9j3r_6u1dh": true,
+    "MIX_mwdrtax6_0airk": true
   },
   "checks": {
     "2026-08-29": {
@@ -8168,6 +8169,18 @@
         "mode": "revision",
         "iso": "2026-11-12",
         "mix": true
+      },
+      {
+        "id": "MIX_mwdrtax6_0airk",
+        "kind": "mix",
+        "title": "Pathologies du fer",
+        "cat": "mi",
+        "itemNums": [
+          219
+        ],
+        "mode": "revision",
+        "iso": "2026-11-12",
+        "mix": true
       }
     ]
   },
@@ -8288,7 +8301,7 @@
   },
   "_meta": {
     "schemaVersion": 4,
-    "updatedAt": "2026-11-12T15:59:21.860Z"
+    "updatedAt": "2026-11-12T16:37:03.922Z"
   },
   "customTheme": {
     "enabled": false,
@@ -9036,6 +9049,12 @@
       "planned": null,
       "itemNum": null,
       "mode": "revision"
+    },
+    "MIX_mwdrtax6_0airk": {
+      "on": "2026-11-12",
+      "planned": null,
+      "itemNum": null,
+      "mode": "revision"
     }
   },
   "itemsCatRefV": 1,
@@ -9186,6 +9205,15 @@
         "cat": "psy",
         "itemNums": [
           55
+        ],
+        "mode": "revision"
+      },
+      {
+        "id": "MIX_mwdrtax6_0airk",
+        "title": "Pathologies du fer",
+        "cat": "mi",
+        "itemNums": [
+          219
         ],
         "mode": "revision"
       }
