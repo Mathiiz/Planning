@@ -8076,6 +8076,48 @@
         "iso": "2026-11-11",
         "mix": true
       }
+    ],
+    "2026-11-12": [
+      {
+        "id": "S1_i77_o1",
+        "kind": "item",
+        "itemNum": 77,
+        "mode": "revision",
+        "idx": 97,
+        "idxKnown": true,
+        "phase": "S1",
+        "iso": "2026-11-12",
+        "overridden": false,
+        "originalItemNum": 77,
+        "dayCap": 2
+      },
+      {
+        "id": "S1_i309_o1",
+        "kind": "item",
+        "itemNum": 309,
+        "mode": "revision",
+        "idx": 98,
+        "idxKnown": true,
+        "phase": "S1",
+        "iso": "2026-11-12",
+        "overridden": false,
+        "originalItemNum": 309,
+        "dayCap": 2
+      },
+      {
+        "id": "MIX_mwdki7fq_4b2zd",
+        "kind": "mix",
+        "title": "Pathologies infectieuses du migrant et de l'enfant voyageur",
+        "cat": "ped",
+        "itemNums": [
+          170,
+          174,
+          175
+        ],
+        "mode": "revision",
+        "iso": "2026-11-12",
+        "mix": true
+      }
     ]
   },
   "queueFreeze": {
@@ -8195,7 +8237,7 @@
   },
   "_meta": {
     "schemaVersion": 4,
-    "updatedAt": "2026-11-11T22:13:59.057Z"
+    "updatedAt": "2026-11-12T13:12:26.928Z"
   },
   "customTheme": {
     "enabled": false,
@@ -9053,6 +9095,19 @@
         "cat": "psy",
         "itemNums": [
           110
+        ],
+        "mode": "revision"
+      }
+    ],
+    "2026-11-12": [
+      {
+        "id": "MIX_mwdki7fq_4b2zd",
+        "title": "Pathologies infectieuses du migrant et de l'enfant voyageur",
+        "cat": "ped",
+        "itemNums": [
+          170,
+          174,
+          175
         ],
         "mode": "revision"
       }
