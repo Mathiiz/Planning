@@ -3466,6 +3466,18 @@
       "swapId": "swap_1793903241986_597",
       "partnerKey": "S1_i132_o1",
       "previousItemNum": 214
+    },
+    "S1_i77_o1": {
+      "itemNum": 55,
+      "swapId": "swap_1794495429349_852",
+      "partnerKey": "S1_i55_o2",
+      "previousItemNum": 77
+    },
+    "S1_i55_o2": {
+      "itemNum": 77,
+      "swapId": "swap_1794495429349_852",
+      "partnerKey": "S1_i77_o1",
+      "previousItemNum": 55
     }
   },
   "subjectDeadlines": {
@@ -3866,7 +3878,8 @@
     "2026-11-09::S1_i364_o1": true,
     "2026-11-10::S1_i133_o1": true,
     "2026-11-11::S1_i308_o1": true,
-    "2026-11-11::S1_i76_o1": true
+    "2026-11-11::S1_i76_o1": true,
+    "2026-11-12::S1_i77_o1": true
   },
   "lcaEntries": {},
   "sddItems": [
@@ -8106,13 +8119,13 @@
       {
         "id": "S1_i77_o1",
         "kind": "item",
-        "itemNum": 77,
+        "itemNum": 55,
         "mode": "revision",
         "idx": 97,
         "idxKnown": true,
         "phase": "S1",
         "iso": "2026-11-12",
-        "overridden": false,
+        "overridden": true,
         "originalItemNum": 77,
         "dayCap": 2
       },
@@ -8138,6 +8151,18 @@
           170,
           174,
           175
+        ],
+        "mode": "revision",
+        "iso": "2026-11-12",
+        "mix": true
+      },
+      {
+        "id": "MIX_mwdo9j3r_6u1dh",
+        "kind": "mix",
+        "title": "Développement psychomoteur du nourrisson et de l’enfant",
+        "cat": "psy",
+        "itemNums": [
+          55
         ],
         "mode": "revision",
         "iso": "2026-11-12",
@@ -8262,7 +8287,7 @@
   },
   "_meta": {
     "schemaVersion": 4,
-    "updatedAt": "2026-11-12T14:56:33.577Z"
+    "updatedAt": "2026-11-12T14:57:40.605Z"
   },
   "customTheme": {
     "enabled": false,
@@ -9145,6 +9170,15 @@
           170,
           174,
           175
+        ],
+        "mode": "revision"
+      },
+      {
+        "id": "MIX_mwdo9j3r_6u1dh",
+        "title": "Développement psychomoteur du nourrisson et de l’enfant",
+        "cat": "psy",
+        "itemNums": [
+          55
         ],
         "mode": "revision"
       }
