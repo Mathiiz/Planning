@@ -2739,7 +2739,8 @@
     "MIX_mwc7yfxf_petnw": true,
     "MIX_mwca7tat_gf3mh": true,
     "MIX_mwcacyqr_jvzuv": true,
-    "MIX_mwcodja3_jsa04": true
+    "MIX_mwcodja3_jsa04": true,
+    "MIX_mwdki7fq_4b2zd": true
   },
   "checks": {
     "2026-08-29": {
@@ -8041,6 +8042,18 @@
         "mix": true
       },
       {
+        "id": "MIX_mwca7b2z_j1zwt",
+        "kind": "mix",
+        "title": "Eosinophilie",
+        "cat": "ped",
+        "itemNums": [
+          218
+        ],
+        "mode": "revision",
+        "iso": "2026-11-11",
+        "mix": true
+      },
+      {
         "id": "MIX_mwca7tat_gf3mh",
         "kind": "mix",
         "title": "Eosinophilie",
@@ -8059,6 +8072,18 @@
         "cat": "psy",
         "itemNums": [
           58
+        ],
+        "mode": "revision",
+        "iso": "2026-11-11",
+        "mix": true
+      },
+      {
+        "id": "MIX_mwcfu6cx_gr1fy",
+        "kind": "mix",
+        "title": "Troubles du sommeil de l’enfant et de l’adulte",
+        "cat": "ped",
+        "itemNums": [
+          110
         ],
         "mode": "revision",
         "iso": "2026-11-11",
@@ -8237,7 +8262,7 @@
   },
   "_meta": {
     "schemaVersion": 4,
-    "updatedAt": "2026-11-12T13:12:26.928Z"
+    "updatedAt": "2026-11-12T14:56:33.577Z"
   },
   "customTheme": {
     "enabled": false,
@@ -8683,6 +8708,12 @@
       "l": 0,
       "f": 0,
       "s": 1
+    },
+    "2026-11-11": {
+      "r": 0,
+      "l": 0,
+      "f": 0,
+      "s": 1
     }
   },
   "pinResetV1": true,
@@ -8964,6 +8995,12 @@
     },
     "MIX_mwcodja3_jsa04": {
       "on": "2026-11-11",
+      "planned": null,
+      "itemNum": null,
+      "mode": "revision"
+    },
+    "MIX_mwdki7fq_4b2zd": {
+      "on": "2026-11-12",
       "planned": null,
       "itemNum": null,
       "mode": "revision"
