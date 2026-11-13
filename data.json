@@ -3480,6 +3480,18 @@
       "swapId": "swap_1794495429349_852",
       "partnerKey": "S1_i77_o1",
       "previousItemNum": 55
+    },
+    "S1_i310_o1": {
+      "itemNum": 308,
+      "swapId": "swap_1794606337372_414",
+      "partnerKey": "S1_i308_o1",
+      "previousItemNum": 310
+    },
+    "S1_i308_o1": {
+      "itemNum": 310,
+      "swapId": "swap_1794606337372_414",
+      "partnerKey": "S1_i310_o1",
+      "previousItemNum": 308
     }
   },
   "subjectDeadlines": {
@@ -8034,13 +8046,13 @@
       {
         "id": "S1_i308_o1",
         "kind": "item",
-        "itemNum": 308,
+        "itemNum": 310,
         "mode": "revision",
         "idx": 96,
         "idxKnown": true,
         "phase": "S1",
         "iso": "2026-11-11",
-        "overridden": false,
+        "overridden": true,
         "originalItemNum": 308,
         "dayCap": 2
       },
@@ -8182,6 +8194,34 @@
         "iso": "2026-11-12",
         "mix": true
       }
+    ],
+    "2026-11-13": [
+      {
+        "id": "S1_i78_o1",
+        "kind": "item",
+        "itemNum": 78,
+        "mode": "revision",
+        "idx": 99,
+        "idxKnown": true,
+        "phase": "S1",
+        "iso": "2026-11-13",
+        "overridden": false,
+        "originalItemNum": 78,
+        "dayCap": 2
+      },
+      {
+        "id": "S1_i310_o1",
+        "kind": "item",
+        "itemNum": 308,
+        "mode": "revision",
+        "idx": 100,
+        "idxKnown": true,
+        "phase": "S1",
+        "iso": "2026-11-13",
+        "overridden": true,
+        "originalItemNum": 310,
+        "dayCap": 2
+      }
     ]
   },
   "queueFreeze": {
@@ -8301,7 +8341,7 @@
   },
   "_meta": {
     "schemaVersion": 4,
-    "updatedAt": "2026-11-12T16:37:03.922Z"
+    "updatedAt": "2026-11-13T21:45:37.376Z"
   },
   "customTheme": {
     "enabled": false,
