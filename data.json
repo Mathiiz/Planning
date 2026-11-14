@@ -2742,7 +2742,8 @@
     "MIX_mwcodja3_jsa04": true,
     "MIX_mwdki7fq_4b2zd": true,
     "MIX_mwdo9j3r_6u1dh": true,
-    "MIX_mwdrtax6_0airk": true
+    "MIX_mwdrtax6_0airk": true,
+    "S1_i310_o1": true
   },
   "checks": {
     "2026-08-29": {
@@ -3492,6 +3493,18 @@
       "swapId": "swap_1794606337372_414",
       "partnerKey": "S1_i310_o1",
       "previousItemNum": 308
+    },
+    "S1_i78_o1": {
+      "itemNum": 67,
+      "swapId": "swap_1794663251107_744",
+      "partnerKey": "S1_i67_o2",
+      "previousItemNum": 78
+    },
+    "S1_i67_o2": {
+      "itemNum": 78,
+      "swapId": "swap_1794663251107_744",
+      "partnerKey": "S1_i78_o1",
+      "previousItemNum": 67
     }
   },
   "subjectDeadlines": {
@@ -3893,7 +3906,8 @@
     "2026-11-10::S1_i133_o1": true,
     "2026-11-11::S1_i308_o1": true,
     "2026-11-11::S1_i76_o1": true,
-    "2026-11-12::S1_i77_o1": true
+    "2026-11-12::S1_i77_o1": true,
+    "2026-11-12::S1_i309_o1": true
   },
   "lcaEntries": {},
   "sddItems": [
@@ -8175,13 +8189,13 @@
       {
         "id": "S1_i78_o1",
         "kind": "item",
-        "itemNum": 78,
+        "itemNum": 67,
         "mode": "revision",
         "idx": 99,
         "idxKnown": true,
         "phase": "S1",
         "iso": "2026-11-13",
-        "overridden": false,
+        "overridden": true,
         "originalItemNum": 78,
         "dayCap": 2
       },
@@ -8317,7 +8331,7 @@
   },
   "_meta": {
     "schemaVersion": 4,
-    "updatedAt": "2026-11-14T10:55:37.512Z"
+    "updatedAt": "2026-11-14T13:34:11.119Z"
   },
   "customTheme": {
     "enabled": false,
@@ -9082,6 +9096,12 @@
       "on": "2026-11-12",
       "planned": null,
       "itemNum": null,
+      "mode": "revision"
+    },
+    "S1_i310_o1": {
+      "on": "2026-11-14",
+      "planned": "2026-11-13",
+      "itemNum": 308,
       "mode": "revision"
     }
   },
