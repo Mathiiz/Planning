@@ -8069,18 +8069,6 @@
         "mix": true
       },
       {
-        "id": "MIX_mwca7b2z_j1zwt",
-        "kind": "mix",
-        "title": "Eosinophilie",
-        "cat": "ped",
-        "itemNums": [
-          218
-        ],
-        "mode": "revision",
-        "iso": "2026-11-11",
-        "mix": true
-      },
-      {
         "id": "MIX_mwca7tat_gf3mh",
         "kind": "mix",
         "title": "Eosinophilie",
@@ -8099,18 +8087,6 @@
         "cat": "psy",
         "itemNums": [
           58
-        ],
-        "mode": "revision",
-        "iso": "2026-11-11",
-        "mix": true
-      },
-      {
-        "id": "MIX_mwcfu6cx_gr1fy",
-        "kind": "mix",
-        "title": "Troubles du sommeil de l’enfant et de l’adulte",
-        "cat": "ped",
-        "itemNums": [
-          110
         ],
         "mode": "revision",
         "iso": "2026-11-11",
@@ -8341,7 +8317,7 @@
   },
   "_meta": {
     "schemaVersion": 4,
-    "updatedAt": "2026-11-13T21:45:37.376Z"
+    "updatedAt": "2026-11-14T10:55:37.512Z"
   },
   "customTheme": {
     "enabled": false,
@@ -8793,6 +8769,18 @@
       "l": 0,
       "f": 0,
       "s": 1
+    },
+    "2026-11-12": {
+      "r": 0,
+      "l": 0,
+      "f": 0,
+      "s": 1
+    },
+    "2026-11-13": {
+      "r": 0,
+      "l": 0,
+      "f": 0,
+      "s": 1
     }
   },
   "pinResetV1": true,
@@ -9182,15 +9170,6 @@
         "mode": "revision"
       },
       {
-        "id": "MIX_mwca7b2z_j1zwt",
-        "title": "Eosinophilie",
-        "cat": "ped",
-        "itemNums": [
-          218
-        ],
-        "mode": "revision"
-      },
-      {
         "id": "MIX_mwca7tat_gf3mh",
         "title": "Eosinophilie",
         "cat": "mi",
@@ -9205,15 +9184,6 @@
         "cat": "psy",
         "itemNums": [
           58
-        ],
-        "mode": "revision"
-      },
-      {
-        "id": "MIX_mwcfu6cx_gr1fy",
-        "title": "Troubles du sommeil de l’enfant et de l’adulte",
-        "cat": "ped",
-        "itemNums": [
-          110
         ],
         "mode": "revision"
       },
