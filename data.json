@@ -2743,7 +2743,8 @@
     "MIX_mwdki7fq_4b2zd": true,
     "MIX_mwdo9j3r_6u1dh": true,
     "MIX_mwdrtax6_0airk": true,
-    "S1_i310_o1": true
+    "S1_i310_o1": true,
+    "MIX_mwgg6kfr_9djrx": true
   },
   "checks": {
     "2026-08-29": {
@@ -3907,7 +3908,8 @@
     "2026-11-11::S1_i308_o1": true,
     "2026-11-11::S1_i76_o1": true,
     "2026-11-12::S1_i77_o1": true,
-    "2026-11-12::S1_i309_o1": true
+    "2026-11-12::S1_i309_o1": true,
+    "2026-11-13::S1_i78_o1": true
   },
   "lcaEntries": {},
   "sddItems": [
@@ -8211,6 +8213,18 @@
         "overridden": true,
         "originalItemNum": 310,
         "dayCap": 2
+      },
+      {
+        "id": "MIX_mwgg6kfr_9djrx",
+        "kind": "mix",
+        "title": "Principaux troubles du neurodéveloppement - Troubles du spectre de l’autisme et trouble déficit de l’attention avec ou sans hyperactivité",
+        "cat": "psy",
+        "itemNums": [
+          67
+        ],
+        "mode": "revision",
+        "iso": "2026-11-13",
+        "mix": true
       }
     ]
   },
@@ -8331,7 +8345,7 @@
   },
   "_meta": {
     "schemaVersion": 4,
-    "updatedAt": "2026-11-14T13:34:11.119Z"
+    "updatedAt": "2026-11-14T17:45:06.820Z"
   },
   "customTheme": {
     "enabled": false,
@@ -9103,6 +9117,12 @@
       "planned": "2026-11-13",
       "itemNum": 308,
       "mode": "revision"
+    },
+    "MIX_mwgg6kfr_9djrx": {
+      "on": "2026-11-14",
+      "planned": null,
+      "itemNum": null,
+      "mode": "revision"
     }
   },
   "itemsCatRefV": 1,
@@ -9244,6 +9264,17 @@
         "cat": "mi",
         "itemNums": [
           219
+        ],
+        "mode": "revision"
+      }
+    ],
+    "2026-11-13": [
+      {
+        "id": "MIX_mwgg6kfr_9djrx",
+        "title": "Principaux troubles du neurodéveloppement - Troubles du spectre de l’autisme et trouble déficit de l’attention avec ou sans hyperactivité",
+        "cat": "psy",
+        "itemNums": [
+          67
         ],
         "mode": "revision"
       }
