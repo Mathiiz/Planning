@@ -8345,7 +8345,7 @@
   },
   "_meta": {
     "schemaVersion": 4,
-    "updatedAt": "2026-11-14T17:45:06.820Z"
+    "updatedAt": "2026-11-14T17:51:02.477Z"
   },
   "customTheme": {
     "enabled": false,
@@ -9275,6 +9275,17 @@
         "cat": "psy",
         "itemNums": [
           67
+        ],
+        "mode": "revision"
+      }
+    ],
+    "2026-11-14": [
+      {
+        "id": "MIX_mwgpc6kq_djny1",
+        "title": "Troubles du comportement de l’enfant et de l’adolescent",
+        "cat": "psy",
+        "itemNums": [
+          68
         ],
         "mode": "revision"
       }
