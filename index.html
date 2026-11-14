@@ -1711,16 +1711,23 @@ function deepMergeMap(remote, local, snapshot){
     } else if(Array.isArray(l) || Array.isArray(r)){
       const arrR = Array.isArray(r) ? r : [];
       const arrL = Array.isArray(l) ? l : [];
+      const arrS = Array.isArray(s) ? s : [];
+      const idOf = item => item && (item.id || item.itemNum || JSON.stringify(item));
+      const inR = new Set(arrR.map(idOf)), inL = new Set(arrL.map(idOf)), inS = new Set(arrS.map(idOf));
       const seen = new Set();
       const mergedArr = [];
       [...arrR, ...arrL].forEach(item=>{
-        const id = item && (item.id || item.itemNum || JSON.stringify(item));
-        if(!seen.has(id)){
-          seen.add(id);
-          mergedArr.push(item);
-        }
+        const id = idOf(item);
+        if(seen.has(id)) return;
+        seen.add(id);
+        // Suppression volontaire : l'élément figurait dans la dernière version synchronisée mais
+        // manque d'un des deux côtés (supprimé ici ou sur un autre appareil) : on ne le ressuscite
+        // pas. Un élément absent de la dernière synchro est, lui, un ajout récent : on le garde.
+        if(inS.has(id) && (!inR.has(id) || !inL.has(id))) return;
+        mergedArr.push(item);
       });
-      out[k] = mergedArr;
+      // Une liste devenue vide est retirée (comme le fait la suppression locale).
+      if(mergedArr.length > 0 || (arrR.length === 0 && arrL.length === 0 && arrS.length === 0)) out[k] = mergedArr;
     } else {
       const localChanged = JSON.stringify(l) !== JSON.stringify(s);
       const remoteChanged = JSON.stringify(r) !== JSON.stringify(s);
