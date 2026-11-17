@@ -2745,7 +2745,8 @@
     "MIX_mwdrtax6_0airk": true,
     "S1_i310_o1": true,
     "MIX_mwgg6kfr_9djrx": true,
-    "MIX_mwgpc6kq_djny1": true
+    "MIX_mwgpc6kq_djny1": true,
+    "S1_i79_o1": true
   },
   "checks": {
     "2026-08-29": {
@@ -3507,6 +3508,18 @@
       "swapId": "swap_1794663251107_744",
       "partnerKey": "S1_i78_o1",
       "previousItemNum": 67
+    },
+    "S1_i79_o1": {
+      "itemNum": 71,
+      "swapId": "swap_1794935545880_729",
+      "partnerKey": "S1_i71_o2",
+      "previousItemNum": 79
+    },
+    "S1_i71_o2": {
+      "itemNum": 79,
+      "swapId": "swap_1794935545880_729",
+      "partnerKey": "S1_i79_o1",
+      "previousItemNum": 71
     }
   },
   "subjectDeadlines": {
@@ -8227,6 +8240,62 @@
         "iso": "2026-11-13",
         "mix": true
       }
+    ],
+    "2026-11-17": [
+      {
+        "id": "S1_i80_o1",
+        "kind": "item",
+        "itemNum": 80,
+        "mode": "revision",
+        "idx": 103,
+        "idxKnown": true,
+        "phase": "S1",
+        "iso": "2026-11-17",
+        "overridden": false,
+        "originalItemNum": 80,
+        "dayCap": 2
+      },
+      {
+        "id": "S1_i312_o1",
+        "kind": "item",
+        "itemNum": 312,
+        "mode": "revision",
+        "idx": 104,
+        "idxKnown": true,
+        "phase": "S1",
+        "iso": "2026-11-17",
+        "overridden": false,
+        "originalItemNum": 312,
+        "dayCap": 2
+      }
+    ],
+    "2026-11-16": [
+      {
+        "id": "S1_i79_o1",
+        "kind": "item",
+        "itemNum": 71,
+        "mode": "revision",
+        "idx": 101,
+        "idxKnown": true,
+        "phase": "S1",
+        "iso": "2026-11-16",
+        "overridden": true,
+        "originalItemNum": 79,
+        "dayCap": 2
+      },
+      {
+        "id": "S1_i311_o1",
+        "kind": "item",
+        "itemNum": 311,
+        "mode": "revision",
+        "idx": 102,
+        "idxKnown": true,
+        "phase": "S1",
+        "iso": "2026-11-16",
+        "overridden": false,
+        "originalItemNum": 311,
+        "dayCap": 2
+      }
     ]
   },
   "queueFreeze": {
@@ -8346,7 +8415,7 @@
   },
   "_meta": {
     "schemaVersion": 4,
-    "updatedAt": "2026-11-14T19:25:27.460Z"
+    "updatedAt": "2026-11-17T17:12:28.997Z"
   },
   "customTheme": {
     "enabled": false,
@@ -8810,6 +8879,18 @@
       "l": 0,
       "f": 0,
       "s": 1
+    },
+    "2026-11-14": {
+      "r": 0,
+      "l": 0,
+      "f": 2,
+      "s": 0
+    },
+    "2026-11-15": {
+      "r": 0,
+      "l": 2,
+      "f": 0,
+      "s": 0
     }
   },
   "pinResetV1": true,
@@ -9129,6 +9210,12 @@
       "on": "2026-11-14",
       "planned": null,
       "itemNum": null,
+      "mode": "revision"
+    },
+    "S1_i79_o1": {
+      "on": "2026-11-17",
+      "planned": "2026-11-16",
+      "itemNum": 71,
       "mode": "revision"
     }
   },
