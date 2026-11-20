@@ -2753,7 +2753,8 @@
     "S1_i351_o1": true,
     "S1_i313_o1": true,
     "S1_i314_o1": true,
-    "S1_i352_o1": true
+    "S1_i352_o1": true,
+    "MIX_mwosu2p3_mdyrp": true
   },
   "checks": {
     "2026-08-29": {
@@ -3955,7 +3956,8 @@
     "2026-11-12::S1_i77_o1": true,
     "2026-11-12::S1_i309_o1": true,
     "2026-11-13::S1_i78_o1": true,
-    "2026-11-20::S1_i353_o1": true
+    "2026-11-20::S1_i353_o1": true,
+    "2026-11-20::S1_i60_o2": true
   },
   "lcaEntries": {},
   "sddItems": [
@@ -8403,7 +8405,7 @@
         "id": "S1_i60_o2",
         "kind": "item",
         "itemNum": 60,
-        "mode": "entrainement",
+        "mode": "revision",
         "idx": 110,
         "idxKnown": true,
         "phase": "S1",
@@ -8543,7 +8545,7 @@
   },
   "_meta": {
     "schemaVersion": 4,
-    "updatedAt": "2026-11-20T09:51:05.516Z"
+    "updatedAt": "2026-11-20T14:58:06.476Z"
   },
   "customTheme": {
     "enabled": false,
@@ -9411,12 +9413,19 @@
       "planned": "2026-11-19",
       "itemNum": 75,
       "mode": "revision"
+    },
+    "MIX_mwosu2p3_mdyrp": {
+      "on": "2026-11-20",
+      "planned": null,
+      "itemNum": null,
+      "mode": "revision"
     }
   },
   "itemsCatRefV": 1,
   "taskModeOverrides": {
     "S1_i75_o1": "revision",
-    "S1_i76_o1": "revision"
+    "S1_i76_o1": "revision",
+    "S1_i60_o2": "revision"
   },
   "dayMixes": {
     "2026-11-08": [
