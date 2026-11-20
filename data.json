@@ -8416,6 +8416,14 @@
         "dayCap": 2
       },
       {
+        "id": "M_76_mwp91px2fbb4",
+        "kind": "manualItem",
+        "itemNum": 76,
+        "mode": "revision",
+        "iso": "2026-11-20",
+        "manual": true
+      },
+      {
         "id": "MIX_mwosu2p3_mdyrp",
         "kind": "mix",
         "title": "Adénopathie superficielle de l’enfant et de l’adulte",
@@ -8558,7 +8566,7 @@
   },
   "_meta": {
     "schemaVersion": 4,
-    "updatedAt": "2026-11-20T16:29:43.013Z"
+    "updatedAt": "2026-11-20T17:24:56.061Z"
   },
   "customTheme": {
     "enabled": false,
@@ -9103,6 +9111,13 @@
       {
         "id": "M_72_mw9cyfc8sh92",
         "itemNum": 72,
+        "mode": "revision"
+      }
+    ],
+    "2026-11-20": [
+      {
+        "id": "M_76_mwp91px2fbb4",
+        "itemNum": 76,
         "mode": "revision"
       }
     ]
