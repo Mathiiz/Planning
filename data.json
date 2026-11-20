@@ -2754,7 +2754,8 @@
     "S1_i313_o1": true,
     "S1_i314_o1": true,
     "S1_i352_o1": true,
-    "MIX_mwosu2p3_mdyrp": true
+    "MIX_mwosu2p3_mdyrp": true,
+    "MIX_mwp72nnw_2p1wu": true
   },
   "checks": {
     "2026-08-29": {
@@ -8425,6 +8426,18 @@
         "mode": "revision",
         "iso": "2026-11-20",
         "mix": true
+      },
+      {
+        "id": "MIX_mwp72nnw_2p1wu",
+        "kind": "mix",
+        "title": "HTA",
+        "cat": "mi",
+        "itemNums": [
+          224
+        ],
+        "mode": "revision",
+        "iso": "2026-11-20",
+        "mix": true
       }
     ]
   },
@@ -8545,7 +8558,7 @@
   },
   "_meta": {
     "schemaVersion": 4,
-    "updatedAt": "2026-11-20T14:58:06.476Z"
+    "updatedAt": "2026-11-20T16:29:43.013Z"
   },
   "customTheme": {
     "enabled": false,
@@ -9419,6 +9432,12 @@
       "planned": null,
       "itemNum": null,
       "mode": "revision"
+    },
+    "MIX_mwp72nnw_2p1wu": {
+      "on": "2026-11-20",
+      "planned": null,
+      "itemNum": null,
+      "mode": "revision"
     }
   },
   "itemsCatRefV": 1,
@@ -9594,6 +9613,15 @@
         "cat": "mi",
         "itemNums": [
           220
+        ],
+        "mode": "revision"
+      },
+      {
+        "id": "MIX_mwp72nnw_2p1wu",
+        "title": "HTA",
+        "cat": "mi",
+        "itemNums": [
+          224
         ],
         "mode": "revision"
       }
