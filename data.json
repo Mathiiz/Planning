@@ -2755,7 +2755,8 @@
     "S1_i314_o1": true,
     "S1_i352_o1": true,
     "MIX_mwosu2p3_mdyrp": true,
-    "MIX_mwp72nnw_2p1wu": true
+    "MIX_mwp72nnw_2p1wu": true,
+    "MIX_mwqhcdq0_itffq": true
   },
   "checks": {
     "2026-08-29": {
@@ -8566,7 +8567,7 @@
   },
   "_meta": {
     "schemaVersion": 4,
-    "updatedAt": "2026-11-20T17:24:56.061Z"
+    "updatedAt": "2026-11-21T14:04:58.408Z"
   },
   "customTheme": {
     "enabled": false,
@@ -9453,6 +9454,12 @@
       "planned": null,
       "itemNum": null,
       "mode": "revision"
+    },
+    "MIX_mwqhcdq0_itffq": {
+      "on": "2026-11-21",
+      "planned": null,
+      "itemNum": null,
+      "mode": "revision"
     }
   },
   "itemsCatRefV": 1,
@@ -9637,6 +9644,17 @@
         "cat": "mi",
         "itemNums": [
           224
+        ],
+        "mode": "revision"
+      }
+    ],
+    "2026-11-21": [
+      {
+        "id": "MIX_mwqhcdq0_itffq",
+        "title": "Vaccinations",
+        "cat": "ped",
+        "itemNums": [
+          146
         ],
         "mode": "revision"
       }
