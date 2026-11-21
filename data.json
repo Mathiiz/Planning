@@ -8568,7 +8568,7 @@
   },
   "_meta": {
     "schemaVersion": 4,
-    "updatedAt": "2026-11-21T15:42:33.829Z"
+    "updatedAt": "2026-11-21T15:44:17.782Z"
   },
   "customTheme": {
     "enabled": false,
@@ -9675,6 +9675,15 @@
         "cat": "ped",
         "itemNums": [
           146
+        ],
+        "mode": "revision"
+      },
+      {
+        "id": "MIX_mwqkw5f3_ipisv",
+        "title": "Thrombose veineuse profonde et embolie pulmonaire",
+        "cat": "mi",
+        "itemNums": [
+          226
         ],
         "mode": "revision"
       }
