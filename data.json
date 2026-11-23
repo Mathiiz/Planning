@@ -2759,7 +2759,8 @@
     "MIX_mwqhcdq0_itffq": true,
     "M_76_mwqkg5vb7h1r": true,
     "MIX_mwrwbc8g_quocr": true,
-    "MIX_mwqkw5f3_ipisv": true
+    "MIX_mwqkw5f3_ipisv": true,
+    "MIX_mwt5u3n7_eyfbi": true
   },
   "checks": {
     "2026-08-29": {
@@ -8480,6 +8481,18 @@
         "overridden": false,
         "originalItemNum": 185,
         "dayCap": 2
+      },
+      {
+        "id": "MIX_mwt5u3n7_eyfbi",
+        "kind": "mix",
+        "title": "Accidents des anticoagulants",
+        "cat": "hemato",
+        "itemNums": [
+          330
+        ],
+        "mode": "revision",
+        "iso": "2026-11-23",
+        "mix": true
       }
     ]
   },
@@ -8600,7 +8613,7 @@
   },
   "_meta": {
     "schemaVersion": 4,
-    "updatedAt": "2026-11-23T11:05:42.868Z"
+    "updatedAt": "2026-11-23T11:27:54.563Z"
   },
   "customTheme": {
     "enabled": false,
@@ -9536,6 +9549,12 @@
       "planned": null,
       "itemNum": null,
       "mode": "revision"
+    },
+    "MIX_mwt5u3n7_eyfbi": {
+      "on": "2026-11-23",
+      "planned": null,
+      "itemNum": null,
+      "mode": "revision"
     }
   },
   "itemsCatRefV": 1,
@@ -9751,6 +9770,17 @@
         "cat": "mi",
         "itemNums": [
           239
+        ],
+        "mode": "revision"
+      }
+    ],
+    "2026-11-23": [
+      {
+        "id": "MIX_mwt5u3n7_eyfbi",
+        "title": "Accidents des anticoagulants",
+        "cat": "hemato",
+        "itemNums": [
+          330
         ],
         "mode": "revision"
       }
