@@ -3962,7 +3962,9 @@
     "2026-11-12::S1_i309_o1": true,
     "2026-11-13::S1_i78_o1": true,
     "2026-11-20::S1_i353_o1": true,
-    "2026-11-20::S1_i60_o2": true
+    "2026-11-20::S1_i60_o2": true,
+    "2026-11-23::S1_i108_o2": true,
+    "2026-11-23::S1_i185_o2": true
   },
   "lcaEntries": {},
   "sddItems": [
@@ -8451,6 +8453,34 @@
         "iso": "2026-11-20",
         "mix": true
       }
+    ],
+    "2026-11-23": [
+      {
+        "id": "S1_i108_o2",
+        "kind": "item",
+        "itemNum": 108,
+        "mode": "entrainement",
+        "idx": 111,
+        "idxKnown": true,
+        "phase": "S1",
+        "iso": "2026-11-23",
+        "overridden": false,
+        "originalItemNum": 108,
+        "dayCap": 2
+      },
+      {
+        "id": "S1_i185_o2",
+        "kind": "item",
+        "itemNum": 185,
+        "mode": "entrainement",
+        "idx": 112,
+        "idxKnown": true,
+        "phase": "S1",
+        "iso": "2026-11-23",
+        "overridden": false,
+        "originalItemNum": 185,
+        "dayCap": 2
+      }
     ]
   },
   "queueFreeze": {
@@ -8570,7 +8600,7 @@
   },
   "_meta": {
     "schemaVersion": 4,
-    "updatedAt": "2026-11-22T13:57:43.521Z"
+    "updatedAt": "2026-11-23T11:05:42.868Z"
   },
   "customTheme": {
     "enabled": false,
@@ -9081,6 +9111,12 @@
       "r": 0,
       "l": 0,
       "f": 2,
+      "s": 0
+    },
+    "2026-11-22": {
+      "r": 0,
+      "l": 2,
+      "f": 0,
       "s": 0
     }
   },
