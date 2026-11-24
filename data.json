@@ -2762,7 +2762,8 @@
     "MIX_mwqkw5f3_ipisv": true,
     "MIX_mwt5u3n7_eyfbi": true,
     "M_329_mwt6mwh4k88g": true,
-    "MIX_mwtlmtrz_e7qg8": true
+    "MIX_mwtlmtrz_e7qg8": true,
+    "M_77_mwv2oygseg7f": true
   },
   "checks": {
     "2026-08-29": {
@@ -3009,7 +3010,8 @@
     },
     "2026-11-06": {
       "custom_1794056699088_850": true
-    }
+    },
+    "2026-11-24": {}
   },
   "reportedDays": {
     "2026-09-02": {
@@ -3931,6 +3933,12 @@
       {
         "id": "custom_1794134765853_412",
         "label": "Items 164, 168 - Éruptions fébriles (pédiatrie)"
+      }
+    ],
+    "2026-11-24": [
+      {
+        "id": "custom_1795547730715_225",
+        "label": "Conf anesth-réa"
       }
     ]
   },
@@ -8525,6 +8533,14 @@
         "overridden": false,
         "originalItemNum": 290,
         "dayCap": 2
+      },
+      {
+        "id": "M_77_mwv2oygseg7f",
+        "kind": "manualItem",
+        "itemNum": 77,
+        "mode": "revision",
+        "iso": "2026-11-24",
+        "manual": true
       }
     ]
   },
@@ -8645,7 +8661,7 @@
   },
   "_meta": {
     "schemaVersion": 4,
-    "updatedAt": "2026-11-24T19:13:12.612Z"
+    "updatedAt": "2026-11-24T19:15:30.716Z"
   },
   "customTheme": {
     "enabled": false,
@@ -9163,6 +9179,12 @@
       "l": 2,
       "f": 0,
       "s": 0
+    },
+    "2026-11-23": {
+      "r": 0,
+      "l": 0,
+      "f": 0,
+      "s": 1
     }
   },
   "pinResetV1": true,
@@ -9222,6 +9244,13 @@
       {
         "id": "M_76_mwqkg5vb7h1r",
         "itemNum": 76,
+        "mode": "revision"
+      }
+    ],
+    "2026-11-24": [
+      {
+        "id": "M_77_mwv2oygseg7f",
+        "itemNum": 77,
         "mode": "revision"
       }
     ]
@@ -9598,6 +9627,12 @@
       "on": "2026-11-23",
       "planned": null,
       "itemNum": null,
+      "mode": "revision"
+    },
+    "M_77_mwv2oygseg7f": {
+      "on": "2026-11-24",
+      "planned": "2026-11-24",
+      "itemNum": 77,
       "mode": "revision"
     }
   },
