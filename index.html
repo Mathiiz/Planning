@@ -1148,7 +1148,11 @@ function buildCalendar(cfg, reportedDays){
     if(!m.isItemDay || m.iso > todayIsoStr) return;
     const raw = DATA.pinnedDayItems[m.iso];
     if(!Array.isArray(raw) || raw.length===0) return;
-    let list = raw.map(p=>materializePinnedEntry(p, m.iso)).filter(e=>e.phase && ITEM_BY_NUM[e.itemNum]);
+    // Seules les entrées auto (S1/S2) sont soumises au plafond ; les ajouts manuels/mix n'en font jamais partie
+    let list = raw
+      .filter(p=>p && parsePinnedId(p.id))
+      .map(p=>materializePinnedEntry(p, m.iso))
+      .filter(e=>e.phase && ITEM_BY_NUM[e.itemNum]);
     if(m.iso === todayIsoStr){
       const doneRec = DATA.itemDoneAt || {};
       list = list.filter(e=> !isItemTaskDone(e.id) || (doneRec[e.id] && doneRec[e.id].on === todayIsoStr));
@@ -1228,7 +1232,7 @@ function buildCalendar(cfg, reportedDays){
         else if(isToday && entries.length < perDay) want = perDay - entries.length;
         for(let i=0;i<want;i++) entries.push(allocEntry(phase, iso));
         entries.forEach(e=>{ e.dayCap = entries.length; });
-        DATA.pinnedDayItems[iso] = entries;
+        DATA.pinnedDayItems[iso] = entries.filter(e=>parsePinnedId(e.id));
       } else {
         for(let i=0;i<perDay;i++) entries.push(allocEntry(phase, iso));
       }
