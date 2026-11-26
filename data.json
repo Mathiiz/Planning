@@ -2771,7 +2771,8 @@
     "M_15_mwxe1vedjzzp": true,
     "MIX_mwxhl2jx_xkj01": true,
     "MIX_mwxhwfev_ei87k": true,
-    "MIX_mwxmmjfg_a9jev": true
+    "MIX_mwxmmjfg_a9jev": true,
+    "MIX_mwxtf6ju_ttzr6": true
   },
   "checks": {
     "2026-08-29": {
@@ -8482,7 +8483,7 @@
   },
   "_meta": {
     "schemaVersion": 4,
-    "updatedAt": "2026-11-26T17:16:54.352Z"
+    "updatedAt": "2026-11-26T17:53:06.217Z"
   },
   "customTheme": {
     "enabled": false,
@@ -9539,6 +9540,12 @@
       "planned": null,
       "itemNum": null,
       "mode": "revision"
+    },
+    "MIX_mwxtf6ju_ttzr6": {
+      "on": "2026-11-26",
+      "planned": null,
+      "itemNum": null,
+      "mode": "revision"
     }
   },
   "itemsCatRefV": 1,
@@ -9794,6 +9801,15 @@
         "cat": "mi",
         "itemNums": [
           275
+        ],
+        "mode": "revision"
+      },
+      {
+        "id": "MIX_mwxtf6ju_ttzr6",
+        "title": "Éducation thérapeutique, observance et automédication",
+        "cat": "mi",
+        "itemNums": [
+          324
         ],
         "mode": "revision"
       }
