@@ -2772,7 +2772,8 @@
     "MIX_mwxhl2jx_xkj01": true,
     "MIX_mwxhwfev_ei87k": true,
     "MIX_mwxmmjfg_a9jev": true,
-    "MIX_mwxtf6ju_ttzr6": true
+    "MIX_mwxtf6ju_ttzr6": true,
+    "MIX_mwxupgey_08z5q": true
   },
   "checks": {
     "2026-08-29": {
@@ -8483,7 +8484,7 @@
   },
   "_meta": {
     "schemaVersion": 4,
-    "updatedAt": "2026-11-26T17:53:06.217Z"
+    "updatedAt": "2026-11-26T18:28:01.615Z"
   },
   "customTheme": {
     "enabled": false,
@@ -9546,6 +9547,12 @@
       "planned": null,
       "itemNum": null,
       "mode": "revision"
+    },
+    "MIX_mwxupgey_08z5q": {
+      "on": "2026-11-26",
+      "planned": null,
+      "itemNum": null,
+      "mode": "revision"
     }
   },
   "itemsCatRefV": 1,
@@ -9810,6 +9817,15 @@
         "cat": "mi",
         "itemNums": [
           324
+        ],
+        "mode": "revision"
+      },
+      {
+        "id": "MIX_mwxupgey_08z5q",
+        "title": "Prescription et surveillance des classes de médicaments les plus courantes, hors anti-infectieux",
+        "cat": "mi",
+        "itemNums": [
+          330
         ],
         "mode": "revision"
       }
