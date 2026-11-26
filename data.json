@@ -8479,7 +8479,7 @@
   },
   "_meta": {
     "schemaVersion": 4,
-    "updatedAt": "2026-11-26T10:44:58.809Z"
+    "updatedAt": "2026-11-26T11:46:05.239Z"
   },
   "customTheme": {
     "enabled": false,
@@ -9744,6 +9744,17 @@
         "cat": "hemato",
         "itemNums": [
           330
+        ],
+        "mode": "revision"
+      }
+    ],
+    "2026-11-26": [
+      {
+        "id": "MIX_mwxhl2jx_xkj01",
+        "title": "Œdèmes des membres inférieurs localisés ou généralisés",
+        "cat": "mi",
+        "itemNums": [
+          257
         ],
         "mode": "revision"
       }
