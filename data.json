@@ -2769,7 +2769,8 @@
     "M_78_mwwogyzj6bh2": true,
     "M_80_mwxd8oo1jplk": true,
     "M_15_mwxe1vedjzzp": true,
-    "MIX_mwxhl2jx_xkj01": true
+    "MIX_mwxhl2jx_xkj01": true,
+    "MIX_mwxhwfev_ei87k": true
   },
   "checks": {
     "2026-08-29": {
@@ -8480,7 +8481,7 @@
   },
   "_meta": {
     "schemaVersion": 4,
-    "updatedAt": "2026-11-26T11:54:39.553Z"
+    "updatedAt": "2026-11-26T14:06:55.310Z"
   },
   "customTheme": {
     "enabled": false,
@@ -9525,6 +9526,12 @@
       "planned": null,
       "itemNum": null,
       "mode": "revision"
+    },
+    "MIX_mwxhwfev_ei87k": {
+      "on": "2026-11-26",
+      "planned": null,
+      "itemNum": null,
+      "mode": "revision"
     }
   },
   "itemsCatRefV": 1,
@@ -9762,6 +9769,15 @@
         "cat": "mi",
         "itemNums": [
           257
+        ],
+        "mode": "revision"
+      },
+      {
+        "id": "MIX_mwxhwfev_ei87k",
+        "title": "Hypercalcémie",
+        "cat": "mi",
+        "itemNums": [
+          268
         ],
         "mode": "revision"
       }
