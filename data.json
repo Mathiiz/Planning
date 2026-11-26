@@ -2764,7 +2764,9 @@
     "M_329_mwt6mwh4k88g": true,
     "MIX_mwtlmtrz_e7qg8": true,
     "M_77_mwv2oygseg7f": true,
-    "M_78_mww7h81x8bj6": true
+    "M_78_mww7h81x8bj6": true,
+    "M_79_mwwogmh3iijh": true,
+    "M_78_mwwogyzj6bh2": true
   },
   "checks": {
     "2026-08-29": {
@@ -3980,7 +3982,9 @@
     "2026-11-24::S1_i47_o2": true,
     "2026-11-24::S1_i290_o2": true,
     "2026-11-25::S1_i212_o2": true,
-    "2026-11-25::S1_i61_o2": true
+    "2026-11-25::S1_i61_o2": true,
+    "2026-11-26::S1_i118_o2": true,
+    "2026-11-26::S1_i186_o2": true
   },
   "lcaEntries": {},
   "sddItems": [
@@ -7373,14 +7377,6 @@
         "overridden": true,
         "originalItemNum": 192,
         "dayCap": 2
-      },
-      {
-        "id": "M_138_mv2iltwfvbi8",
-        "kind": "manualItem",
-        "itemNum": 138,
-        "mode": "revision",
-        "iso": "2026-10-08",
-        "manual": true
       }
     ],
     "2026-10-09": [
@@ -7409,14 +7405,6 @@
         "overridden": false,
         "originalItemNum": 125,
         "dayCap": 2
-      },
-      {
-        "id": "M_285_mv2ktlh5nhen",
-        "kind": "manualItem",
-        "itemNum": 285,
-        "mode": "revision",
-        "iso": "2026-10-09",
-        "manual": true
       }
     ],
     "2026-10-12": [
@@ -7501,14 +7489,6 @@
         "overridden": true,
         "originalItemNum": 315,
         "dayCap": 2
-      },
-      {
-        "id": "M_218_mv884fjqlo8s",
-        "kind": "manualItem",
-        "itemNum": 218,
-        "mode": "entrainement",
-        "iso": "2026-10-14",
-        "manual": true
       }
     ],
     "2026-10-15": [
@@ -7537,14 +7517,6 @@
         "overridden": true,
         "originalItemNum": 194,
         "dayCap": 2
-      },
-      {
-        "id": "M_144_mv9n4s7tqvcu",
-        "kind": "manualItem",
-        "itemNum": 144,
-        "mode": "revision",
-        "iso": "2026-10-15",
-        "manual": true
       }
     ],
     "2026-10-16": [
@@ -7797,14 +7769,6 @@
         "overridden": true,
         "originalItemNum": 202,
         "dayCap": 2
-      },
-      {
-        "id": "M_213_mvsb4v5buwng",
-        "kind": "manualItem",
-        "itemNum": 213,
-        "mode": "entrainement",
-        "iso": "2026-10-28",
-        "manual": true
       }
     ],
     "2026-10-29": [
@@ -8029,50 +7993,6 @@
         "overridden": false,
         "originalItemNum": 364,
         "dayCap": 2
-      },
-      {
-        "id": "M_72_mw9cyfc8sh92",
-        "kind": "manualItem",
-        "itemNum": 72,
-        "mode": "revision",
-        "iso": "2026-11-09",
-        "manual": true
-      },
-      {
-        "id": "MIX_mw9b64u1_nrkl4",
-        "kind": "mix",
-        "title": "66g - Trouble de l’adaptation",
-        "cat": "psy",
-        "itemNums": [
-          66
-        ],
-        "mode": "revision",
-        "iso": "2026-11-09",
-        "mix": true
-      },
-      {
-        "id": "MIX_mw9biq4z_0tcyr",
-        "kind": "mix",
-        "title": "66h - Trouble de personnalité",
-        "cat": "psy",
-        "itemNums": [
-          66
-        ],
-        "mode": "revision",
-        "iso": "2026-11-09",
-        "mix": true
-      },
-      {
-        "id": "MIX_mw9i6hnf_zttp5",
-        "kind": "mix",
-        "title": "Item 155 - Infections cutanées bactériennes",
-        "cat": "ped",
-        "itemNums": [
-          155
-        ],
-        "mode": "revision",
-        "iso": "2026-11-09",
-        "mix": true
       }
     ],
     "2026-11-10": [
@@ -8101,19 +8021,6 @@
         "overridden": false,
         "originalItemNum": 307,
         "dayCap": 2
-      },
-      {
-        "id": "MIX_mwal4mnp_criez",
-        "kind": "mix",
-        "title": "Apprendre à prescrire chez le patient âgé",
-        "cat": "ger",
-        "itemNums": [
-          322,
-          325
-        ],
-        "mode": "revision",
-        "iso": "2026-11-10",
-        "mix": true
       }
     ],
     "2026-11-11": [
@@ -8142,54 +8049,6 @@
         "overridden": true,
         "originalItemNum": 308,
         "dayCap": 2
-      },
-      {
-        "id": "MIX_mwc7yfxf_petnw",
-        "kind": "mix",
-        "title": "Syndrome mononucléosique",
-        "cat": "mi",
-        "itemNums": [
-          217
-        ],
-        "mode": "revision",
-        "iso": "2026-11-11",
-        "mix": true
-      },
-      {
-        "id": "MIX_mwca7tat_gf3mh",
-        "kind": "mix",
-        "title": "Eosinophilie",
-        "cat": "mi",
-        "itemNums": [
-          218
-        ],
-        "mode": "revision",
-        "iso": "2026-11-11",
-        "mix": true
-      },
-      {
-        "id": "MIX_mwcacyqr_jvzuv",
-        "kind": "mix",
-        "title": "Sexualité normale et ses troubles",
-        "cat": "psy",
-        "itemNums": [
-          58
-        ],
-        "mode": "revision",
-        "iso": "2026-11-11",
-        "mix": true
-      },
-      {
-        "id": "MIX_mwcodja3_jsa04",
-        "kind": "mix",
-        "title": "Troubles du sommeil de l’enfant et de l’adulte",
-        "cat": "psy",
-        "itemNums": [
-          110
-        ],
-        "mode": "revision",
-        "iso": "2026-11-11",
-        "mix": true
       }
     ],
     "2026-11-12": [
@@ -8218,44 +8077,6 @@
         "overridden": true,
         "originalItemNum": 309,
         "dayCap": 2
-      },
-      {
-        "id": "MIX_mwdki7fq_4b2zd",
-        "kind": "mix",
-        "title": "Pathologies infectieuses du migrant et de l'enfant voyageur",
-        "cat": "ped",
-        "itemNums": [
-          170,
-          174,
-          175
-        ],
-        "mode": "revision",
-        "iso": "2026-11-12",
-        "mix": true
-      },
-      {
-        "id": "MIX_mwdo9j3r_6u1dh",
-        "kind": "mix",
-        "title": "Développement psychomoteur du nourrisson et de l’enfant",
-        "cat": "psy",
-        "itemNums": [
-          55
-        ],
-        "mode": "revision",
-        "iso": "2026-11-12",
-        "mix": true
-      },
-      {
-        "id": "MIX_mwdrtax6_0airk",
-        "kind": "mix",
-        "title": "Pathologies du fer",
-        "cat": "mi",
-        "itemNums": [
-          219
-        ],
-        "mode": "revision",
-        "iso": "2026-11-12",
-        "mix": true
       }
     ],
     "2026-11-13": [
@@ -8284,18 +8105,6 @@
         "overridden": true,
         "originalItemNum": 310,
         "dayCap": 2
-      },
-      {
-        "id": "MIX_mwgg6kfr_9djrx",
-        "kind": "mix",
-        "title": "Principaux troubles du neurodéveloppement - Troubles du spectre de l’autisme et trouble déficit de l’attention avec ou sans hyperactivité",
-        "cat": "psy",
-        "itemNums": [
-          67
-        ],
-        "mode": "revision",
-        "iso": "2026-11-13",
-        "mix": true
       }
     ],
     "2026-11-17": [
@@ -8436,38 +8245,6 @@
         "overridden": false,
         "originalItemNum": 60,
         "dayCap": 2
-      },
-      {
-        "id": "M_76_mwp91px2fbb4",
-        "kind": "manualItem",
-        "itemNum": 76,
-        "mode": "revision",
-        "iso": "2026-11-20",
-        "manual": true
-      },
-      {
-        "id": "MIX_mwosu2p3_mdyrp",
-        "kind": "mix",
-        "title": "Adénopathie superficielle de l’enfant et de l’adulte",
-        "cat": "mi",
-        "itemNums": [
-          220
-        ],
-        "mode": "revision",
-        "iso": "2026-11-20",
-        "mix": true
-      },
-      {
-        "id": "MIX_mwp72nnw_2p1wu",
-        "kind": "mix",
-        "title": "HTA",
-        "cat": "mi",
-        "itemNums": [
-          224
-        ],
-        "mode": "revision",
-        "iso": "2026-11-20",
-        "mix": true
       }
     ],
     "2026-11-23": [
@@ -8496,18 +8273,6 @@
         "overridden": false,
         "originalItemNum": 185,
         "dayCap": 2
-      },
-      {
-        "id": "MIX_mwt5u3n7_eyfbi",
-        "kind": "mix",
-        "title": "Accidents des anticoagulants",
-        "cat": "hemato",
-        "itemNums": [
-          330
-        ],
-        "mode": "revision",
-        "iso": "2026-11-23",
-        "mix": true
       }
     ],
     "2026-11-24": [
@@ -8536,14 +8301,6 @@
         "overridden": false,
         "originalItemNum": 290,
         "dayCap": 2
-      },
-      {
-        "id": "M_77_mwv2oygseg7f",
-        "kind": "manualItem",
-        "itemNum": 77,
-        "mode": "revision",
-        "iso": "2026-11-24",
-        "manual": true
       }
     ],
     "2026-11-25": [
@@ -8571,6 +8328,34 @@
         "iso": "2026-11-25",
         "overridden": false,
         "originalItemNum": 61,
+        "dayCap": 2
+      }
+    ],
+    "2026-11-26": [
+      {
+        "id": "S1_i118_o2",
+        "kind": "item",
+        "itemNum": 118,
+        "mode": "entrainement",
+        "idx": 117,
+        "idxKnown": true,
+        "phase": "S1",
+        "iso": "2026-11-26",
+        "overridden": false,
+        "originalItemNum": 118,
+        "dayCap": 2
+      },
+      {
+        "id": "S1_i186_o2",
+        "kind": "item",
+        "itemNum": 186,
+        "mode": "entrainement",
+        "idx": 118,
+        "idxKnown": true,
+        "phase": "S1",
+        "iso": "2026-11-26",
+        "overridden": false,
+        "originalItemNum": 186,
         "dayCap": 2
       }
     ]
@@ -8692,7 +8477,7 @@
   },
   "_meta": {
     "schemaVersion": 4,
-    "updatedAt": "2026-11-25T22:10:37.569Z"
+    "updatedAt": "2026-11-26T09:44:22.396Z"
   },
   "customTheme": {
     "enabled": false,
@@ -9216,6 +9001,18 @@
       "l": 0,
       "f": 0,
       "s": 1
+    },
+    "2026-11-24": {
+      "r": 0,
+      "l": 0,
+      "f": 0,
+      "s": 1
+    },
+    "2026-11-25": {
+      "r": 0,
+      "l": 0,
+      "f": 0,
+      "s": 1
     }
   },
   "pinResetV1": true,
@@ -9282,6 +9079,18 @@
       {
         "id": "M_77_mwv2oygseg7f",
         "itemNum": 77,
+        "mode": "revision"
+      }
+    ],
+    "2026-11-25": [
+      {
+        "id": "M_79_mwwogmh3iijh",
+        "itemNum": 79,
+        "mode": "revision"
+      },
+      {
+        "id": "M_78_mwwogyzj6bh2",
+        "itemNum": 78,
         "mode": "revision"
       }
     ]
@@ -9667,6 +9476,18 @@
       "mode": "revision"
     },
     "M_78_mww7h81x8bj6": {
+      "on": "2026-11-25",
+      "planned": "2026-11-25",
+      "itemNum": 78,
+      "mode": "revision"
+    },
+    "M_79_mwwogmh3iijh": {
+      "on": "2026-11-25",
+      "planned": "2026-11-25",
+      "itemNum": 79,
+      "mode": "revision"
+    },
+    "M_78_mwwogyzj6bh2": {
       "on": "2026-11-25",
       "planned": "2026-11-25",
       "itemNum": 78,
