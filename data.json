@@ -2773,7 +2773,8 @@
     "MIX_mwxhwfev_ei87k": true,
     "MIX_mwxmmjfg_a9jev": true,
     "MIX_mwxtf6ju_ttzr6": true,
-    "MIX_mwxupgey_08z5q": true
+    "MIX_mwxupgey_08z5q": true,
+    "MIX_mwz6v425_fps88": true
   },
   "checks": {
     "2026-08-29": {
@@ -8514,7 +8515,7 @@
   },
   "_meta": {
     "schemaVersion": 4,
-    "updatedAt": "2026-11-27T16:20:57.198Z"
+    "updatedAt": "2026-11-27T16:21:57.222Z"
   },
   "customTheme": {
     "enabled": false,
@@ -9046,6 +9047,12 @@
       "s": 1
     },
     "2026-11-25": {
+      "r": 0,
+      "l": 0,
+      "f": 0,
+      "s": 1
+    },
+    "2026-11-26": {
       "r": 0,
       "l": 0,
       "f": 0,
@@ -9583,6 +9590,12 @@
       "planned": null,
       "itemNum": null,
       "mode": "revision"
+    },
+    "MIX_mwz6v425_fps88": {
+      "on": "2026-11-27",
+      "planned": null,
+      "itemNum": null,
+      "mode": "revision"
     }
   },
   "itemsCatRefV": 1,
@@ -9856,6 +9869,27 @@
         "cat": "mi",
         "itemNums": [
           330
+        ],
+        "mode": "revision"
+      }
+    ],
+    "2026-11-27": [
+      {
+        "id": "MIX_mwz6v425_fps88",
+        "title": "Troubles des conduites alimentaires de l'adolescent",
+        "cat": "ped",
+        "itemNums": [
+          71,
+          251
+        ],
+        "mode": "revision"
+      },
+      {
+        "id": "MIX_mwz6votc_9b3q1",
+        "title": "Risque et conduite suicidaires chez l'enfant, l'adolescent et l'adulte",
+        "cat": "ped",
+        "itemNums": [
+          353
         ],
         "mode": "revision"
       }
